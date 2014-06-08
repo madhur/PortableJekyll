@@ -1,0 +1,256 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Migrating from GtkOptionMenu and GtkCombo to GtkComboBox and GtkComboBoxEntry</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="GTK+ 2 Reference Manual">
+<link rel="up" href="migrating.html" title="Part IV. Migrating from Previous Versions of GTK+">
+<link rel="prev" href="migrating-gnomeuiinfo.html" title="Migrating from GnomeUIInfo">
+<link rel="next" href="migrating-GtkCombo.html" title="Migrating from GtkCombo to GtkComboBoxEntry">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle">
+<td><a accesskey="p" href="migrating-gnomeuiinfo.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="migrating.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GTK+ 2 Reference Manual</th>
+<td><a accesskey="n" href="migrating-GtkCombo.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="chapter">
+<div class="titlepage"><div><div><h2 class="title">
+<a name="gtk-migrating-GtkComboBox"></a>Migrating from GtkOptionMenu and GtkCombo to GtkComboBox and 
+         GtkComboBoxEntry</h2></div></div></div>
+<div class="toc"><dl>
+<dt><span class="section"><a href="gtk-migrating-GtkComboBox.html#migrating-GtkOptionMenu">Migrating from GtkOptionMenu to GtkComboBox</a></span></dt>
+<dt><span class="section"><a href="migrating-GtkCombo.html">Migrating from GtkCombo to GtkComboBoxEntry</a></span></dt>
+<dt><span class="section"><a href="new-features-GtkComboBox.html">New features</a></span></dt>
+</dl></div>
+<p>
+    Prior to 2.4, GTK+ offered two widgets for the task of selecting one
+    item from a list of options. <a class="link" href="GtkOptionMenu.html" title="GtkOptionMenu"><span class="type">GtkOptionMenu</span></a> presents the list of 
+    options as a menu while <a class="link" href="GtkCombo.html" title="GtkCombo"><span class="type">GtkCombo</span></a> presents them in a Windows-style list 
+    popup. The only difference between the two is that a <a class="link" href="GtkCombo.html" title="GtkCombo"><span class="type">GtkCombo</span></a> allows to 
+    manually edit the selected value, while the <a class="link" href="GtkOptionMenu.html" title="GtkOptionMenu"><span class="type">GtkOptionMenu</span></a> does not.
+  </p>
+<p>
+    In GTK+ 2.4, a unified API for list selection was introduced, with 
+    <a class="link" href="GtkComboBox.html" title="GtkComboBox"><span class="type">GtkComboBox</span></a> for the non-editable case and <a class="link" href="GtkComboBoxEntry.html" title="GtkComboBoxEntry"><span class="type">GtkComboBoxEntry</span></a> for the 
+    editable case. 
+    The selection of the display style — menu or list —
+    is no longer done at the API level, but has been made themeable via
+    the style property <span class="type">"appears-as-list"</span>.
+  </p>
+<div class="section">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="migrating-GtkOptionMenu"></a>Migrating from GtkOptionMenu to GtkComboBox</h2></div></div></div>
+<p>
+      Here is an example of a simple, but typical use of 
+      <a class="link" href="GtkOptionMenu.html" title="GtkOptionMenu"><span class="type">GtkOptionMenu</span></a>:
+      </p>
+<div class="informalexample">
+  <table class="listing_frame" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+      <tr>
+        <td class="listing_lines" align="right"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16</pre></td>
+        <td class="listing_code"><pre class="programlisting"><span class="usertype">GtkWidget</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">option_menu</span><span class="symbol">,</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">menu</span><span class="symbol">,</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">menu_item</span><span class="symbol">;</span>
+
+<span class="normal">option_menu </span><span class="symbol">=</span><span class="normal"> </span><span class="function"><a href="GtkOptionMenu.html#gtk-option-menu-new">gtk_option_menu_new</a></span><span class="normal"> </span><span class="symbol">();</span><span class="normal">      </span>
+<span class="normal">menu </span><span class="symbol">=</span><span class="normal"> </span><span class="function"><a href="GtkMenu.html#gtk-menu-new">gtk_menu_new</a></span><span class="normal"> </span><span class="symbol">();</span>
+
+<span class="normal">menu_item </span><span class="symbol">=</span><span class="normal"> </span><span class="function"><a href="GtkMenuItem.html#gtk-menu-item-new-with-label">gtk_menu_item_new_with_label</a></span><span class="normal"> </span><span class="symbol">(</span><span class="string">"First Item"</span><span class="symbol">);</span>
+<span class="function"><a href="GtkMenuShell.html#gtk-menu-shell-append">gtk_menu_shell_append</a></span><span class="normal"> </span><span class="symbol">(</span><span class="function">GTK_MENU_SHELL</span><span class="normal"> </span><span class="symbol">(</span><span class="normal">menu</span><span class="symbol">),</span><span class="normal"> menu_item</span><span class="symbol">);</span>
+<span class="function"><a href="GtkWidget.html#gtk-widget-show">gtk_widget_show</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">menu_item</span><span class="symbol">);</span>
+<span class="normal">menu_item </span><span class="symbol">=</span><span class="normal"> </span><span class="function"><a href="GtkMenuItem.html#gtk-menu-item-new-with-label">gtk_menu_item_new_with_label</a></span><span class="normal"> </span><span class="symbol">(</span><span class="string">"Second Item"</span><span class="symbol">);</span>
+<span class="function"><a href="GtkMenuShell.html#gtk-menu-shell-append">gtk_menu_shell_append</a></span><span class="normal"> </span><span class="symbol">(</span><span class="function">GTK_MENU_SHELL</span><span class="normal"> </span><span class="symbol">(</span><span class="normal">menu</span><span class="symbol">),</span><span class="normal"> menu_item</span><span class="symbol">);</span>
+<span class="function"><a href="GtkWidget.html#gtk-widget-show">gtk_widget_show</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">menu_item</span><span class="symbol">);</span>
+<span class="normal">menu_item </span><span class="symbol">=</span><span class="normal"> </span><span class="function"><a href="GtkMenuItem.html#gtk-menu-item-new-with-label">gtk_menu_item_new_with_label</a></span><span class="normal"> </span><span class="symbol">(</span><span class="string">"Third Item"</span><span class="symbol">);</span>
+<span class="function"><a href="GtkMenuShell.html#gtk-menu-shell-append">gtk_menu_shell_append</a></span><span class="normal"> </span><span class="symbol">(</span><span class="function">GTK_MENU_SHELL</span><span class="normal"> </span><span class="symbol">(</span><span class="normal">menu</span><span class="symbol">),</span><span class="normal"> menu_item</span><span class="symbol">);</span>
+<span class="function"><a href="GtkWidget.html#gtk-widget-show">gtk_widget_show</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">menu_item</span><span class="symbol">);</span>
+
+<span class="function"><a href="GtkOptionMenu.html#gtk-option-menu-set-menu">gtk_option_menu_set_menu</a></span><span class="normal"> </span><span class="symbol">(</span><span class="function">GTK_OPTION_MENU</span><span class="normal"> </span><span class="symbol">(</span><span class="normal">option_menu</span><span class="symbol">),</span><span class="normal"> menu</span><span class="symbol">);</span></pre></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+      In order to react to the user's selection, connect to the <a class="link" href="GtkOptionMenu.html#GtkOptionMenu-changed" title='The "changed" signal'><span class="type">"changed"</span></a>
+      signal on the option menu and use <a class="link" href="GtkOptionMenu.html#gtk-option-menu-get-history" title="gtk_option_menu_get_history ()"><code class="function">gtk_option_menu_get_history()</code></a>
+      to retrieve the index of the selected item.
+    </p>
+<p>
+      And here is how it would be done with a <a class="link" href="GtkComboBox.html" title="GtkComboBox"><span class="type">GtkComboBox</span></a>:
+      </p>
+<div class="informalexample">
+  <table class="listing_frame" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+      <tr>
+        <td class="listing_lines" align="right"><pre>1
+2
+3
+4
+5
+6
+7</pre></td>
+        <td class="listing_code"><pre class="programlisting"><span class="usertype">GtkWidget</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">combo_box</span><span class="symbol">;</span>
+
+<span class="normal">combo_box </span><span class="symbol">=</span><span class="normal"> </span><span class="function"><a href="GtkComboBoxText.html#gtk-combo-box-text-new">gtk_combo_box_text_new</a></span><span class="normal"> </span><span class="symbol">();</span>
+
+<span class="function"><a href="http://library.gnome.org/devel/gtk/GtkComboBoxText.html#gtk-combo-box-text-append">gtk_combo_box_text_append</a></span><span class="normal"> </span><span class="symbol">(</span><span class="function">GTK_COMBO_BOX_TEXT</span><span class="normal"> </span><span class="symbol">(</span><span class="normal">combo_box</span><span class="symbol">),</span><span class="normal"> </span><span class="string">"First Item"</span><span class="symbol">);</span>
+<span class="function"><a href="http://library.gnome.org/devel/gtk/GtkComboBoxText.html#gtk-combo-box-text-append">gtk_combo_box_text_append</a></span><span class="normal"> </span><span class="symbol">(</span><span class="function">GTK_COMBO_BOX_TEXT</span><span class="normal"> </span><span class="symbol">(</span><span class="normal">combo_box</span><span class="symbol">),</span><span class="normal"> </span><span class="string">"Second Item"</span><span class="symbol">);</span>
+<span class="function"><a href="http://library.gnome.org/devel/gtk/GtkComboBoxText.html#gtk-combo-box-text-append">gtk_combo_box_text_append</a></span><span class="normal"> </span><span class="symbol">(</span><span class="function">GTK_COMBO_BOX_TEXT</span><span class="normal"> </span><span class="symbol">(</span><span class="normal">combo_box</span><span class="symbol">),</span><span class="normal"> </span><span class="string">"Third Item"</span><span class="symbol">);</span></pre></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+      In order to react to the user's selection, connect to the 
+      <a class="link" href="GtkComboBox.html#GtkComboBox-changed" title='The "changed" signal'><span class="type">"changed"</span></a> signal and use <a class="link" href="GtkComboBox.html#gtk-combo-box-get-active" title="gtk_combo_box_get_active ()"><code class="function">gtk_combo_box_get_active()</code></a>
+      to retrieve the index of the selected item.
+    </p>
+<p>
+      A slightly more complex example involving images:
+      </p>
+<div class="informalexample">
+  <table class="listing_frame" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+      <tr>
+        <td class="listing_lines" align="right"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19</pre></td>
+        <td class="listing_code"><pre class="programlisting"><span class="usertype">GtkWidget</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">option_menu</span><span class="symbol">,</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">menu</span><span class="symbol">,</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">menu_item</span><span class="symbol">;</span>
+
+<span class="normal">option_menu </span><span class="symbol">=</span><span class="normal"> </span><span class="function"><a href="GtkOptionMenu.html#gtk-option-menu-new">gtk_option_menu_new</a></span><span class="normal"> </span><span class="symbol">();</span><span class="normal">      </span>
+<span class="normal">menu </span><span class="symbol">=</span><span class="normal"> </span><span class="function"><a href="GtkMenu.html#gtk-menu-new">gtk_menu_new</a></span><span class="normal"> </span><span class="symbol">();</span>
+
+<span class="normal">menu_item </span><span class="symbol">=</span><span class="normal"> </span><span class="function"><a href="GtkImageMenuItem.html#gtk-image-menu-item-new-with-label">gtk_image_menu_item_new_with_label</a></span><span class="normal"> </span><span class="symbol">(</span><span class="string">"First Item"</span><span class="symbol">);</span>
+<span class="function"><a href="GtkImageMenuItem.html#gtk-image-menu-item-set-image">gtk_image_menu_item_set_image</a></span><span class="normal"> </span><span class="symbol">(</span><span class="function"><a href="GtkImage.html#gtk-image-new-from-pixbuf">gtk_image_new_from_pixbuf</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">pixbuf1</span><span class="symbol">));</span>
+<span class="function"><a href="GtkMenuShell.html#gtk-menu-shell-append">gtk_menu_shell_append</a></span><span class="normal"> </span><span class="symbol">(</span><span class="function">GTK_MENU_SHELL</span><span class="normal"> </span><span class="symbol">(</span><span class="normal">menu</span><span class="symbol">),</span><span class="normal"> menu_item</span><span class="symbol">);</span>
+<span class="function"><a href="GtkWidget.html#gtk-widget-show">gtk_widget_show</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">menu_item</span><span class="symbol">);</span>
+<span class="normal">menu_item </span><span class="symbol">=</span><span class="normal"> </span><span class="function"><a href="GtkImageMenuItem.html#gtk-image-menu-item-new-with-label">gtk_image_menu_item_new_with_label</a></span><span class="normal"> </span><span class="symbol">(</span><span class="string">"Second Item"</span><span class="symbol">);</span>
+<span class="function"><a href="GtkImageMenuItem.html#gtk-image-menu-item-set-image">gtk_image_menu_item_set_image</a></span><span class="normal"> </span><span class="symbol">(</span><span class="function"><a href="GtkImage.html#gtk-image-new-from-pixbuf">gtk_image_new_from_pixbuf</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">pixbuf2</span><span class="symbol">));</span>
+<span class="function"><a href="GtkMenuShell.html#gtk-menu-shell-append">gtk_menu_shell_append</a></span><span class="normal"> </span><span class="symbol">(</span><span class="function">GTK_MENU_SHELL</span><span class="normal"> </span><span class="symbol">(</span><span class="normal">menu</span><span class="symbol">),</span><span class="normal"> menu_item</span><span class="symbol">);</span>
+<span class="function"><a href="GtkWidget.html#gtk-widget-show">gtk_widget_show</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">menu_item</span><span class="symbol">);</span>
+<span class="normal">menu_item </span><span class="symbol">=</span><span class="normal"> </span><span class="function"><a href="GtkImageMenuItem.html#gtk-image-menu-item-new-with-label">gtk_image_menu_item_new_with_label</a></span><span class="normal"> </span><span class="symbol">(</span><span class="string">"Third Item"</span><span class="symbol">);</span>
+<span class="function"><a href="GtkImageMenuItem.html#gtk-image-menu-item-set-image">gtk_image_menu_item_set_image</a></span><span class="normal"> </span><span class="symbol">(</span><span class="function"><a href="GtkImage.html#gtk-image-new-from-pixbuf">gtk_image_new_from_pixbuf</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">pixbuf3</span><span class="symbol">));</span>
+<span class="function"><a href="GtkMenuShell.html#gtk-menu-shell-append">gtk_menu_shell_append</a></span><span class="normal"> </span><span class="symbol">(</span><span class="function">GTK_MENU_SHELL</span><span class="normal"> </span><span class="symbol">(</span><span class="normal">menu</span><span class="symbol">),</span><span class="normal"> menu_item</span><span class="symbol">);</span>
+<span class="function"><a href="GtkWidget.html#gtk-widget-show">gtk_widget_show</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">menu_item</span><span class="symbol">);</span>
+
+<span class="function"><a href="GtkOptionMenu.html#gtk-option-menu-set-menu">gtk_option_menu_set_menu</a></span><span class="normal"> </span><span class="symbol">(</span><span class="function">GTK_OPTION_MENU</span><span class="normal"> </span><span class="symbol">(</span><span class="normal">option_menu</span><span class="symbol">),</span><span class="normal"> menu</span><span class="symbol">);</span></pre></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+    </p>
+<p>
+      can be done using a <a class="link" href="GtkComboBox.html" title="GtkComboBox"><span class="type">GtkComboBox</span></a> as follows:
+      </p>
+<div class="informalexample">
+  <table class="listing_frame" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+      <tr>
+        <td class="listing_lines" align="right"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27</pre></td>
+        <td class="listing_code"><pre class="programlisting"><span class="usertype">GtkListStore</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">store</span><span class="symbol">;</span>
+<span class="usertype">GtkTreeIter</span><span class="normal"> iter</span><span class="symbol">;</span>
+<span class="usertype">GtkCellRenderer</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">renderer</span><span class="symbol">;</span>
+<span class="usertype">GtkWidget</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">combo_box</span><span class="symbol">;</span>
+
+<span class="normal">store </span><span class="symbol">=</span><span class="normal"> </span><span class="function"><a href="GtkListStore.html#gtk-list-store-new">gtk_list_store_new</a></span><span class="normal"> </span><span class="symbol">(</span><span class="number">2</span><span class="symbol">,</span><span class="normal"> GDK_TYPE_PIXBUF</span><span class="symbol">,</span><span class="normal"> <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#G-TYPE-STRING:CAPS">G_TYPE_STRING</a></span><span class="symbol">);</span>
+
+<span class="function"><a href="GtkListStore.html#gtk-list-store-append">gtk_list_store_append</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">store</span><span class="symbol">,</span><span class="normal"> </span><span class="symbol">&amp;</span><span class="normal">iter</span><span class="symbol">);</span>
+<span class="function"><a href="GtkListStore.html#gtk-list-store-set">gtk_list_store_set</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">store</span><span class="symbol">,</span><span class="normal"> </span><span class="symbol">&amp;</span><span class="normal">iter</span><span class="symbol">,</span><span class="normal"> </span><span class="number">0</span><span class="symbol">,</span><span class="normal"> pixbuf1</span><span class="symbol">,</span><span class="normal"> </span><span class="number">1</span><span class="symbol">,</span><span class="normal"> </span><span class="string">"First Item"</span><span class="symbol">,</span><span class="normal"> </span><span class="symbol">-</span><span class="number">1</span><span class="symbol">);</span>
+<span class="function"><a href="GtkListStore.html#gtk-list-store-append">gtk_list_store_append</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">store</span><span class="symbol">,</span><span class="normal"> </span><span class="symbol">&amp;</span><span class="normal">iter</span><span class="symbol">);</span>
+<span class="function"><a href="GtkListStore.html#gtk-list-store-set">gtk_list_store_set</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">store</span><span class="symbol">,</span><span class="normal"> </span><span class="symbol">&amp;</span><span class="normal">iter</span><span class="symbol">,</span><span class="normal"> </span><span class="number">0</span><span class="symbol">,</span><span class="normal"> pixbuf2</span><span class="symbol">,</span><span class="normal"> </span><span class="number">1</span><span class="symbol">,</span><span class="normal"> </span><span class="string">"Second Item"</span><span class="symbol">,</span><span class="normal"> </span><span class="symbol">-</span><span class="number">1</span><span class="symbol">);</span>
+<span class="function"><a href="GtkListStore.html#gtk-list-store-append">gtk_list_store_append</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">store</span><span class="symbol">,</span><span class="normal"> </span><span class="symbol">&amp;</span><span class="normal">iter</span><span class="symbol">);</span>
+<span class="function"><a href="GtkListStore.html#gtk-list-store-set">gtk_list_store_set</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">store</span><span class="symbol">,</span><span class="normal"> </span><span class="symbol">&amp;</span><span class="normal">iter</span><span class="symbol">,</span><span class="normal"> </span><span class="number">0</span><span class="symbol">,</span><span class="normal"> pixbuf3</span><span class="symbol">,</span><span class="normal"> </span><span class="number">1</span><span class="symbol">,</span><span class="normal"> </span><span class="string">"Third Item"</span><span class="symbol">,</span><span class="normal"> </span><span class="symbol">-</span><span class="number">1</span><span class="symbol">);</span>
+
+<span class="normal">combo_box </span><span class="symbol">=</span><span class="normal"> </span><span class="function"><a href="GtkComboBox.html#gtk-combo-box-new-with-model">gtk_combo_box_new_with_model</a></span><span class="normal"> </span><span class="symbol">(</span><span class="function">GTK_TREE_MODEL</span><span class="normal"> </span><span class="symbol">(</span><span class="normal">store</span><span class="symbol">));</span>
+
+<span class="normal">renderer </span><span class="symbol">=</span><span class="normal"> </span><span class="function"><a href="GtkCellRendererPixbuf.html#gtk-cell-renderer-pixbuf-new">gtk_cell_renderer_pixbuf_new</a></span><span class="normal"> </span><span class="symbol">();</span>
+<span class="function"><a href="GtkCellLayout.html#gtk-cell-layout-pack-start">gtk_cell_layout_pack_start</a></span><span class="normal"> </span><span class="symbol">(</span><span class="function">GTK_CELL_LAYOUT</span><span class="normal"> </span><span class="symbol">(</span><span class="normal">combo_box</span><span class="symbol">),</span><span class="normal"> renderer</span><span class="symbol">,</span><span class="normal"> <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS">FALSE</a></span><span class="symbol">);</span>
+<span class="function"><a href="GtkCellLayout.html#gtk-cell-layout-set-attributes">gtk_cell_layout_set_attributes</a></span><span class="normal"> </span><span class="symbol">(</span><span class="function">GTK_CELL_LAYOUT</span><span class="normal"> </span><span class="symbol">(</span><span class="normal">combo_box</span><span class="symbol">),</span><span class="normal"> renderer</span><span class="symbol">,</span>
+<span class="normal">                                </span><span class="string">"pixbuf"</span><span class="symbol">,</span><span class="normal"> </span><span class="number">0</span><span class="symbol">,</span>
+<span class="normal">                                <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS">NULL</a></span><span class="symbol">);</span>
+
+<span class="normal">renderer </span><span class="symbol">=</span><span class="normal"> </span><span class="function"><a href="GtkCellRendererText.html#gtk-cell-renderer-text-new">gtk_cell_renderer_text_new</a></span><span class="normal"> </span><span class="symbol">();</span>
+<span class="function"><a href="GtkCellLayout.html#gtk-cell-layout-pack-start">gtk_cell_layout_pack_start</a></span><span class="normal"> </span><span class="symbol">(</span><span class="function">GTK_CELL_LAYOUT</span><span class="normal"> </span><span class="symbol">(</span><span class="normal">combo_box</span><span class="symbol">),</span><span class="normal"> renderer</span><span class="symbol">,</span><span class="normal"> <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS">TRUE</a></span><span class="symbol">);</span>
+<span class="function"><a href="GtkCellLayout.html#gtk-cell-layout-set-attributes">gtk_cell_layout_set_attributes</a></span><span class="normal"> </span><span class="symbol">(</span><span class="function">GTK_CELL_LAYOUT</span><span class="normal"> </span><span class="symbol">(</span><span class="normal">combo_box</span><span class="symbol">),</span><span class="normal"> renderer</span><span class="symbol">,</span>
+<span class="normal">                                </span><span class="string">"text"</span><span class="symbol">,</span><span class="normal"> </span><span class="number">1</span><span class="symbol">,</span>
+<span class="normal">                                <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS">NULL</a></span><span class="symbol">);</span></pre></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+    </p>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

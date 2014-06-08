@@ -1,0 +1,1887 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>module MaRuKu::In::Markdown::SpanLevelParser - maruku-0.7.0 Documentation</title>
+
+<link type="text/css" media="screen" href="../../../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../../../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../../../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../../js/darkfish.js"></script>
+
+
+<body id="top" class="module">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../../../index.html">Home</a>
+    <a href="../../../table_of_contents.html#classes">Classes</a>
+    <a href="../../../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+<div id="table-of-contents">
+  <nav class="section">
+    <h3 class="section-header">Table of Contents</h3>
+    <ul>
+      <li><a href="#label-RubyPants+--+SmartyPants+ported+to+Ruby">RubyPants – SmartyPants ported to Ruby</a>
+      <li><a href="#label-Authors">Authors</a>
+      <li><a href="#label-Copyright+and+License">Copyright and License</a>
+      <li><a href="#label-SmartyPants+license%3A">SmartyPants license:</a>
+      <li><a href="#label-RubyPants+license">RubyPants license</a>
+      <li><a href="#label-Links">Links</a>
+    </ul>
+  </nav>
+</div>
+
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/maruku.rb
+    <li>lib/maruku/attributes.rb
+    <li>lib/maruku/ext/div.rb
+    <li>lib/maruku/ext/fenced_code.rb
+    <li>lib/maruku/input/charsource.rb
+    <li>lib/maruku/input/html_helper.rb
+    <li>lib/maruku/input/parse_span.rb
+    <li>lib/maruku/input/rubypants.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    
+    <!-- Included Modules -->
+<nav id="includes-section" class="section">
+  <h3 class="section-header">Included Modules</h3>
+
+  <ul class="link-list">
+  
+  
+    <li><a class="include" href="../../Helpers.html">MaRuKu::Helpers</a>
+  
+  
+  </ul>
+</nav>
+
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li ><a href="#method-i-apply_one_rule-21">#apply_one_rule!</a>
+    
+    <li ><a href="#method-i-educate">#educate</a>
+    
+    <li ><a href="#method-i-extension_meta">#extension_meta</a>
+    
+    <li ><a href="#method-i-ial-3F">#ial?</a>
+    
+    <li ><a href="#method-i-interpret_extension">#interpret_extension</a>
+    
+    <li ><a href="#method-i-md_al">#md_al</a>
+    
+    <li ><a href="#method-i-merge_ial">#merge_ial</a>
+    
+    <li ><a href="#method-i-parse_span">#parse_span</a>
+    
+    <li ><a href="#method-i-read_attribute_list">#read_attribute_list</a>
+    
+    <li ><a href="#method-i-read_em">#read_em</a>
+    
+    <li ><a href="#method-i-read_email_el">#read_email_el</a>
+    
+    <li ><a href="#method-i-read_emstrong">#read_emstrong</a>
+    
+    <li ><a href="#method-i-read_footnote_ref">#read_footnote_ref</a>
+    
+    <li ><a href="#method-i-read_image">#read_image</a>
+    
+    <li ><a href="#method-i-read_inline_code">#read_inline_code</a>
+    
+    <li ><a href="#method-i-read_inline_html">#read_inline_html</a>
+    
+    <li ><a href="#method-i-read_link">#read_link</a>
+    
+    <li ><a href="#method-i-read_quoted">#read_quoted</a>
+    
+    <li ><a href="#method-i-read_quoted_or_unquoted">#read_quoted_or_unquoted</a>
+    
+    <li ><a href="#method-i-read_ref_id">#read_ref_id</a>
+    
+    <li ><a href="#method-i-read_simple">#read_simple</a>
+    
+    <li ><a href="#method-i-read_span">#read_span</a>
+    
+    <li ><a href="#method-i-read_strong">#read_strong</a>
+    
+    <li ><a href="#method-i-read_url">#read_url</a>
+    
+    <li ><a href="#method-i-read_url_el">#read_url_el</a>
+    
+    <li ><a href="#method-i-read_xml_instr_span">#read_xml_instr_span</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../../../MaRuKu.html">MaRuKu</a>
+  
+    <li><a href="../../../MaRuKu/AttributeList.html">MaRuKu::AttributeList</a>
+  
+    <li><a href="../../../MaRuKu/Errors.html">MaRuKu::Errors</a>
+  
+    <li><a href="../../../MaRuKu/Exception.html">MaRuKu::Exception</a>
+  
+    <li><a href="../../../MaRuKu/HTMLElement.html">MaRuKu::HTMLElement</a>
+  
+    <li><a href="../../../MaRuKu/HTMLFragment.html">MaRuKu::HTMLFragment</a>
+  
+    <li><a href="../../../MaRuKu/Helpers.html">MaRuKu::Helpers</a>
+  
+    <li><a href="../../../MaRuKu/In.html">MaRuKu::In</a>
+  
+    <li><a href="../../../MaRuKu/In.html">MaRuKu::In</a>
+  
+    <li><a href="../../../MaRuKu/In/Markdown.html">MaRuKu::In::Markdown</a>
+  
+    <li><a href="../../../MaRuKu/In/Markdown.html">MaRuKu::In::Markdown</a>
+  
+    <li><a href="../../../MaRuKu/In/Markdown/BlockLevelParser.html">MaRuKu::In::Markdown::BlockLevelParser</a>
+  
+    <li><a href="../../../MaRuKu/In/Markdown/BlockLevelParser/BlockContext.html">MaRuKu::In::Markdown::BlockLevelParser::BlockContext</a>
+  
+    <li><a href="../../../MaRuKu/In/Markdown/BlockLevelParser/LineSource.html">MaRuKu::In::Markdown::BlockLevelParser::LineSource</a>
+  
+    <li><a href="../../../MaRuKu/In/Markdown/SpanExtension.html">MaRuKu::In::Markdown::SpanExtension</a>
+  
+    <li><a href="../../../MaRuKu/In/Markdown/SpanLevelParser.html">MaRuKu::In::Markdown::SpanLevelParser</a>
+  
+    <li><a href="../../../MaRuKu/In/Markdown/SpanLevelParser/CaptureRule.html">MaRuKu::In::Markdown::SpanLevelParser::CaptureRule</a>
+  
+    <li><a href="../../../MaRuKu/In/Markdown/SpanLevelParser/CharSourceDebug.html">MaRuKu::In::Markdown::SpanLevelParser::CharSourceDebug</a>
+  
+    <li><a href="../../../MaRuKu/In/Markdown/SpanLevelParser/CharSourceManual.html">MaRuKu::In::Markdown::SpanLevelParser::CharSourceManual</a>
+  
+    <li><a href="../../../MaRuKu/In/Markdown/SpanLevelParser/CharSourceStrscan.html">MaRuKu::In::Markdown::SpanLevelParser::CharSourceStrscan</a>
+  
+    <li><a href="../../../MaRuKu/In/Markdown/SpanLevelParser/HTMLHelper.html">MaRuKu::In::Markdown::SpanLevelParser::HTMLHelper</a>
+  
+    <li><a href="../../../MaRuKu/In/Markdown/SpanLevelParser/ReplaceRule.html">MaRuKu::In::Markdown::SpanLevelParser::ReplaceRule</a>
+  
+    <li><a href="../../../MaRuKu/In/Markdown/SpanLevelParser/Rule.html">MaRuKu::In::Markdown::SpanLevelParser::Rule</a>
+  
+    <li><a href="../../../MaRuKu/In/Markdown/SpanLevelParser/SpanContext.html">MaRuKu::In::Markdown::SpanLevelParser::SpanContext</a>
+  
+    <li><a href="../../../MaRuKu/MDDocument.html">MaRuKu::MDDocument</a>
+  
+    <li><a href="../../../MaRuKu/MDElement.html">MaRuKu::MDElement</a>
+  
+    <li><a href="../../../MaRuKu/MDHTMLElement.html">MaRuKu::MDHTMLElement</a>
+  
+    <li><a href="../../../MaRuKu/MDLine.html">MaRuKu::MDLine</a>
+  
+    <li><a href="../../../MaRuKu/NokogiriHTMLFragment.html">MaRuKu::NokogiriHTMLFragment</a>
+  
+    <li><a href="../../../MaRuKu/Out.html">MaRuKu::Out</a>
+  
+    <li><a href="../../../MaRuKu/Out/EntityTable.html">MaRuKu::Out::EntityTable</a>
+  
+    <li><a href="../../../MaRuKu/Out/HTML.html">MaRuKu::Out::HTML</a>
+  
+    <li><a href="../../../MaRuKu/Out/HTML/HTMLElement.html">MaRuKu::Out::HTML::HTMLElement</a>
+  
+    <li><a href="../../../MaRuKu/Out/Latex.html">MaRuKu::Out::Latex</a>
+  
+    <li><a href="../../../MaRuKu/Out/Latex/MDDocumentExtensions.html">MaRuKu::Out::Latex::MDDocumentExtensions</a>
+  
+    <li><a href="../../../MaRuKu/Out/Markdown.html">MaRuKu::Out::Markdown</a>
+  
+    <li><a href="../../../MaRuKu/REXMLHTMLFragment.html">MaRuKu::REXMLHTMLFragment</a>
+  
+    <li><a href="../../../MaRuKu/Section.html">MaRuKu::Section</a>
+  
+    <li><a href="../../../MaRuKu/Strings.html">MaRuKu::Strings</a>
+  
+    <li><a href="../../../Maruku.html">Maruku</a>
+  
+    <li><a href="../../../Maruku.html">Maruku</a>
+  
+    <li><a href="../../../Maruku/In/Markdown/FencedCode.html">Maruku::In::Markdown::FencedCode</a>
+  
+    <li><a href="../../../Object.html">Object</a>
+  
+    <li><a href="../../../String.html">String</a>
+  
+    <li><a href="../../../Textile2Signature.html">Textile2Signature</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="module">module MaRuKu::In::Markdown::SpanLevelParser</h1>
+
+  <div id="description" class="description">
+    
+<h1 id="label-RubyPants+--+SmartyPants+ported+to+Ruby">RubyPants – SmartyPants ported to Ruby<span><a href="#label-RubyPants+--+SmartyPants+ported+to+Ruby">&para;</a> <a href="#documentation">&uarr;</a></span></h1>
+<dl class="rdoc-list label-list"><dt>snip
+<dd>
+<h2 id="label-Authors">Authors<span><a href="#label-Authors">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+
+<p>John Gruber did all of the hard work of writing this software in Perl for
+Movable Type and almost all of this useful documentation. Chad Miller
+ported it to Python to use with Pyblosxom.</p>
+
+<p>Christian Neukirchen provided the Ruby port, as a general-purpose library
+that follows the *Cloth API.</p>
+
+<h2 id="label-Copyright+and+License">Copyright and License<span><a href="#label-Copyright+and+License">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+
+<h3 id="label-SmartyPants+license%3A">SmartyPants license:<span><a href="#label-SmartyPants+license%3A">&para;</a> <a href="#documentation">&uarr;</a></span></h3>
+
+<p>Copyright © 2003 John Gruber (<a
+href="http://daringfireball.net">daringfireball.net</a>) All rights
+reserved.</p>
+
+<p>Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:</p>
+<ul><li>
+<p>Redistributions of source code must retain the above copyright notice, this
+list of conditions and the following disclaimer.</p>
+</li><li>
+<p>Redistributions in binary form must reproduce the above copyright notice,
+this list of conditions and the following disclaimer in the documentation
+and/or other materials provided with the distribution.</p>
+</li><li>
+<p>Neither the name “SmartyPants” nor the names of its contributors may be
+used to endorse or promote products derived from this software without
+specific prior written permission.</p>
+</li></ul>
+
+<p>This software is provided by the copyright holders and contributors “as is”
+and any express or implied warranties, including, but not limited to, the
+implied warranties of merchantability and fitness for a particular purpose
+are disclaimed. <a href="../../In.html">In</a> no event shall the copyright
+owner or contributors be liable for any direct, indirect, incidental,
+special, exemplary, or consequential damages (including, but not limited
+to, procurement of substitute goods or services; loss of use, data, or
+profits; or business interruption) however caused and on any theory of
+liability, whether in contract, strict liability, or tort (including
+negligence or otherwise) arising in any way out of the use of this
+software, even if advised of the possibility of such damage.</p>
+
+<h3 id="label-RubyPants+license">RubyPants license<span><a href="#label-RubyPants+license">&para;</a> <a href="#documentation">&uarr;</a></span></h3>
+
+<p>RubyPants is a derivative work of SmartyPants and smartypants.py.</p>
+
+<p>Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:</p>
+<ul><li>
+<p>Redistributions of source code must retain the above copyright notice, this
+list of conditions and the following disclaimer.</p>
+</li><li>
+<p>Redistributions in binary form must reproduce the above copyright notice,
+this list of conditions and the following disclaimer in the documentation
+and/or other materials provided with the distribution.</p>
+</li></ul>
+
+<p>This software is provided by the copyright holders and contributors “as is”
+and any express or implied warranties, including, but not limited to, the
+implied warranties of merchantability and fitness for a particular purpose
+are disclaimed. <a href="../../In.html">In</a> no event shall the copyright
+owner or contributors be liable for any direct, indirect, incidental,
+special, exemplary, or consequential damages (including, but not limited
+to, procurement of substitute goods or services; loss of use, data, or
+profits; or business interruption) however caused and on any theory of
+liability, whether in contract, strict liability, or tort (including
+negligence or otherwise) arising in any way out of the use of this
+software, even if advised of the possibility of such damage.</p>
+
+<h2 id="label-Links">Links<span><a href="#label-Links">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+<dl class="rdoc-list note-list"><dt>John Gruber
+<dd>
+<p><a href="http://daringfireball.net">daringfireball.net</a></p>
+</dd><dt>SmartyPants
+<dd>
+<p><a
+href="http://daringfireball.net/projects/smartypants">daringfireball.net/projects/smartypants</a></p>
+</dd><dt>Chad Miller
+<dd>
+<p><a href="http://web.chad.org">web.chad.org</a></p>
+</dd><dt>Christian Neukirchen
+<dd>
+<p><a href="http://kronavita.de/chris">kronavita.de/chris</a></p>
+</dd></dl>
+</dd></dl>
+
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+    <!-- Constants -->
+    <section id="constants-list" class="section">
+      <h3 class="section-header">Constants</h3>
+      <dl>
+      
+        <dt id="CharSource">CharSource
+        
+        <dd class="description"><p>Choose!</p>
+        
+      
+        <dt id="Close_class">Close_class
+        
+        <dd class="description">
+        
+      
+        <dt id="EscapedCharInInlineCode">EscapedCharInInlineCode
+        
+        <dd class="description">
+        
+      
+        <dt id="EscapedCharInQuotes">EscapedCharInQuotes
+        
+        <dd class="description">
+        
+      
+        <dt id="EscapedCharInText">EscapedCharInText
+        
+        <dd class="description">
+        
+      
+        <dt id="IgnoreWikiLinks">IgnoreWikiLinks
+        
+        <dd class="description">
+        
+      
+        <dt id="Punct_class">Punct_class
+        
+        <dd class="description">
+        
+      
+        <dt id="Rules">Rules
+        
+        <dd class="description"><p>All the rules that will be applied (in order) to smarten the document.</p>
+        
+      
+      </dl>
+    </section>
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-apply_one_rule-21" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">apply_one_rule!</span><span
+            class="method-args">(rule, input)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Fully apply a single rule to an entire array of elements. note: input will
+be modified in place</p>
+          
+          
+
+          
+          <div class="method-source-code" id="apply_one_rule-21-source">
+            <pre><span class="ruby-comment"># File lib/maruku/input/rubypants.rb, line 278</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">apply_one_rule!</span>(<span class="ruby-identifier">rule</span>, <span class="ruby-identifier">input</span>)
+  <span class="ruby-identifier">output</span> = []
+  <span class="ruby-keyword">while</span> <span class="ruby-identifier">first</span> = <span class="ruby-identifier">input</span>.<span class="ruby-identifier">shift</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">first</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">String</span>)
+      <span class="ruby-identifier">rule</span>.<span class="ruby-identifier">doc</span> = <span class="ruby-ivar">@doc</span>
+      <span class="ruby-identifier">rule</span>.<span class="ruby-identifier">apply</span>(<span class="ruby-identifier">first</span>, <span class="ruby-identifier">input</span>, <span class="ruby-identifier">output</span>)
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">output</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">first</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">output</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- apply_one_rule-21-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- apply_one_rule-21-method -->
+
+    
+      <div id="method-i-educate" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">educate</span><span
+            class="method-args">(elements)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Transform elements to have SmartyPants punctuation.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="educate-source">
+            <pre><span class="ruby-comment"># File lib/maruku/input/rubypants.rb, line 292</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">educate</span>(<span class="ruby-identifier">elements</span>)
+  <span class="ruby-constant">Rules</span>.<span class="ruby-identifier">inject</span>(<span class="ruby-identifier">elements</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">elems</span>, <span class="ruby-identifier">rule</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">apply_one_rule!</span>(<span class="ruby-identifier">rule</span>, <span class="ruby-identifier">elems</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- educate-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- educate-method -->
+
+    
+      <div id="method-i-extension_meta" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">extension_meta</span><span
+            class="method-args">(src, con, break_on_chars=nil)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="extension_meta-source">
+            <pre><span class="ruby-comment"># File lib/maruku/input/parse_span.rb, line 270</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">extension_meta</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>, <span class="ruby-identifier">break_on_chars</span>=<span class="ruby-keyword">nil</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">m</span> = <span class="ruby-identifier">src</span>.<span class="ruby-identifier">read_regexp</span>(<span class="ruby-regexp">/([^\s\:\&quot;\}]+?):/</span>)
+    <span class="ruby-identifier">name</span> = <span class="ruby-identifier">m</span>[<span class="ruby-value">1</span>]
+    <span class="ruby-identifier">al</span> = <span class="ruby-identifier">read_attribute_list</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>, <span class="ruby-identifier">break_on_chars</span>)
+    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">doc</span>.<span class="ruby-identifier">ald</span>[<span class="ruby-identifier">name</span>] = <span class="ruby-identifier">al</span>
+    <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push</span> <span class="ruby-identifier">md_ald</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">al</span>)
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">al</span> = <span class="ruby-identifier">read_attribute_list</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>, <span class="ruby-identifier">break_on_chars</span>)
+    <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push</span> <span class="ruby-identifier">md_ial</span>(<span class="ruby-identifier">al</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- extension_meta-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- extension_meta-method -->
+
+    
+      <div id="method-i-interpret_extension" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">interpret_extension</span><span
+            class="method-args">(src, con, break_on_chars=nil)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Start: cursor on character *<strong>after</strong>* &#39;{&#39; End: curson
+on &#39;}&#39; or EOF</p>
+          
+          
+
+          
+          <div class="method-source-code" id="interpret_extension-source">
+            <pre><span class="ruby-comment"># File lib/maruku/input/parse_span.rb, line 249</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">interpret_extension</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>, <span class="ruby-identifier">break_on_chars</span>=<span class="ruby-keyword">nil</span>)
+  <span class="ruby-keyword">case</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">cur_char</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;:&#39;</span>
+    <span class="ruby-identifier">src</span>.<span class="ruby-identifier">ignore_char</span> <span class="ruby-comment"># :</span>
+    <span class="ruby-identifier">extension_meta</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>, <span class="ruby-identifier">break_on_chars</span>)
+  <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;#&#39;</span>, <span class="ruby-string">&#39;.&#39;</span>
+    <span class="ruby-identifier">extension_meta</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>, <span class="ruby-identifier">break_on_chars</span>)
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">stuff</span> = <span class="ruby-identifier">read_simple</span>(<span class="ruby-identifier">src</span>, <span class="ruby-string">&#39;}&#39;</span>, <span class="ruby-identifier">break_on_chars</span>)
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">stuff</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp">/^(\w+\s|[^\w])/</span>
+      <span class="ruby-identifier">extension_id</span> = <span class="ruby-node">$1</span>.<span class="ruby-identifier">strip</span>
+
+      <span class="ruby-identifier">maruku_recover</span> <span class="ruby-node">&quot;I don&#39;t know what to do with extension &#39;#{extension_id}&#39;\n&quot;</span> <span class="ruby-operator">+</span>
+        <span class="ruby-node">&quot;I will treat this:\n\t{#{stuff}} \n as meta-data.\n&quot;</span>, <span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">maruku_recover</span> <span class="ruby-node">&quot;I will treat this:\n\t{#{stuff}} \n as meta-data.\n&quot;</span>, <span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">extension_meta</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>, <span class="ruby-identifier">break_on_chars</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- interpret_extension-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- interpret_extension-method -->
+
+    
+      <div id="method-i-md_al" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">md_al</span><span
+            class="method-args">(s = [])</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="md_al-source">
+            <pre><span class="ruby-comment"># File lib/maruku/attributes.rb, line 28</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">md_al</span>(<span class="ruby-identifier">s</span> = [])
+  <span class="ruby-constant">AttributeList</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">s</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- md_al-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- md_al-method -->
+
+    
+      <div id="method-i-merge_ial" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">merge_ial</span><span
+            class="method-args">(elements, src, con)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="merge_ial-source">
+            <pre><span class="ruby-comment"># File lib/maruku/attributes.rb, line 91</span>
+    <span class="ruby-keyword">def</span> <span class="ruby-identifier">merge_ial</span>(<span class="ruby-identifier">elements</span>, <span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>)
+      <span class="ruby-comment"># Apply each IAL to the element before</span>
+      (<span class="ruby-identifier">elements</span> <span class="ruby-operator">+</span> [<span class="ruby-keyword">nil</span>]).<span class="ruby-identifier">each_cons</span>(<span class="ruby-value">3</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">before</span>, <span class="ruby-identifier">e</span>, <span class="ruby-identifier">after</span><span class="ruby-operator">|</span>
+        <span class="ruby-keyword">next</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">ial?</span>(<span class="ruby-identifier">e</span>)
+
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">before</span>.<span class="ruby-identifier">kind_of?</span> <span class="ruby-constant">MDElement</span>
+          <span class="ruby-identifier">before</span>.<span class="ruby-identifier">al</span> = <span class="ruby-identifier">e</span>.<span class="ruby-identifier">ial</span>
+        <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">after</span>.<span class="ruby-identifier">kind_of?</span> <span class="ruby-constant">MDElement</span>
+          <span class="ruby-identifier">after</span>.<span class="ruby-identifier">al</span> = <span class="ruby-identifier">e</span>.<span class="ruby-identifier">ial</span>
+        <span class="ruby-keyword">else</span>
+          <span class="ruby-identifier">maruku_error</span> <span class="ruby-string">&quot;It&#39;s unclear which element the attribute list {:#{e.ial.to_s}}
+is referring to. The element before is a #{before.class},
+the element after is a #{after.class}.
+  before: #{before.inspect}
+  after: #{after.inspect}
+&quot;</span>, <span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>
+        <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">end</span>
+
+      <span class="ruby-keyword">unless</span> <span class="ruby-constant">Globals</span>[<span class="ruby-value">:debug_keep_ials</span>]
+        <span class="ruby-identifier">elements</span>.<span class="ruby-identifier">delete_if</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-identifier">ial?</span>(<span class="ruby-identifier">x</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">x</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">elements</span>.<span class="ruby-identifier">first</span>}
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span></pre>
+          </div><!-- merge_ial-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- merge_ial-method -->
+
+    
+      <div id="method-i-parse_span" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">parse_span</span><span
+            class="method-args">(string, parent=nil)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="parse_span-source">
+            <pre><span class="ruby-comment"># File lib/maruku/input/parse_span.rb, line 11</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">parse_span</span>(<span class="ruby-identifier">string</span>, <span class="ruby-identifier">parent</span>=<span class="ruby-keyword">nil</span>)
+  <span class="ruby-identifier">string</span> = <span class="ruby-constant">Array</span>(<span class="ruby-identifier">string</span>).<span class="ruby-identifier">join</span>(<span class="ruby-string">&quot;\n&quot;</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">string</span>.<span class="ruby-identifier">kind_of?</span> <span class="ruby-constant">String</span>
+  <span class="ruby-identifier">src</span> = <span class="ruby-constant">MaRuKu</span><span class="ruby-operator">::</span><span class="ruby-constant">In</span><span class="ruby-operator">::</span><span class="ruby-constant">Markdown</span><span class="ruby-operator">::</span><span class="ruby-constant">SpanLevelParser</span><span class="ruby-operator">::</span><span class="ruby-constant">CharSource</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">string</span>, <span class="ruby-identifier">parent</span>)
+  <span class="ruby-identifier">read_span</span>(<span class="ruby-identifier">src</span>, <span class="ruby-constant">EscapedCharInText</span>, [<span class="ruby-keyword">nil</span>])
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- parse_span-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- parse_span-method -->
+
+    
+      <div id="method-i-read_attribute_list" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">read_attribute_list</span><span
+            class="method-args">(src, con=nil, break_on_chars=nil)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>@return [AttributeList, nil]</p>
+          
+          
+
+          
+          <div class="method-source-code" id="read_attribute_list-source">
+            <pre><span class="ruby-comment"># File lib/maruku/attributes.rb, line 33</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">read_attribute_list</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">break_on_chars</span>=<span class="ruby-keyword">nil</span>)
+  <span class="ruby-identifier">break_on_chars</span> = <span class="ruby-constant">Array</span>(<span class="ruby-identifier">break_on_chars</span>)
+  <span class="ruby-identifier">separators</span> = <span class="ruby-identifier">break_on_chars</span> <span class="ruby-operator">+</span> [<span class="ruby-string">&#39;=&#39;</span>, <span class="ruby-string">&#39; &#39;</span>, <span class="ruby-string">&quot;\t&quot;</span>]
+  <span class="ruby-identifier">escaped</span> = <span class="ruby-constant">Maruku</span><span class="ruby-operator">::</span><span class="ruby-constant">EscapedCharInQuotes</span>
+
+  <span class="ruby-identifier">al</span> = <span class="ruby-constant">AttributeList</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-identifier">loop</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">src</span>.<span class="ruby-identifier">consume_whitespace</span>
+    <span class="ruby-keyword">break</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">break_on_chars</span>.<span class="ruby-identifier">include?</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">cur_char</span>
+
+    <span class="ruby-keyword">case</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">cur_char</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;:&#39;</span>
+      <span class="ruby-identifier">src</span>.<span class="ruby-identifier">ignore_char</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-keyword">nil</span>
+      <span class="ruby-keyword">break</span>      <span class="ruby-comment"># we&#39;re done here.</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;=&#39;</span>     <span class="ruby-comment"># error</span>
+      <span class="ruby-identifier">src</span>.<span class="ruby-identifier">ignore_char</span>
+      <span class="ruby-identifier">maruku_error</span> <span class="ruby-string">&quot;In attribute lists, cannot start identifier with `=`.&quot;</span>
+      <span class="ruby-identifier">tell_user</span> <span class="ruby-string">&quot;Ignoring and continuing.&quot;</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;#&#39;</span>     <span class="ruby-comment"># id definition</span>
+      <span class="ruby-identifier">src</span>.<span class="ruby-identifier">ignore_char</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">id</span> = <span class="ruby-identifier">read_quoted_or_unquoted</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>, <span class="ruby-identifier">escaped</span>, <span class="ruby-identifier">separators</span>)
+        <span class="ruby-identifier">al</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-value">:id</span>, <span class="ruby-identifier">id</span>]
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-identifier">maruku_error</span> <span class="ruby-string">&#39;Could not read `id` attribute.&#39;</span>, <span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>
+        <span class="ruby-identifier">tell_user</span> <span class="ruby-string">&#39;Ignoring bad `id` attribute.&#39;</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;.&#39;</span>     <span class="ruby-comment"># class definition</span>
+      <span class="ruby-identifier">src</span>.<span class="ruby-identifier">ignore_char</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">klass</span> = <span class="ruby-identifier">read_quoted_or_unquoted</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>, <span class="ruby-identifier">escaped</span>, <span class="ruby-identifier">separators</span>)
+        <span class="ruby-identifier">al</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-value">:class</span>, <span class="ruby-identifier">klass</span>]
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-identifier">maruku_error</span> <span class="ruby-string">&#39;Could not read `class` attribute.&#39;</span>, <span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>
+        <span class="ruby-identifier">tell_user</span> <span class="ruby-string">&#39;Ignoring bad `class` attribute.&#39;</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-keyword">unless</span> <span class="ruby-identifier">key</span> = <span class="ruby-identifier">read_quoted_or_unquoted</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>, <span class="ruby-identifier">escaped</span>, <span class="ruby-identifier">separators</span>)
+        <span class="ruby-identifier">maruku_error</span> <span class="ruby-string">&#39;Could not read key or reference.&#39;</span>
+        <span class="ruby-keyword">next</span>
+      <span class="ruby-keyword">end</span>
+
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">cur_char</span> <span class="ruby-operator">!=</span> <span class="ruby-string">&#39;=&#39;</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">key</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+        <span class="ruby-identifier">al</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-value">:ref</span>, <span class="ruby-identifier">key</span>]
+        <span class="ruby-keyword">next</span>
+      <span class="ruby-keyword">end</span>
+
+      <span class="ruby-identifier">src</span>.<span class="ruby-identifier">ignore_char</span> <span class="ruby-comment"># skip the =</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">val</span> = <span class="ruby-identifier">read_quoted_or_unquoted</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>, <span class="ruby-identifier">escaped</span>, <span class="ruby-identifier">separators</span>)
+        <span class="ruby-identifier">al</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">key</span>, <span class="ruby-identifier">val</span>]
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-identifier">maruku_error</span> <span class="ruby-node">&quot;Could not read value for key #{key.inspect}.&quot;</span>, <span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>
+        <span class="ruby-identifier">tell_user</span> <span class="ruby-node">&quot;Ignoring key #{key.inspect}&quot;</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">al</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- read_attribute_list-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- read_attribute_list-method -->
+
+    
+      <div id="method-i-read_em" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">read_em</span><span
+            class="method-args">(src, delim)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="read_em-source">
+            <pre><span class="ruby-comment"># File lib/maruku/input/parse_span.rb, line 378</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">read_em</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">delim</span>)
+  <span class="ruby-identifier">src</span>.<span class="ruby-identifier">ignore_char</span>
+  <span class="ruby-identifier">children</span> = <span class="ruby-identifier">read_span</span>(<span class="ruby-identifier">src</span>, <span class="ruby-constant">EscapedCharInText</span>, <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">delim</span>)
+  <span class="ruby-identifier">src</span>.<span class="ruby-identifier">ignore_char</span>
+  <span class="ruby-identifier">md_em</span>(<span class="ruby-identifier">children</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- read_em-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- read_em-method -->
+
+    
+      <div id="method-i-read_email_el" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">read_email_el</span><span
+            class="method-args">(src,con)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="read_email_el-source">
+            <pre><span class="ruby-comment"># File lib/maruku/input/parse_span.rb, line 290</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">read_email_el</span>(<span class="ruby-identifier">src</span>,<span class="ruby-identifier">con</span>)
+  <span class="ruby-identifier">src</span>.<span class="ruby-identifier">ignore_char</span> <span class="ruby-comment"># leading &lt;</span>
+  <span class="ruby-identifier">mail</span> = <span class="ruby-identifier">read_simple</span>(<span class="ruby-identifier">src</span>, <span class="ruby-keyword">nil</span>, <span class="ruby-string">&#39;&gt;&#39;</span>)
+  <span class="ruby-identifier">src</span>.<span class="ruby-identifier">ignore_char</span> <span class="ruby-comment"># closing &gt;</span>
+
+  <span class="ruby-identifier">address</span> = <span class="ruby-identifier">mail</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/^mailto:/</span>, <span class="ruby-string">&#39;&#39;</span>)
+  <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push_element</span> <span class="ruby-identifier">md_email</span>(<span class="ruby-identifier">address</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- read_email_el-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- read_email_el-method -->
+
+    
+      <div id="method-i-read_emstrong" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">read_emstrong</span><span
+            class="method-args">(src, delim)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="read_emstrong-source">
+            <pre><span class="ruby-comment"># File lib/maruku/input/parse_span.rb, line 392</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">read_emstrong</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">delim</span>)
+  <span class="ruby-identifier">src</span>.<span class="ruby-identifier">ignore_chars</span>(<span class="ruby-value">3</span>)
+  <span class="ruby-identifier">children</span> = <span class="ruby-identifier">read_span</span>(<span class="ruby-identifier">src</span>, <span class="ruby-constant">EscapedCharInText</span>, <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">delim</span>)
+  <span class="ruby-identifier">src</span>.<span class="ruby-identifier">ignore_chars</span>(<span class="ruby-value">3</span>)
+  <span class="ruby-identifier">md_emstrong</span>(<span class="ruby-identifier">children</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- read_emstrong-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- read_emstrong-method -->
+
+    
+      <div id="method-i-read_footnote_ref" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">read_footnote_ref</span><span
+            class="method-args">(src,con)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="read_footnote_ref-source">
+            <pre><span class="ruby-comment"># File lib/maruku/input/parse_span.rb, line 409</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">read_footnote_ref</span>(<span class="ruby-identifier">src</span>,<span class="ruby-identifier">con</span>)
+  <span class="ruby-identifier">ref</span> = <span class="ruby-identifier">read_ref_id</span>(<span class="ruby-identifier">src</span>,<span class="ruby-identifier">con</span>)
+  <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push_element</span> <span class="ruby-identifier">md_foot_ref</span>(<span class="ruby-identifier">ref</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- read_footnote_ref-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- read_footnote_ref-method -->
+
+    
+      <div id="method-i-read_image" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">read_image</span><span
+            class="method-args">(src, con)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="read_image-source">
+            <pre><span class="ruby-comment"># File lib/maruku/input/parse_span.rb, line 542</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">read_image</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>)
+  <span class="ruby-identifier">src</span>.<span class="ruby-identifier">ignore_chars</span>(<span class="ruby-value">2</span>) <span class="ruby-comment"># opening &quot;![&quot;</span>
+  <span class="ruby-identifier">alt_text</span> = <span class="ruby-identifier">read_span</span>(<span class="ruby-identifier">src</span>, <span class="ruby-constant">EscapedCharInText</span>, <span class="ruby-string">&#39;]&#39;</span>)
+  <span class="ruby-identifier">src</span>.<span class="ruby-identifier">ignore_char</span> <span class="ruby-comment"># closing bracket</span>
+  <span class="ruby-comment"># ignore space</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">cur_char</span> <span class="ruby-operator">==</span> <span class="ruby-string">&#39; &#39;</span> <span class="ruby-operator">&amp;&amp;</span> [<span class="ruby-string">&#39;[&#39;</span>, <span class="ruby-string">&#39;(&#39;</span>].<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">src</span>.<span class="ruby-identifier">next_char</span>)
+    <span class="ruby-identifier">src</span>.<span class="ruby-identifier">ignore_char</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">case</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">cur_char</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;(&#39;</span>
+    <span class="ruby-identifier">src</span>.<span class="ruby-identifier">ignore_char</span> <span class="ruby-comment"># opening (</span>
+    <span class="ruby-identifier">src</span>.<span class="ruby-identifier">consume_whitespace</span>
+    <span class="ruby-identifier">url</span> = <span class="ruby-identifier">read_url</span>(<span class="ruby-identifier">src</span>, [<span class="ruby-string">&#39; &#39;</span>, <span class="ruby-string">&quot;\t&quot;</span>, <span class="ruby-string">&#39;)&#39;</span>])
+    <span class="ruby-keyword">unless</span> <span class="ruby-identifier">url</span>
+      <span class="ruby-identifier">maruku_error</span> <span class="ruby-node">&quot;Could not read url from #{src.cur_chars(10).inspect}&quot;</span>, <span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">src</span>.<span class="ruby-identifier">consume_whitespace</span>
+    <span class="ruby-identifier">title</span> = <span class="ruby-keyword">nil</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">cur_char</span> <span class="ruby-operator">!=</span> <span class="ruby-string">&#39;)&#39;</span> <span class="ruby-comment"># we have a title</span>
+      <span class="ruby-identifier">quote_char</span> = <span class="ruby-identifier">src</span>.<span class="ruby-identifier">cur_char</span>
+      <span class="ruby-identifier">title</span> = <span class="ruby-identifier">read_quoted</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>)
+      <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">title</span>
+        <span class="ruby-identifier">maruku_error</span> <span class="ruby-string">&#39;Must quote title&#39;</span>, <span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-comment"># Tries to read a title with quotes: ![a](url &quot;ti&quot;tle&quot;)</span>
+        <span class="ruby-comment"># this is the most ugly thing in Markdown</span>
+        <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">src</span>.<span class="ruby-identifier">next_matches</span>(<span class="ruby-regexp">/\s*\)/</span>)
+          <span class="ruby-comment"># if there is not a closing par ), then read</span>
+          <span class="ruby-comment"># the rest and guess it&#39;s title with quotes</span>
+          <span class="ruby-identifier">rest</span> = <span class="ruby-identifier">read_simple</span>(<span class="ruby-identifier">src</span>, <span class="ruby-keyword">nil</span>, <span class="ruby-string">&#39;)&#39;</span>, <span class="ruby-keyword">nil</span>)
+          <span class="ruby-comment"># chop the closing char</span>
+          <span class="ruby-identifier">rest</span>.<span class="ruby-identifier">chop!</span>
+          <span class="ruby-identifier">title</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">quote_char</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">rest</span>
+        <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">src</span>.<span class="ruby-identifier">consume_whitespace</span>
+    <span class="ruby-identifier">closing</span> = <span class="ruby-identifier">src</span>.<span class="ruby-identifier">shift_char</span> <span class="ruby-comment"># closing )</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">closing</span> <span class="ruby-operator">!=</span> <span class="ruby-string">&#39;)&#39;</span>
+      <span class="ruby-identifier">maruku_error</span> <span class="ruby-node">&quot;Unclosed link: &#39;#{closing}&#39;&quot;</span> <span class="ruby-operator">+</span>
+        <span class="ruby-node">&quot; Read url=#{url.inspect} title=#{title.inspect}&quot;</span>, <span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push_element</span> <span class="ruby-identifier">md_im_image</span>(<span class="ruby-identifier">alt_text</span>, <span class="ruby-identifier">url</span>, <span class="ruby-identifier">title</span>)
+  <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;[&#39;</span> <span class="ruby-comment"># link ref</span>
+    <span class="ruby-identifier">ref_id</span> = <span class="ruby-identifier">read_ref_id</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>)
+    <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">ref_id</span> <span class="ruby-comment"># TODO: check around</span>
+      <span class="ruby-identifier">maruku_error</span> <span class="ruby-string">&#39;Reference not closed.&#39;</span>, <span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>
+      <span class="ruby-identifier">ref_id</span> = <span class="ruby-string">&quot;&quot;</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push_element</span> <span class="ruby-identifier">md_image</span>(<span class="ruby-identifier">alt_text</span>, <span class="ruby-identifier">ref_id</span>)
+  <span class="ruby-keyword">else</span> <span class="ruby-comment"># no stuff</span>
+    <span class="ruby-identifier">ref_id</span> = <span class="ruby-identifier">alt_text</span>.<span class="ruby-identifier">join</span>
+    <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push_element</span> <span class="ruby-identifier">md_image</span>(<span class="ruby-identifier">alt_text</span>, <span class="ruby-identifier">ref_id</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- read_image-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- read_image-method -->
+
+    
+      <div id="method-i-read_inline_code" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">read_inline_code</span><span
+            class="method-args">(src, con)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="read_inline_code-source">
+            <pre><span class="ruby-comment"># File lib/maruku/input/parse_span.rb, line 440</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">read_inline_code</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>)
+  <span class="ruby-comment"># Count the number of ticks</span>
+  <span class="ruby-identifier">num_ticks</span> = <span class="ruby-value">0</span>
+  <span class="ruby-keyword">while</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">cur_char</span> <span class="ruby-operator">==</span> <span class="ruby-string">&#39;`&#39;</span>
+    <span class="ruby-identifier">num_ticks</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+    <span class="ruby-identifier">src</span>.<span class="ruby-identifier">ignore_char</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-comment"># We will read until this string</span>
+  <span class="ruby-identifier">end_string</span> = <span class="ruby-string">&quot;`&quot;</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">num_ticks</span>
+
+  <span class="ruby-identifier">code</span> = <span class="ruby-identifier">read_simple</span>(<span class="ruby-identifier">src</span>, <span class="ruby-keyword">nil</span>, <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">end_string</span>)
+
+  <span class="ruby-comment"># We didn&#39;t find a closing batch!</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">code</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">cur_char</span> <span class="ruby-operator">!=</span> <span class="ruby-string">&#39;`&#39;</span>
+    <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push_element</span>(<span class="ruby-identifier">end_string</span> <span class="ruby-operator">+</span> (<span class="ruby-identifier">code</span> <span class="ruby-operator">||</span> <span class="ruby-string">&#39;&#39;</span>)) <span class="ruby-keyword">and</span> <span class="ruby-keyword">return</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-comment"># We didn&#39;t find a closing batch!</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">code</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">cur_char</span> <span class="ruby-operator">!=</span> <span class="ruby-string">&#39;`&#39;</span>
+    <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push_element</span>(<span class="ruby-identifier">end_string</span> <span class="ruby-operator">+</span> (<span class="ruby-identifier">code</span> <span class="ruby-operator">||</span> <span class="ruby-string">&#39;&#39;</span>))
+    <span class="ruby-keyword">return</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-comment">#   puts &quot;Now I expects #{num_ticks} ticks: #{src.cur_chars(10).inspect}&quot;</span>
+  <span class="ruby-identifier">src</span>.<span class="ruby-identifier">ignore_chars</span> <span class="ruby-identifier">num_ticks</span>
+
+  <span class="ruby-comment"># Ignore at most one space</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">num_ticks</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">code</span>[<span class="ruby-value">0</span>, <span class="ruby-value">1</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&#39; &#39;</span>
+    <span class="ruby-identifier">code</span> = <span class="ruby-identifier">code</span>[<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-comment"># drop last space</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">num_ticks</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">code</span>[<span class="ruby-value">-1</span>, <span class="ruby-value">1</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&#39; &#39;</span>
+    <span class="ruby-identifier">code</span> = <span class="ruby-identifier">code</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">-2</span>]
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-comment">#   puts &quot;Read `` code: #{code.inspect}; after: #{src.cur_chars(10).inspect} &quot;</span>
+  <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push_element</span> <span class="ruby-identifier">md_code</span>(<span class="ruby-identifier">code</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- read_inline_code-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- read_inline_code-method -->
+
+    
+      <div id="method-i-read_inline_html" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">read_inline_html</span><span
+            class="method-args">(src, con)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="read_inline_html-source">
+            <pre><span class="ruby-comment"># File lib/maruku/input/parse_span.rb, line 414</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">read_inline_html</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>)
+  <span class="ruby-identifier">h</span> = <span class="ruby-constant">HTMLHelper</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-comment"># This is our current buffer in the context</span>
+    <span class="ruby-identifier">next_stuff</span> = <span class="ruby-identifier">src</span>.<span class="ruby-identifier">current_remaining_buffer</span>
+
+    <span class="ruby-identifier">consumed</span> = <span class="ruby-value">0</span>
+    <span class="ruby-keyword">while</span> <span class="ruby-keyword">true</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">consumed</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-identifier">next_stuff</span>.<span class="ruby-identifier">size</span>
+        <span class="ruby-identifier">maruku_error</span> <span class="ruby-node">&quot;Malformed HTML starting at #{next_stuff.inspect}&quot;</span>, <span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>
+        <span class="ruby-keyword">break</span>
+      <span class="ruby-keyword">end</span>
+
+      <span class="ruby-identifier">h</span>.<span class="ruby-identifier">eat_this</span> <span class="ruby-identifier">next_stuff</span>[<span class="ruby-identifier">consumed</span>].<span class="ruby-identifier">chr</span>
+      <span class="ruby-identifier">consumed</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+      <span class="ruby-keyword">break</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">h</span>.<span class="ruby-identifier">is_finished?</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">src</span>.<span class="ruby-identifier">ignore_chars</span>(<span class="ruby-identifier">consumed</span>)
+    <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push_element</span> <span class="ruby-identifier">md_html</span>(<span class="ruby-identifier">h</span>.<span class="ruby-identifier">stuff_you_read</span>)
+  <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">maruku_error</span> <span class="ruby-string">&quot;Bad html: \n&quot;</span> <span class="ruby-operator">+</span>
+      <span class="ruby-identifier">e</span>.<span class="ruby-identifier">inspect</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/^/</span>, <span class="ruby-string">&#39;&gt;&#39;</span>), <span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>, <span class="ruby-string">&quot;I will try to continue after bad HTML.&quot;</span>
+    <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push_char</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">shift_char</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- read_inline_html-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- read_inline_html-method -->
+
+    
+      <div id="method-i-read_link" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">read_link</span><span
+            class="method-args">(src, con)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="read_link-source">
+            <pre><span class="ruby-comment"># File lib/maruku/input/parse_span.rb, line 480</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">read_link</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>)
+  <span class="ruby-comment"># we read the string and see what happens</span>
+  <span class="ruby-identifier">src</span>.<span class="ruby-identifier">ignore_char</span> <span class="ruby-comment"># opening bracket</span>
+  <span class="ruby-identifier">children</span> = <span class="ruby-identifier">read_span</span>(<span class="ruby-identifier">src</span>, <span class="ruby-constant">EscapedCharInText</span>, <span class="ruby-string">&#39;]&#39;</span>)
+  <span class="ruby-identifier">src</span>.<span class="ruby-identifier">ignore_char</span> <span class="ruby-comment"># closing bracket</span>
+
+  <span class="ruby-comment"># ignore space</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">cur_char</span> <span class="ruby-operator">==</span> <span class="ruby-string">&#39; &#39;</span> <span class="ruby-operator">&amp;&amp;</span> [<span class="ruby-string">&#39;[&#39;</span>, <span class="ruby-string">&#39;(&#39;</span>].<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">src</span>.<span class="ruby-identifier">next_char</span>)
+    <span class="ruby-identifier">src</span>.<span class="ruby-identifier">shift_char</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">case</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">cur_char</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;(&#39;</span>
+    <span class="ruby-identifier">src</span>.<span class="ruby-identifier">ignore_char</span> <span class="ruby-comment"># opening (</span>
+    <span class="ruby-identifier">src</span>.<span class="ruby-identifier">consume_whitespace</span>
+    <span class="ruby-identifier">url</span> = <span class="ruby-identifier">read_url</span>(<span class="ruby-identifier">src</span>, [<span class="ruby-string">&#39; &#39;</span>, <span class="ruby-string">&quot;\t&quot;</span>, <span class="ruby-string">&quot;)&quot;</span>]) <span class="ruby-operator">||</span> <span class="ruby-string">&#39;&#39;</span>
+
+    <span class="ruby-identifier">src</span>.<span class="ruby-identifier">consume_whitespace</span>
+    <span class="ruby-identifier">title</span> = <span class="ruby-keyword">nil</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">cur_char</span> <span class="ruby-operator">!=</span> <span class="ruby-string">&#39;)&#39;</span> <span class="ruby-comment"># we have a title</span>
+      <span class="ruby-identifier">quote_char</span> = <span class="ruby-identifier">src</span>.<span class="ruby-identifier">cur_char</span>
+      <span class="ruby-identifier">title</span> = <span class="ruby-identifier">read_quoted</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>)
+
+      <span class="ruby-keyword">if</span> <span class="ruby-keyword">not</span> <span class="ruby-identifier">title</span>
+        <span class="ruby-identifier">maruku_error</span> <span class="ruby-string">&#39;Must quote title&#39;</span>, <span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-comment"># Tries to read a title with quotes: ![a](url &quot;ti&quot;tle&quot;)</span>
+        <span class="ruby-comment"># this is the most ugly thing in Markdown</span>
+        <span class="ruby-keyword">unless</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">next_matches</span>(<span class="ruby-regexp">/\s*\)/</span>)
+          <span class="ruby-comment"># if there is not a closing par ), then read</span>
+          <span class="ruby-comment"># the rest and guess it&#39;s title with quotes</span>
+          <span class="ruby-identifier">rest</span> = <span class="ruby-identifier">read_simple</span>(<span class="ruby-identifier">src</span>, <span class="ruby-keyword">nil</span>, <span class="ruby-string">&#39;)&#39;</span>, <span class="ruby-keyword">nil</span>)
+          <span class="ruby-comment"># chop the closing char</span>
+          <span class="ruby-identifier">rest</span>.<span class="ruby-identifier">chop!</span>
+          <span class="ruby-identifier">title</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">quote_char</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">rest</span>
+        <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">src</span>.<span class="ruby-identifier">consume_whitespace</span>
+    <span class="ruby-identifier">closing</span> = <span class="ruby-identifier">src</span>.<span class="ruby-identifier">shift_char</span> <span class="ruby-comment"># closing )</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">closing</span> <span class="ruby-operator">!=</span> <span class="ruby-string">&#39;)&#39;</span>
+      <span class="ruby-identifier">maruku_error</span> <span class="ruby-string">&#39;Unclosed link&#39;</span>, <span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>, <span class="ruby-string">&quot;No closing ): I will not create&quot;</span> <span class="ruby-operator">+</span>
+        <span class="ruby-node">&quot; the link for #{children.inspect}&quot;</span>
+      <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push_elements</span> <span class="ruby-identifier">children</span>
+      <span class="ruby-keyword">return</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push_element</span> <span class="ruby-identifier">md_im_link</span>(<span class="ruby-identifier">children</span>, <span class="ruby-identifier">url</span>, <span class="ruby-identifier">title</span>)
+  <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;[&#39;</span> <span class="ruby-comment"># link ref</span>
+    <span class="ruby-identifier">ref_id</span> = <span class="ruby-identifier">read_ref_id</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>)
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">ref_id</span>
+      <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push_element</span> <span class="ruby-identifier">md_link</span>(<span class="ruby-identifier">children</span>, <span class="ruby-identifier">ref_id</span>)
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">maruku_error</span> <span class="ruby-string">&quot;Could not read ref_id&quot;</span>, <span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>, <span class="ruby-string">&quot;I will not create the link for &quot;</span> <span class="ruby-operator">+</span>
+        <span class="ruby-node">&quot;#{children.inspect}&quot;</span>
+      <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push_elements</span> <span class="ruby-identifier">children</span>
+      <span class="ruby-keyword">return</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">else</span> <span class="ruby-comment"># empty [link]</span>
+    <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push_element</span> <span class="ruby-identifier">md_link</span>(<span class="ruby-identifier">children</span>, <span class="ruby-keyword">nil</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- read_link-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- read_link-method -->
+
+    
+      <div id="method-i-read_quoted" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">read_quoted</span><span
+            class="method-args">(src, con)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Tries to read a quoted value. If stream does not start with &#39; or “,
+returns nil.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="read_quoted-source">
+            <pre><span class="ruby-comment"># File lib/maruku/input/parse_span.rb, line 326</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">read_quoted</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>)
+  <span class="ruby-keyword">case</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">cur_char</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;&#39;&quot;</span>, <span class="ruby-string">&#39;&quot;&#39;</span>
+    <span class="ruby-identifier">quote_char</span> = <span class="ruby-identifier">src</span>.<span class="ruby-identifier">shift_char</span> <span class="ruby-comment"># opening quote</span>
+    <span class="ruby-identifier">string</span> = <span class="ruby-identifier">read_simple</span>(<span class="ruby-identifier">src</span>, <span class="ruby-constant">EscapedCharInQuotes</span>, <span class="ruby-identifier">quote_char</span>)
+    <span class="ruby-identifier">src</span>.<span class="ruby-identifier">ignore_char</span> <span class="ruby-comment"># closing quote</span>
+    <span class="ruby-identifier">string</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-keyword">nil</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- read_quoted-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- read_quoted-method -->
+
+    
+      <div id="method-i-read_quoted_or_unquoted" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">read_quoted_or_unquoted</span><span
+            class="method-args">(src, con, escaped, exit_on_chars)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="read_quoted_or_unquoted-source">
+            <pre><span class="ruby-comment"># File lib/maruku/input/parse_span.rb, line 315</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">read_quoted_or_unquoted</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>, <span class="ruby-identifier">escaped</span>, <span class="ruby-identifier">exit_on_chars</span>)
+  <span class="ruby-keyword">case</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">cur_char</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;&#39;&quot;</span>, <span class="ruby-string">&#39;&quot;&#39;</span>
+    <span class="ruby-identifier">read_quoted</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>)
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">read_simple</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">escaped</span>, <span class="ruby-identifier">exit_on_chars</span>, <span class="ruby-keyword">nil</span>, <span class="ruby-keyword">false</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- read_quoted_or_unquoted-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- read_quoted_or_unquoted-method -->
+
+    
+      <div id="method-i-read_ref_id" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">read_ref_id</span><span
+            class="method-args">(src, con)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Reads a bracketed id “[refid]”. Consumes also both brackets.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="read_ref_id-source">
+            <pre><span class="ruby-comment"># File lib/maruku/input/parse_span.rb, line 400</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">read_ref_id</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>)
+  <span class="ruby-identifier">src</span>.<span class="ruby-identifier">ignore_char</span> <span class="ruby-comment"># [</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">m</span> = <span class="ruby-identifier">src</span>.<span class="ruby-identifier">read_regexp</span>(<span class="ruby-regexp">/([^\]]*?)\]/</span>)
+    <span class="ruby-identifier">m</span>[<span class="ruby-value">1</span>]
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-keyword">nil</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- read_ref_id-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- read_ref_id-method -->
+
+    
+      <div id="method-i-read_simple" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">read_simple</span><span
+            class="method-args">(src, escaped, exit_on_chars=nil, exit_on_strings=nil, warn=true)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Reads a simple string (no formatting) until one of break_on_chars, while
+escaping the escaped. If the string is empty, it returns nil. By default,
+raises on error if the string terminates unexpectedly. This can be by
+setting the last argument to false.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="read_simple-source">
+            <pre><span class="ruby-comment"># File lib/maruku/input/parse_span.rb, line 343</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">read_simple</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">escaped</span>, <span class="ruby-identifier">exit_on_chars</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">exit_on_strings</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">warn</span>=<span class="ruby-keyword">true</span>)
+  <span class="ruby-identifier">text</span> = <span class="ruby-string">&quot;&quot;</span>
+  <span class="ruby-identifier">escaped</span> = <span class="ruby-constant">Array</span>(<span class="ruby-identifier">escaped</span>)
+  <span class="ruby-identifier">exit_on_chars</span> = <span class="ruby-constant">Array</span>(<span class="ruby-identifier">exit_on_chars</span>)
+  <span class="ruby-identifier">exit_on_strings</span> = <span class="ruby-constant">Array</span>(<span class="ruby-identifier">exit_on_strings</span>)
+  <span class="ruby-keyword">while</span> <span class="ruby-keyword">true</span>
+    <span class="ruby-identifier">c</span> = <span class="ruby-identifier">src</span>.<span class="ruby-identifier">cur_char</span>
+
+    <span class="ruby-keyword">break</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">exit_on_chars</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">c</span>)
+    <span class="ruby-keyword">break</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">exit_on_strings</span>.<span class="ruby-identifier">any?</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">cur_chars_are</span> <span class="ruby-identifier">x</span> }
+
+    <span class="ruby-keyword">case</span> <span class="ruby-identifier">c</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-keyword">nil</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">warn</span>
+        <span class="ruby-identifier">maruku_error</span> <span class="ruby-string">&quot;String finished while reading (break on &quot;</span> <span class="ruby-operator">+</span>
+          <span class="ruby-node">&quot;#{exit_on_chars.inspect})&quot;</span> <span class="ruby-operator">+</span>
+          <span class="ruby-node">&quot; already read: #{text.inspect}&quot;</span>, <span class="ruby-identifier">src</span>
+      <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">break</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;\\&quot;</span>
+      <span class="ruby-identifier">d</span> = <span class="ruby-identifier">src</span>.<span class="ruby-identifier">next_char</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">escaped</span>.<span class="ruby-identifier">include?</span> <span class="ruby-identifier">d</span>
+        <span class="ruby-identifier">src</span>.<span class="ruby-identifier">ignore_chars</span>(<span class="ruby-value">2</span>)
+        <span class="ruby-identifier">text</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">d</span>
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-identifier">text</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">shift_char</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">text</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">shift_char</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">text</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-operator">?</span> <span class="ruby-keyword">nil</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">text</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- read_simple-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- read_simple-method -->
+
+    
+      <div id="method-i-read_span" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">read_span</span><span
+            class="method-args">(src, escaped, exit_on_chars=nil, exit_on_strings=nil)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This is the main loop for reading span elements</p>
+
+<p>It&#39;s long, but not <strong>complex</strong> or difficult to understand.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="read_span-source">
+            <pre><span class="ruby-comment"># File lib/maruku/input/parse_span.rb, line 22</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">read_span</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">escaped</span>, <span class="ruby-identifier">exit_on_chars</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">exit_on_strings</span>=<span class="ruby-keyword">nil</span>)
+  <span class="ruby-identifier">escaped</span> = <span class="ruby-constant">Array</span>(<span class="ruby-identifier">escaped</span>)
+  <span class="ruby-identifier">con</span> = <span class="ruby-constant">SpanContext</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-identifier">c</span> = <span class="ruby-identifier">d</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-keyword">while</span> <span class="ruby-keyword">true</span>
+    <span class="ruby-identifier">c</span> = <span class="ruby-identifier">src</span>.<span class="ruby-identifier">cur_char</span>
+
+    <span class="ruby-comment"># This is only an optimization which cuts 50% of the time used.</span>
+    <span class="ruby-comment"># (but you can&#39;t use a-zA-z in exit_on_chars)</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">c</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">c</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp">/a-zA-Z0-9/</span>
+      <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push_char</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">shift_char</span>
+      <span class="ruby-keyword">next</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-keyword">break</span> <span class="ruby-keyword">if</span> <span class="ruby-constant">Array</span>(<span class="ruby-identifier">exit_on_chars</span>).<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">c</span>)
+    <span class="ruby-keyword">if</span> <span class="ruby-constant">Array</span>(<span class="ruby-identifier">exit_on_strings</span>).<span class="ruby-identifier">any?</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">cur_chars_are</span> <span class="ruby-identifier">x</span> }
+      <span class="ruby-comment"># Special case: bold nested in italic</span>
+      <span class="ruby-keyword">break</span> <span class="ruby-keyword">unless</span> <span class="ruby-operator">!</span>([<span class="ruby-string">&#39;*&#39;</span>, <span class="ruby-string">&#39;_&#39;</span>] <span class="ruby-operator">&amp;</span> <span class="ruby-constant">Array</span>(<span class="ruby-identifier">exit_on_strings</span>)).<span class="ruby-identifier">empty?</span> <span class="ruby-operator">&amp;&amp;</span>
+        [<span class="ruby-string">&#39;**&#39;</span>, <span class="ruby-string">&#39;__&#39;</span>].<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">src</span>.<span class="ruby-identifier">cur_chars</span>(<span class="ruby-value">2</span>)) <span class="ruby-operator">&amp;&amp;</span>
+        <span class="ruby-operator">!</span>[<span class="ruby-string">&#39;***&#39;</span>, <span class="ruby-string">&#39;___&#39;</span>].<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">src</span>.<span class="ruby-identifier">cur_chars</span>(<span class="ruby-value">3</span>))
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-comment"># check if there are extensions</span>
+    <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">check_span_extensions</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>)
+
+    <span class="ruby-keyword">case</span> <span class="ruby-identifier">c</span> = <span class="ruby-identifier">src</span>.<span class="ruby-identifier">cur_char</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-string">&#39; &#39;</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">cur_chars_are</span> <span class="ruby-string">&quot;  \n&quot;</span>
+        <span class="ruby-identifier">src</span>.<span class="ruby-identifier">ignore_chars</span>(<span class="ruby-value">3</span>)
+        <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push_element</span> <span class="ruby-identifier">md_br</span>
+        <span class="ruby-keyword">next</span>
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-identifier">src</span>.<span class="ruby-identifier">ignore_char</span>
+        <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push_space</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;\n&quot;</span>, <span class="ruby-string">&quot;\t&quot;</span>
+      <span class="ruby-identifier">src</span>.<span class="ruby-identifier">ignore_char</span>
+      <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push_space</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;`&#39;</span>
+      <span class="ruby-identifier">read_inline_code</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>)
+    <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;&lt;&#39;</span>
+      <span class="ruby-comment"># It could be:</span>
+      <span class="ruby-comment"># 1) HTML &quot;&lt;div ...&quot;</span>
+      <span class="ruby-comment"># 2) HTML &quot;&lt;!-- ...&quot;</span>
+      <span class="ruby-comment"># 3) url &quot;&lt;http:// &quot;, &quot;&lt;ftp:// ...&quot;</span>
+      <span class="ruby-comment"># 4) email &quot;&lt;andrea@... &quot;, &quot;&lt;mailto:andrea@...&quot;</span>
+      <span class="ruby-comment"># 5) on itself! &quot;a &lt; b  &quot;</span>
+      <span class="ruby-comment"># 6) Start of &lt;&lt;guillemettes&gt;&gt;</span>
+
+      <span class="ruby-keyword">case</span> <span class="ruby-identifier">d</span> = <span class="ruby-identifier">src</span>.<span class="ruby-identifier">next_char</span>
+      <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;&lt;&#39;</span>  <span class="ruby-comment"># guillemettes</span>
+        <span class="ruby-identifier">src</span>.<span class="ruby-identifier">ignore_chars</span>(<span class="ruby-value">2</span>)
+        <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push_char</span> <span class="ruby-string">&#39;&lt;&#39;</span>
+        <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push_char</span> <span class="ruby-string">&#39;&lt;&#39;</span>
+      <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;!&#39;</span>
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">cur_chars_are</span> <span class="ruby-string">&#39;&lt;!--&#39;</span>
+          <span class="ruby-identifier">read_inline_html</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>)
+        <span class="ruby-keyword">else</span>
+          <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push_char</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">shift_char</span>
+        <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;?&#39;</span>
+        <span class="ruby-identifier">read_xml_instr_span</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>)
+      <span class="ruby-keyword">when</span> <span class="ruby-string">&#39; &#39;</span>, <span class="ruby-string">&quot;\t&quot;</span>
+        <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push_char</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">shift_char</span>
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">next_matches</span>(<span class="ruby-regexp">/&lt;mailto:/</span>) <span class="ruby-operator">||</span>
+            <span class="ruby-identifier">src</span>.<span class="ruby-identifier">next_matches</span>(<span class="ruby-regexp">/&lt;[\w\.]+\@/</span>)
+          <span class="ruby-identifier">read_email_el</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>)
+        <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">next_matches</span>(<span class="ruby-regexp">/&lt;\w+:/</span>)
+          <span class="ruby-identifier">read_url_el</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>)
+        <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">next_matches</span>(<span class="ruby-regexp">/&lt;\w/</span>)
+          <span class="ruby-comment">#puts &quot;This is HTML: #{src.cur_chars(20)}&quot;</span>
+          <span class="ruby-identifier">read_inline_html</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>)
+        <span class="ruby-keyword">else</span>
+          <span class="ruby-comment">#puts &quot;This is NOT HTML: #{src.cur_chars(20)}&quot;</span>
+          <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push_char</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">shift_char</span>
+        <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;\\&quot;</span>
+      <span class="ruby-identifier">d</span> = <span class="ruby-identifier">src</span>.<span class="ruby-identifier">next_char</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">d</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;&#39;&quot;</span>
+        <span class="ruby-identifier">src</span>.<span class="ruby-identifier">ignore_chars</span>(<span class="ruby-value">2</span>)
+        <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push_element</span> <span class="ruby-identifier">md_entity</span>(<span class="ruby-string">&#39;apos&#39;</span>)
+      <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">d</span> <span class="ruby-operator">==</span> <span class="ruby-string">&#39;&quot;&#39;</span>
+        <span class="ruby-identifier">src</span>.<span class="ruby-identifier">ignore_chars</span>(<span class="ruby-value">2</span>)
+        <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push_element</span> <span class="ruby-identifier">md_entity</span>(<span class="ruby-string">&#39;quot&#39;</span>)
+      <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">escaped</span>.<span class="ruby-identifier">include?</span> <span class="ruby-identifier">d</span>
+        <span class="ruby-identifier">src</span>.<span class="ruby-identifier">ignore_chars</span>(<span class="ruby-value">2</span>)
+        <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push_char</span> <span class="ruby-identifier">d</span>
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push_char</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">shift_char</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;[&#39;</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">markdown_extra?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">next_char</span> <span class="ruby-operator">==</span> <span class="ruby-string">&#39;^&#39;</span>
+        <span class="ruby-identifier">read_footnote_ref</span>(<span class="ruby-identifier">src</span>,<span class="ruby-identifier">con</span>)
+      <span class="ruby-keyword">elsif</span> <span class="ruby-constant">IgnoreWikiLinks</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">next_char</span> <span class="ruby-operator">==</span> <span class="ruby-string">&#39;[&#39;</span>
+        <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push_char</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">shift_char</span>
+        <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push_char</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">shift_char</span>
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-identifier">read_link</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>)
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;!&#39;</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">next_char</span> <span class="ruby-operator">==</span> <span class="ruby-string">&#39;[&#39;</span>
+        <span class="ruby-identifier">read_image</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>)
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push_char</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">shift_char</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;&amp;&#39;</span>
+      <span class="ruby-comment"># named references</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">m</span> = <span class="ruby-identifier">src</span>.<span class="ruby-identifier">read_regexp</span>(<span class="ruby-regexp">/\&amp;(\w+);/</span>)
+        <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push_element</span> <span class="ruby-identifier">md_entity</span>(<span class="ruby-identifier">m</span>[<span class="ruby-value">1</span>])
+        <span class="ruby-comment"># numeric</span>
+      <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">m</span> = <span class="ruby-identifier">src</span>.<span class="ruby-identifier">read_regexp</span>(<span class="ruby-node">/\&amp;\#(x)?(\w+);/</span>)
+        <span class="ruby-identifier">num</span> = <span class="ruby-identifier">m</span>[<span class="ruby-value">1</span>] <span class="ruby-operator">?</span> <span class="ruby-identifier">m</span>[<span class="ruby-value">2</span>].<span class="ruby-identifier">hex</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">m</span>[<span class="ruby-value">2</span>].<span class="ruby-identifier">to_i</span>
+        <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push_element</span> <span class="ruby-identifier">md_entity</span>(<span class="ruby-identifier">num</span>)
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push_char</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">shift_char</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;*&#39;</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">src</span>.<span class="ruby-identifier">next_char</span>
+        <span class="ruby-identifier">maruku_error</span> <span class="ruby-string">&quot;Opening * as last char.&quot;</span>, <span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>, <span class="ruby-string">&#39;Treating as literal&#39;</span>
+        <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push_char</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">shift_char</span>
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-identifier">follows</span> = <span class="ruby-identifier">src</span>.<span class="ruby-identifier">cur_chars</span>(<span class="ruby-value">4</span>)
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">follows</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp">/^\*\*\*[^\s\*]/</span>
+          <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push_element</span> <span class="ruby-identifier">read_emstrong</span>(<span class="ruby-identifier">src</span>, <span class="ruby-string">&#39;***&#39;</span>)
+        <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">follows</span>  <span class="ruby-operator">=~</span> <span class="ruby-regexp">/^\*\*[^\s\*]/</span>
+          <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push_element</span> <span class="ruby-identifier">read_strong</span>(<span class="ruby-identifier">src</span>, <span class="ruby-string">&#39;**&#39;</span>)
+        <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">follows</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp">/^\*[^\s\*]/</span>
+          <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push_element</span> <span class="ruby-identifier">read_em</span>(<span class="ruby-identifier">src</span>, <span class="ruby-string">&#39;*&#39;</span>)
+        <span class="ruby-keyword">else</span> <span class="ruby-comment"># * is just a normal char</span>
+          <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push_char</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">shift_char</span>
+        <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;_&#39;</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">src</span>.<span class="ruby-identifier">next_char</span>
+        <span class="ruby-identifier">maruku_error</span> <span class="ruby-string">&quot;Opening _ as last char&quot;</span>, <span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>, <span class="ruby-string">&#39;Treating as literal&#39;</span>
+        <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push_char</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">shift_char</span>
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-comment"># we don&#39;t want &quot;mod_ruby&quot; to start an emphasis</span>
+        <span class="ruby-comment"># so we start one only if</span>
+        <span class="ruby-comment"># 1) there&#39;s nothing else in the span (first char)</span>
+        <span class="ruby-comment"># or 2) the last char was a space</span>
+        <span class="ruby-comment"># or 3) the current string is empty</span>
+        <span class="ruby-comment">#if con.elements.empty? ||</span>
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">con</span>.<span class="ruby-identifier">is_end?</span>
+          <span class="ruby-comment"># also, we check the next characters</span>
+          <span class="ruby-identifier">follows</span> = <span class="ruby-identifier">src</span>.<span class="ruby-identifier">cur_chars</span>(<span class="ruby-value">4</span>)
+          <span class="ruby-keyword">if</span>  <span class="ruby-identifier">follows</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp">/^\_\_\_[^\s\_]/</span>
+            <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push_element</span> <span class="ruby-identifier">read_emstrong</span>(<span class="ruby-identifier">src</span>, <span class="ruby-string">&#39;___&#39;</span>)
+          <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">follows</span>  <span class="ruby-operator">=~</span> <span class="ruby-regexp">/^\_\_[^\s\_]/</span>
+            <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push_element</span> <span class="ruby-identifier">read_strong</span>(<span class="ruby-identifier">src</span>, <span class="ruby-string">&#39;__&#39;</span>)
+          <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">follows</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp">/^\_[^\s\_]/</span>
+            <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push_element</span> <span class="ruby-identifier">read_em</span>(<span class="ruby-identifier">src</span>, <span class="ruby-string">&#39;_&#39;</span>)
+          <span class="ruby-keyword">else</span> <span class="ruby-comment"># _ is just a normal char</span>
+            <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push_char</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">shift_char</span>
+          <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">else</span>
+          <span class="ruby-comment"># _ is just a normal char</span>
+          <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push_char</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">shift_char</span>
+        <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;{&#39;</span> <span class="ruby-comment"># extension</span>
+      <span class="ruby-keyword">if</span> [<span class="ruby-string">&#39;#&#39;</span>, <span class="ruby-string">&#39;.&#39;</span>, <span class="ruby-string">&#39;:&#39;</span>].<span class="ruby-identifier">include?</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">next_char</span>
+        <span class="ruby-identifier">src</span>.<span class="ruby-identifier">ignore_char</span> <span class="ruby-comment"># {</span>
+        <span class="ruby-identifier">interpret_extension</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>, <span class="ruby-string">&#39;}&#39;</span>)
+        <span class="ruby-identifier">src</span>.<span class="ruby-identifier">ignore_char</span> <span class="ruby-comment"># }</span>
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push_char</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">shift_char</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-keyword">nil</span>
+      <span class="ruby-identifier">maruku_error</span>( (<span class="ruby-string">&quot;Unclosed span (waiting for %s&quot;</span> <span class="ruby-operator">+</span>
+                     <span class="ruby-node">&quot;#{exit_on_strings.inspect})&quot;</span>) <span class="ruby-operator">%</span>
+                    [ <span class="ruby-identifier">exit_on_chars</span> <span class="ruby-operator">?</span> <span class="ruby-node">&quot;#{exit_on_chars.inspect} or&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-string">&quot;&quot;</span> ],
+                    <span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>)
+      <span class="ruby-keyword">break</span>
+    <span class="ruby-keyword">else</span> <span class="ruby-comment"># normal text</span>
+      <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push_char</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">shift_char</span>
+    <span class="ruby-keyword">end</span> <span class="ruby-comment"># end case</span>
+  <span class="ruby-keyword">end</span> <span class="ruby-comment"># end while true</span>
+
+  <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push_string_if_present</span>
+
+  <span class="ruby-comment"># Assign IAL to elements</span>
+  <span class="ruby-identifier">merge_ial</span>(<span class="ruby-identifier">con</span>.<span class="ruby-identifier">elements</span>, <span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>)
+
+  <span class="ruby-comment"># Remove leading space</span>
+  <span class="ruby-keyword">if</span> (<span class="ruby-identifier">s</span> = <span class="ruby-identifier">con</span>.<span class="ruby-identifier">elements</span>.<span class="ruby-identifier">first</span>).<span class="ruby-identifier">kind_of?</span> <span class="ruby-constant">String</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">s</span>[<span class="ruby-value">0</span>, <span class="ruby-value">1</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&#39; &#39;</span>
+      <span class="ruby-identifier">con</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value">0</span>] = <span class="ruby-identifier">s</span>[<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">con</span>.<span class="ruby-identifier">elements</span>.<span class="ruby-identifier">shift</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">s</span>.<span class="ruby-identifier">empty?</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-comment"># Remove final spaces</span>
+  <span class="ruby-keyword">if</span> (<span class="ruby-identifier">s</span> = <span class="ruby-identifier">con</span>.<span class="ruby-identifier">elements</span>.<span class="ruby-identifier">last</span>).<span class="ruby-identifier">kind_of?</span> <span class="ruby-constant">String</span>
+    <span class="ruby-identifier">s</span>.<span class="ruby-identifier">chop!</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">s</span>[<span class="ruby-value">-1</span>, <span class="ruby-value">1</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&#39; &#39;</span>
+    <span class="ruby-identifier">con</span>.<span class="ruby-identifier">elements</span>.<span class="ruby-identifier">pop</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">s</span>.<span class="ruby-identifier">empty?</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">educate</span>(<span class="ruby-identifier">con</span>.<span class="ruby-identifier">elements</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- read_span-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- read_span-method -->
+
+    
+      <div id="method-i-read_strong" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">read_strong</span><span
+            class="method-args">(src, delim)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="read_strong-source">
+            <pre><span class="ruby-comment"># File lib/maruku/input/parse_span.rb, line 385</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">read_strong</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">delim</span>)
+  <span class="ruby-identifier">src</span>.<span class="ruby-identifier">ignore_chars</span>(<span class="ruby-value">2</span>)
+  <span class="ruby-identifier">children</span> = <span class="ruby-identifier">read_span</span>(<span class="ruby-identifier">src</span>, <span class="ruby-constant">EscapedCharInText</span>, <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">delim</span>)
+  <span class="ruby-identifier">src</span>.<span class="ruby-identifier">ignore_chars</span>(<span class="ruby-value">2</span>)
+  <span class="ruby-identifier">md_strong</span>(<span class="ruby-identifier">children</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- read_strong-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- read_strong-method -->
+
+    
+      <div id="method-i-read_url" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">read_url</span><span
+            class="method-args">(src, break_on)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="read_url-source">
+            <pre><span class="ruby-comment"># File lib/maruku/input/parse_span.rb, line 299</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">read_url</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">break_on</span>)
+  <span class="ruby-keyword">if</span> [<span class="ruby-string">&quot;&#39;&quot;</span>, <span class="ruby-string">&#39;&quot;&#39;</span>].<span class="ruby-identifier">include?</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">cur_char</span>
+    <span class="ruby-identifier">maruku_error</span> <span class="ruby-string">&#39;Invalid char for url&#39;</span>, <span class="ruby-identifier">src</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">url</span> = <span class="ruby-identifier">read_simple</span>(<span class="ruby-identifier">src</span>, <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">break_on</span>) <span class="ruby-operator">||</span> <span class="ruby-string">&#39;&#39;</span>
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">url</span>[<span class="ruby-value">0</span>, <span class="ruby-value">1</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&#39;&lt;&#39;</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">url</span>[<span class="ruby-value">-1</span>, <span class="ruby-value">1</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&#39;&gt;&#39;</span>
+    <span class="ruby-identifier">url</span> = <span class="ruby-identifier">url</span>[<span class="ruby-value">1</span>, <span class="ruby-identifier">url</span>.<span class="ruby-identifier">size</span><span class="ruby-operator">-</span><span class="ruby-value">2</span>]
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">url</span>.<span class="ruby-identifier">empty?</span>
+  <span class="ruby-identifier">url</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- read_url-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- read_url-method -->
+
+    
+      <div id="method-i-read_url_el" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">read_url_el</span><span
+            class="method-args">(src,con)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="read_url_el-source">
+            <pre><span class="ruby-comment"># File lib/maruku/input/parse_span.rb, line 282</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">read_url_el</span>(<span class="ruby-identifier">src</span>,<span class="ruby-identifier">con</span>)
+  <span class="ruby-identifier">src</span>.<span class="ruby-identifier">ignore_char</span> <span class="ruby-comment"># leading &lt;</span>
+  <span class="ruby-identifier">url</span> = <span class="ruby-identifier">read_simple</span>(<span class="ruby-identifier">src</span>, <span class="ruby-keyword">nil</span>, <span class="ruby-string">&#39;&gt;&#39;</span>)
+  <span class="ruby-identifier">src</span>.<span class="ruby-identifier">ignore_char</span> <span class="ruby-comment"># closing &gt;</span>
+
+  <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push_element</span> <span class="ruby-identifier">md_url</span>(<span class="ruby-identifier">url</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- read_url_el-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- read_url_el-method -->
+
+    
+      <div id="method-i-read_xml_instr_span" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">read_xml_instr_span</span><span
+            class="method-args">(src, con)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="read_xml_instr_span-source">
+            <pre><span class="ruby-comment"># File lib/maruku/input/parse_span.rb, line 226</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">read_xml_instr_span</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>)
+  <span class="ruby-identifier">src</span>.<span class="ruby-identifier">ignore_chars</span>(<span class="ruby-value">2</span>) <span class="ruby-comment"># starting &lt;?</span>
+
+  <span class="ruby-comment"># read target &lt;?target code... ?&gt;</span>
+  <span class="ruby-identifier">target</span> = <span class="ruby-keyword">if</span> <span class="ruby-identifier">m</span> = <span class="ruby-identifier">src</span>.<span class="ruby-identifier">read_regexp</span>(<span class="ruby-regexp">/^(\w+)/</span>)
+             <span class="ruby-identifier">m</span>[<span class="ruby-value">1</span>]
+           <span class="ruby-keyword">else</span>
+             <span class="ruby-comment"># XML instructions are invalid without a target</span>
+             <span class="ruby-string">&#39;&#39;</span>
+           <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">delim</span> = <span class="ruby-string">&quot;?&gt;&quot;</span>
+
+  <span class="ruby-identifier">code</span> = <span class="ruby-identifier">read_simple</span>(<span class="ruby-identifier">src</span>, <span class="ruby-keyword">nil</span>, <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">delim</span>)
+
+  <span class="ruby-identifier">src</span>.<span class="ruby-identifier">ignore_chars</span> <span class="ruby-identifier">delim</span>.<span class="ruby-identifier">size</span>
+
+  <span class="ruby-identifier">code</span> = (<span class="ruby-identifier">code</span> <span class="ruby-operator">||</span> <span class="ruby-string">&quot;&quot;</span>).<span class="ruby-identifier">strip</span>
+  <span class="ruby-identifier">con</span>.<span class="ruby-identifier">push_element</span> <span class="ruby-identifier">md_xml_instr</span>(<span class="ruby-identifier">target</span>, <span class="ruby-identifier">code</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- read_xml_instr_span-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- read_xml_instr_span-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+     <section id="private-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Private Instance Methods</h3>
+
+    
+      <div id="method-i-ial-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">ial?</span><span
+            class="method-args">(e)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="ial-3F-source">
+            <pre><span class="ruby-comment"># File lib/maruku/attributes.rb, line 118</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">ial?</span>(<span class="ruby-identifier">e</span>)
+  <span class="ruby-identifier">e</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">MDElement</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">node_type</span> <span class="ruby-operator">==</span> <span class="ruby-value">:ial</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- ial-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- ial-3F-method -->
+
+    
+    </section><!-- private-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

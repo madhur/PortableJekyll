@@ -1,0 +1,76 @@
+<!-- proposed DTD for new glade format -->
+
+<!ELEMENT glade-interface (requires*, widget*) >
+<!ATTLIST glade-interface
+  xmlns CDATA #FIXED 'http://glade.gnome.org/glade-2.0.dtd' >
+
+<!ELEMENT requires EMPTY >
+<!ATTLIST requires
+  lib CDATA #REQUIRED >
+
+<!ELEMENT widget (property*, accessibility?, signal*, accelerator*, child*) >
+<!ATTLIST widget
+  class CDATA #REQUIRED
+  id ID #REQUIRED >
+
+<!ELEMENT property (#PCDATA) >
+<!-- type is an optional tag, and should be the string name of the
+     GType for the property -->
+<!-- translatable specifies whether the property should be translated
+     before use. -->
+<!-- context indicates that the value has a |-separated 
+     context which must be stripped before use, look up g_strip_context() 
+     in the GLib API documentation for details.-->
+<!ATTLIST property
+  name CDATA #REQUIRED
+  type CDATA #IMPLIED
+  translatable (yes|no) 'no'
+  context (yes|no) 'no'
+  comments CDATA #IMPLIED
+  agent CDATA #IMPLIED >
+
+<!ELEMENT atkproperty (#PCDATA | accessibility)* >
+<!ATTLIST atkproperty
+  name CDATA #REQUIRED
+  type CDATA #IMPLIED
+  translatable (yes|no) 'no'
+  context (yes|no) 'no'
+  comments CDATA #IMPLIED >
+
+<!ELEMENT atkrelation EMPTY >
+<!ATTLIST atkrelation
+  target CDATA #REQUIRED
+  type CDATA #REQUIRED >
+
+<!-- description is assumed to be a translatable string -->
+<!ELEMENT atkaction EMPTY >
+<!ATTLIST atkaction
+  action_name CDATA #REQUIRED
+  description CDATA #IMPLIED >
+
+<!ELEMENT accessibility (atkrelation | atkaction | atkproperty)* >
+
+<!ELEMENT signal (property*) >
+<!ATTLIST signal
+  name CDATA #REQUIRED
+  handler CDATA #REQUIRED
+  after (yes|no) 'no'
+  object IDREF #IMPLIED
+  last_modification_time CDATA #IMPLIED >
+
+<!ELEMENT accelerator EMPTY >
+<!ATTLIST accelerator
+  key CDATA #REQUIRED
+  modifiers CDATA #REQUIRED
+  signal CDATA #REQUIRED >
+
+<!ELEMENT child ((widget|placeholder), packing?) >
+<!-- internal children should not have any properties set on them.
+     (Internal children are things like the scrollbars in a
+     GtkScrolledWindow, or the vbox in a GtkDialog). -->
+<!ATTLIST child
+  internal-child CDATA #IMPLIED >
+
+<!ELEMENT packing (property+) >
+
+<!ELEMENT placeholder EMPTY >

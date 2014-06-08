@@ -1,0 +1,88 @@
+.TH INTLTOOL-EXTRACT 8 "2003-08-02" "intltool"
+
+.SH NAME
+intltool-extract \- generate header files which can be read by gettext
+
+.SH SYNOPSIS
+.B intltool-extract
+.I "[options]..." SOURCE_FILE
+
+
+.SH DESCRIPTION
+.B intltool-extract
+extracts strings in the specified XML/INI type \fISOURCE_FILE\fR and writes
+them into a C header file. Then \fBxgettext\fR(1) can merge these strings
+inside header file into po template.
+
+.B intltool-extract
+is usually not executed manually, but called from \fBintltool-update\fR(8)
+instead.
+
+.SH OPTIONS
+.IP "\fB\-l\fR" 4
+.PD 0
+.IP "\fB\--local\fR" 4
+.PD
+Creates a subdirectory under current working directory (named "\fBtmp/\fR")
+and writes files there. This option can't be used with \fB\--update\fR option.
+.IP "\fB\--update\fR" 4
+.PD
+Writes header file into the same directory the source file is in. New file
+name is the source file name appending ".h" extension. This option can't be
+used with
+.BR \-l / \--local
+option. Besides, this option is the default option if neither \fB\--local\fR
+nor \fB\--update\fR is specified.
+.IP "\fB\--type\fR=\fITYPE\fR" 4
+.PD
+Specify the type of source file. Currently supported types are:
+.br
+"gettext/glade" (.glade, .glade2)
+.br
+"gettext/ini" (Generic INI file)
+.br
+"gettext/keys" (.keys)
+.br
+"gettext/rfc822deb" (RFC 822 format file)
+.br
+"gettext/quoted" (all strings within "")
+.br
+"gettext/schemas" (.schemas)
+.br
+"gettext/scheme" (.scm)
+.br
+"gettext/xml" (Generic XML file)
+.IP "\fB\-v\fR" 4
+.PD 0
+.IP "\fB\--version\fR" 4
+.PD
+Show version information.
+.IP "\fB\-h\fR" 4
+.PD 0
+.IP "\fB\--help\fR" 4
+.PD
+Show usage and basic help information.
+.IP "\fB\-q\fR" 4
+.PD 0
+.IP "\fB\--quiet\fR" 4
+.PD
+Be quiet while running.
+
+.SH REPORTING BUGS
+Report bugs to http://bugzilla.gnome.org (product name "\fBintltool\fR")
+or send email to <xml-i18n-tools@gnome.org>.
+
+.SH AUTHOR
+Darin Adler <darin@bentspoon.com>
+.br
+Kenneth Christiansen <kenneth@gnu.org>
+.br
+Maciej Stachowiak <mjs@eazel.com>
+
+
+.SH SEE ALSO
+.BR intltoolize (8),
+.BR intltool-prepare (8),
+.BR intltool-merge (8),
+.BR intltool-update (8),
+.BR xgettext (1)

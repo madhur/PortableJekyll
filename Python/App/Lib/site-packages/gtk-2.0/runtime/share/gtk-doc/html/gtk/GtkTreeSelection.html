@@ -1,0 +1,796 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>GtkTreeSelection</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="GTK+ 2 Reference Manual">
+<link rel="up" href="TreeWidgetObjects.html" title="Tree, List and Icon Grid Widgets">
+<link rel="prev" href="GtkTreeModel.html" title="GtkTreeModel">
+<link rel="next" href="GtkTreeViewColumn.html" title="GtkTreeViewColumn">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="GtkTreeModel.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="TreeWidgetObjects.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GTK+ 2 Reference Manual</th>
+<td><a accesskey="n" href="GtkTreeViewColumn.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#GtkTreeSelection.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#GtkTreeSelection.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#GtkTreeSelection.object-hierarchy" class="shortcut">Object Hierarchy</a>
+                   | 
+                  <a href="#GtkTreeSelection.signals" class="shortcut">Signals</a>
+</td></tr>
+</table>
+<div class="refentry">
+<a name="GtkTreeSelection"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="GtkTreeSelection.top_of_page"></a>GtkTreeSelection</span></h2>
+<p>GtkTreeSelection — The selection object for GtkTreeView</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="GtkTreeSelection.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+#include &lt;gtk/gtk.h&gt;
+
+                    <a class="link" href="GtkTreeSelection.html#GtkTreeSelection-struct" title="GtkTreeSelection">GtkTreeSelection</a>;
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            (<a class="link" href="GtkTreeSelection.html#GtkTreeSelectionFunc" title="GtkTreeSelectionFunc ()">*GtkTreeSelectionFunc</a>)             (<em class="parameter"><code><a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a> *selection</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> path_currently_selected</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> data</code></em>);
+<span class="returnvalue">void</span>                (<a class="link" href="GtkTreeSelection.html#GtkTreeSelectionForeachFunc" title="GtkTreeSelectionForeachFunc ()">*GtkTreeSelectionForeachFunc</a>)      (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> data</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkTreeSelection.html#gtk-tree-selection-set-mode" title="gtk_tree_selection_set_mode ()">gtk_tree_selection_set_mode</a>         (<em class="parameter"><code><a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a> *selection</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="gtk-Standard-Enumerations.html#GtkSelectionMode" title="enum GtkSelectionMode"><span class="type">GtkSelectionMode</span></a> type</code></em>);
+<a class="link" href="gtk-Standard-Enumerations.html#GtkSelectionMode" title="enum GtkSelectionMode"><span class="returnvalue">GtkSelectionMode</span></a>    <a class="link" href="GtkTreeSelection.html#gtk-tree-selection-get-mode" title="gtk_tree_selection_get_mode ()">gtk_tree_selection_get_mode</a>         (<em class="parameter"><code><a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a> *selection</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkTreeSelection.html#gtk-tree-selection-set-select-function" title="gtk_tree_selection_set_select_function ()">gtk_tree_selection_set_select_function</a>
+                                                        (<em class="parameter"><code><a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a> *selection</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeSelection.html#GtkTreeSelectionFunc" title="GtkTreeSelectionFunc ()"><span class="type">GtkTreeSelectionFunc</span></a> func</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> data</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> destroy</code></em>);
+<a class="link" href="GtkTreeSelection.html#GtkTreeSelectionFunc" title="GtkTreeSelectionFunc ()"><span class="returnvalue">GtkTreeSelectionFunc</span></a> <a class="link" href="GtkTreeSelection.html#gtk-tree-selection-get-select-function" title="gtk_tree_selection_get_select_function ()">gtk_tree_selection_get_select_function</a>
+                                                        (<em class="parameter"><code><a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a> *selection</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="returnvalue">gpointer</span></a>            <a class="link" href="GtkTreeSelection.html#gtk-tree-selection-get-user-data" title="gtk_tree_selection_get_user_data ()">gtk_tree_selection_get_user_data</a>    (<em class="parameter"><code><a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a> *selection</code></em>);
+<a class="link" href="GtkTreeView.html" title="GtkTreeView"><span class="returnvalue">GtkTreeView</span></a> *       <a class="link" href="GtkTreeSelection.html#gtk-tree-selection-get-tree-view" title="gtk_tree_selection_get_tree_view ()">gtk_tree_selection_get_tree_view</a>    (<em class="parameter"><code><a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a> *selection</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="GtkTreeSelection.html#gtk-tree-selection-get-selected" title="gtk_tree_selection_get_selected ()">gtk_tree_selection_get_selected</a>     (<em class="parameter"><code><a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a> *selection</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> **model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkTreeSelection.html#gtk-tree-selection-selected-foreach" title="gtk_tree_selection_selected_foreach ()">gtk_tree_selection_selected_foreach</a> (<em class="parameter"><code><a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a> *selection</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeSelection.html#GtkTreeSelectionForeachFunc" title="GtkTreeSelectionForeachFunc ()"><span class="type">GtkTreeSelectionForeachFunc</span></a> func</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> data</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             <a class="link" href="GtkTreeSelection.html#gtk-tree-selection-get-selected-rows" title="gtk_tree_selection_get_selected_rows ()">gtk_tree_selection_get_selected_rows</a>
+                                                        (<em class="parameter"><code><a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a> *selection</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> **model</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                <a class="link" href="GtkTreeSelection.html#gtk-tree-selection-count-selected-rows" title="gtk_tree_selection_count_selected_rows ()">gtk_tree_selection_count_selected_rows</a>
+                                                        (<em class="parameter"><code><a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a> *selection</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkTreeSelection.html#gtk-tree-selection-select-path" title="gtk_tree_selection_select_path ()">gtk_tree_selection_select_path</a>      (<em class="parameter"><code><a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a> *selection</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkTreeSelection.html#gtk-tree-selection-unselect-path" title="gtk_tree_selection_unselect_path ()">gtk_tree_selection_unselect_path</a>    (<em class="parameter"><code><a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a> *selection</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="GtkTreeSelection.html#gtk-tree-selection-path-is-selected" title="gtk_tree_selection_path_is_selected ()">gtk_tree_selection_path_is_selected</a> (<em class="parameter"><code><a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a> *selection</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkTreeSelection.html#gtk-tree-selection-select-iter" title="gtk_tree_selection_select_iter ()">gtk_tree_selection_select_iter</a>      (<em class="parameter"><code><a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a> *selection</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkTreeSelection.html#gtk-tree-selection-unselect-iter" title="gtk_tree_selection_unselect_iter ()">gtk_tree_selection_unselect_iter</a>    (<em class="parameter"><code><a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a> *selection</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="GtkTreeSelection.html#gtk-tree-selection-iter-is-selected" title="gtk_tree_selection_iter_is_selected ()">gtk_tree_selection_iter_is_selected</a> (<em class="parameter"><code><a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a> *selection</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkTreeSelection.html#gtk-tree-selection-select-all" title="gtk_tree_selection_select_all ()">gtk_tree_selection_select_all</a>       (<em class="parameter"><code><a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a> *selection</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkTreeSelection.html#gtk-tree-selection-unselect-all" title="gtk_tree_selection_unselect_all ()">gtk_tree_selection_unselect_all</a>     (<em class="parameter"><code><a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a> *selection</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkTreeSelection.html#gtk-tree-selection-select-range" title="gtk_tree_selection_select_range ()">gtk_tree_selection_select_range</a>     (<em class="parameter"><code><a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a> *selection</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *start_path</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *end_path</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkTreeSelection.html#gtk-tree-selection-unselect-range" title="gtk_tree_selection_unselect_range ()">gtk_tree_selection_unselect_range</a>   (<em class="parameter"><code><a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a> *selection</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *start_path</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *end_path</code></em>);
+</pre>
+</div>
+<div class="refsect1">
+<a name="GtkTreeSelection.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
+   +----GtkTreeSelection
+</pre>
+</div>
+<div class="refsect1">
+<a name="GtkTreeSelection.signals"></a><h2>Signals</h2>
+<pre class="synopsis">
+  "<a class="link" href="GtkTreeSelection.html#GtkTreeSelection-changed" title='The "changed" signal'>changed</a>"                                        : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-FIRST:CAPS"><code class="literal">Run First</code></a>
+</pre>
+</div>
+<div class="refsect1">
+<a name="GtkTreeSelection.description"></a><h2>Description</h2>
+<p>
+The <a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a> object is a helper object to manage the selection
+for a <a class="link" href="GtkTreeView.html" title="GtkTreeView"><span class="type">GtkTreeView</span></a> widget.  The <a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a> object is
+automatically created when a new <a class="link" href="GtkTreeView.html" title="GtkTreeView"><span class="type">GtkTreeView</span></a> widget is created, and
+cannot exist independentally of this widget.  The primary reason the
+<a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a> objects exists is for cleanliness of code and API.
+That is, there is no conceptual reason all these functions could not be
+methods on the <a class="link" href="GtkTreeView.html" title="GtkTreeView"><span class="type">GtkTreeView</span></a> widget instead of a separate function.
+</p>
+<p>
+The <a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a> object is gotten from a <a class="link" href="GtkTreeView.html" title="GtkTreeView"><span class="type">GtkTreeView</span></a> by calling
+<a class="link" href="GtkTreeView.html#gtk-tree-view-get-selection" title="gtk_tree_view_get_selection ()"><code class="function">gtk_tree_view_get_selection()</code></a>.  It can be manipulated to check the
+selection status of the tree, as well as select and deselect individual
+rows.  Selection is done completely view side.  As a result, multiple
+views of the same model can have completely different selections.
+Additionally, you cannot change the selection of a row on the model that
+is not currently displayed by the view without expanding its parents
+first.
+</p>
+<p>
+One of the important things to remember when monitoring the selection of
+a view is that the <a class="link" href="GtkTreeSelection.html#GtkTreeSelection-changed" title='The "changed" signal'><span class="type">"changed"</span></a> signal is mostly a hint.  That is, it may
+only emit one signal when a range of rows is selected.  Additionally, it
+may on occasion emit a ::changed signal when nothing has happened
+(mostly as a result of programmers calling select_row on an already
+selected row).
+</p>
+</div>
+<div class="refsect1">
+<a name="GtkTreeSelection.details"></a><h2>Details</h2>
+<div class="refsect2">
+<a name="GtkTreeSelection-struct"></a><h3>GtkTreeSelection</h3>
+<pre class="programlisting">typedef struct _GtkTreeSelection GtkTreeSelection;</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkTreeSelectionFunc"></a><h3>GtkTreeSelectionFunc ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            (*GtkTreeSelectionFunc)             (<em class="parameter"><code><a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a> *selection</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> path_currently_selected</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> data</code></em>);</pre>
+<p>
+A function used by <a class="link" href="GtkTreeSelection.html#gtk-tree-selection-set-select-function" title="gtk_tree_selection_set_select_function ()"><code class="function">gtk_tree_selection_set_select_function()</code></a> to filter
+whether or not a row may be selected.  It is called whenever a row's
+state might change.  A return value of <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> indicates to <em class="parameter"><code>selection</code></em>
+that it is okay to change the selection.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>selection</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>model</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> being viewed</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
+<td>The <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> of the row in question</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>path_currently_selected</code></em> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a>, if the path is currently selected</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td>user data</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a>, if the selection state of the row can be toggled</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkTreeSelectionForeachFunc"></a><h3>GtkTreeSelectionForeachFunc ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                (*GtkTreeSelectionForeachFunc)      (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> data</code></em>);</pre>
+<p>
+A function used by <a class="link" href="GtkTreeSelection.html#gtk-tree-selection-selected-foreach" title="gtk_tree_selection_selected_foreach ()"><code class="function">gtk_tree_selection_selected_foreach()</code></a> to map all
+selected rows.  It will be called on every selected row in the view.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>model</code></em> :</span></p></td>
+<td>The <a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> being viewed</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
+<td>The <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> of a selected row</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>iter</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> pointing to a selected row</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td>user data</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-selection-set-mode"></a><h3>gtk_tree_selection_set_mode ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_tree_selection_set_mode         (<em class="parameter"><code><a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a> *selection</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="gtk-Standard-Enumerations.html#GtkSelectionMode" title="enum GtkSelectionMode"><span class="type">GtkSelectionMode</span></a> type</code></em>);</pre>
+<p>
+Sets the selection mode of the <em class="parameter"><code>selection</code></em>.  If the previous type was
+<a class="link" href="gtk-Standard-Enumerations.html#GTK-SELECTION-MULTIPLE:CAPS"><span class="type">GTK_SELECTION_MULTIPLE</span></a>, then the anchor is kept selected, if it was
+previously selected.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>selection</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>type</code></em> :</span></p></td>
+<td>The selection mode</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-selection-get-mode"></a><h3>gtk_tree_selection_get_mode ()</h3>
+<pre class="programlisting"><a class="link" href="gtk-Standard-Enumerations.html#GtkSelectionMode" title="enum GtkSelectionMode"><span class="returnvalue">GtkSelectionMode</span></a>    gtk_tree_selection_get_mode         (<em class="parameter"><code><a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a> *selection</code></em>);</pre>
+<p>
+Gets the selection mode for <em class="parameter"><code>selection</code></em>. See
+<a class="link" href="GtkTreeSelection.html#gtk-tree-selection-set-mode" title="gtk_tree_selection_set_mode ()"><code class="function">gtk_tree_selection_set_mode()</code></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>selection</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the current selection mode</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-selection-set-select-function"></a><h3>gtk_tree_selection_set_select_function ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_tree_selection_set_select_function
+                                                        (<em class="parameter"><code><a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a> *selection</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeSelection.html#GtkTreeSelectionFunc" title="GtkTreeSelectionFunc ()"><span class="type">GtkTreeSelectionFunc</span></a> func</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> data</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> destroy</code></em>);</pre>
+<p>
+Sets the selection function.  If set, this function is called before any node
+is selected or unselected, giving some control over which nodes are selected.
+The select function should return <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the state of the node may be toggled,
+and <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> if the state of the node should be left unchanged.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>selection</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>func</code></em> :</span></p></td>
+<td>The selection function.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td>The selection function's data.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>destroy</code></em> :</span></p></td>
+<td>The destroy function for user data.  May be NULL.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-selection-get-select-function"></a><h3>gtk_tree_selection_get_select_function ()</h3>
+<pre class="programlisting"><a class="link" href="GtkTreeSelection.html#GtkTreeSelectionFunc" title="GtkTreeSelectionFunc ()"><span class="returnvalue">GtkTreeSelectionFunc</span></a> gtk_tree_selection_get_select_function
+                                                        (<em class="parameter"><code><a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a> *selection</code></em>);</pre>
+<p>
+Returns the current selection function.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>selection</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The function.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.14</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-selection-get-user-data"></a><h3>gtk_tree_selection_get_user_data ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="returnvalue">gpointer</span></a>            gtk_tree_selection_get_user_data    (<em class="parameter"><code><a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a> *selection</code></em>);</pre>
+<p>
+Returns the user data for the selection function.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>selection</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The user data.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-selection-get-tree-view"></a><h3>gtk_tree_selection_get_tree_view ()</h3>
+<pre class="programlisting"><a class="link" href="GtkTreeView.html" title="GtkTreeView"><span class="returnvalue">GtkTreeView</span></a> *       gtk_tree_selection_get_tree_view    (<em class="parameter"><code><a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a> *selection</code></em>);</pre>
+<p>
+Returns the tree view associated with <em class="parameter"><code>selection</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>selection</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>A <a class="link" href="GtkTreeView.html" title="GtkTreeView"><span class="type">GtkTreeView</span></a>. <span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-selection-get-selected"></a><h3>gtk_tree_selection_get_selected ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gtk_tree_selection_get_selected     (<em class="parameter"><code><a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a> *selection</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> **model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>);</pre>
+<p>
+Sets <em class="parameter"><code>iter</code></em> to the currently selected node if <em class="parameter"><code>selection</code></em> is set to
+<a class="link" href="gtk-Standard-Enumerations.html#GTK-SELECTION-SINGLE:CAPS"><span class="type">GTK_SELECTION_SINGLE</span></a> or <a class="link" href="gtk-Standard-Enumerations.html#GTK-SELECTION-BROWSE:CAPS"><span class="type">GTK_SELECTION_BROWSE</span></a>.  <em class="parameter"><code>iter</code></em> may be NULL if you
+just want to test if <em class="parameter"><code>selection</code></em> has any selected nodes.  <em class="parameter"><code>model</code></em> is filled
+with the current model as a convenience.  This function will not work if you
+use <em class="parameter"><code>selection</code></em> is <a class="link" href="gtk-Standard-Enumerations.html#GTK-SELECTION-MULTIPLE:CAPS"><span class="type">GTK_SELECTION_MULTIPLE</span></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>selection</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>model</code></em> :</span></p></td>
+<td>A pointer to set to the <a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a>, or NULL. <span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>][<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>][<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>iter</code></em> :</span></p></td>
+<td>The <a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a>, or NULL. <span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>][<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>TRUE, if there is a selected node.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-selection-selected-foreach"></a><h3>gtk_tree_selection_selected_foreach ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_tree_selection_selected_foreach (<em class="parameter"><code><a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a> *selection</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeSelection.html#GtkTreeSelectionForeachFunc" title="GtkTreeSelectionForeachFunc ()"><span class="type">GtkTreeSelectionForeachFunc</span></a> func</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> data</code></em>);</pre>
+<p>
+Calls a function for each selected node. Note that you cannot modify
+the tree or selection from within this function. As a result,
+<a class="link" href="GtkTreeSelection.html#gtk-tree-selection-get-selected-rows" title="gtk_tree_selection_get_selected_rows ()"><code class="function">gtk_tree_selection_get_selected_rows()</code></a> might be more useful.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>selection</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>func</code></em> :</span></p></td>
+<td>The function to call for each selected node. <span class="annotation">[<acronym title="The callback is valid only during the call to the method."><span class="acronym">scope call</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td>user data to pass to the function.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-selection-get-selected-rows"></a><h3>gtk_tree_selection_get_selected_rows ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             gtk_tree_selection_get_selected_rows
+                                                        (<em class="parameter"><code><a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a> *selection</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> **model</code></em>);</pre>
+<p>
+Creates a list of path of all selected rows. Additionally, if you are
+planning on modifying the model after calling this function, you may
+want to convert the returned list into a list of <a class="link" href="GtkTreeModel.html#GtkTreeRowReference" title="GtkTreeRowReference"><span class="type">GtkTreeRowReference</span></a>s.
+To do this, you can use <a class="link" href="GtkTreeModel.html#gtk-tree-row-reference-new" title="gtk_tree_row_reference_new ()"><code class="function">gtk_tree_row_reference_new()</code></a>.
+</p>
+<p>
+To free the return value, use:
+</p>
+<div class="informalexample">
+  <table class="listing_frame" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+      <tr>
+        <td class="listing_lines" align="right"><pre>1
+2</pre></td>
+        <td class="listing_code"><pre class="programlisting"><span class="function"><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#g-list-foreach">g_list_foreach</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">list</span><span class="symbol">,</span><span class="normal"> </span><span class="symbol">(</span><span class="normal"><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GFunc">GFunc</a></span><span class="symbol">)</span><span class="normal"> <a href="GtkTreeModel.html#gtk-tree-path-free">gtk_tree_path_free</a></span><span class="symbol">,</span><span class="normal"> <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS">NULL</a></span><span class="symbol">);</span>
+<span class="function"><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#g-list-free">g_list_free</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">list</span><span class="symbol">);</span></pre></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>selection</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>model</code></em> :</span></p></td>
+<td>A pointer to set to the <a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a>, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>][<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>][<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>A <a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> containing a <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> for each selected row. <span class="annotation">[<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> GtkTreePath][<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-selection-count-selected-rows"></a><h3>gtk_tree_selection_count_selected_rows ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                gtk_tree_selection_count_selected_rows
+                                                        (<em class="parameter"><code><a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a> *selection</code></em>);</pre>
+<p>
+Returns the number of rows that have been selected in <em class="parameter"><code>tree</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>selection</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The number of rows selected.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-selection-select-path"></a><h3>gtk_tree_selection_select_path ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_tree_selection_select_path      (<em class="parameter"><code><a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a> *selection</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>);</pre>
+<p>
+Select the row at <em class="parameter"><code>path</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>selection</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
+<td>The <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> to be selected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-selection-unselect-path"></a><h3>gtk_tree_selection_unselect_path ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_tree_selection_unselect_path    (<em class="parameter"><code><a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a> *selection</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>);</pre>
+<p>
+Unselects the row at <em class="parameter"><code>path</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>selection</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
+<td>The <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> to be unselected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-selection-path-is-selected"></a><h3>gtk_tree_selection_path_is_selected ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gtk_tree_selection_path_is_selected (<em class="parameter"><code><a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a> *selection</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>);</pre>
+<p>
+Returns <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the row pointed to by <em class="parameter"><code>path</code></em> is currently selected.  If <em class="parameter"><code>path</code></em>
+does not point to a valid location, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> is returned
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>selection</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> to check selection on.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if <em class="parameter"><code>path</code></em> is selected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-selection-select-iter"></a><h3>gtk_tree_selection_select_iter ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_tree_selection_select_iter      (<em class="parameter"><code><a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a> *selection</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>);</pre>
+<p>
+Selects the specified iterator.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>selection</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>iter</code></em> :</span></p></td>
+<td>The <a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> to be selected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-selection-unselect-iter"></a><h3>gtk_tree_selection_unselect_iter ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_tree_selection_unselect_iter    (<em class="parameter"><code><a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a> *selection</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>);</pre>
+<p>
+Unselects the specified iterator.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>selection</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>iter</code></em> :</span></p></td>
+<td>The <a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> to be unselected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-selection-iter-is-selected"></a><h3>gtk_tree_selection_iter_is_selected ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gtk_tree_selection_iter_is_selected (<em class="parameter"><code><a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a> *selection</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>);</pre>
+<p>
+Returns <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the row at <em class="parameter"><code>iter</code></em> is currently selected.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>selection</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>iter</code></em> :</span></p></td>
+<td>A valid <a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a>, if <em class="parameter"><code>iter</code></em> is selected</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-selection-select-all"></a><h3>gtk_tree_selection_select_all ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_tree_selection_select_all       (<em class="parameter"><code><a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a> *selection</code></em>);</pre>
+<p>
+Selects all the nodes. <em class="parameter"><code>selection</code></em> must be set to <a class="link" href="gtk-Standard-Enumerations.html#GTK-SELECTION-MULTIPLE:CAPS"><span class="type">GTK_SELECTION_MULTIPLE</span></a>
+mode.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>selection</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a>.</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-selection-unselect-all"></a><h3>gtk_tree_selection_unselect_all ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_tree_selection_unselect_all     (<em class="parameter"><code><a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a> *selection</code></em>);</pre>
+<p>
+Unselects all the nodes.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>selection</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a>.</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-selection-select-range"></a><h3>gtk_tree_selection_select_range ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_tree_selection_select_range     (<em class="parameter"><code><a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a> *selection</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *start_path</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *end_path</code></em>);</pre>
+<p>
+Selects a range of nodes, determined by <em class="parameter"><code>start_path</code></em> and <em class="parameter"><code>end_path</code></em> inclusive.
+<em class="parameter"><code>selection</code></em> must be set to <a class="link" href="gtk-Standard-Enumerations.html#GTK-SELECTION-MULTIPLE:CAPS"><span class="type">GTK_SELECTION_MULTIPLE</span></a> mode.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>selection</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>start_path</code></em> :</span></p></td>
+<td>The initial node of the range.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>end_path</code></em> :</span></p></td>
+<td>The final node of the range.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-selection-unselect-range"></a><h3>gtk_tree_selection_unselect_range ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_tree_selection_unselect_range   (<em class="parameter"><code><a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a> *selection</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *start_path</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *end_path</code></em>);</pre>
+<p>
+Unselects a range of nodes, determined by <em class="parameter"><code>start_path</code></em> and <em class="parameter"><code>end_path</code></em>
+inclusive.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>selection</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>start_path</code></em> :</span></p></td>
+<td>The initial node of the range.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>end_path</code></em> :</span></p></td>
+<td>The initial node of the range.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.2</p>
+</div>
+</div>
+<div class="refsect1">
+<a name="GtkTreeSelection.signal-details"></a><h2>Signal Details</h2>
+<div class="refsect2">
+<a name="GtkTreeSelection-changed"></a><h3>The <code class="literal">"changed"</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="GtkTreeSelection.html" title="GtkTreeSelection"><span class="type">GtkTreeSelection</span></a> *treeselection,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>          user_data)          : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-FIRST:CAPS"><code class="literal">Run First</code></a></pre>
+<p>
+Emitted whenever the selection has (possibly) changed.  Please note that
+this signal is mostly a hint.  It may only be emitted once when a range
+of rows are selected, and it may occasionally be emitted when nothing
+has happened.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>treeselection</code></em> :</span></p></td>
+<td>the object which received the signal.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect1">
+<a name="GtkTreeSelection.see-also"></a><h2>See Also</h2>
+<p>
+<a class="link" href="GtkTreeView.html" title="GtkTreeView"><span class="type">GtkTreeView</span></a>, <a class="link" href="GtkTreeViewColumn.html" title="GtkTreeViewColumn"><span class="type">GtkTreeViewColumn</span></a>, <span class="type">GtkTreeDnd</span>, <span class="type">GtkTreeMode</span>, <a class="link" href="GtkTreeSortable.html" title="GtkTreeSortable"><span class="type">GtkTreeSortable</span></a>, <a class="link" href="GtkTreeModelSort.html" title="GtkTreeModelSort"><span class="type">GtkTreeModelSort</span></a>, <a class="link" href="GtkListStore.html" title="GtkListStore"><span class="type">GtkListStore</span></a>, <a class="link" href="GtkTreeStore.html" title="GtkTreeStore"><span class="type">GtkTreeStore</span></a>, <a class="link" href="GtkCellRenderer.html" title="GtkCellRenderer"><span class="type">GtkCellRenderer</span></a>, <a class="link" href="GtkCellEditable.html" title="GtkCellEditable"><span class="type">GtkCellEditable</span></a>, <a class="link" href="GtkCellRendererPixbuf.html" title="GtkCellRendererPixbuf"><span class="type">GtkCellRendererPixbuf</span></a>, <a class="link" href="GtkCellRendererText.html" title="GtkCellRendererText"><span class="type">GtkCellRendererText</span></a>, <a class="link" href="GtkCellRendererToggle.html" title="GtkCellRendererToggle"><span class="type">GtkCellRendererToggle</span></a>
+</p>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

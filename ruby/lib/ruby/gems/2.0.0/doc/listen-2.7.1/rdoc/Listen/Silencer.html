@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>class Listen::Silencer - listen-2.7.1 Documentation</title>
+
+<link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../index.html">Home</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/listen/silencer.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">Object
+  
+</nav>
+
+    <!-- Included Modules -->
+<nav id="includes-section" class="section">
+  <h3 class="section-header">Included Modules</h3>
+
+  <ul class="link-list">
+  
+  
+    <li><span class="include">Celluloid</span>
+  
+  
+  </ul>
+</nav>
+
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li ><a href="#method-c-new">::new</a>
+    
+    <li ><a href="#method-i-_default_ignore_patterns">#_default_ignore_patterns</a>
+    
+    <li ><a href="#method-i-_default_ignored_directories_patterns">#_default_ignored_directories_patterns</a>
+    
+    <li ><a href="#method-i-_default_ignored_extensions_patterns">#_default_ignored_extensions_patterns</a>
+    
+    <li ><a href="#method-i-_init_ignore_patterns">#_init_ignore_patterns</a>
+    
+    <li ><a href="#method-i-_init_only_patterns">#_init_only_patterns</a>
+    
+    <li ><a href="#method-i-_relative_path">#_relative_path</a>
+    
+    <li ><a href="#method-i-silenced-3F">#silenced?</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../Listen.html">Listen</a>
+  
+    <li><a href="../Listen/Adapter.html">Listen::Adapter</a>
+  
+    <li><a href="../Listen/Adapter/BSD.html">Listen::Adapter::BSD</a>
+  
+    <li><a href="../Listen/Adapter/Base.html">Listen::Adapter::Base</a>
+  
+    <li><a href="../Listen/Adapter/Darwin.html">Listen::Adapter::Darwin</a>
+  
+    <li><a href="../Listen/Adapter/Linux.html">Listen::Adapter::Linux</a>
+  
+    <li><a href="../Listen/Adapter/Polling.html">Listen::Adapter::Polling</a>
+  
+    <li><a href="../Listen/Adapter/TCP.html">Listen::Adapter::TCP</a>
+  
+    <li><a href="../Listen/Adapter/Windows.html">Listen::Adapter::Windows</a>
+  
+    <li><a href="../Listen/CLI.html">Listen::CLI</a>
+  
+    <li><a href="../Listen/Change.html">Listen::Change</a>
+  
+    <li><a href="../Listen/Directory.html">Listen::Directory</a>
+  
+    <li><a href="../Listen/File.html">Listen::File</a>
+  
+    <li><a href="../Listen/Forwarder.html">Listen::Forwarder</a>
+  
+    <li><a href="../Listen/Listener.html">Listen::Listener</a>
+  
+    <li><a href="../Listen/Record.html">Listen::Record</a>
+  
+    <li><a href="../Listen/Silencer.html">Listen::Silencer</a>
+  
+    <li><a href="../Listen/TCP.html">Listen::TCP</a>
+  
+    <li><a href="../Listen/TCP/Broadcaster.html">Listen::TCP::Broadcaster</a>
+  
+    <li><a href="../Listen/TCP/Listener.html">Listen::TCP::Listener</a>
+  
+    <li><a href="../Listen/TCP/Message.html">Listen::TCP::Message</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class Listen::Silencer</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+    <!-- Constants -->
+    <section id="constants-list" class="section">
+      <h3 class="section-header">Constants</h3>
+      <dl>
+      
+        <dt id="DEFAULT_IGNORED_DIRECTORIES">DEFAULT_IGNORED_DIRECTORIES
+        
+        <dd class="description"><p>The default list of directories that get ignored.</p>
+        
+      
+        <dt id="DEFAULT_IGNORED_EXTENSIONS">DEFAULT_IGNORED_EXTENSIONS
+        
+        <dd class="description"><p>The default list of files that get ignored.</p>
+        
+      
+      </dl>
+    </section>
+    
+
+    
+    <!-- Attributes -->
+    <section id="attribute-method-details" class="method-section section">
+      <h3 class="section-header">Attributes</h3>
+
+      
+      <div id="attribute-i-ignore_patterns" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">ignore_patterns</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-listener" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">listener</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-only_patterns" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">only_patterns</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+    </section><!-- attribute-method-details -->
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">(listener)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/listen/silencer.rb, line 13</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">listener</span>)
+  <span class="ruby-ivar">@listener</span> = <span class="ruby-identifier">listener</span>
+  <span class="ruby-identifier">_init_only_patterns</span>
+  <span class="ruby-identifier">_init_ignore_patterns</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- new-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- new-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-silenced-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">silenced?</span><span
+            class="method-args">(path, type = 'Unknown')</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="silenced-3F-source">
+            <pre><span class="ruby-comment"># File lib/listen/silencer.rb, line 19</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">silenced?</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">type</span> = <span class="ruby-string">&#39;Unknown&#39;</span>)
+  <span class="ruby-identifier">silenced</span> = <span class="ruby-keyword">false</span>
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">only_patterns</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">type</span> <span class="ruby-operator">==</span> <span class="ruby-string">&#39;File&#39;</span>
+    <span class="ruby-identifier">silenced</span> = <span class="ruby-operator">!</span><span class="ruby-identifier">only_patterns</span>.<span class="ruby-identifier">any?</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">pattern</span><span class="ruby-operator">|</span> <span class="ruby-identifier">_relative_path</span>(<span class="ruby-identifier">path</span>) <span class="ruby-operator">=~</span> <span class="ruby-identifier">pattern</span> }
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">silenced</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">ignore_patterns</span>.<span class="ruby-identifier">any?</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">pattern</span><span class="ruby-operator">|</span> <span class="ruby-identifier">_relative_path</span>(<span class="ruby-identifier">path</span>) <span class="ruby-operator">=~</span> <span class="ruby-identifier">pattern</span> }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- silenced-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- silenced-3F-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+     <section id="private-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Private Instance Methods</h3>
+
+    
+      <div id="method-i-_default_ignore_patterns" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">_default_ignore_patterns</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="_default_ignore_patterns-source">
+            <pre><span class="ruby-comment"># File lib/listen/silencer.rb, line 45</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">_default_ignore_patterns</span>
+  [<span class="ruby-identifier">_default_ignored_directories_patterns</span>, <span class="ruby-identifier">_default_ignored_extensions_patterns</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- _default_ignore_patterns-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- _default_ignore_patterns-method -->
+
+    
+      <div id="method-i-_default_ignored_directories_patterns" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">_default_ignored_directories_patterns</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="_default_ignored_directories_patterns-source">
+            <pre><span class="ruby-comment"># File lib/listen/silencer.rb, line 49</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">_default_ignored_directories_patterns</span>
+  <span class="ruby-identifier">ignored_directories</span> = <span class="ruby-constant">DEFAULT_IGNORED_DIRECTORIES</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span> <span class="ruby-constant">Regexp</span>.<span class="ruby-identifier">escape</span>(<span class="ruby-identifier">d</span>) }
+  <span class="ruby-node">%r{^(?:#{ignored_directories.join(&#39;|&#39;)})(/|$)}</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- _default_ignored_directories_patterns-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- _default_ignored_directories_patterns-method -->
+
+    
+      <div id="method-i-_default_ignored_extensions_patterns" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">_default_ignored_extensions_patterns</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="_default_ignored_extensions_patterns-source">
+            <pre><span class="ruby-comment"># File lib/listen/silencer.rb, line 54</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">_default_ignored_extensions_patterns</span>
+  <span class="ruby-identifier">ignored_extensions</span> = <span class="ruby-constant">DEFAULT_IGNORED_EXTENSIONS</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-constant">Regexp</span>.<span class="ruby-identifier">escape</span>(<span class="ruby-identifier">e</span>) }
+  <span class="ruby-node">%r{(?:#{ignored_extensions.join(&#39;|&#39;)})$}</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- _default_ignored_extensions_patterns-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- _default_ignored_extensions_patterns-method -->
+
+    
+      <div id="method-i-_init_ignore_patterns" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">_init_ignore_patterns</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="_init_ignore_patterns-source">
+            <pre><span class="ruby-comment"># File lib/listen/silencer.rb, line 37</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">_init_ignore_patterns</span>
+  <span class="ruby-ivar">@ignore_patterns</span> = []
+  <span class="ruby-ivar">@ignore_patterns</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">_default_ignore_patterns</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">listener</span>.<span class="ruby-identifier">options</span>[<span class="ruby-value">:ignore!</span>]
+  <span class="ruby-ivar">@ignore_patterns</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">listener</span>.<span class="ruby-identifier">options</span>[<span class="ruby-value">:ignore</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">listener</span>.<span class="ruby-identifier">options</span>[<span class="ruby-value">:ignore!</span>]
+  <span class="ruby-ivar">@ignore_patterns</span>.<span class="ruby-identifier">compact!</span>
+  <span class="ruby-ivar">@ignore_patterns</span>.<span class="ruby-identifier">flatten!</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- _init_ignore_patterns-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- _init_ignore_patterns-method -->
+
+    
+      <div id="method-i-_init_only_patterns" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">_init_only_patterns</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="_init_only_patterns-source">
+            <pre><span class="ruby-comment"># File lib/listen/silencer.rb, line 31</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">_init_only_patterns</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">listener</span>.<span class="ruby-identifier">options</span>[<span class="ruby-value">:only</span>]
+    <span class="ruby-ivar">@only_patterns</span> = <span class="ruby-constant">Array</span>(<span class="ruby-identifier">listener</span>.<span class="ruby-identifier">options</span>[<span class="ruby-value">:only</span>])
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- _init_only_patterns-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- _init_only_patterns-method -->
+
+    
+      <div id="method-i-_relative_path" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">_relative_path</span><span
+            class="method-args">(path)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="_relative_path-source">
+            <pre><span class="ruby-comment"># File lib/listen/silencer.rb, line 59</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">_relative_path</span>(<span class="ruby-identifier">path</span>)
+  <span class="ruby-identifier">relative_paths</span> = <span class="ruby-identifier">listener</span>.<span class="ruby-identifier">directories</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">dir</span><span class="ruby-operator">|</span> <span class="ruby-identifier">path</span>.<span class="ruby-identifier">relative_path_from</span>(<span class="ruby-identifier">dir</span>).<span class="ruby-identifier">to_s</span> }
+  <span class="ruby-identifier">relative_paths</span>.<span class="ruby-identifier">detect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">path</span><span class="ruby-operator">|</span> <span class="ruby-operator">!</span><span class="ruby-identifier">path</span>.<span class="ruby-identifier">start_with?</span>(<span class="ruby-string">&#39;../&#39;</span>) }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- _relative_path-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- _relative_path-method -->
+
+    
+    </section><!-- private-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

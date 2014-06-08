@@ -1,0 +1,128 @@
+; -*- scheme -*-
+
+(define-method flags
+  (of-object "GtkObject")
+  (c-name "GTK_OBJECT_FLAGS")
+  (return-type "GtkWidgetFlags")
+)
+
+(define-method set_flags
+  (of-object "GtkObject")
+  (c-name "GTK_OBJECT_SET_FLAGS")
+  (return-type "none")
+  (parameters
+    '("GtkWidgetFlags" "flags")
+  )
+)
+
+(define-method unset_flags
+  (of-object "GtkObject")
+  (c-name "GTK_OBJECT_UNSET_FLAGS")
+  (return-type "none")
+  (parameters
+    '("GtkWidgetFlags" "flags")
+  )
+)
+
+(define-method get_allocation
+  (of-object "GtkWidget")
+  (c-name "gtk_widget_get_allocation")
+  (return-type "GtkAllocation")
+)
+
+(define-method get_selection
+  (of-object "GtkList")
+  (c-name "gtk_list_get_selection")
+  (return-type "GList*")
+)
+
+(define-method set_all
+  (of-object "GtkAdjustment")
+  (c-name "gtk_adjustment_set_all")
+  (return-type "none")
+  (parameters
+    '("gfloat" "value")
+    '("gfloat" "lower")
+    '("gfloat" "upper")
+    '("gfloat" "step_increment")
+    '("gfloat" "page_increment")
+    '("gfloat" "page_size")
+  )
+)
+
+;; PyGtkTreeModel
+
+(define-object GenericTreeModel
+  (in-module "PyGtk")
+  (parent "GObject")
+  (c-name "PyGtkGenericTreeModel")
+  (gtype-id "PYGTK_TYPE_GENERIC_TREE_MODEL")
+  (implements "GtkTreeModel")
+)
+
+(define-function pygtk_generic_tree_model_get_type
+  (c-name "pygtk_generic_tree_model_get_type")
+  (return-type "GType")
+)
+
+(define-function pygtk_generic_tree_model_new
+  (c-name "pygtk_generic_tree_model_new")
+  (is-constructor-of PyGtkGenericTreeModel)
+  (return-type "PyGtkGenericTreeModel*")
+)
+
+;; PyGtkGenericTreeModel methods
+
+(define-method invalidate_iters
+  (of-object "PyGtkGenericTreeModel")
+  (c-name "pygtk_generic_tree_model_invalidate_iters")
+  (return-type "none")
+)
+
+(define-method iter_is_valid
+  (of-object "PyGtkGenericTreeModel")
+  (c-name "pygtk_generic_tree_model_iter_is_valid")
+  (return-type "gboolean")
+  (parameters
+    '("GtkTreeIter*" "iter")
+  )
+)
+
+(define-method get_user_data
+  (of-object "PyGtkGenericTreeModel")
+  (c-name "pygtk_generic_tree_model_get_user_data")
+  (return-type "PyObject*")
+  (parameters
+    '("GtkTreeIter*" "iter")
+  )
+)
+
+(define-method create_tree_iter
+  (of-object "PyGtkGenericTreeModel")
+  (c-name "pygtk_generic_tree_model_create_tree_iter")
+  (return-type "GtkTreeIter")
+  (parameters
+    '("PyObject*" "user_data")
+  )
+)
+
+;; PyGtkGenericCellRenderer
+
+(define-object GenericCellRenderer
+  (in-module "PyGtk")
+  (parent "GtkCellRenderer")
+  (c-name "PyGtkGenericCellRenderer")
+  (gtype-id "PYGTK_TYPE_GENERIC_CELL_RENDERER")
+)
+
+(define-function pygtk_generic_cell_renderer_get_type
+  (c-name "pygtk_generic_cell_renderer_get_type")
+  (return-type "GType")
+)
+
+(define-function pygtk_generic_cell_renderer_new
+  (c-name "pygtk_generic_cell_renderer_new")
+  (is-constructor-of PyGtkGenericCellRenderer)
+  (return-type "GtkCellRenderer*")
+)
+

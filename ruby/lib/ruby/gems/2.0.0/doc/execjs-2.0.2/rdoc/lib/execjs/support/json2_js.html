@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>json2.js - execjs-2.0.2 Documentation</title>
+
+<link type="text/css" media="screen" href="../../../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../../../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../../../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../../js/darkfish.js"></script>
+
+
+<body class="file">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../../../index.html">Home</a>
+    <a href="../../../table_of_contents.html#classes">Classes</a>
+    <a href="../../../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="../../../lib/execjs/support/jsc_runner_js.html">jsc_runner.js</a>
+  
+    <li class="file"><a href="../../../lib/execjs/support/jscript_runner_js.html">jscript_runner.js</a>
+  
+    <li class="file"><a href="../../../lib/execjs/support/json2_js.html">json2.js</a>
+  
+    <li class="file"><a href="../../../lib/execjs/support/node_runner_js.html">node_runner.js</a>
+  
+    <li class="file"><a href="../../../lib/execjs/support/spidermonkey_runner_js.html">spidermonkey_runner.js</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../../../ExecJS.html">ExecJS</a>
+  
+    <li><a href="../../../ExecJS/DisabledRuntime.html">ExecJS::DisabledRuntime</a>
+  
+    <li><a href="../../../ExecJS/Encoding.html">ExecJS::Encoding</a>
+  
+    <li><a href="../../../ExecJS/Error.html">ExecJS::Error</a>
+  
+    <li><a href="../../../ExecJS/ExternalRuntime.html">ExecJS::ExternalRuntime</a>
+  
+    <li><a href="../../../ExecJS/ExternalRuntime/Context.html">ExecJS::ExternalRuntime::Context</a>
+  
+    <li><a href="../../../ExecJS/JohnsonRuntime.html">ExecJS::JohnsonRuntime</a>
+  
+    <li><a href="../../../ExecJS/JohnsonRuntime/Context.html">ExecJS::JohnsonRuntime::Context</a>
+  
+    <li><a href="../../../ExecJS/MustangRuntime.html">ExecJS::MustangRuntime</a>
+  
+    <li><a href="../../../ExecJS/MustangRuntime/Context.html">ExecJS::MustangRuntime::Context</a>
+  
+    <li><a href="../../../ExecJS/ProgramError.html">ExecJS::ProgramError</a>
+  
+    <li><a href="../../../ExecJS/RubyRacerRuntime.html">ExecJS::RubyRacerRuntime</a>
+  
+    <li><a href="../../../ExecJS/RubyRacerRuntime/Context.html">ExecJS::RubyRacerRuntime::Context</a>
+  
+    <li><a href="../../../ExecJS/RubyRhinoRuntime.html">ExecJS::RubyRhinoRuntime</a>
+  
+    <li><a href="../../../ExecJS/RubyRhinoRuntime/Context.html">ExecJS::RubyRhinoRuntime::Context</a>
+  
+    <li><a href="../../../ExecJS/Runtime.html">ExecJS::Runtime</a>
+  
+    <li><a href="../../../ExecJS/Runtime/Context.html">ExecJS::Runtime::Context</a>
+  
+    <li><a href="../../../ExecJS/RuntimeError.html">ExecJS::RuntimeError</a>
+  
+    <li><a href="../../../ExecJS/RuntimeUnavailable.html">ExecJS::RuntimeUnavailable</a>
+  
+    <li><a href="../../../ExecJS/Runtimes.html">ExecJS::Runtimes</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation" class="description">
+  
+<pre>http://www.JSON.org/json2.js
+2011-01-18
+
+Public Domain.
+
+NO WARRANTY EXPRESSED OR IMPLIED. USE AT YOUR OWN RISK.
+
+See http://www.JSON.org/js.html
+
+This code should be minified before deployment.
+See http://javascript.crockford.com/jsmin.html
+
+USE YOUR OWN COPY. IT IS EXTREMELY UNWISE TO LOAD CODE FROM SERVERS YOU DO
+NOT CONTROL.
+
+This file creates a global JSON object containing two methods: stringify
+and parse.
+
+    JSON.stringify(value, replacer, space)
+        value       any JavaScript value, usually an object or array.
+
+        replacer    an optional parameter that determines how object
+                    values are stringified for objects. It can be a
+                    function or an array of strings.
+
+        space       an optional parameter that specifies the indentation
+                    of nested structures. If it is omitted, the text will
+                    be packed without extra whitespace. If it is a number,
+                    it will specify the number of spaces to indent at each
+                    level. If it is a string (such as &#39;\t&#39; or &#39;&amp;nbsp;&#39;),
+                    it contains the characters used to indent at each level.
+
+        This method produces a JSON text from a JavaScript value.
+
+        When an object value is found, if the object contains a toJSON
+        method, its toJSON method will be called and the result will be
+        stringified. A toJSON method does not serialize: it returns the
+        value represented by the name/value pair that should be serialized,
+        or undefined if nothing should be serialized. The toJSON method
+        will be passed the key associated with the value, and this will be
+        bound to the value
+
+        For example, this would serialize Dates as ISO strings.
+
+            Date.prototype.toJSON = function (key) {
+                function f(n) {
+                    // Format integers to have at least two digits.
+                    return n &lt; 10 ? &#39;0&#39; + n : n;
+                }
+
+                return this.getUTCFullYear()   + &#39;-&#39; +
+                     f(this.getUTCMonth() + 1) + &#39;-&#39; +
+                     f(this.getUTCDate())      + &#39;T&#39; +
+                     f(this.getUTCHours())     + &#39;:&#39; +
+                     f(this.getUTCMinutes())   + &#39;:&#39; +
+                     f(this.getUTCSeconds())   + &#39;Z&#39;;
+            };
+
+        You can provide an optional replacer method. It will be passed the
+        key and value of each member, with this bound to the containing
+        object. The value that is returned from your method will be
+        serialized. If your method returns undefined, then the member will
+        be excluded from the serialization.
+
+        If the replacer parameter is an array of strings, then it will be
+        used to select the members to be serialized. It filters the results
+        such that only members with keys listed in the replacer array are
+        stringified.
+
+        Values that do not have JSON representations, such as undefined or
+        functions, will not be serialized. Such values in objects will be
+        dropped; in arrays they will be replaced with null. You can use
+        a replacer function to replace those with JSON values.
+        JSON.stringify(undefined) returns undefined.
+
+        The optional space parameter produces a stringification of the
+        value that is filled with line breaks and indentation to make it
+        easier to read.
+
+        If the space parameter is a non-empty string, then that string will
+        be used for indentation. If the space parameter is a number, then
+        the indentation will be that many spaces.
+
+        Example:
+
+        text = JSON.stringify([&#39;e&#39;, {pluribus: &#39;unum&#39;}]);
+        // text is &#39;[&quot;e&quot;,{&quot;pluribus&quot;:&quot;unum&quot;}]&#39;
+
+        text = JSON.stringify([&#39;e&#39;, {pluribus: &#39;unum&#39;}], null, &#39;\t&#39;);
+        // text is &#39;[\n\t&quot;e&quot;,\n\t{\n\t\t&quot;pluribus&quot;: &quot;unum&quot;\n\t}\n]&#39;
+
+        text = JSON.stringify([new Date()], function (key, value) {
+            return this[key] instanceof Date ?
+                &#39;Date(&#39; + this[key] + &#39;)&#39; : value;
+        });
+        // text is &#39;[&quot;Date(---current time---)&quot;]&#39;
+
+    JSON.parse(text, reviver)
+        This method parses a JSON text to produce an object or array.
+        It can throw a SyntaxError exception.
+
+        The optional reviver parameter is a function that can filter and
+        transform the results. It receives each of the keys and values,
+        and its return value is used instead of the original value.
+        If it returns what it received, then the structure is not modified.
+        If it returns undefined then the member is deleted.
+
+        Example:
+
+        // Parse the text. Values that look like ISO date strings will
+        // be converted to Date objects.
+
+        myData = JSON.parse(text, function (key, value) {
+            var a;
+            if (typeof value === &#39;string&#39;) {
+                a =</pre>
+
+<p>/^(d{4})-(d{2})-(d{2})T(d{2}):(d{2}):(d{2}(?:.d*)?)Z$/.exec(value);</p>
+
+<pre>                  if (a) {
+                      return new Date(Date.UTC(+a[1], +a[2] - 1, +a[3], +a[4],
+                          +a[5], +a[6]));
+                  }
+              }
+              return value;
+          });
+
+          myData = JSON.parse(&#39;[&quot;Date(09/09/2001)&quot;]&#39;, function (key, value) {
+              var d;
+              if (typeof value === &#39;string&#39; &amp;&amp;
+                      value.slice(0, 5) === &#39;Date(&#39; &amp;&amp;
+                      value.slice(-1) === &#39;)&#39;) {
+                  d = new Date(value.slice(5, -1));
+                  if (d) {
+                      return d;
+                  }
+              }
+              return value;
+          });
+
+  This is a reference implementation. You are free to copy, modify, or
+  redistribute.
+
+jslint evil: true, strict: false, regexp: false</pre>
+
+<p>/*members “”, “b”, “t”, “n”, “f”, “r”, “&quot;”, JSON, “\”, apply,</p>
+
+<pre>   call, charCodeAt, getUTCDate, getUTCFullYear, getUTCHours,
+   getUTCMinutes, getUTCMonth, getUTCSeconds, hasOwnProperty, join,
+   lastIndex, length, parse, prototype, push, replace, slice, stringify,
+   test, toJSON, toString, valueOf
+/</pre>
+
+<p>// Create a JSON object only if one does not already exist. We create the
+// methods in a closure to avoid creating global variables.</p>
+
+<p>(function (global) {</p>
+
+<pre>if (!global.JSON) {
+    global.JSON = {};
+}
+
+var JSON = global.JSON;
+
+&quot;use strict&quot;;
+
+function f(n) {
+    // Format integers to have at least two digits.
+    return n &lt; 10 ? &#39;0&#39; + n : n;
+}
+
+if (typeof Date.prototype.toJSON !== &#39;function&#39;) {
+
+    Date.prototype.toJSON = function (key) {
+
+        return isFinite(this.valueOf()) ?
+            this.getUTCFullYear()     + &#39;-&#39; +
+            f(this.getUTCMonth() + 1) + &#39;-&#39; +
+            f(this.getUTCDate())      + &#39;T&#39; +
+            f(this.getUTCHours())     + &#39;:&#39; +
+            f(this.getUTCMinutes())   + &#39;:&#39; +
+            f(this.getUTCSeconds())   + &#39;Z&#39; : null;
+    };
+
+    String.prototype.toJSON      =
+        Number.prototype.toJSON  =
+        Boolean.prototype.toJSON = function (key) {
+            return this.valueOf();
+        };
+}
+
+var cx = /[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
+    escapable = /[\\\&quot;\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
+    gap,
+    indent,
+    meta = {    // table of character substitutions
+        &#39;\b&#39;: &#39;\\b&#39;,
+        &#39;\t&#39;: &#39;\\t&#39;,
+        &#39;\n&#39;: &#39;\\n&#39;,
+        &#39;\f&#39;: &#39;\\f&#39;,
+        &#39;\r&#39;: &#39;\\r&#39;,
+        &#39;&quot;&#39; : &#39;\\&quot;&#39;,
+        &#39;\\&#39;: &#39;\\\\&#39;
+    },
+    rep;
+
+function quote(string) {</pre>
+
+<p>// If the string contains no control characters, no quote characters, and
+no // backslash characters, then we can safely slap some quotes around it.
+// Otherwise we must also replace the offending characters with safe escape
+// sequences.</p>
+
+<pre>    escapable.lastIndex = 0;
+    return escapable.test(string) ? &#39;&quot;&#39; + string.replace(escapable, function (a) {
+        var c = meta[a];
+        return typeof c === &#39;string&#39; ? c :
+            &#39;\\u&#39; + (&#39;0000&#39; + a.charCodeAt(0).toString(16)).slice(-4);
+    }) + &#39;&quot;&#39; : &#39;&quot;&#39; + string + &#39;&quot;&#39;;
+}
+
+function str(key, holder) {</pre>
+
+<p>// Produce a string from <a href="http://key">holder</a>.</p>
+
+<pre>var i,          // The loop counter.
+    k,          // The member key.
+    v,          // The member value.
+    length,
+    mind = gap,
+    partial,
+    value = holder[key];</pre>
+
+<p>// If the value has a toJSON method, call it to obtain a replacement value.</p>
+
+<pre>if (value &amp;&amp; typeof value === &#39;object&#39; &amp;&amp;
+        typeof value.toJSON === &#39;function&#39;) {
+    value = value.toJSON(key);
+}</pre>
+
+<p>// If we were called with a replacer function, then call the replacer to //
+obtain a replacement value.</p>
+
+<pre>if (typeof rep === &#39;function&#39;) {
+    value = rep.call(holder, key, value);
+}</pre>
+
+<p>// What happens next depends on the value&#39;s type.</p>
+
+<pre>switch (typeof value) {
+case &#39;string&#39;:
+    return quote(value);
+
+case &#39;number&#39;:</pre>
+
+<p>// JSON numbers must be finite. Encode non-finite numbers as null.</p>
+
+<pre>    return isFinite(value) ? String(value) : &#39;null&#39;;
+
+case &#39;boolean&#39;:
+case &#39;null&#39;:</pre>
+
+<p>// If the value is a boolean or null, convert it to a string. Note: //
+typeof null does not produce &#39;null&#39;. The case is included here in
+// the remote chance that this gets fixed someday.</p>
+
+<pre>return String(value);</pre>
+
+<p>// If the type is &#39;object&#39;, we might be dealing with an object or
+an array or // null.</p>
+
+<pre>case &#39;object&#39;:</pre>
+
+<p>// Due to a specification blunder in ECMAScript, typeof null is
+&#39;object&#39;, // so watch out for that case.</p>
+
+<pre>if (!value) {
+    return &#39;null&#39;;
+}</pre>
+
+<p>// Make an array to hold the partial results of stringifying this object
+value.</p>
+
+<pre>gap += indent;
+partial = [];</pre>
+
+<p>// Is the value an array?</p>
+
+<pre>if (Object.prototype.toString.apply(value) === &#39;[object Array]&#39;) {</pre>
+
+<p>// The value is an array. Stringify every element. Use null as a
+placeholder // for non-JSON values.</p>
+
+<pre>length = value.length;
+for (i = 0; i &lt; length; i += 1) {
+    partial[i] = str(i, value) || &#39;null&#39;;
+}</pre>
+
+<p>// Join all of the elements together, separated with commas, and wrap them
+in // brackets.</p>
+
+<pre>    v = partial.length === 0 ? &#39;[]&#39; : gap ?
+        &#39;[\n&#39; + gap + partial.join(&#39;,\n&#39; + gap) + &#39;\n&#39; + mind + &#39;]&#39; :
+        &#39;[&#39; + partial.join(&#39;,&#39;) + &#39;]&#39;;
+    gap = mind;
+    return v;
+}</pre>
+
+<p>// If the replacer is an array, use it to select the members to be
+stringified.</p>
+
+<pre>if (rep &amp;&amp; typeof rep === &#39;object&#39;) {
+    length = rep.length;
+    for (i = 0; i &lt; length; i += 1) {
+        k = rep[i];
+        if (typeof k === &#39;string&#39;) {
+            v = str(k, value);
+            if (v) {
+                partial.push(quote(k) + (gap ? &#39;: &#39; : &#39;:&#39;) + v);
+            }
+        }
+    }
+} else {</pre>
+
+<p>// Otherwise, iterate through all of the keys in the object.</p>
+
+<pre>    for (k in value) {
+        if (Object.hasOwnProperty.call(value, k)) {
+            v = str(k, value);
+            if (v) {
+                partial.push(quote(k) + (gap ? &#39;: &#39; : &#39;:&#39;) + v);
+            }
+        }
+    }
+}</pre>
+
+<p>// Join all of the member texts together, separated with commas, // and
+wrap them in braces.</p>
+
+<pre>        v = partial.length === 0 ? &#39;{}&#39; : gap ?
+            &#39;{\n&#39; + gap + partial.join(&#39;,\n&#39; + gap) + &#39;\n&#39; + mind + &#39;}&#39; :
+            &#39;{&#39; + partial.join(&#39;,&#39;) + &#39;}&#39;;
+        gap = mind;
+        return v;
+    }
+}</pre>
+
+<p>// If the JSON object does not yet have a stringify method, give it one.</p>
+
+<pre>if (typeof JSON.stringify !== &#39;function&#39;) {
+    JSON.stringify = function (value, replacer, space) {</pre>
+
+<p>// The stringify method takes a value and an optional replacer, and an
+optional // space parameter, and returns a JSON text. The replacer can be a
+function // that can replace values, or an array of strings that will
+select the keys. // A default replacer method can be provided. Use of the
+space parameter can // produce text that is more easily readable.</p>
+
+<pre>var i;
+gap = &#39;&#39;;
+indent = &#39;&#39;;</pre>
+
+<p>// If the space parameter is a number, make an indent string containing
+that // many spaces.</p>
+
+<pre>if (typeof space === &#39;number&#39;) {
+    for (i = 0; i &lt; space; i += 1) {
+        indent += &#39; &#39;;
+    }</pre>
+
+<p>// If the space parameter is a string, it will be used as the indent
+string.</p>
+
+<pre>} else if (typeof space === &#39;string&#39;) {
+    indent = space;
+}</pre>
+
+<p>// If there is a replacer, it must be a function or an array. // Otherwise,
+throw an error.</p>
+
+<pre>rep = replacer;
+if (replacer &amp;&amp; typeof replacer !== &#39;function&#39; &amp;&amp;
+        (typeof replacer !== &#39;object&#39; ||
+        typeof replacer.length !== &#39;number&#39;)) {
+    throw new Error(&#39;JSON.stringify&#39;);
+}</pre>
+
+<p>// Make a fake root object containing our value under the key of
+&#39;&#39;. // Return the result of stringifying the value.</p>
+
+<pre>        return str(&#39;&#39;, {&#39;&#39;: value});
+    };
+}</pre>
+
+<p>// If the JSON object does not yet have a parse method, give it one.</p>
+
+<pre>if (typeof JSON.parse !== &#39;function&#39;) {
+    JSON.parse = function (text, reviver) {</pre>
+
+<p>// The parse method takes a text and an optional reviver function, and
+returns // a JavaScript value if the text is a valid JSON text.</p>
+
+<pre>var j;
+
+function walk(holder, key) {</pre>
+
+<p>// The walk method is used to recursively walk the resulting structure so
+// that modifications can be made.</p>
+
+<pre>    var k, v, value = holder[key];
+    if (value &amp;&amp; typeof value === &#39;object&#39;) {
+        for (k in value) {
+            if (Object.hasOwnProperty.call(value, k)) {
+                v = walk(value, k);
+                if (v !== undefined) {
+                    value[k] = v;
+                } else {
+                    delete value[k];
+                }
+            }
+        }
+    }
+    return reviver.call(holder, key, value);
+}</pre>
+
+<p>// Parsing happens in four stages. In the first stage, we replace certain
+// Unicode characters with escape sequences. JavaScript handles many
+characters // incorrectly, either silently deleting them, or treating them
+as line endings.</p>
+
+<pre>text = String(text);
+cx.lastIndex = 0;
+if (cx.test(text)) {
+    text = text.replace(cx, function (a) {
+        return &#39;\\u&#39; +
+            (&#39;0000&#39; + a.charCodeAt(0).toString(16)).slice(-4);
+    });
+}</pre>
+
+<p>// In the second stage, we run the text against regular expressions that
+look // for non-JSON patterns. We are especially concerned with
+&#39;()&#39; and &#39;new&#39; // because they can cause invocation, and
+&#39;=&#39; because it can cause mutation. // But just to be safe, we want
+to reject all unexpected forms.</p>
+
+<p>// We split the second stage into 4 regexp operations in order to work
+around // crippling inefficiencies in IE&#39;s and Safari&#39;s regexp
+engines. First we // replace the JSON backslash pairs with &#39;@&#39; (a
+non-JSON character). Second, we // replace all simple value tokens with
+&#39;]&#39; characters. Third, we delete all // open brackets that follow a
+colon or comma or that begin the text. Finally, // we look to see that the
+remaining characters are only whitespace or &#39;]&#39; or // &#39;,&#39;
+or &#39;:&#39; or &#39;{&#39; or &#39;}&#39;. If that is so, then the text
+is safe for eval.</p>
+
+<pre>if (/^[\],:{}\s]*$/
+        .test(text.replace(/\\(?:[&quot;\\\/bfnrt]|u[0-9a-fA-F]{4})/g, &#39;@&#39;)
+            .replace(/&quot;[^&quot;\\\n\r]*&quot;|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, &#39;]&#39;)
+            .replace(/(?:^|:|,)(?:\s*\[)+/g, &#39;&#39;))) {</pre>
+
+<p>// In the third stage we use the eval function to compile the text into a
+// JavaScript structure. The &#39;{&#39; operator is subject to a syntactic
+ambiguity // in JavaScript: it can begin a block or an object literal. We
+wrap the text // in parens to eliminate the ambiguity.</p>
+
+<pre>j = eval(&#39;(&#39; + text + &#39;)&#39;);</pre>
+
+<p>// In the optional fourth stage, we recursively walk the new structure,
+passing // each name/value pair to a reviver function for possible
+transformation.</p>
+
+<pre>    return typeof reviver === &#39;function&#39; ?
+        walk({&#39;&#39;: j}, &#39;&#39;) : j;
+}</pre>
+
+<p>// If the text is not JSON parseable, then a SyntaxError is thrown.</p>
+
+<pre>        throw new SyntaxError(&#39;JSON.parse&#39;);
+    };
+}</pre>
+
+<p>}(this));</p>
+
+</div>
+
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

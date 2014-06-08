@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+ Author: Yevgen Muntyan <muntyan@tamu.edu>
+ Copyright (C) 2006-2007 Yevgen Muntyan <muntyan@tamu.edu>
+
+ This library is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Library General Public
+ License as published by the Free Software Foundation; either
+ version 2 of the License, or (at your option) any later version.
+
+ This library is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ Library General Public License for more details.
+
+ You should have received a copy of the GNU Library General Public
+ License along with this library; if not, write to the
+ Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ Boston, MA 02111-1307, USA.
+
+-->
+<language id="libtool" _name="libtool" version="2.0" _section="Others">
+  <metadata>
+    <property name="mimetypes">text/x-libtool</property>
+    <property name="globs">*.la;*.lai;*.lo</property>
+    <property name="line-comment-start">#</property>
+  </metadata>
+
+  <styles>
+    <style id="constant" _name="Constant" map-to="def:constant"/>
+    <style id="boolean" _name="Boolean" map-to="libtool:constant"/>
+  </styles>
+
+  <definitions>
+    <context id="libtool">
+      <include>
+        <context ref="def:shell-like-comment"/>
+        <context end-at-line-end="true">
+          <start>\=</start>
+          <include>
+            <context ref="def:single-quoted-string"/>
+            <context ref="def:string"/>
+            <context ref="def:shell-like-comment"/>
+            <context ref="def:decimal" style-ref="constant"/>
+            <context style-ref="boolean">
+              <keyword>yes</keyword>
+              <keyword>no</keyword>
+            </context>
+          </include>
+        </context>
+      </include>
+    </context>
+  </definitions>
+</language>

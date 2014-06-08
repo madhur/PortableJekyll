@@ -1,0 +1,194 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>PangoEngineLang</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="Pango Reference Manual">
+<link rel="up" href="lowlevel.html" title="Low Level Functionality">
+<link rel="prev" href="pango-Engines.html" title="Engines">
+<link rel="next" href="PangoEngineShape.html" title="PangoEngineShape">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="pango-Engines.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="lowlevel.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Pango Reference Manual</th>
+<td><a accesskey="n" href="PangoEngineShape.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#PangoEngineLang.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#PangoEngineLang.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#PangoEngineLang.object-hierarchy" class="shortcut">Object Hierarchy</a>
+</td></tr>
+</table>
+<div class="refentry">
+<a name="PangoEngineLang"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="PangoEngineLang.top_of_page"></a>PangoEngineLang</span></h2>
+<p>PangoEngineLang — Rendering-system independent script engines</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="PangoEngineLang.stability-level"></a><h2>Stability Level</h2>
+Unstable, unless otherwise indicated
+</div>
+<div class="refsynopsisdiv">
+<a name="PangoEngineLang.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">                    <a class="link" href="PangoEngineLang.html#PangoEngineLang-struct" title="PangoEngineLang">PangoEngineLang</a>;
+struct              <a class="link" href="PangoEngineLang.html#PangoEngineLangClass" title="struct PangoEngineLangClass">PangoEngineLangClass</a>;
+#define             <a class="link" href="PangoEngineLang.html#PANGO-ENGINE-TYPE-LANG:CAPS" title="PANGO_ENGINE_TYPE_LANG">PANGO_ENGINE_TYPE_LANG</a>
+#define             <a class="link" href="PangoEngineLang.html#PANGO-ENGINE-LANG-DEFINE-TYPE:CAPS" title="PANGO_ENGINE_LANG_DEFINE_TYPE()">PANGO_ENGINE_LANG_DEFINE_TYPE</a>       (name,
+                                                         prefix,
+                                                         class_init,
+                                                         instance_init)
+</pre>
+</div>
+<div class="refsect1">
+<a name="PangoEngineLang.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
+   +----<a class="link" href="pango-Engines.html#PangoEngine">PangoEngine</a>
+         +----PangoEngineLang
+</pre>
+</div>
+<div class="refsect1">
+<a name="PangoEngineLang.description"></a><h2>Description</h2>
+<p>
+The <em class="firstterm">language engines</em> are rendering-system independent
+engines that determine line, word, and character breaks for character strings.
+These engines are used in <a class="link" href="pango-Text-Processing.html#pango-break" title="pango_break ()"><code class="function">pango_break()</code></a>.
+</p>
+</div>
+<div class="refsect1">
+<a name="PangoEngineLang.details"></a><h2>Details</h2>
+<div class="refsect2">
+<a name="PangoEngineLang-struct"></a><h3>PangoEngineLang</h3>
+<pre class="programlisting">typedef struct _PangoEngineLang PangoEngineLang;</pre>
+<p>
+The <a class="link" href="PangoEngineLang.html" title="PangoEngineLang"><span class="type">PangoEngineLang</span></a> class is implemented by engines that
+customize the rendering-system independent part of the
+Pango pipeline for a particular script or language. For
+instance, a custom <a class="link" href="PangoEngineLang.html" title="PangoEngineLang"><span class="type">PangoEngineLang</span></a> could be provided for
+Thai to implement the dictionary-based word boundary
+lookups needed for that language.
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="PangoEngineLangClass"></a><h3>struct PangoEngineLangClass</h3>
+<pre class="programlisting">struct PangoEngineLangClass {
+  void (*script_break) (PangoEngineLang *engine,
+			const char    *text,
+			int            len,
+			PangoAnalysis *analysis,
+			PangoLogAttr  *attrs,
+			int            attrs_len);
+};
+</pre>
+<p>
+Class structure for <a class="link" href="PangoEngineLang.html" title="PangoEngineLang"><span class="type">PangoEngineLang</span></a>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="structfield"><code><a name="PangoEngineLangClass.script-break"></a>script_break</code></em> ()</span></p></td>
+<td>Provides a custom implementation of <a class="link" href="pango-Text-Processing.html#pango-break" title="pango_break ()"><code class="function">pango_break()</code></a>.
+If <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>, <a class="link" href="pango-Text-Processing.html#pango-default-break" title="pango_default_break ()"><code class="function">pango_default_break()</code></a> is used instead. If not <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>, for
+Pango versions before 1.16 (module interface version before 1.6.0),
+this was called instead of <a class="link" href="pango-Text-Processing.html#pango-default-break" title="pango_default_break ()"><code class="function">pango_default_break()</code></a>, but in newer versions,
+<a class="link" href="pango-Text-Processing.html#pango-default-break" title="pango_default_break ()"><code class="function">pango_default_break()</code></a> is always called and this is called after that to
+allow tailoring the breaking results.</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="PANGO-ENGINE-TYPE-LANG:CAPS"></a><h3>PANGO_ENGINE_TYPE_LANG</h3>
+<pre class="programlisting">#define PANGO_ENGINE_TYPE_LANG "PangoEngineLang"
+</pre>
+<p>
+A string constant defining the engine type
+for language engines.
+These engines derive from <a class="link" href="PangoEngineLang.html" title="PangoEngineLang"><span class="type">PangoEngineLang</span></a>.
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="PANGO-ENGINE-LANG-DEFINE-TYPE:CAPS"></a><h3>PANGO_ENGINE_LANG_DEFINE_TYPE()</h3>
+<pre class="programlisting">#define             PANGO_ENGINE_LANG_DEFINE_TYPE(name, prefix, class_init, instance_init)</pre>
+<p>
+Outputs the necessary code for GObject type registration for a
+<a class="link" href="PangoEngineLang.html" title="PangoEngineLang"><span class="type">PangoEngineLang</span></a> class defined in a module. Two static symbols
+are defined.
+</p>
+<p>
+</p>
+<pre class="programlisting">
+ static GType <em class="replaceable"><code>prefix</code></em>_type;
+ static void <em class="replaceable"><code>prefix</code></em>_register_type (GTypeModule module);
+</pre>
+<p>
+</p>
+<p>
+The <code class="function"><em class="replaceable"><code>prefix</code></em>, <code class="function">_register_type()</code></code>
+function should be called in your <a class="link" href="pango-Engines.html#script-engine-init" title="script_engine_init ()"><code class="function">script_engine_init()</code></a> function for
+each type that your module implements, and then your <a class="link" href="pango-Engines.html#script-engine-create" title="script_engine_create ()"><code class="function">script_engine_create()</code></a>
+function can create instances of the object as follows:
+</p>
+<p>
+</p>
+<div class="informalexample">
+  <table class="listing_frame" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+      <tr>
+        <td class="listing_lines" align="right"><pre>1</pre></td>
+        <td class="listing_code"><pre class="programlisting"><span class="usertype">PangoEngine</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">engine </span><span class="symbol">=</span><span class="normal"> </span><span class="function"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-new">g_object_new</a></span><span class="normal"> </span><span class="symbol">(&lt;</span><span class="usertype">em</span><span class="normal"> class</span><span class="symbol">=</span><span class="string">"replaceable"</span><span class="symbol">&gt;&lt;</span><span class="normal">code</span><span class="symbol">&gt;</span><span class="normal">prefix</span><span class="symbol">&lt;/</span><span class="normal">code</span><span class="symbol">&gt;&lt;/</span><span class="normal">em</span><span class="symbol">&gt;</span><span class="normal">_type</span><span class="symbol">,</span><span class="normal"> <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS">NULL</a></span><span class="symbol">);</span></pre></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>name</code></em> :</span></p></td>
+<td>Name of the the type to register (for example:, <code class="literal">ArabicEngineFc</code>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>prefix</code></em> :</span></p></td>
+<td>Prefix for symbols that will be defined (for example:, <code class="literal">arabic_engine_fc</code>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>class_init</code></em> :</span></p></td>
+<td>Class initialization function for the new type, or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>instance_init</code></em> :</span></p></td>
+<td>Instance initialization function for the new type, or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

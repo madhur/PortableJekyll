@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Exceptions</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.74.3">
+<link rel="home" href="index.html" title="Libglade - Graphical Interface Description Loader API">
+<link rel="up" href="libglade-dtd.html" title="Glade 2.0 File Format">
+<link rel="prev" href="libglade-dtd.html" title="Glade 2.0 File Format">
+<link rel="next" href="libglade-lib.html" title="Part I. Libglade Library Reference">
+<meta name="generator" content="GTK-Doc V1.12 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="libglade-notes.html" title="Libglade Programming Notes">
+<link rel="chapter" href="libglade-dtd.html" title="Glade 2.0 File Format">
+<link rel="part" href="libglade-lib.html" title="Part I. Libglade Library Reference">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle">
+<td><a accesskey="p" href="libglade-dtd.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="libglade-dtd.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Libglade - Graphical Interface Description Loader API</th>
+<td><a accesskey="n" href="libglade-lib.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="sect1" lang="en">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="libglade-dtd-exceptions"></a>Exceptions</h2></div></div></div>
+<p>As some widgets do not implement properties for all
+      required properties.  This section documents some of the
+      exceptions built into libglade's logic.</p>
+<p>The following properties have custom handlers in libglade.
+      Most of these will probably become real properties in GTK+
+      2.2.</p>
+<div class="itemizedlist"><ul type="disc">
+<li><p><em class="parameter"><code>GtkWidget::visible</code></em> is handled
+	  specially so that it gets applied after children have been
+	  added.  This works around some sizing bugs in certain
+	  widgets (and is the same behaviour libglade-0.x had).</p></li>
+<li><p><em class="parameter"><code>GtkWidget::tooltip</code></em> implements
+	  tooltips for the widget.  The property value is the tooltip
+	  to set on the widget.</p></li>
+<li><p><em class="parameter"><code>GtkOptionMenu::history</code></em> sets
+	  which menu item index in the list should be selected
+	  initially with
+	  <code class="function">gtk_option_menu_set_history()</code>.</p></li>
+<li><p><em class="parameter"><code>GtkTextView::text</code></em> offers an
+	  easy way to set the contents of a text view's buffer.</p></li>
+<li><p><em class="parameter"><code>GtkCallendar::display_options</code></em>
+	  sets display options of a calendar with
+	  <code class="function">gtk_calendar_display_options()</code>.</p></li>
+<li><p><em class="parameter"><code>GtkRadioMenuItem::group</code></em> sets
+	  the group for the radio item.  The property value is the
+	  name of another widget in the group.  This property won't
+	  handle forward references like the
+	  <em class="parameter"><code>GtkRadioButton::group</code></em>
+	  property.</p></li>
+<li><p><em class="parameter"><code>GtkToolbar::tooltips</code></em> sets
+	  whether the toolbar shows tooltips with
+	  <code class="function">gtk_toolbar_set_tooltips()</code>.</p></li>
+<li><p><em class="parameter"><code>GtkStatusbar::has_resize_grip</code></em>
+	  sets whether the status bar has a resize grip in the bottom
+	  corner with
+	  <code class="function">gtk_statusbar_set_has_resize_grip()</code>.</p></li>
+<li><p><em class="parameter"><code>GtkRuler::metric</code></em> sets the
+	  bounds and metric type for the ruler with
+	  <code class="function">gtk_ruler_set_metric()</code>.</p></li>
+<li><p><em class="parameter"><code>GtkMenuItem::label</code></em>,
+	  <em class="parameter"><code>GtkMenuItem::use_underline</code></em> and
+	  <em class="parameter"><code>GtkMenuItem::use_stock</code></em> are used to
+	  create a label inside a menu item, and set whether it has a
+	  mnemonic (underlined letter), and whether it should be a
+	  stock item (standardised, translated label and an icon, if
+	  it is a GtkImageMenuItem).  These properties act similarly
+	  to the identically named <code class="classname">GtkButton</code>
+	  properties.</p></li>
+</ul></div>
+<p>There are custom handlers for a number of deprecated
+      widgets, and deprecated settings for some widgets.  These most
+      likely won't be converted to real properties in the
+      future.  These include:</p>
+<table class="simplelist" border="0" summary="Simple list">
+<tr><td><em class="parameter"><code>GtkPixmap::build_insensitive</code></em></td></tr>
+<tr><td><em class="parameter"><code>GtkPixmap::filename</code></em></td></tr>
+<tr><td><em class="parameter"><code>GtkProgress::format</code></em></td></tr>
+<tr><td><em class="parameter"><code>GtkCalendar::display_options</code></em></td></tr>
+<tr><td><em class="parameter"><code>GtkCList::column_widths</code></em></td></tr>
+<tr><td><em class="parameter"><code>GtkCList::selection_mode</code></em></td></tr>
+<tr><td><em class="parameter"><code>GtkCList::shadow_type</code></em></td></tr>
+<tr><td><em class="parameter"><code>GtkCList::show_titles</code></em></td></tr>
+<tr><td><em class="parameter"><code>GtkTree::selection_mode</code></em></td></tr>
+<tr><td><em class="parameter"><code>GtkTree::view_mode</code></em></td></tr>
+<tr><td><em class="parameter"><code>GtkTree::view_line</code></em></td></tr>
+<tr><td><em class="parameter"><code>GtkList::selection_mode</code></em></td></tr>
+<tr><td><em class="parameter"><code>GtkCheckMenuItem::always_show_toggle</code></em></td></tr>
+<tr><td><em class="parameter"><code>GtkText::text</code></em></td></tr>
+</table>
+<p><span class="emphasis"><em>XXXX - To be done</em></span></p>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.12</div>
+</body>
+</html>

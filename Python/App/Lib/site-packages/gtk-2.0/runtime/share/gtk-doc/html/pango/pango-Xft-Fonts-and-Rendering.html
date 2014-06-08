@@ -1,0 +1,970 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Xft Fonts and Rendering</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="Pango Reference Manual">
+<link rel="up" href="rendering.html" title="Rendering with Pango">
+<link rel="prev" href="pango-FreeType-Fonts-and-Rendering.html" title="FreeType Fonts and Rendering">
+<link rel="next" href="pango-Cairo-Rendering.html" title="Cairo Rendering">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="pango-FreeType-Fonts-and-Rendering.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="rendering.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Pango Reference Manual</th>
+<td><a accesskey="n" href="pango-Cairo-Rendering.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#pango-Xft-Fonts-and-Rendering.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#pango-Xft-Fonts-and-Rendering.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#pango-Xft-Fonts-and-Rendering.object-hierarchy" class="shortcut">Object Hierarchy</a>
+                   | 
+                  <a href="#pango-Xft-Fonts-and-Rendering.properties" class="shortcut">Properties</a>
+</td></tr>
+</table>
+<div class="refentry">
+<a name="pango-Xft-Fonts-and-Rendering"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="pango-Xft-Fonts-and-Rendering.top_of_page"></a>Xft Fonts and Rendering</span></h2>
+<p>Xft Fonts and Rendering — Font handling and rendering with the Xft backend</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="pango-Xft-Fonts-and-Rendering.synopsis"></a><h2>Synopsis</h2>
+<a name="PangoXftFont"></a><a name="PangoXftFontMap"></a><a name="PangoXftRenderer"></a><pre class="synopsis">                    <a class="link" href="pango-Xft-Fonts-and-Rendering.html#PangoXftFont-struct" title="PangoXftFont">PangoXftFont</a>;
+                    <a class="link" href="pango-Xft-Fonts-and-Rendering.html#PangoXftFontMap-struct" title="PangoXftFontMap">PangoXftFontMap</a>;
+#define             <a class="link" href="pango-Xft-Fonts-and-Rendering.html#PANGO-RENDER-TYPE-XFT:CAPS" title="PANGO_RENDER_TYPE_XFT">PANGO_RENDER_TYPE_XFT</a>
+<a class="link" href="pango-Text-Processing.html#PangoContext"><span class="returnvalue">PangoContext</span></a> *      <a class="link" href="pango-Xft-Fonts-and-Rendering.html#pango-xft-get-context" title="pango_xft_get_context ()">pango_xft_get_context</a>               (<em class="parameter"><code><span class="type">Display</span> *display</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> screen</code></em>);
+<a class="link" href="pango-Fonts.html#PangoFontMap"><span class="returnvalue">PangoFontMap</span></a> *      <a class="link" href="pango-Xft-Fonts-and-Rendering.html#pango-xft-get-font-map" title="pango_xft_get_font_map ()">pango_xft_get_font_map</a>              (<em class="parameter"><code><span class="type">Display</span> *display</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> screen</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="pango-Xft-Fonts-and-Rendering.html#pango-xft-set-default-substitute" title="pango_xft_set_default_substitute ()">pango_xft_set_default_substitute</a>    (<em class="parameter"><code><span class="type">Display</span> *display</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> screen</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Xft-Fonts-and-Rendering.html#PangoXftSubstituteFunc" title="PangoXftSubstituteFunc ()"><span class="type">PangoXftSubstituteFunc</span></a> func</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> data</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> notify</code></em>);
+<span class="returnvalue">void</span>                (<a class="link" href="pango-Xft-Fonts-and-Rendering.html#PangoXftSubstituteFunc" title="PangoXftSubstituteFunc ()">*PangoXftSubstituteFunc</a>)           (<em class="parameter"><code><span class="type">FcPattern</span> *pattern</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> data</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="pango-Xft-Fonts-and-Rendering.html#pango-xft-substitute-changed" title="pango_xft_substitute_changed ()">pango_xft_substitute_changed</a>        (<em class="parameter"><code><span class="type">Display</span> *display</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> screen</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="pango-Xft-Fonts-and-Rendering.html#pango-xft-shutdown-display" title="pango_xft_shutdown_display ()">pango_xft_shutdown_display</a>          (<em class="parameter"><code><span class="type">Display</span> *display</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> screen</code></em>);
+<span class="returnvalue">XftFont</span> *           <a class="link" href="pango-Xft-Fonts-and-Rendering.html#pango-xft-font-get-font" title="pango_xft_font_get_font ()">pango_xft_font_get_font</a>             (<em class="parameter"><code><a class="link" href="pango-Fonts.html#PangoFont"><span class="type">PangoFont</span></a> *font</code></em>);
+<span class="returnvalue">Display</span> *           <a class="link" href="pango-Xft-Fonts-and-Rendering.html#pango-xft-font-get-display" title="pango_xft_font_get_display ()">pango_xft_font_get_display</a>          (<em class="parameter"><code><a class="link" href="pango-Fonts.html#PangoFont"><span class="type">PangoFont</span></a> *font</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="pango-Xft-Fonts-and-Rendering.html#pango-xft-font-has-char" title="pango_xft_font_has_char ()">pango_xft_font_has_char</a>             (<em class="parameter"><code><a class="link" href="pango-Fonts.html#PangoFont"><span class="type">PangoFont</span></a> *font</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Unicode-Manipulation.html#gunichar"><span class="type">gunichar</span></a> wc</code></em>);
+<span class="returnvalue">FT_Face</span>             <a class="link" href="pango-Xft-Fonts-and-Rendering.html#pango-xft-font-lock-face" title="pango_xft_font_lock_face ()">pango_xft_font_lock_face</a>            (<em class="parameter"><code><a class="link" href="pango-Fonts.html#PangoFont"><span class="type">PangoFont</span></a> *font</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="pango-Xft-Fonts-and-Rendering.html#pango-xft-font-unlock-face" title="pango_xft_font_unlock_face ()">pango_xft_font_unlock_face</a>          (<em class="parameter"><code><a class="link" href="pango-Fonts.html#PangoFont"><span class="type">PangoFont</span></a> *font</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>               <a class="link" href="pango-Xft-Fonts-and-Rendering.html#pango-xft-font-get-glyph" title="pango_xft_font_get_glyph ()">pango_xft_font_get_glyph</a>            (<em class="parameter"><code><a class="link" href="pango-Fonts.html#PangoFont"><span class="type">PangoFont</span></a> *font</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Unicode-Manipulation.html#gunichar"><span class="type">gunichar</span></a> wc</code></em>);
+<a class="link" href="pango-Glyph-Storage.html#PangoGlyph" title="PangoGlyph"><span class="returnvalue">PangoGlyph</span></a>          <a class="link" href="pango-Xft-Fonts-and-Rendering.html#pango-xft-font-get-unknown-glyph" title="pango_xft_font_get_unknown_glyph ()">pango_xft_font_get_unknown_glyph</a>    (<em class="parameter"><code><a class="link" href="pango-Fonts.html#PangoFont"><span class="type">PangoFont</span></a> *font</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Unicode-Manipulation.html#gunichar"><span class="type">gunichar</span></a> wc</code></em>);
+struct              <a class="link" href="pango-Xft-Fonts-and-Rendering.html#PangoXftRenderer-struct" title="struct PangoXftRenderer">PangoXftRenderer</a>;
+struct              <a class="link" href="pango-Xft-Fonts-and-Rendering.html#PangoXftRendererClass" title="struct PangoXftRendererClass">PangoXftRendererClass</a>;
+<a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="returnvalue">PangoRenderer</span></a> *     <a class="link" href="pango-Xft-Fonts-and-Rendering.html#pango-xft-renderer-new" title="pango_xft_renderer_new ()">pango_xft_renderer_new</a>              (<em class="parameter"><code><span class="type">Display</span> *display</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> screen</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="pango-Xft-Fonts-and-Rendering.html#pango-xft-renderer-set-draw" title="pango_xft_renderer_set_draw ()">pango_xft_renderer_set_draw</a>         (<em class="parameter"><code><a class="link" href="pango-Xft-Fonts-and-Rendering.html#PangoXftRenderer"><span class="type">PangoXftRenderer</span></a> *xftrenderer</code></em>,
+                                                         <em class="parameter"><code><span class="type">XftDraw</span> *draw</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="pango-Xft-Fonts-and-Rendering.html#pango-xft-renderer-set-default-color" title="pango_xft_renderer_set_default_color ()">pango_xft_renderer_set_default_color</a>
+                                                        (<em class="parameter"><code><a class="link" href="pango-Xft-Fonts-and-Rendering.html#PangoXftRenderer"><span class="type">PangoXftRenderer</span></a> *xftrenderer</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Text-Attributes.html#PangoColor"><span class="type">PangoColor</span></a> *default_color</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="pango-Xft-Fonts-and-Rendering.html#pango-xft-render" title="pango_xft_render ()">pango_xft_render</a>                    (<em class="parameter"><code><span class="type">XftDraw</span> *draw</code></em>,
+                                                         <em class="parameter"><code><span class="type">XftColor</span> *color</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Fonts.html#PangoFont"><span class="type">PangoFont</span></a> *font</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Glyph-Storage.html#PangoGlyphString"><span class="type">PangoGlyphString</span></a> *glyphs</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> x</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> y</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="pango-Xft-Fonts-and-Rendering.html#pango-xft-picture-render" title="pango_xft_picture_render ()">pango_xft_picture_render</a>            (<em class="parameter"><code><span class="type">Display</span> *display</code></em>,
+                                                         <em class="parameter"><code><span class="type">Picture</span> src_picture</code></em>,
+                                                         <em class="parameter"><code><span class="type">Picture</span> dest_picture</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Fonts.html#PangoFont"><span class="type">PangoFont</span></a> *font</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Glyph-Storage.html#PangoGlyphString"><span class="type">PangoGlyphString</span></a> *glyphs</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> x</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> y</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="pango-Xft-Fonts-and-Rendering.html#pango-xft-render-transformed" title="pango_xft_render_transformed ()">pango_xft_render_transformed</a>        (<em class="parameter"><code><span class="type">XftDraw</span> *draw</code></em>,
+                                                         <em class="parameter"><code><span class="type">XftColor</span> *color</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Glyph-Storage.html#PangoMatrix"><span class="type">PangoMatrix</span></a> *matrix</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Fonts.html#PangoFont"><span class="type">PangoFont</span></a> *font</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Glyph-Storage.html#PangoGlyphString"><span class="type">PangoGlyphString</span></a> *glyphs</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> x</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> y</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="pango-Xft-Fonts-and-Rendering.html#pango-xft-render-layout-line" title="pango_xft_render_layout_line ()">pango_xft_render_layout_line</a>        (<em class="parameter"><code><span class="type">XftDraw</span> *draw</code></em>,
+                                                         <em class="parameter"><code><span class="type">XftColor</span> *color</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Layout-Objects.html#PangoLayoutLine"><span class="type">PangoLayoutLine</span></a> *line</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> x</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> y</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="pango-Xft-Fonts-and-Rendering.html#pango-xft-render-layout" title="pango_xft_render_layout ()">pango_xft_render_layout</a>             (<em class="parameter"><code><span class="type">XftDraw</span> *draw</code></em>,
+                                                         <em class="parameter"><code><span class="type">XftColor</span> *color</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Layout-Objects.html#PangoLayout"><span class="type">PangoLayout</span></a> *layout</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> x</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> y</code></em>);
+</pre>
+</div>
+<div class="refsect1">
+<a name="pango-Xft-Fonts-and-Rendering.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
+   +----<a class="link" href="pango-Fonts.html#PangoFont">PangoFont</a>
+         +----<a class="link" href="PangoFcFont.html" title="PangoFcFont">PangoFcFont</a>
+               +----PangoXftFont
+</pre>
+<pre class="synopsis">
+  <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
+   +----<a class="link" href="pango-Fonts.html#PangoFontMap">PangoFontMap</a>
+         +----<a class="link" href="PangoFcFontMap.html" title="PangoFcFontMap">PangoFcFontMap</a>
+               +----PangoXftFontMap
+</pre>
+<pre class="synopsis">
+  <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
+   +----<a class="link" href="pango-pango-renderer.html#PangoRenderer">PangoRenderer</a>
+         +----PangoXftRenderer
+</pre>
+</div>
+<div class="refsect1">
+<a name="pango-Xft-Fonts-and-Rendering.properties"></a><h2>Properties</h2>
+<pre class="synopsis">
+  "<a class="link" href="pango-Xft-Fonts-and-Rendering.html#PangoXftRenderer--display" title='The "display" property'>display</a>"                  <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>              : Write / Construct Only
+  "<a class="link" href="pango-Xft-Fonts-and-Rendering.html#PangoXftRenderer--screen" title='The "screen" property'>screen</a>"                   <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Write / Construct Only
+</pre>
+</div>
+<div class="refsect1">
+<a name="pango-Xft-Fonts-and-Rendering.description"></a><h2>Description</h2>
+<p>
+The Xft library is a library for displaying fonts on the X window
+system; internally it uses the fontconfig library to locate font
+files, and the FreeType library to load and render fonts. The
+Xft backend is the recommended Pango font backend for screen
+display with X. (The <a class="link" href="pango-Cairo-Rendering.html" title="Cairo Rendering">Cairo back end</a> is another possibility.)
+</p>
+<p>
+Using the Xft backend is generally straightforward;
+<a class="link" href="pango-Xft-Fonts-and-Rendering.html#pango-xft-get-context" title="pango_xft_get_context ()"><code class="function">pango_xft_get_context()</code></a> creates a context for a specified display
+and screen. You can then create a <a class="link" href="pango-Layout-Objects.html#PangoLayout"><span class="type">PangoLayout</span></a> with that context
+and render it with <a class="link" href="pango-Xft-Fonts-and-Rendering.html#pango-xft-render-layout" title="pango_xft_render_layout ()"><code class="function">pango_xft_render_layout()</code></a>. At a more advanced
+level, the low-level fontconfig options used for rendering fonts
+can be affected using <a class="link" href="pango-Xft-Fonts-and-Rendering.html#pango-xft-set-default-substitute" title="pango_xft_set_default_substitute ()"><code class="function">pango_xft_set_default_substitute()</code></a>, and
+<a class="link" href="pango-Xft-Fonts-and-Rendering.html#pango-xft-substitute-changed" title="pango_xft_substitute_changed ()"><code class="function">pango_xft_substitute_changed()</code></a>.
+</p>
+<p>
+A range of functions for drawing pieces of a layout, such as
+individual layout lines and glyphs strings are provided.  You can also
+directly create a <a class="link" href="pango-Xft-Fonts-and-Rendering.html#PangoXftRenderer"><span class="type">PangoXftRenderer</span></a>. Finally, in some advanced cases, it
+is useful to derive from <a class="link" href="pango-Xft-Fonts-and-Rendering.html#PangoXftRenderer"><span class="type">PangoXftRenderer</span></a>. Deriving from
+<a class="link" href="pango-Xft-Fonts-and-Rendering.html#PangoXftRenderer"><span class="type">PangoXftRenderer</span></a> is useful for two reasons. One reason is be to
+support custom attributes by overriding <a class="link" href="pango-pango-renderer.html#PangoRendererClass" title="struct PangoRendererClass"><span class="type">PangoRendererClass</span></a> virtual
+functions like 'prepare_run' or 'draw_shape'. The reason is to
+customize exactly how the final bits are drawn to the destination by
+overriding the <a class="link" href="pango-Xft-Fonts-and-Rendering.html#PangoXftRendererClass" title="struct PangoXftRendererClass"><span class="type">PangoXftRendererClass</span></a> virtual functions
+'composite_glyphs' and 'composite_trapezoids'.
+</p>
+</div>
+<div class="refsect1">
+<a name="pango-Xft-Fonts-and-Rendering.details"></a><h2>Details</h2>
+<div class="refsect2">
+<a name="PangoXftFont-struct"></a><h3>PangoXftFont</h3>
+<pre class="programlisting">typedef struct _PangoXftFont PangoXftFont;</pre>
+<p>
+<a class="link" href="pango-Xft-Fonts-and-Rendering.html#PangoXftFont"><span class="type">PangoXftFont</span></a> is an implementation of <a class="link" href="PangoFcFont.html" title="PangoFcFont"><span class="type">PangoFcFont</span></a> using the Xft
+library for rendering.  It is used in conjunction with <a class="link" href="pango-Xft-Fonts-and-Rendering.html#PangoXftFontMap"><span class="type">PangoXftFontMap</span></a>.
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="PangoXftFontMap-struct"></a><h3>PangoXftFontMap</h3>
+<pre class="programlisting">typedef struct _PangoXftFontMap PangoXftFontMap;</pre>
+<p>
+<a class="link" href="pango-Xft-Fonts-and-Rendering.html#PangoXftFontMap"><span class="type">PangoXftFontMap</span></a> is an implementation of <a class="link" href="PangoFcFontMap.html" title="PangoFcFontMap"><span class="type">PangoFcFontMap</span></a> suitable for
+the Xft library as the renderer.  It is used in to create fonts of
+type <a class="link" href="pango-Xft-Fonts-and-Rendering.html#PangoXftFont"><span class="type">PangoXftFont</span></a>.
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="PANGO-RENDER-TYPE-XFT:CAPS"></a><h3>PANGO_RENDER_TYPE_XFT</h3>
+<pre class="programlisting">#define PANGO_RENDER_TYPE_XFT "PangoRenderXft"
+</pre>
+<div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Warning</h3>
+<p><code class="literal">PANGO_RENDER_TYPE_XFT</code> is deprecated and should not be used in newly-written code.</p>
+</div>
+<p>
+A string constant that was used to identify shape engines that work
+with the Xft backend. See <a class="link" href="PangoFcFont.html#PANGO-RENDER-TYPE-FC:CAPS" title="PANGO_RENDER_TYPE_FC"><code class="literal">PANGO_RENDER_TYPE_FC</code></a> for the replacement.
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-xft-get-context"></a><h3>pango_xft_get_context ()</h3>
+<pre class="programlisting"><a class="link" href="pango-Text-Processing.html#PangoContext"><span class="returnvalue">PangoContext</span></a> *      pango_xft_get_context               (<em class="parameter"><code><span class="type">Display</span> *display</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> screen</code></em>);</pre>
+<div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Warning</h3>
+<p><code class="literal">pango_xft_get_context</code> has been deprecated since version 1.22 and should not be used in newly-written code. Use <a class="link" href="pango-Xft-Fonts-and-Rendering.html#pango-xft-get-font-map" title="pango_xft_get_font_map ()"><code class="function">pango_xft_get_font_map()</code></a> followed by
+<a class="link" href="pango-Fonts.html#pango-font-map-create-context" title="pango_font_map_create_context ()"><code class="function">pango_font_map_create_context()</code></a> instead.</p>
+</div>
+<p>
+Retrieves a <a class="link" href="pango-Text-Processing.html#PangoContext"><span class="type">PangoContext</span></a> appropriate for rendering with
+Xft fonts on the given screen of the given display.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>display</code></em> :</span></p></td>
+<td>an X display.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>screen</code></em> :</span></p></td>
+<td>an X screen.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the new <a class="link" href="pango-Text-Processing.html#PangoContext"><span class="type">PangoContext</span></a>.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-xft-get-font-map"></a><h3>pango_xft_get_font_map ()</h3>
+<pre class="programlisting"><a class="link" href="pango-Fonts.html#PangoFontMap"><span class="returnvalue">PangoFontMap</span></a> *      pango_xft_get_font_map              (<em class="parameter"><code><span class="type">Display</span> *display</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> screen</code></em>);</pre>
+<p>
+Returns the <span class="type">PangoXftFontmap</span> for the given display and screen.
+The fontmap is owned by Pango and will be valid until
+the display is closed.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>display</code></em> :</span></p></td>
+<td>an X display</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>screen</code></em> :</span></p></td>
+<td>the screen number of a screen within <em class="parameter"><code>display</code></em>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a <a class="link" href="pango-Fonts.html#PangoFontMap"><span class="type">PangoFontMap</span></a> object, owned by Pango. <span class="annotation">[<a href="http://foldoc.org/transfer%20none"><span class="acronym">transfer none</span></a>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-xft-set-default-substitute"></a><h3>pango_xft_set_default_substitute ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                pango_xft_set_default_substitute    (<em class="parameter"><code><span class="type">Display</span> *display</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> screen</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Xft-Fonts-and-Rendering.html#PangoXftSubstituteFunc" title="PangoXftSubstituteFunc ()"><span class="type">PangoXftSubstituteFunc</span></a> func</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> data</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> notify</code></em>);</pre>
+<p>
+Sets a function that will be called to do final configuration
+substitution on a <span class="type">FcPattern</span> before it is used to load
+the font. This function can be used to do things like set
+hinting and antialiasing options.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>display</code></em> :</span></p></td>
+<td>an X Display</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>screen</code></em> :</span></p></td>
+<td>the screen number of a screen within <em class="parameter"><code>display</code></em>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>func</code></em> :</span></p></td>
+<td>function to call to to do final config tweaking
+on <span class="type">FcPattern</span> objects.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td>data to pass to <em class="parameter"><code>func</code></em>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>notify</code></em> :</span></p></td>
+<td>function to call when <em class="parameter"><code>data</code></em> is no longer used.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="PangoXftSubstituteFunc"></a><h3>PangoXftSubstituteFunc ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                (*PangoXftSubstituteFunc)           (<em class="parameter"><code><span class="type">FcPattern</span> *pattern</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> data</code></em>);</pre>
+<p>
+Function type for doing final config tweaking on prepared FcPatterns.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>pattern</code></em> :</span></p></td>
+<td>the FcPattern to tweak.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td>user data.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-xft-substitute-changed"></a><h3>pango_xft_substitute_changed ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                pango_xft_substitute_changed        (<em class="parameter"><code><span class="type">Display</span> *display</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> screen</code></em>);</pre>
+<p>
+Call this function any time the results of the
+default substitution function set with
+<a class="link" href="pango-Xft-Fonts-and-Rendering.html#pango-xft-set-default-substitute" title="pango_xft_set_default_substitute ()"><code class="function">pango_xft_set_default_substitute()</code></a> change.
+That is, if your substitution function will return different
+results for the same input pattern, you must call this function.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>display</code></em> :</span></p></td>
+<td>an X Display</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>screen</code></em> :</span></p></td>
+<td>the screen number of a screen within <em class="parameter"><code>display</code></em>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-xft-shutdown-display"></a><h3>pango_xft_shutdown_display ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                pango_xft_shutdown_display          (<em class="parameter"><code><span class="type">Display</span> *display</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> screen</code></em>);</pre>
+<p>
+Release any resources that have been cached for the
+combination of <em class="parameter"><code>display</code></em> and <em class="parameter"><code>screen</code></em>. Note that when the
+X display is closed, resources are released automatically,
+without needing to call this function.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>display</code></em> :</span></p></td>
+<td>an X display</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>screen</code></em> :</span></p></td>
+<td>the screen number of a screen within <em class="parameter"><code>display</code></em>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-xft-font-get-font"></a><h3>pango_xft_font_get_font ()</h3>
+<pre class="programlisting"><span class="returnvalue">XftFont</span> *           pango_xft_font_get_font             (<em class="parameter"><code><a class="link" href="pango-Fonts.html#PangoFont"><span class="type">PangoFont</span></a> *font</code></em>);</pre>
+<p>
+Returns the XftFont of a font.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>font</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-Fonts.html#PangoFont"><span class="type">PangoFont</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the XftFont associated to <em class="parameter"><code>font</code></em>, or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>font</code></em> is <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-xft-font-get-display"></a><h3>pango_xft_font_get_display ()</h3>
+<pre class="programlisting"><span class="returnvalue">Display</span> *           pango_xft_font_get_display          (<em class="parameter"><code><a class="link" href="pango-Fonts.html#PangoFont"><span class="type">PangoFont</span></a> *font</code></em>);</pre>
+<p>
+Returns the X display of the XftFont of a font.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>font</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-Fonts.html#PangoFont"><span class="type">PangoFont</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the X display of the XftFont associated to <em class="parameter"><code>font</code></em>.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-xft-font-has-char"></a><h3>pango_xft_font_has_char ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            pango_xft_font_has_char             (<em class="parameter"><code><a class="link" href="pango-Fonts.html#PangoFont"><span class="type">PangoFont</span></a> *font</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Unicode-Manipulation.html#gunichar"><span class="type">gunichar</span></a> wc</code></em>);</pre>
+<div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Warning</h3>
+<p><code class="literal">pango_xft_font_has_char</code> is deprecated and should not be used in newly-written code.</p>
+</div>
+<p>
+Determines whether <em class="parameter"><code>font</code></em> has a glyph for the codepoint <em class="parameter"><code>wc</code></em>.
+</p>
+<p>
+Use <a class="link" href="PangoFcFont.html#pango-fc-font-has-char" title="pango_fc_font_has_char ()"><code class="function">pango_fc_font_has_char()</code></a> instead.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>font</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-Fonts.html#PangoFont"><span class="type">PangoFont</span></a> for the Xft backend</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>wc</code></em> :</span></p></td>
+<td>Unicode codepoint to look up</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if <em class="parameter"><code>font</code></em> has the requested codepoint.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-xft-font-lock-face"></a><h3>pango_xft_font_lock_face ()</h3>
+<pre class="programlisting"><span class="returnvalue">FT_Face</span>             pango_xft_font_lock_face            (<em class="parameter"><code><a class="link" href="pango-Fonts.html#PangoFont"><span class="type">PangoFont</span></a> *font</code></em>);</pre>
+<div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Warning</h3>
+<p><code class="literal">pango_xft_font_lock_face</code> is deprecated and should not be used in newly-written code.</p>
+</div>
+<p>
+Gets the FreeType <span class="type">FT_Face</span> associated with a font,
+This face will be kept around until you call
+<a class="link" href="pango-Xft-Fonts-and-Rendering.html#pango-xft-font-unlock-face" title="pango_xft_font_unlock_face ()"><code class="function">pango_xft_font_unlock_face()</code></a>.
+</p>
+<p>
+Use <a class="link" href="PangoFcFont.html#pango-fc-font-lock-face" title="pango_fc_font_lock_face ()"><code class="function">pango_fc_font_lock_face()</code></a> instead.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>font</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-Fonts.html#PangoFont"><span class="type">PangoFont</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the FreeType <span class="type">FT_Face</span> associated with <em class="parameter"><code>font</code></em>.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-xft-font-unlock-face"></a><h3>pango_xft_font_unlock_face ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                pango_xft_font_unlock_face          (<em class="parameter"><code><a class="link" href="pango-Fonts.html#PangoFont"><span class="type">PangoFont</span></a> *font</code></em>);</pre>
+<div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Warning</h3>
+<p><code class="literal">pango_xft_font_unlock_face</code> is deprecated and should not be used in newly-written code.</p>
+</div>
+<p>
+Releases a font previously obtained with
+<a class="link" href="pango-Xft-Fonts-and-Rendering.html#pango-xft-font-lock-face" title="pango_xft_font_lock_face ()"><code class="function">pango_xft_font_lock_face()</code></a>.
+</p>
+<p>
+Use <a class="link" href="PangoFcFont.html#pango-fc-font-unlock-face" title="pango_fc_font_unlock_face ()"><code class="function">pango_fc_font_unlock_face()</code></a> instead.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>font</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-Fonts.html#PangoFont"><span class="type">PangoFont</span></a>.</td>
+</tr></tbody>
+</table></div>
+<p class="since">Since 1.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-xft-font-get-glyph"></a><h3>pango_xft_font_get_glyph ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>               pango_xft_font_get_glyph            (<em class="parameter"><code><a class="link" href="pango-Fonts.html#PangoFont"><span class="type">PangoFont</span></a> *font</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Unicode-Manipulation.html#gunichar"><span class="type">gunichar</span></a> wc</code></em>);</pre>
+<div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Warning</h3>
+<p><code class="literal">pango_xft_font_get_glyph</code> is deprecated and should not be used in newly-written code.</p>
+</div>
+<p>
+Gets the glyph index for a given Unicode character
+for <em class="parameter"><code>font</code></em>. If you only want to determine
+whether the font has the glyph, use <a class="link" href="pango-Xft-Fonts-and-Rendering.html#pango-xft-font-has-char" title="pango_xft_font_has_char ()"><code class="function">pango_xft_font_has_char()</code></a>.
+</p>
+<p>
+Use <a class="link" href="PangoFcFont.html#pango-fc-font-get-glyph" title="pango_fc_font_get_glyph ()"><code class="function">pango_fc_font_get_glyph()</code></a> instead.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>font</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-Fonts.html#PangoFont"><span class="type">PangoFont</span></a> for the Xft backend</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>wc</code></em> :</span></p></td>
+<td>Unicode codepoint to look up</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the glyph index, or 0, if the Unicode
+character does not exist in the font.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-xft-font-get-unknown-glyph"></a><h3>pango_xft_font_get_unknown_glyph ()</h3>
+<pre class="programlisting"><a class="link" href="pango-Glyph-Storage.html#PangoGlyph" title="PangoGlyph"><span class="returnvalue">PangoGlyph</span></a>          pango_xft_font_get_unknown_glyph    (<em class="parameter"><code><a class="link" href="pango-Fonts.html#PangoFont"><span class="type">PangoFont</span></a> *font</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Unicode-Manipulation.html#gunichar"><span class="type">gunichar</span></a> wc</code></em>);</pre>
+<div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Warning</h3>
+<p><code class="literal">pango_xft_font_get_unknown_glyph</code> is deprecated and should not be used in newly-written code.</p>
+</div>
+<p>
+Returns the index of a glyph suitable for drawing <em class="parameter"><code>wc</code></em> as an
+unknown character.
+</p>
+<p>
+Use <a class="link" href="pango-Glyph-Storage.html#PANGO-GET-UNKNOWN-GLYPH:CAPS" title="PANGO_GET_UNKNOWN_GLYPH()"><code class="function">PANGO_GET_UNKNOWN_GLYPH()</code></a> instead.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>font</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-Fonts.html#PangoFont"><span class="type">PangoFont</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>wc</code></em> :</span></p></td>
+<td>the Unicode character for which a glyph is needed.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a glyph index into <em class="parameter"><code>font</code></em>.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="PangoXftRenderer-struct"></a><h3>struct PangoXftRenderer</h3>
+<pre class="programlisting">struct PangoXftRenderer;</pre>
+<p>
+<a class="link" href="pango-Xft-Fonts-and-Rendering.html#PangoXftRenderer"><span class="type">PangoXftRenderer</span></a> is a subclass of <a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a> used for rendering
+with Pango's Xft backend. It can be used directly, or it can be
+further subclassed to modify exactly how drawing of individual
+elements occurs.
+</p>
+<p class="since">Since 1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="PangoXftRendererClass"></a><h3>struct PangoXftRendererClass</h3>
+<pre class="programlisting">struct PangoXftRendererClass {
+  void (*composite_trapezoids) (PangoXftRenderer *xftrenderer,
+				PangoRenderPart   part,
+				XTrapezoid       *trapezoids,
+				int               n_trapezoids);
+  void (*composite_glyphs)     (PangoXftRenderer *xftrenderer,
+				XftFont          *xft_font,
+				XftGlyphSpec     *glyphs,
+				int               n_glyphs);
+};
+</pre>
+<p>
+The class structure for <a class="link" href="pango-Xft-Fonts-and-Rendering.html#PangoXftRenderer"><span class="type">PangoXftRenderer</span></a>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="PangoXftRendererClass.composite-trapezoids"></a>composite_trapezoids</code></em> ()</span></p></td>
+<td>draw the specified trapezoids using
+the current color and other attributes for <em class="parameter"><code>part</code></em>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="PangoXftRendererClass.composite-glyphs"></a>composite_glyphs</code></em> ()</span></p></td>
+<td>draw the specified glyphs using
+the current foreground color and other foreground
+attributes</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-xft-renderer-new"></a><h3>pango_xft_renderer_new ()</h3>
+<pre class="programlisting"><a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="returnvalue">PangoRenderer</span></a> *     pango_xft_renderer_new              (<em class="parameter"><code><span class="type">Display</span> *display</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> screen</code></em>);</pre>
+<p>
+Create a new <a class="link" href="pango-Xft-Fonts-and-Rendering.html#PangoXftRenderer"><span class="type">PangoXftRenderer</span></a> to allow rendering Pango objects
+with the Xft library. You must call <a class="link" href="pango-Xft-Fonts-and-Rendering.html#pango-xft-renderer-set-draw" title="pango_xft_renderer_set_draw ()"><code class="function">pango_xft_renderer_set_draw()</code></a> before
+using the renderer.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>display</code></em> :</span></p></td>
+<td>an X display</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>screen</code></em> :</span></p></td>
+<td>the index of the screen for <em class="parameter"><code>display</code></em> to which rendering will be done</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the newly created <a class="link" href="pango-Xft-Fonts-and-Rendering.html#PangoXftRenderer"><span class="type">PangoXftRenderer</span></a>, which should
+be freed with <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a>.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-xft-renderer-set-draw"></a><h3>pango_xft_renderer_set_draw ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                pango_xft_renderer_set_draw         (<em class="parameter"><code><a class="link" href="pango-Xft-Fonts-and-Rendering.html#PangoXftRenderer"><span class="type">PangoXftRenderer</span></a> *xftrenderer</code></em>,
+                                                         <em class="parameter"><code><span class="type">XftDraw</span> *draw</code></em>);</pre>
+<p>
+Sets the <span class="type">XftDraw</span> object that the renderer is drawing to.
+The renderer must not be currently active.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>xftrenderer</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-Xft-Fonts-and-Rendering.html#PangoXftRenderer"><span class="type">PangoXftRenderer</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>draw</code></em> :</span></p></td>
+<td>a <span class="type">XftDraw</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-xft-renderer-set-default-color"></a><h3>pango_xft_renderer_set_default_color ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                pango_xft_renderer_set_default_color
+                                                        (<em class="parameter"><code><a class="link" href="pango-Xft-Fonts-and-Rendering.html#PangoXftRenderer"><span class="type">PangoXftRenderer</span></a> *xftrenderer</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Text-Attributes.html#PangoColor"><span class="type">PangoColor</span></a> *default_color</code></em>);</pre>
+<p>
+Sets the default foreground color for a <span class="type">XftRenderer</span>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>xftrenderer</code></em> :</span></p></td>
+<td>a <span class="type">XftRenderer</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>default_color</code></em> :</span></p></td>
+<td>the default foreground color</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-xft-render"></a><h3>pango_xft_render ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                pango_xft_render                    (<em class="parameter"><code><span class="type">XftDraw</span> *draw</code></em>,
+                                                         <em class="parameter"><code><span class="type">XftColor</span> *color</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Fonts.html#PangoFont"><span class="type">PangoFont</span></a> *font</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Glyph-Storage.html#PangoGlyphString"><span class="type">PangoGlyphString</span></a> *glyphs</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> x</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> y</code></em>);</pre>
+<p>
+Renders a <a class="link" href="pango-Glyph-Storage.html#PangoGlyphString"><span class="type">PangoGlyphString</span></a> onto an <span class="type">XftDraw</span> object wrapping an X drawable.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>draw</code></em> :</span></p></td>
+<td>the <span class="type">XftDraw</span> object.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>color</code></em> :</span></p></td>
+<td>the color in which to draw the string</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>font</code></em> :</span></p></td>
+<td>the font in which to draw the string</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>glyphs</code></em> :</span></p></td>
+<td>the glyph string to draw</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>x</code></em> :</span></p></td>
+<td>the x position of start of string (in pixels)</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>y</code></em> :</span></p></td>
+<td>the y position of baseline (in pixels)</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-xft-picture-render"></a><h3>pango_xft_picture_render ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                pango_xft_picture_render            (<em class="parameter"><code><span class="type">Display</span> *display</code></em>,
+                                                         <em class="parameter"><code><span class="type">Picture</span> src_picture</code></em>,
+                                                         <em class="parameter"><code><span class="type">Picture</span> dest_picture</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Fonts.html#PangoFont"><span class="type">PangoFont</span></a> *font</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Glyph-Storage.html#PangoGlyphString"><span class="type">PangoGlyphString</span></a> *glyphs</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> x</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> y</code></em>);</pre>
+<p>
+Renders a <a class="link" href="pango-Glyph-Storage.html#PangoGlyphString"><span class="type">PangoGlyphString</span></a> onto an Xrender <span class="type">Picture</span> object.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>display</code></em> :</span></p></td>
+<td>an X display</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src_picture</code></em> :</span></p></td>
+<td>the source picture to draw the string with</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dest_picture</code></em> :</span></p></td>
+<td>the destination picture to draw the string onto</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>font</code></em> :</span></p></td>
+<td>the font in which to draw the string</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>glyphs</code></em> :</span></p></td>
+<td>the glyph string to draw</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>x</code></em> :</span></p></td>
+<td>the x position of start of string (in pixels)</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>y</code></em> :</span></p></td>
+<td>the y position of baseline (in pixels)</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-xft-render-transformed"></a><h3>pango_xft_render_transformed ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                pango_xft_render_transformed        (<em class="parameter"><code><span class="type">XftDraw</span> *draw</code></em>,
+                                                         <em class="parameter"><code><span class="type">XftColor</span> *color</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Glyph-Storage.html#PangoMatrix"><span class="type">PangoMatrix</span></a> *matrix</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Fonts.html#PangoFont"><span class="type">PangoFont</span></a> *font</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Glyph-Storage.html#PangoGlyphString"><span class="type">PangoGlyphString</span></a> *glyphs</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> x</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> y</code></em>);</pre>
+<p>
+Renders a <a class="link" href="pango-Glyph-Storage.html#PangoGlyphString"><span class="type">PangoGlyphString</span></a> onto a <span class="type">XftDraw</span>, possibly
+transforming the layed-out coordinates through a transformation
+matrix. Note that the transformation matrix for <em class="parameter"><code>font</code></em> is not
+changed, so to produce correct rendering results, the <em class="parameter"><code>font</code></em>
+must have been loaded using a <a class="link" href="pango-Text-Processing.html#PangoContext"><span class="type">PangoContext</span></a> with an identical
+transformation matrix to that passed in to this function.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>draw</code></em> :</span></p></td>
+<td>an <span class="type">XftDraw</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>color</code></em> :</span></p></td>
+<td>the color in which to draw the glyphs</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>matrix</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-Glyph-Storage.html#PangoMatrix"><span class="type">PangoMatrix</span></a>, or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> to use an identity transformation</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>font</code></em> :</span></p></td>
+<td>the font in which to draw the string</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>glyphs</code></em> :</span></p></td>
+<td>the glyph string to draw</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>x</code></em> :</span></p></td>
+<td>the x position of the start of the string (in Pango
+units in user space coordinates)</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>y</code></em> :</span></p></td>
+<td>the y position of the baseline (in Pango units
+in user space coordinates)</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-xft-render-layout-line"></a><h3>pango_xft_render_layout_line ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                pango_xft_render_layout_line        (<em class="parameter"><code><span class="type">XftDraw</span> *draw</code></em>,
+                                                         <em class="parameter"><code><span class="type">XftColor</span> *color</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Layout-Objects.html#PangoLayoutLine"><span class="type">PangoLayoutLine</span></a> *line</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> x</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> y</code></em>);</pre>
+<p>
+Render a <a class="link" href="pango-Layout-Objects.html#PangoLayoutLine"><span class="type">PangoLayoutLine</span></a> onto a <span class="type">XftDraw</span>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>draw</code></em> :</span></p></td>
+<td>an <span class="type">XftDraw</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>color</code></em> :</span></p></td>
+<td>the foreground color in which to draw the layout line
+(may be overridden by color attributes)</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>line</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-Layout-Objects.html#PangoLayoutLine"><span class="type">PangoLayoutLine</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>x</code></em> :</span></p></td>
+<td>the x position of start of string (in Pango units)</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>y</code></em> :</span></p></td>
+<td>the y position of baseline (in Pango units)</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-xft-render-layout"></a><h3>pango_xft_render_layout ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                pango_xft_render_layout             (<em class="parameter"><code><span class="type">XftDraw</span> *draw</code></em>,
+                                                         <em class="parameter"><code><span class="type">XftColor</span> *color</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Layout-Objects.html#PangoLayout"><span class="type">PangoLayout</span></a> *layout</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> x</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> y</code></em>);</pre>
+<p>
+Render a <a class="link" href="pango-Layout-Objects.html#PangoLayout"><span class="type">PangoLayout</span></a> onto a <span class="type">XftDraw</span>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>draw</code></em> :</span></p></td>
+<td>an <span class="type">XftDraw</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>color</code></em> :</span></p></td>
+<td>the foreground color in which to draw the layout
+(may be overridden by color attributes)</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>layout</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-Layout-Objects.html#PangoLayout"><span class="type">PangoLayout</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>x</code></em> :</span></p></td>
+<td>the X position of the left of the layout (in Pango units)</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>y</code></em> :</span></p></td>
+<td>the Y position of the top of the layout (in Pango units)</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.8</p>
+</div>
+</div>
+<div class="refsect1">
+<a name="pango-Xft-Fonts-and-Rendering.property-details"></a><h2>Property Details</h2>
+<div class="refsect2">
+<a name="PangoXftRenderer--display"></a><h3>The <code class="literal">"display"</code> property</h3>
+<pre class="programlisting">  "display"                  <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>              : Write / Construct Only</pre>
+<p>The display being rendered to.</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="PangoXftRenderer--screen"></a><h3>The <code class="literal">"screen"</code> property</h3>
+<pre class="programlisting">  "screen"                   <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Write / Construct Only</pre>
+<p>The screen being rendered to.</p>
+<p>Allowed values: &gt;= 0</p>
+<p>Default value: 0</p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

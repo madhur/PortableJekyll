@@ -1,0 +1,194 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>PangoFcDecoder</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="Pango Reference Manual">
+<link rel="up" href="lowlevel.html" title="Low Level Functionality">
+<link rel="prev" href="PangoFcFont.html" title="PangoFcFont">
+<link rel="next" href="pango-OpenType-Font-Handling.html" title="OpenType Font Handling">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="PangoFcFont.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="lowlevel.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Pango Reference Manual</th>
+<td><a accesskey="n" href="pango-OpenType-Font-Handling.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#PangoFcDecoder.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#PangoFcDecoder.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#PangoFcDecoder.object-hierarchy" class="shortcut">Object Hierarchy</a>
+</td></tr>
+</table>
+<div class="refentry">
+<a name="PangoFcDecoder"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="PangoFcDecoder.top_of_page"></a>PangoFcDecoder</span></h2>
+<p>PangoFcDecoder — Custom font encoding handling</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="PangoFcDecoder.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">struct              <a class="link" href="PangoFcDecoder.html#PangoFcDecoder-struct" title="struct PangoFcDecoder">PangoFcDecoder</a>;
+struct              <a class="link" href="PangoFcDecoder.html#PangoFcDecoderClass" title="struct PangoFcDecoderClass">PangoFcDecoderClass</a>;
+<span class="returnvalue">FcCharSet</span> *         <a class="link" href="PangoFcDecoder.html#pango-fc-decoder-get-charset" title="pango_fc_decoder_get_charset ()">pango_fc_decoder_get_charset</a>        (<em class="parameter"><code><a class="link" href="PangoFcDecoder.html" title="PangoFcDecoder"><span class="type">PangoFcDecoder</span></a> *decoder</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="PangoFcFont.html" title="PangoFcFont"><span class="type">PangoFcFont</span></a> *fcfont</code></em>);
+<a class="link" href="pango-Glyph-Storage.html#PangoGlyph" title="PangoGlyph"><span class="returnvalue">PangoGlyph</span></a>          <a class="link" href="PangoFcDecoder.html#pango-fc-decoder-get-glyph" title="pango_fc_decoder_get_glyph ()">pango_fc_decoder_get_glyph</a>          (<em class="parameter"><code><a class="link" href="PangoFcDecoder.html" title="PangoFcDecoder"><span class="type">PangoFcDecoder</span></a> *decoder</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="PangoFcFont.html" title="PangoFcFont"><span class="type">PangoFcFont</span></a> *fcfont</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint32"><span class="type">guint32</span></a> wc</code></em>);
+</pre>
+</div>
+<div class="refsect1">
+<a name="PangoFcDecoder.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
+   +----PangoFcDecoder
+</pre>
+</div>
+<div class="refsect1">
+<a name="PangoFcDecoder.description"></a><h2>Description</h2>
+<p>
+PangoFcDecoder represents a decoder that an application provides
+for handling a font that is encoded in a custom way.
+</p>
+</div>
+<div class="refsect1">
+<a name="PangoFcDecoder.details"></a><h2>Details</h2>
+<div class="refsect2">
+<a name="PangoFcDecoder-struct"></a><h3>struct PangoFcDecoder</h3>
+<pre class="programlisting">struct PangoFcDecoder;</pre>
+<p>
+<a class="link" href="PangoFcDecoder.html" title="PangoFcDecoder"><span class="type">PangoFcDecoder</span></a> is a virtual base class that implementations will
+inherit from.  It's the interface that is used to define a custom
+encoding for a font.  These objects are created in your code from a
+function callback that was originally registered with
+<a class="link" href="PangoFcFontMap.html#pango-fc-font-map-add-decoder-find-func" title="pango_fc_font_map_add_decoder_find_func ()"><code class="function">pango_fc_font_map_add_decoder_find_func()</code></a>.  Pango requires
+information about the supported charset for a font as well as the
+individual character to glyph conversions.  Pango gets that
+information via the <span class="type">get_charset</span> and <span class="type">get_glyph</span> callbacks into your
+object implementation.
+</p>
+<p class="since">Since 1.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="PangoFcDecoderClass"></a><h3>struct PangoFcDecoderClass</h3>
+<pre class="programlisting">struct PangoFcDecoderClass {
+  FcCharSet  *(*get_charset) (PangoFcDecoder *decoder,
+			      PangoFcFont    *fcfont);
+  PangoGlyph  (*get_glyph)   (PangoFcDecoder *decoder,
+			      PangoFcFont    *fcfont,
+			      guint32         wc);
+};
+</pre>
+<p>
+Class structure for <a class="link" href="PangoFcDecoder.html" title="PangoFcDecoder"><span class="type">PangoFcDecoder</span></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="PangoFcDecoderClass.get-charset"></a>get_charset</code></em> ()</span></p></td>
+<td>This returns an <span class="type">FcCharset</span> given a <a class="link" href="PangoFcFont.html" title="PangoFcFont"><span class="type">PangoFcFont</span></a> that
+includes a list of supported characters in the font.  The
+<span class="type">FcCharSet</span> that is returned should be an internal reference to your
+code.  Pango will not free this structure.  It is important that
+you make this callback fast because this callback is called
+separately for each character to determine Unicode coverage.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="PangoFcDecoderClass.get-glyph"></a>get_glyph</code></em> ()</span></p></td>
+<td>This returns a single <a class="link" href="pango-Glyph-Storage.html#PangoGlyph" title="PangoGlyph"><span class="type">PangoGlyph</span></a> for a given Unicode
+code point.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-fc-decoder-get-charset"></a><h3>pango_fc_decoder_get_charset ()</h3>
+<pre class="programlisting"><span class="returnvalue">FcCharSet</span> *         pango_fc_decoder_get_charset        (<em class="parameter"><code><a class="link" href="PangoFcDecoder.html" title="PangoFcDecoder"><span class="type">PangoFcDecoder</span></a> *decoder</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="PangoFcFont.html" title="PangoFcFont"><span class="type">PangoFcFont</span></a> *fcfont</code></em>);</pre>
+<p>
+Generates an <span class="type">FcCharSet</span> of supported characters for the fcfont
+given.  The returned <span class="type">FcCharSet</span> will be a reference to an
+internal value stored by the <a class="link" href="PangoFcDecoder.html" title="PangoFcDecoder"><span class="type">PangoFcDecoder</span></a> and must not
+be modified or freed.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>decoder</code></em> :</span></p></td>
+<td>a <a class="link" href="PangoFcDecoder.html" title="PangoFcDecoder"><span class="type">PangoFcDecoder</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>fcfont</code></em> :</span></p></td>
+<td>the <a class="link" href="PangoFcFont.html" title="PangoFcFont"><span class="type">PangoFcFont</span></a> to query.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the <span class="type">FcCharset</span> for <em class="parameter"><code>fcfont</code></em>; must not be modified
+or freed.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-fc-decoder-get-glyph"></a><h3>pango_fc_decoder_get_glyph ()</h3>
+<pre class="programlisting"><a class="link" href="pango-Glyph-Storage.html#PangoGlyph" title="PangoGlyph"><span class="returnvalue">PangoGlyph</span></a>          pango_fc_decoder_get_glyph          (<em class="parameter"><code><a class="link" href="PangoFcDecoder.html" title="PangoFcDecoder"><span class="type">PangoFcDecoder</span></a> *decoder</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="PangoFcFont.html" title="PangoFcFont"><span class="type">PangoFcFont</span></a> *fcfont</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint32"><span class="type">guint32</span></a> wc</code></em>);</pre>
+<p>
+Generates a <a class="link" href="pango-Glyph-Storage.html#PangoGlyph" title="PangoGlyph"><span class="type">PangoGlyph</span></a> for the given Unicode point using the
+custom decoder. For complex scripts where there can be multiple
+glyphs for a single character, the decoder will return whatever
+glyph is most convenient for it. (Usually whatever glyph is directly
+in the fonts character map table.)
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>decoder</code></em> :</span></p></td>
+<td>a <a class="link" href="PangoFcDecoder.html" title="PangoFcDecoder"><span class="type">PangoFcDecoder</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>fcfont</code></em> :</span></p></td>
+<td>a <a class="link" href="PangoFcFont.html" title="PangoFcFont"><span class="type">PangoFcFont</span></a> to query.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>wc</code></em> :</span></p></td>
+<td>the Unicode code point to convert to a single <a class="link" href="pango-Glyph-Storage.html#PangoGlyph" title="PangoGlyph"><span class="type">PangoGlyph</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the glyph index, or 0 if the glyph isn't
+covered by the font.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.6</p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

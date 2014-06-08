@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>class Celluloid::PoolManager - celluloid-0.15.2 Documentation</title>
+
+<link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../index.html">Home</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/celluloid/pool_manager.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">Object
+  
+</nav>
+
+    <!-- Included Modules -->
+<nav id="includes-section" class="section">
+  <h3 class="section-header">Included Modules</h3>
+
+  <ul class="link-list">
+  
+  
+    <li><a class="include" href="../Celluloid.html">Celluloid</a>
+  
+  
+  </ul>
+</nav>
+
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li ><a href="#method-c-new">::new</a>
+    
+    <li ><a href="#method-i-__crash_handler__">#__crash_handler__</a>
+    
+    <li ><a href="#method-i-__provision_worker__">#__provision_worker__</a>
+    
+    <li ><a href="#method-i-__shutdown__">#__shutdown__</a>
+    
+    <li ><a href="#method-i-_send_">#_send_</a>
+    
+    <li ><a href="#method-i-busy_size">#busy_size</a>
+    
+    <li ><a href="#method-i-idle_size">#idle_size</a>
+    
+    <li ><a href="#method-i-inspect">#inspect</a>
+    
+    <li ><a href="#method-i-is_a-3F">#is_a?</a>
+    
+    <li ><a href="#method-i-kind_of-3F">#kind_of?</a>
+    
+    <li class="calls-super" ><a href="#method-i-method_missing">#method_missing</a>
+    
+    <li ><a href="#method-i-methods">#methods</a>
+    
+    <li ><a href="#method-i-name">#name</a>
+    
+    <li class="calls-super" ><a href="#method-i-respond_to-3F">#respond_to?</a>
+    
+    <li ><a href="#method-i-size">#size</a>
+    
+    <li ><a href="#method-i-to_s">#to_s</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../Celluloid.html">Celluloid</a>
+  
+    <li><a href="../Celluloid/AbortError.html">Celluloid::AbortError</a>
+  
+    <li><a href="../Celluloid/AbstractProxy.html">Celluloid::AbstractProxy</a>
+  
+    <li><a href="../Celluloid/Actor.html">Celluloid::Actor</a>
+  
+    <li><a href="../Celluloid/Actor/Sleeper.html">Celluloid::Actor::Sleeper</a>
+  
+    <li><a href="../Celluloid/ActorProxy.html">Celluloid::ActorProxy</a>
+  
+    <li><a href="../Celluloid/AsyncCall.html">Celluloid::AsyncCall</a>
+  
+    <li><a href="../Celluloid/AsyncProxy.html">Celluloid::AsyncProxy</a>
+  
+    <li><a href="../Celluloid/BlockCall.html">Celluloid::BlockCall</a>
+  
+    <li><a href="../Celluloid/BlockProxy.html">Celluloid::BlockProxy</a>
+  
+    <li><a href="../Celluloid/BlockResponse.html">Celluloid::BlockResponse</a>
+  
+    <li><a href="../Celluloid/CPUCounter.html">Celluloid::CPUCounter</a>
+  
+    <li><a href="../Celluloid/CPUCounter/RbConfig.html">Celluloid::CPUCounter::RbConfig</a>
+  
+    <li><a href="../Celluloid/Call.html">Celluloid::Call</a>
+  
+    <li><a href="../Celluloid/CallChain.html">Celluloid::CallChain</a>
+  
+    <li><a href="../Celluloid/ClassMethods.html">Celluloid::ClassMethods</a>
+  
+    <li><a href="../Celluloid/Condition.html">Celluloid::Condition</a>
+  
+    <li><a href="../Celluloid/Condition/Waiter.html">Celluloid::Condition::Waiter</a>
+  
+    <li><a href="../Celluloid/ConditionError.html">Celluloid::ConditionError</a>
+  
+    <li><a href="../Celluloid/DeadActorError.html">Celluloid::DeadActorError</a>
+  
+    <li><a href="../Celluloid/DeadTaskError.html">Celluloid::DeadTaskError</a>
+  
+    <li><a href="../Celluloid/ErrorResponse.html">Celluloid::ErrorResponse</a>
+  
+    <li><a href="../Celluloid/EventedMailbox.html">Celluloid::EventedMailbox</a>
+  
+    <li><a href="../Celluloid/ExitEvent.html">Celluloid::ExitEvent</a>
+  
+    <li><a href="../Celluloid/FSM.html">Celluloid::FSM</a>
+  
+    <li><a href="../Celluloid/FSM/ClassMethods.html">Celluloid::FSM::ClassMethods</a>
+  
+    <li><a href="../Celluloid/FSM/State.html">Celluloid::FSM::State</a>
+  
+    <li><a href="../Celluloid/FSM/UnattachedError.html">Celluloid::FSM::UnattachedError</a>
+  
+    <li><a href="../Celluloid/FiberStackError.html">Celluloid::FiberStackError</a>
+  
+    <li><a href="../Celluloid/Future.html">Celluloid::Future</a>
+  
+    <li><a href="../Celluloid/Future/Result.html">Celluloid::Future::Result</a>
+  
+    <li><a href="../Celluloid/FutureProxy.html">Celluloid::FutureProxy</a>
+  
+    <li><a href="../Celluloid/Incident.html">Celluloid::Incident</a>
+  
+    <li><a href="../Celluloid/IncidentLogger.html">Celluloid::IncidentLogger</a>
+  
+    <li><a href="../Celluloid/IncidentLogger/Severity.html">Celluloid::IncidentLogger::Severity</a>
+  
+    <li><a href="../Celluloid/IncidentReporter.html">Celluloid::IncidentReporter</a>
+  
+    <li><a href="../Celluloid/IncidentReporter/Formatter.html">Celluloid::IncidentReporter::Formatter</a>
+  
+    <li><a href="../Celluloid/InstanceMethods.html">Celluloid::InstanceMethods</a>
+  
+    <li><a href="../Celluloid/InternalPool.html">Celluloid::InternalPool</a>
+  
+    <li><a href="../Celluloid/LinkingRequest.html">Celluloid::LinkingRequest</a>
+  
+    <li><a href="../Celluloid/LinkingResponse.html">Celluloid::LinkingResponse</a>
+  
+    <li><a href="../Celluloid/Links.html">Celluloid::Links</a>
+  
+    <li><a href="../Celluloid/LogEvent.html">Celluloid::LogEvent</a>
+  
+    <li><a href="../Celluloid/Logger.html">Celluloid::Logger</a>
+  
+    <li><a href="../Celluloid/Mailbox.html">Celluloid::Mailbox</a>
+  
+    <li><a href="../Celluloid/MailboxDead.html">Celluloid::MailboxDead</a>
+  
+    <li><a href="../Celluloid/MailboxShutdown.html">Celluloid::MailboxShutdown</a>
+  
+    <li><a href="../Celluloid/Method.html">Celluloid::Method</a>
+  
+    <li><a href="../Celluloid/NamingRequest.html">Celluloid::NamingRequest</a>
+  
+    <li><a href="../Celluloid/NotActorError.html">Celluloid::NotActorError</a>
+  
+    <li><a href="../Celluloid/NotTaskError.html">Celluloid::NotTaskError</a>
+  
+    <li><a href="../Celluloid/Notifications.html">Celluloid::Notifications</a>
+  
+    <li><a href="../Celluloid/Notifications/Fanout.html">Celluloid::Notifications::Fanout</a>
+  
+    <li><a href="../Celluloid/Notifications/Subscriber.html">Celluloid::Notifications::Subscriber</a>
+  
+    <li><a href="../Celluloid/PoolManager.html">Celluloid::PoolManager</a>
+  
+    <li><a href="../Celluloid/Properties.html">Celluloid::Properties</a>
+  
+    <li><a href="../Celluloid/Receiver.html">Celluloid::Receiver</a>
+  
+    <li><a href="../Celluloid/Receivers.html">Celluloid::Receivers</a>
+  
+    <li><a href="../Celluloid/Registry.html">Celluloid::Registry</a>
+  
+    <li><a href="../Celluloid/Registry/actor;.html">Celluloid::Registry::actor;</a>
+  
+    <li><a href="../Celluloid/Response.html">Celluloid::Response</a>
+  
+    <li><a href="../Celluloid/ResumableError.html">Celluloid::ResumableError</a>
+  
+    <li><a href="../Celluloid/RingBuffer.html">Celluloid::RingBuffer</a>
+  
+    <li><a href="../Celluloid/SignalConditionRequest.html">Celluloid::SignalConditionRequest</a>
+  
+    <li><a href="../Celluloid/Signals.html">Celluloid::Signals</a>
+  
+    <li><a href="../Celluloid/StackDump.html">Celluloid::StackDump</a>
+  
+    <li><a href="../Celluloid/StackDump/ActorState.html">Celluloid::StackDump::ActorState</a>
+  
+    <li><a href="../Celluloid/StackDump/DisplayBacktrace.html">Celluloid::StackDump::DisplayBacktrace</a>
+  
+    <li><a href="../Celluloid/StackDump/TaskState.html">Celluloid::StackDump::TaskState</a>
+  
+    <li><a href="../Celluloid/StackDump/ThreadState.html">Celluloid::StackDump::ThreadState</a>
+  
+    <li><a href="../Celluloid/SuccessResponse.html">Celluloid::SuccessResponse</a>
+  
+    <li><a href="../Celluloid/SupervisionGroup.html">Celluloid::SupervisionGroup</a>
+  
+    <li><a href="../Celluloid/SupervisionGroup/Member.html">Celluloid::SupervisionGroup::Member</a>
+  
+    <li><a href="../Celluloid/Supervisor.html">Celluloid::Supervisor</a>
+  
+    <li><a href="../Celluloid/SyncCall.html">Celluloid::SyncCall</a>
+  
+    <li><a href="../Celluloid/SyncProxy.html">Celluloid::SyncProxy</a>
+  
+    <li><a href="../Celluloid/SystemEvent.html">Celluloid::SystemEvent</a>
+  
+    <li><a href="../Celluloid/Task.html">Celluloid::Task</a>
+  
+    <li><a href="../Celluloid/Task/TerminatedError.html">Celluloid::Task::TerminatedError</a>
+  
+    <li><a href="../Celluloid/Task/TimeoutError.html">Celluloid::Task::TimeoutError</a>
+  
+    <li><a href="../Celluloid/TaskFiber.html">Celluloid::TaskFiber</a>
+  
+    <li><a href="../Celluloid/TaskSet.html">Celluloid::TaskSet</a>
+  
+    <li><a href="../Celluloid/TaskThread.html">Celluloid::TaskThread</a>
+  
+    <li><a href="../Celluloid/TerminationRequest.html">Celluloid::TerminationRequest</a>
+  
+    <li><a href="../Celluloid/Thread.html">Celluloid::Thread</a>
+  
+    <li><a href="../Celluloid/ThreadHandle.html">Celluloid::ThreadHandle</a>
+  
+    <li><a href="../Celluloid/TimeoutError.html">Celluloid::TimeoutError</a>
+  
+    <li><a href="../Celluloid/UUID.html">Celluloid::UUID</a>
+  
+    <li><a href="../Fiber.html">Fiber</a>
+  
+    <li><a href="../Thread.html">Thread</a>
+  
+    <li><a href="../org.html">org</a>
+  
+    <li><a href="../org/jruby.html">org::jruby</a>
+  
+    <li><a href="../org/jruby/ext.html">org::jruby::ext</a>
+  
+    <li><a href="../org/jruby/ext/fiber.html">org::jruby::ext::fiber</a>
+  
+    <li><a href="../org/jruby/ext/fiber/ThreadFiber.html">org::jruby::ext::fiber::ThreadFiber</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class Celluloid::PoolManager</h1>
+
+  <div id="description" class="description">
+    
+<p>Manages a fixed-size pool of workers Delegates work (i.e. methods) and
+supervises workers Don&#39;t use this class directly. Instead use
+MyKlass.pool</p>
+
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">(worker_class, options = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/celluloid/pool_manager.rb, line 12</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">worker_class</span>, <span class="ruby-identifier">options</span> = {})
+  <span class="ruby-ivar">@size</span> = <span class="ruby-identifier">options</span>[<span class="ruby-value">:size</span>] <span class="ruby-operator">||</span> [<span class="ruby-constant">Celluloid</span>.<span class="ruby-identifier">cores</span>, <span class="ruby-value">2</span>].<span class="ruby-identifier">max</span>
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-string">&quot;minimum pool size is 2&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@size</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">2</span>
+
+  <span class="ruby-ivar">@worker_class</span> = <span class="ruby-identifier">worker_class</span>
+  <span class="ruby-ivar">@args</span> = <span class="ruby-identifier">options</span>[<span class="ruby-value">:args</span>] <span class="ruby-operator">?</span> <span class="ruby-constant">Array</span>(<span class="ruby-identifier">options</span>[<span class="ruby-value">:args</span>]) <span class="ruby-operator">:</span> []
+
+  <span class="ruby-ivar">@idle</span> = <span class="ruby-ivar">@size</span>.<span class="ruby-identifier">times</span>.<span class="ruby-identifier">map</span> { <span class="ruby-identifier">worker_class</span>.<span class="ruby-identifier">new_link</span>(<span class="ruby-operator">*</span><span class="ruby-ivar">@args</span>) }
+
+  <span class="ruby-comment"># FIXME: Another data structure (e.g. Set) would be more appropriate</span>
+  <span class="ruby-comment"># here except it causes MRI to crash :o</span>
+  <span class="ruby-ivar">@busy</span> = []
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- new-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- new-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-__crash_handler__" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">__crash_handler__</span><span
+            class="method-args">(actor, reason)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Spawn a new worker for every crashed one</p>
+          
+          
+
+          
+          <div class="method-source-code" id="__crash_handler__-source">
+            <pre><span class="ruby-comment"># File lib/celluloid/pool_manager.rb, line 108</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">__crash_handler__</span>(<span class="ruby-identifier">actor</span>, <span class="ruby-identifier">reason</span>)
+  <span class="ruby-ivar">@busy</span>.<span class="ruby-identifier">delete</span> <span class="ruby-identifier">actor</span>
+  <span class="ruby-ivar">@idle</span>.<span class="ruby-identifier">delete</span> <span class="ruby-identifier">actor</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">reason</span>
+
+  <span class="ruby-ivar">@idle</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-ivar">@worker_class</span>.<span class="ruby-identifier">new_link</span>(<span class="ruby-operator">*</span><span class="ruby-ivar">@args</span>)
+  <span class="ruby-identifier">signal</span> <span class="ruby-value">:respawn_complete</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- __crash_handler__-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- __crash_handler__-method -->
+
+    
+      <div id="method-i-__provision_worker__" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">__provision_worker__</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Provision a new worker</p>
+          
+          
+
+          
+          <div class="method-source-code" id="__provision_worker__-source">
+            <pre><span class="ruby-comment"># File lib/celluloid/pool_manager.rb, line 93</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">__provision_worker__</span>
+  <span class="ruby-constant">Task</span>.<span class="ruby-identifier">current</span>.<span class="ruby-identifier">guard_warnings</span> = <span class="ruby-keyword">true</span>
+  <span class="ruby-keyword">while</span> <span class="ruby-ivar">@idle</span>.<span class="ruby-identifier">empty?</span>
+    <span class="ruby-comment"># Wait for responses from one of the busy workers</span>
+    <span class="ruby-identifier">response</span> = <span class="ruby-identifier">exclusive</span> { <span class="ruby-identifier">receive</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">msg</span><span class="ruby-operator">|</span> <span class="ruby-identifier">msg</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Response</span>) } }
+    <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">current</span>[<span class="ruby-value">:celluloid_actor</span>].<span class="ruby-identifier">handle_message</span>(<span class="ruby-identifier">response</span>)
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">worker</span> = <span class="ruby-ivar">@idle</span>.<span class="ruby-identifier">shift</span>
+  <span class="ruby-ivar">@busy</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">worker</span>
+
+  <span class="ruby-identifier">worker</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- __provision_worker__-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- __provision_worker__-method -->
+
+    
+      <div id="method-i-__shutdown__" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">__shutdown__</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="__shutdown__-source">
+            <pre><span class="ruby-comment"># File lib/celluloid/pool_manager.rb, line 26</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">__shutdown__</span>
+  <span class="ruby-identifier">terminators</span> = (<span class="ruby-ivar">@idle</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@busy</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">actor</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">begin</span>
+      <span class="ruby-identifier">actor</span>.<span class="ruby-identifier">future</span>(<span class="ruby-value">:terminate</span>)
+    <span class="ruby-keyword">rescue</span> <span class="ruby-constant">DeadActorError</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">terminators</span>.<span class="ruby-identifier">compact</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">terminator</span><span class="ruby-operator">|</span> <span class="ruby-identifier">terminator</span>.<span class="ruby-identifier">value</span> <span class="ruby-keyword">rescue</span> <span class="ruby-keyword">nil</span> }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- __shutdown__-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- __shutdown__-method -->
+
+    
+      <div id="method-i-_send_" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">_send_</span><span
+            class="method-args">(method, *args, &block)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="_send_-source">
+            <pre><span class="ruby-comment"># File lib/celluloid/pool_manager.rb, line 37</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">_send_</span>(<span class="ruby-identifier">method</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+  <span class="ruby-identifier">worker</span> = <span class="ruby-identifier">__provision_worker__</span>
+
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-identifier">worker</span>.<span class="ruby-identifier">_send_</span> <span class="ruby-identifier">method</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">DeadActorError</span> <span class="ruby-comment"># if we get a dead actor out of the pool</span>
+    <span class="ruby-identifier">wait</span> <span class="ruby-value">:respawn_complete</span>
+    <span class="ruby-identifier">worker</span> = <span class="ruby-identifier">__provision_worker__</span>
+    <span class="ruby-keyword">retry</span>
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Exception</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ex</span>
+    <span class="ruby-identifier">abort</span> <span class="ruby-identifier">ex</span>
+  <span class="ruby-keyword">ensure</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">worker</span>.<span class="ruby-identifier">alive?</span>
+      <span class="ruby-ivar">@idle</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">worker</span>
+      <span class="ruby-ivar">@busy</span>.<span class="ruby-identifier">delete</span> <span class="ruby-identifier">worker</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- _send_-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- _send_-method -->
+
+    
+      <div id="method-i-busy_size" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">busy_size</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="busy_size-source">
+            <pre><span class="ruby-comment"># File lib/celluloid/pool_manager.rb, line 84</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">busy_size</span>
+  <span class="ruby-ivar">@busy</span>.<span class="ruby-identifier">length</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- busy_size-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- busy_size-method -->
+
+    
+      <div id="method-i-idle_size" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">idle_size</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="idle_size-source">
+            <pre><span class="ruby-comment"># File lib/celluloid/pool_manager.rb, line 88</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">idle_size</span>
+  <span class="ruby-ivar">@idle</span>.<span class="ruby-identifier">length</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- idle_size-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- idle_size-method -->
+
+    
+      <div id="method-i-inspect" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">inspect</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="inspect-source">
+            <pre><span class="ruby-comment"># File lib/celluloid/pool_manager.rb, line 76</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">inspect</span>
+  <span class="ruby-identifier">_send_</span> <span class="ruby-value">:inspect</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- inspect-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- inspect-method -->
+
+    
+      <div id="method-i-is_a-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">is_a?</span><span
+            class="method-args">(klass)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="is_a-3F-source">
+            <pre><span class="ruby-comment"># File lib/celluloid/pool_manager.rb, line 60</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">is_a?</span>(<span class="ruby-identifier">klass</span>)
+  <span class="ruby-identifier">_send_</span> <span class="ruby-value">:is_a?</span>, <span class="ruby-identifier">klass</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- is_a-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- is_a-3F-method -->
+
+    
+      <div id="method-i-kind_of-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">kind_of?</span><span
+            class="method-args">(klass)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="kind_of-3F-source">
+            <pre><span class="ruby-comment"># File lib/celluloid/pool_manager.rb, line 64</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">kind_of?</span>(<span class="ruby-identifier">klass</span>)
+  <span class="ruby-identifier">_send_</span> <span class="ruby-value">:kind_of?</span>, <span class="ruby-identifier">klass</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- kind_of-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- kind_of-3F-method -->
+
+    
+      <div id="method-i-method_missing" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">method_missing</span><span
+            class="method-args">(method, *args, &block)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+            <div class="method-calls-super">
+              Calls superclass method
+              
+            </div>
+          
+
+          
+          <div class="method-source-code" id="method_missing-source">
+            <pre><span class="ruby-comment"># File lib/celluloid/pool_manager.rb, line 121</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">method</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">method</span>)
+    <span class="ruby-identifier">_send_</span> <span class="ruby-identifier">method</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-keyword">super</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- method_missing-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- method_missing-method -->
+
+    
+      <div id="method-i-methods" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">methods</span><span
+            class="method-args">(include_ancestors = true)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="methods-source">
+            <pre><span class="ruby-comment"># File lib/celluloid/pool_manager.rb, line 68</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">methods</span>(<span class="ruby-identifier">include_ancestors</span> = <span class="ruby-keyword">true</span>)
+  <span class="ruby-identifier">_send_</span> <span class="ruby-value">:methods</span>, <span class="ruby-identifier">include_ancestors</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- methods-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- methods-method -->
+
+    
+      <div id="method-i-name" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">name</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="name-source">
+            <pre><span class="ruby-comment"># File lib/celluloid/pool_manager.rb, line 56</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">name</span>
+  <span class="ruby-identifier">_send_</span> <span class="ruby-ivar">@mailbox</span>, <span class="ruby-value">:name</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- name-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- name-method -->
+
+    
+      <div id="method-i-respond_to-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">respond_to?</span><span
+            class="method-args">(method, include_private = false)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+            <div class="method-calls-super">
+              Calls superclass method
+              
+            </div>
+          
+
+          
+          <div class="method-source-code" id="respond_to-3F-source">
+            <pre><span class="ruby-comment"># File lib/celluloid/pool_manager.rb, line 117</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">method</span>, <span class="ruby-identifier">include_private</span> = <span class="ruby-keyword">false</span>)
+  <span class="ruby-keyword">super</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@worker_class</span>.<span class="ruby-identifier">instance_methods</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">method</span>.<span class="ruby-identifier">to_sym</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- respond_to-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- respond_to-3F-method -->
+
+    
+      <div id="method-i-size" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">size</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="size-source">
+            <pre><span class="ruby-comment"># File lib/celluloid/pool_manager.rb, line 80</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">size</span>
+  <span class="ruby-ivar">@size</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- size-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- size-method -->
+
+    
+      <div id="method-i-to_s" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">to_s</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="to_s-source">
+            <pre><span class="ruby-comment"># File lib/celluloid/pool_manager.rb, line 72</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">to_s</span>
+  <span class="ruby-identifier">_send_</span> <span class="ruby-value">:to_s</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- to_s-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- to_s-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

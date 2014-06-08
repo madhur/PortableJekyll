@@ -1,0 +1,638 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>GtkBuildable</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="GTK+ 2 Reference Manual">
+<link rel="up" href="Builder.html" title="Interface builder">
+<link rel="prev" href="Builder.html" title="Interface builder">
+<link rel="next" href="GtkBuilder.html" title="GtkBuilder">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="Builder.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="Builder.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GTK+ 2 Reference Manual</th>
+<td><a accesskey="n" href="GtkBuilder.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#GtkBuildable.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#GtkBuildable.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#GtkBuildable.object-hierarchy" class="shortcut">Object Hierarchy</a>
+                   | 
+                  <a href="#GtkBuildable.prerequisites" class="shortcut">Prerequisites</a>
+                   | 
+                  <a href="#GtkBuildable.implementations" class="shortcut">Known Implementations</a>
+</td></tr>
+</table>
+<div class="refentry">
+<a name="GtkBuildable"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="GtkBuildable.top_of_page"></a>GtkBuildable</span></h2>
+<p>GtkBuildable — Interface for objects that can be built by GtkBuilder</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="GtkBuildable.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+#include &lt;gtk/gtk.h&gt;
+
+                    <a class="link" href="GtkBuildable.html#GtkBuildable-struct" title="GtkBuildable">GtkBuildable</a>;
+struct              <a class="link" href="GtkBuildable.html#GtkBuildableIface" title="struct GtkBuildableIface">GtkBuildableIface</a>;
+<span class="returnvalue">void</span>                <a class="link" href="GtkBuildable.html#gtk-buildable-set-name" title="gtk_buildable_set_name ()">gtk_buildable_set_name</a>              (<em class="parameter"><code><a class="link" href="GtkBuildable.html" title="GtkBuildable"><span class="type">GtkBuildable</span></a> *buildable</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *name</code></em>);
+const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="GtkBuildable.html#gtk-buildable-get-name" title="gtk_buildable_get_name ()">gtk_buildable_get_name</a>              (<em class="parameter"><code><a class="link" href="GtkBuildable.html" title="GtkBuildable"><span class="type">GtkBuildable</span></a> *buildable</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkBuildable.html#gtk-buildable-add-child" title="gtk_buildable_add_child ()">gtk_buildable_add_child</a>             (<em class="parameter"><code><a class="link" href="GtkBuildable.html" title="GtkBuildable"><span class="type">GtkBuildable</span></a> *buildable</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkBuilder.html" title="GtkBuilder"><span class="type">GtkBuilder</span></a> *builder</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *child</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *type</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkBuildable.html#gtk-buildable-set-buildable-property" title="gtk_buildable_set_buildable_property ()">gtk_buildable_set_buildable_property</a>
+                                                        (<em class="parameter"><code><a class="link" href="GtkBuildable.html" title="GtkBuildable"><span class="type">GtkBuildable</span></a> *buildable</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkBuilder.html" title="GtkBuilder"><span class="type">GtkBuilder</span></a> *builder</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *name</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Generic-values.html#GValue"><span class="type">GValue</span></a> *value</code></em>);
+<a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="returnvalue">GObject</span></a> *           <a class="link" href="GtkBuildable.html#gtk-buildable-construct-child" title="gtk_buildable_construct_child ()">gtk_buildable_construct_child</a>       (<em class="parameter"><code><a class="link" href="GtkBuildable.html" title="GtkBuildable"><span class="type">GtkBuildable</span></a> *buildable</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkBuilder.html" title="GtkBuilder"><span class="type">GtkBuilder</span></a> *builder</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *name</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="GtkBuildable.html#gtk-buildable-custom-tag-start" title="gtk_buildable_custom_tag_start ()">gtk_buildable_custom_tag_start</a>      (<em class="parameter"><code><a class="link" href="GtkBuildable.html" title="GtkBuildable"><span class="type">GtkBuildable</span></a> *buildable</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkBuilder.html" title="GtkBuilder"><span class="type">GtkBuilder</span></a> *builder</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *child</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *tagname</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Simple-XML-Subset-Parser.html#GMarkupParser"><span class="type">GMarkupParser</span></a> *parser</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> *data</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkBuildable.html#gtk-buildable-custom-tag-end" title="gtk_buildable_custom_tag_end ()">gtk_buildable_custom_tag_end</a>        (<em class="parameter"><code><a class="link" href="GtkBuildable.html" title="GtkBuildable"><span class="type">GtkBuildable</span></a> *buildable</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkBuilder.html" title="GtkBuilder"><span class="type">GtkBuilder</span></a> *builder</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *child</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *tagname</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> *data</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkBuildable.html#gtk-buildable-custom-finished" title="gtk_buildable_custom_finished ()">gtk_buildable_custom_finished</a>       (<em class="parameter"><code><a class="link" href="GtkBuildable.html" title="GtkBuildable"><span class="type">GtkBuildable</span></a> *buildable</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkBuilder.html" title="GtkBuilder"><span class="type">GtkBuilder</span></a> *builder</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *child</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *tagname</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> data</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkBuildable.html#gtk-buildable-parser-finished" title="gtk_buildable_parser_finished ()">gtk_buildable_parser_finished</a>       (<em class="parameter"><code><a class="link" href="GtkBuildable.html" title="GtkBuildable"><span class="type">GtkBuildable</span></a> *buildable</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkBuilder.html" title="GtkBuilder"><span class="type">GtkBuilder</span></a> *builder</code></em>);
+<a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="returnvalue">GObject</span></a> *           <a class="link" href="GtkBuildable.html#gtk-buildable-get-internal-child" title="gtk_buildable_get_internal_child ()">gtk_buildable_get_internal_child</a>    (<em class="parameter"><code><a class="link" href="GtkBuildable.html" title="GtkBuildable"><span class="type">GtkBuildable</span></a> *buildable</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkBuilder.html" title="GtkBuilder"><span class="type">GtkBuilder</span></a> *builder</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *childname</code></em>);
+</pre>
+</div>
+<div class="refsect1">
+<a name="GtkBuildable.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  GInterface
+   +----GtkBuildable
+</pre>
+</div>
+<div class="refsect1">
+<a name="GtkBuildable.prerequisites"></a><h2>Prerequisites</h2>
+<p>
+GtkBuildable requires
+ <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>.</p>
+</div>
+<div class="refsect1">
+<a name="GtkBuildable.implementations"></a><h2>Known Implementations</h2>
+<p>
+GtkBuildable is implemented by
+ <a class="link" href="GtkAboutDialog.html" title="GtkAboutDialog">GtkAboutDialog</a>,  <a class="link" href="GtkAccelLabel.html" title="GtkAccelLabel">GtkAccelLabel</a>,  <a class="link" href="GtkAction.html" title="GtkAction">GtkAction</a>,  <a class="link" href="GtkActionGroup.html" title="GtkActionGroup">GtkActionGroup</a>,  <a class="link" href="GtkAlignment.html" title="GtkAlignment">GtkAlignment</a>,  <a class="link" href="GtkArrow.html" title="GtkArrow">GtkArrow</a>,  <a class="link" href="GtkAspectFrame.html" title="GtkAspectFrame">GtkAspectFrame</a>,  <a class="link" href="GtkAssistant.html" title="GtkAssistant">GtkAssistant</a>,  <a class="link" href="GtkBin.html" title="GtkBin">GtkBin</a>,  <a class="link" href="GtkBox.html" title="GtkBox">GtkBox</a>,  <a class="link" href="GtkButton.html" title="GtkButton">GtkButton</a>,  <a class="link" href="GtkButtonBox.html" title="GtkButtonBox">GtkButtonBox</a>,  <a class="link" href="GtkCList.html" title="GtkCList">GtkCList</a>,  <a class="link" href="GtkCTree.html" title="GtkCTree">GtkCTree</a>,  <a class="link" href="GtkCalendar.html" title="GtkCalendar">GtkCalendar</a>,  <a class="link" href="GtkCellView.html" title="GtkCellView">GtkCellView</a>,  <a class="link" href="GtkCheckButton.html" title="GtkCheckButton">GtkCheckButton</a>,  <a class="link" href="gtk-gtkcheckmenuitem.html#GtkCheckMenuItem">GtkCheckMenuItem</a>,  <a class="link" href="GtkColorButton.html" title="GtkColorButton">GtkColorButton</a>,  <a class="link" href="GtkColorSelection.html" title="GtkColorSelection">GtkColorSelection</a>,  <a class="link" href="GtkColorSelectionDialog.html" title="GtkColorSelectionDialog">GtkColorSelectionDialog</a>,  <a class="link" href="GtkCombo.html" title="GtkCombo">GtkCombo</a>,  <a class="link" href="GtkComboBox.html" title="GtkComboBox">GtkComboBox</a>,  <a class="link" href="GtkComboBoxEntry.html" title="GtkComboBoxEntry">GtkComboBoxEntry</a>,  <a class="link" href="GtkComboBoxText.html" title="GtkComboBoxText">GtkComboBoxText</a>,  <a class="link" href="GtkContainer.html" title="GtkContainer">GtkContainer</a>,  <a class="link" href="GtkCurve.html" title="GtkCurve">GtkCurve</a>,  <a class="link" href="GtkDialog.html" title="GtkDialog">GtkDialog</a>,  <a class="link" href="GtkDrawingArea.html" title="GtkDrawingArea">GtkDrawingArea</a>,  <a class="link" href="GtkEntry.html" title="GtkEntry">GtkEntry</a>,  <a class="link" href="GtkEntryCompletion.html" title="GtkEntryCompletion">GtkEntryCompletion</a>,  <a class="link" href="GtkEventBox.html" title="GtkEventBox">GtkEventBox</a>,  <a class="link" href="GtkExpander.html" title="GtkExpander">GtkExpander</a>,  <a class="link" href="GtkFileChooserButton.html" title="GtkFileChooserButton">GtkFileChooserButton</a>,  <a class="link" href="GtkFileChooserDialog.html" title="GtkFileChooserDialog">GtkFileChooserDialog</a>,  <a class="link" href="GtkFileChooserWidget.html" title="GtkFileChooserWidget">GtkFileChooserWidget</a>,  <a class="link" href="GtkFileSelection.html" title="GtkFileSelection">GtkFileSelection</a>,  <a class="link" href="GtkFixed.html" title="GtkFixed">GtkFixed</a>,  <a class="link" href="GtkFontButton.html" title="GtkFontButton">GtkFontButton</a>,  <a class="link" href="GtkFontSelection.html" title="GtkFontSelection">GtkFontSelection</a>,  <a class="link" href="GtkFontSelectionDialog.html" title="GtkFontSelectionDialog">GtkFontSelectionDialog</a>,  <a class="link" href="GtkFrame.html" title="GtkFrame">GtkFrame</a>,  <a class="link" href="GtkGammaCurve.html" title="GtkGammaCurve">GtkGammaCurve</a>,  <a class="link" href="GtkHBox.html" title="GtkHBox">GtkHBox</a>,  <a class="link" href="GtkHButtonBox.html" title="GtkHButtonBox">GtkHButtonBox</a>,  <a class="link" href="GtkHPaned.html" title="GtkHPaned">GtkHPaned</a>,  <a class="link" href="GtkHRuler.html" title="GtkHRuler">GtkHRuler</a>,  <a class="link" href="GtkHSV.html" title="GtkHSV">GtkHSV</a>,  <a class="link" href="GtkHScale.html" title="GtkHScale">GtkHScale</a>,  <a class="link" href="GtkHScrollbar.html" title="GtkHScrollbar">GtkHScrollbar</a>,  <a class="link" href="GtkHSeparator.html" title="GtkHSeparator">GtkHSeparator</a>,  <a class="link" href="GtkHandleBox.html" title="GtkHandleBox">GtkHandleBox</a>,  <a class="link" href="gtk-Themeable-Stock-Images.html#GtkIconFactory">GtkIconFactory</a>,  <a class="link" href="GtkIconView.html" title="GtkIconView">GtkIconView</a>,  <a class="link" href="GtkImage.html" title="GtkImage">GtkImage</a>,  <a class="link" href="GtkImageMenuItem.html" title="GtkImageMenuItem">GtkImageMenuItem</a>,  <a class="link" href="GtkInfoBar.html" title="GtkInfoBar">GtkInfoBar</a>,  <a class="link" href="GtkInputDialog.html" title="GtkInputDialog">GtkInputDialog</a>,  <a class="link" href="GtkInvisible.html" title="GtkInvisible">GtkInvisible</a>,  <a class="link" href="GtkItem.html" title="GtkItem">GtkItem</a>,  <a class="link" href="GtkLabel.html" title="GtkLabel">GtkLabel</a>,  <a class="link" href="GtkLayout.html" title="GtkLayout">GtkLayout</a>,  <a class="link" href="GtkLinkButton.html" title="GtkLinkButton">GtkLinkButton</a>,  <a class="link" href="GtkList.html" title="GtkList">GtkList</a>,  <a class="link" href="GtkListItem.html" title="GtkListItem">GtkListItem</a>,  <a class="link" href="GtkListStore.html" title="GtkListStore">GtkListStore</a>,  <a class="link" href="GtkMenu.html" title="GtkMenu">GtkMenu</a>,  <a class="link" href="GtkMenuBar.html" title="GtkMenuBar">GtkMenuBar</a>,  <a class="link" href="GtkMenuItem.html" title="GtkMenuItem">GtkMenuItem</a>,  <a class="link" href="GtkMenuShell.html" title="GtkMenuShell">GtkMenuShell</a>,  <a class="link" href="GtkMenuToolButton.html" title="GtkMenuToolButton">GtkMenuToolButton</a>,  <a class="link" href="GtkMessageDialog.html" title="GtkMessageDialog">GtkMessageDialog</a>,  <a class="link" href="GtkMisc.html" title="GtkMisc">GtkMisc</a>,  <a class="link" href="GtkNotebook.html" title="GtkNotebook">GtkNotebook</a>,  <a class="link" href="GtkOffscreenWindow.html" title="GtkOffscreenWindow">GtkOffscreenWindow</a>,  <a class="link" href="GtkOldEditable.html" title="GtkOldEditable">GtkOldEditable</a>,  <a class="link" href="GtkOptionMenu.html" title="GtkOptionMenu">GtkOptionMenu</a>,  <a class="link" href="GtkPageSetupUnixDialog.html" title="GtkPageSetupUnixDialog">GtkPageSetupUnixDialog</a>,  <a class="link" href="GtkPaned.html" title="GtkPaned">GtkPaned</a>,  <a class="link" href="GtkPixmap.html" title="GtkPixmap">GtkPixmap</a>,  <a class="link" href="GtkPlug.html" title="GtkPlug">GtkPlug</a>,  <a class="link" href="GtkPreview.html" title="GtkPreview">GtkPreview</a>,  <a class="link" href="GtkPrintUnixDialog.html" title="GtkPrintUnixDialog">GtkPrintUnixDialog</a>,  <a class="link" href="GtkProgress.html" title="GtkProgress">GtkProgress</a>,  <a class="link" href="GtkProgressBar.html" title="GtkProgressBar">GtkProgressBar</a>,  <a class="link" href="GtkRadioAction.html" title="GtkRadioAction">GtkRadioAction</a>,  <a class="link" href="GtkRadioButton.html" title="GtkRadioButton">GtkRadioButton</a>,  <a class="link" href="GtkRadioMenuItem.html" title="GtkRadioMenuItem">GtkRadioMenuItem</a>,  <a class="link" href="GtkRadioToolButton.html" title="GtkRadioToolButton">GtkRadioToolButton</a>,  <a class="link" href="GtkRange.html" title="GtkRange">GtkRange</a>,  <a class="link" href="GtkRecentAction.html" title="GtkRecentAction">GtkRecentAction</a>,  <a class="link" href="GtkRecentChooserDialog.html" title="GtkRecentChooserDialog">GtkRecentChooserDialog</a>,  <a class="link" href="GtkRecentChooserMenu.html" title="GtkRecentChooserMenu">GtkRecentChooserMenu</a>,  <a class="link" href="GtkRecentChooserWidget.html" title="GtkRecentChooserWidget">GtkRecentChooserWidget</a>,  <a class="link" href="GtkRuler.html" title="GtkRuler">GtkRuler</a>,  <a class="link" href="GtkScale.html" title="GtkScale">GtkScale</a>,  <a class="link" href="GtkScaleButton.html" title="GtkScaleButton">GtkScaleButton</a>,  <a class="link" href="GtkScrollbar.html" title="GtkScrollbar">GtkScrollbar</a>,  <a class="link" href="GtkScrolledWindow.html" title="GtkScrolledWindow">GtkScrolledWindow</a>,  <a class="link" href="GtkSeparator.html" title="GtkSeparator">GtkSeparator</a>,  <a class="link" href="GtkSeparatorMenuItem.html" title="GtkSeparatorMenuItem">GtkSeparatorMenuItem</a>,  <a class="link" href="GtkSeparatorToolItem.html" title="GtkSeparatorToolItem">GtkSeparatorToolItem</a>,  <a class="link" href="GtkSizeGroup.html" title="GtkSizeGroup">GtkSizeGroup</a>,  <a class="link" href="GtkSocket.html" title="GtkSocket">GtkSocket</a>,  <a class="link" href="GtkSpinButton.html" title="GtkSpinButton">GtkSpinButton</a>,  <a class="link" href="GtkSpinner.html" title="GtkSpinner">GtkSpinner</a>,  <a class="link" href="GtkStatusbar.html" title="GtkStatusbar">GtkStatusbar</a>,  <a class="link" href="GtkTable.html" title="GtkTable">GtkTable</a>,  <a class="link" href="GtkTearoffMenuItem.html" title="GtkTearoffMenuItem">GtkTearoffMenuItem</a>,  <a class="link" href="GtkText.html" title="GtkText">GtkText</a>,  <a class="link" href="GtkTextTagTable.html" title="GtkTextTagTable">GtkTextTagTable</a>,  <a class="link" href="GtkTextView.html" title="GtkTextView">GtkTextView</a>,  <a class="link" href="GtkTipsQuery.html" title="GtkTipsQuery">GtkTipsQuery</a>,  <a class="link" href="GtkToggleAction.html" title="GtkToggleAction">GtkToggleAction</a>,  <a class="link" href="GtkToggleButton.html" title="GtkToggleButton">GtkToggleButton</a>,  <a class="link" href="GtkToggleToolButton.html" title="GtkToggleToolButton">GtkToggleToolButton</a>,  <a class="link" href="GtkToolButton.html" title="GtkToolButton">GtkToolButton</a>,  <a class="link" href="GtkToolItem.html" title="GtkToolItem">GtkToolItem</a>,  <a class="link" href="GtkToolItemGroup.html" title="GtkToolItemGroup">GtkToolItemGroup</a>,  <a class="link" href="GtkToolPalette.html" title="GtkToolPalette">GtkToolPalette</a>,  <a class="link" href="GtkToolbar.html" title="GtkToolbar">GtkToolbar</a>,  <a class="link" href="GtkTree.html" title="GtkTree">GtkTree</a>,  <a class="link" href="GtkTreeItem.html" title="GtkTreeItem">GtkTreeItem</a>,  <a class="link" href="GtkTreeStore.html" title="GtkTreeStore">GtkTreeStore</a>,  <a class="link" href="GtkTreeView.html" title="GtkTreeView">GtkTreeView</a>,  <a class="link" href="GtkTreeViewColumn.html" title="GtkTreeViewColumn">GtkTreeViewColumn</a>,  <a class="link" href="GtkUIManager.html" title="GtkUIManager">GtkUIManager</a>,  <a class="link" href="GtkVBox.html" title="GtkVBox">GtkVBox</a>,  <a class="link" href="GtkVButtonBox.html" title="GtkVButtonBox">GtkVButtonBox</a>,  <a class="link" href="GtkVPaned.html" title="GtkVPaned">GtkVPaned</a>,  <a class="link" href="GtkVRuler.html" title="GtkVRuler">GtkVRuler</a>,  <a class="link" href="GtkVScale.html" title="GtkVScale">GtkVScale</a>,  <a class="link" href="GtkVScrollbar.html" title="GtkVScrollbar">GtkVScrollbar</a>,  <a class="link" href="GtkVSeparator.html" title="GtkVSeparator">GtkVSeparator</a>,  <a class="link" href="GtkViewport.html" title="GtkViewport">GtkViewport</a>,  <a class="link" href="GtkVolumeButton.html" title="GtkVolumeButton">GtkVolumeButton</a>,  <a class="link" href="GtkWidget.html" title="GtkWidget">GtkWidget</a> and  <a class="link" href="GtkWindow.html" title="GtkWindow">GtkWindow</a>.</p>
+</div>
+<div class="refsect1">
+<a name="GtkBuildable.description"></a><h2>Description</h2>
+<p>
+In order to allow construction from a <a class="link" href="GtkBuilder.html#BUILDER-UI" title="GtkBuilder UI Definitions">GtkBuilder
+UI description</a>, an object class must implement the
+GtkBuildable interface. The interface includes methods for setting
+names and properties of objects, parsing custom tags, constructing
+child objects.
+</p>
+<p>
+The GtkBuildable interface is implemented by all widgets and
+many of the non-widget objects that are provided by GTK+. The
+main user of this interface is <a class="link" href="GtkBuilder.html" title="GtkBuilder"><span class="type">GtkBuilder</span></a>, there should be
+very little need for applications to call any
+<code class="function">gtk_buildable_...</code> functions.
+</p>
+</div>
+<div class="refsect1">
+<a name="GtkBuildable.details"></a><h2>Details</h2>
+<div class="refsect2">
+<a name="GtkBuildable-struct"></a><h3>GtkBuildable</h3>
+<pre class="programlisting">typedef struct _GtkBuildable GtkBuildable;</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkBuildableIface"></a><h3>struct GtkBuildableIface</h3>
+<pre class="programlisting">struct GtkBuildableIface {
+  GTypeInterface g_iface;
+
+  /* virtual table */
+  void          (* set_name)               (GtkBuildable  *buildable,
+                                            const gchar   *name);
+  const gchar * (* get_name)               (GtkBuildable  *buildable);
+  void          (* add_child)              (GtkBuildable  *buildable,
+					    GtkBuilder    *builder,
+					    GObject       *child,
+					    const gchar   *type);
+  void          (* set_buildable_property) (GtkBuildable  *buildable,
+					    GtkBuilder    *builder,
+					    const gchar   *name,
+					    const GValue  *value);
+  GObject *     (* construct_child)        (GtkBuildable  *buildable,
+					    GtkBuilder    *builder,
+					    const gchar   *name);
+  gboolean      (* custom_tag_start)       (GtkBuildable  *buildable,
+					    GtkBuilder    *builder,
+					    GObject       *child,
+					    const gchar   *tagname,
+					    GMarkupParser *parser,
+					    gpointer      *data);
+  void          (* custom_tag_end)         (GtkBuildable  *buildable,
+					    GtkBuilder    *builder,
+					    GObject       *child,
+					    const gchar   *tagname,
+					    gpointer      *data);
+  void          (* custom_finished)        (GtkBuildable  *buildable,
+					    GtkBuilder    *builder,
+					    GObject       *child,
+					    const gchar   *tagname,
+					    gpointer       data);
+  void          (* parser_finished)        (GtkBuildable  *buildable,
+					    GtkBuilder    *builder);
+
+  GObject *     (* get_internal_child)     (GtkBuildable  *buildable,
+					    GtkBuilder    *builder,
+					    const gchar   *childname);
+};
+</pre>
+<p>
+The GtkBuildableIface interface contains method that are
+necessary to allow <a class="link" href="GtkBuilder.html" title="GtkBuilder"><span class="type">GtkBuilder</span></a> to construct an object from
+a GtkBuilder UI definition.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#GTypeInterface"><span class="type">GTypeInterface</span></a> <em class="structfield"><code><a name="GtkBuildableIface.g-iface"></a>g_iface</code></em>;</span></p></td>
+<td>the parent class</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="GtkBuildableIface.set-name"></a>set_name</code></em> ()</span></p></td>
+<td>Stores the name attribute given in the GtkBuilder UI definition.
+<a class="link" href="GtkWidget.html" title="GtkWidget"><span class="type">GtkWidget</span></a> stores the name as object data. Implement this method if your
+object has some notion of "name" and it makes sense to map the XML name
+attribute to it.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="GtkBuildableIface.get-name"></a>get_name</code></em> ()</span></p></td>
+<td>The getter corresponding to <em class="parameter"><code>set_name</code></em>. Implement this
+if you implement <em class="parameter"><code>set_name</code></em>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="GtkBuildableIface.add-child"></a>add_child</code></em> ()</span></p></td>
+<td>Adds a child. The <em class="parameter"><code>type</code></em> parameter can be used to
+differentiate the kind of child. <a class="link" href="GtkContainer.html" title="GtkContainer"><span class="type">GtkContainer</span></a> implements this
+to add add a child widget to the container, <a class="link" href="GtkNotebook.html" title="GtkNotebook"><span class="type">GtkNotebook</span></a> uses
+the <em class="parameter"><code>type</code></em> to distinguish between page labels (of type "page-label")
+and normal children.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="GtkBuildableIface.set-buildable-property"></a>set_buildable_property</code></em> ()</span></p></td>
+<td>Sets a property of a buildable object.
+It is normally not necessary to implement this, <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-set-property"><code class="function">g_object_set_property()</code></a>
+is used by default. <a class="link" href="GtkWindow.html" title="GtkWindow"><span class="type">GtkWindow</span></a> implements this to delay showing itself
+(i.e. setting the <a class="link" href="GtkWidget.html#GtkWidget--visible" title='The "visible" property'><span class="type">"visible"</span></a> property) until the whole interface
+is created.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="GtkBuildableIface.construct-child"></a>construct_child</code></em> ()</span></p></td>
+<td>Constructs a child of a buildable that has been
+specified as "constructor" in the UI definition. <a class="link" href="GtkUIManager.html" title="GtkUIManager"><span class="type">GtkUIManager</span></a> implements
+this to reference to a widget created in a &lt;ui&gt; tag which is outside
+of the normal GtkBuilder UI definition hierarchy.  A reference to the
+constructed object is returned and becomes owned by the caller.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="GtkBuildableIface.custom-tag-start"></a>custom_tag_start</code></em> ()</span></p></td>
+<td>Implement this if the buildable needs to parse
+content below &lt;child&gt;. To handle an element, the implementation
+must fill in the <em class="parameter"><code>parser</code></em> structure and <em class="parameter"><code>user_data</code></em> and return <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a>.
+<a class="link" href="GtkWidget.html" title="GtkWidget"><span class="type">GtkWidget</span></a> implements this to parse keyboard accelerators specified
+in &lt;accelerator&gt; elements. <a class="link" href="GtkContainer.html" title="GtkContainer"><span class="type">GtkContainer</span></a> implements it to map
+properties defined via &lt;packing&gt; elements to child properties.
+Note that <em class="parameter"><code>user_data</code></em> must be freed in <em class="parameter"><code>custom_tag_end</code></em> or <em class="parameter"><code>custom_finished</code></em>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="GtkBuildableIface.custom-tag-end"></a>custom_tag_end</code></em> ()</span></p></td>
+<td>Called for the end tag of each custom element that is
+handled by the buildable (see <em class="parameter"><code>custom_tag_start</code></em>).</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="GtkBuildableIface.custom-finished"></a>custom_finished</code></em> ()</span></p></td>
+<td>Called for each custom tag handled by the buildable
+when the builder finishes parsing (see <em class="parameter"><code>custom_tag_start</code></em>)</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="GtkBuildableIface.parser-finished"></a>parser_finished</code></em> ()</span></p></td>
+<td>Called when a builder finishes the parsing
+of a UI definition. It is normally not necessary to implement this,
+unless you need to perform special cleanup actions. <a class="link" href="GtkWindow.html" title="GtkWindow"><span class="type">GtkWindow</span></a> sets
+the <a class="link" href="GtkWidget.html#GtkWidget--visible" title='The "visible" property'><span class="type">"visible"</span></a> property here.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="GtkBuildableIface.get-internal-child"></a>get_internal_child</code></em> ()</span></p></td>
+<td>Returns an internal child of a buildable.
+<a class="link" href="GtkDialog.html" title="GtkDialog"><span class="type">GtkDialog</span></a> implements this to give access to its <em class="parameter"><code>vbox</code></em>, making
+it possible to add children to the vbox in a UI definition.
+Implement this if the buildable has internal children that may
+need to be accessed from a UI definition.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-buildable-set-name"></a><h3>gtk_buildable_set_name ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_buildable_set_name              (<em class="parameter"><code><a class="link" href="GtkBuildable.html" title="GtkBuildable"><span class="type">GtkBuildable</span></a> *buildable</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *name</code></em>);</pre>
+<p>
+Sets the name of the <em class="parameter"><code>buildable</code></em> object.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>buildable</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkBuildable.html" title="GtkBuildable"><span class="type">GtkBuildable</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>name</code></em> :</span></p></td>
+<td>name to set</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.12</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-buildable-get-name"></a><h3>gtk_buildable_get_name ()</h3>
+<pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       gtk_buildable_get_name              (<em class="parameter"><code><a class="link" href="GtkBuildable.html" title="GtkBuildable"><span class="type">GtkBuildable</span></a> *buildable</code></em>);</pre>
+<p>
+Gets the name of the <em class="parameter"><code>buildable</code></em> object. 
+</p>
+<p>
+<a class="link" href="GtkBuilder.html" title="GtkBuilder"><span class="type">GtkBuilder</span></a> sets the name based on the the 
+<a class="link" href="GtkBuilder.html#BUILDER-UI" title="GtkBuilder UI Definitions">GtkBuilder UI definition</a> 
+used to construct the <em class="parameter"><code>buildable</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>buildable</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkBuildable.html" title="GtkBuildable"><span class="type">GtkBuildable</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the name set with <a class="link" href="GtkBuildable.html#gtk-buildable-set-name" title="gtk_buildable_set_name ()"><code class="function">gtk_buildable_set_name()</code></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.12</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-buildable-add-child"></a><h3>gtk_buildable_add_child ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_buildable_add_child             (<em class="parameter"><code><a class="link" href="GtkBuildable.html" title="GtkBuildable"><span class="type">GtkBuildable</span></a> *buildable</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkBuilder.html" title="GtkBuilder"><span class="type">GtkBuilder</span></a> *builder</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *child</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *type</code></em>);</pre>
+<p>
+Adds a child to <em class="parameter"><code>buildable</code></em>. <em class="parameter"><code>type</code></em> is an optional string
+describing how the child should be added.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>buildable</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkBuildable.html" title="GtkBuildable"><span class="type">GtkBuildable</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>builder</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkBuilder.html" title="GtkBuilder"><span class="type">GtkBuilder</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>child</code></em> :</span></p></td>
+<td>child to add</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>type</code></em> :</span></p></td>
+<td>kind of child or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.12</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-buildable-set-buildable-property"></a><h3>gtk_buildable_set_buildable_property ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_buildable_set_buildable_property
+                                                        (<em class="parameter"><code><a class="link" href="GtkBuildable.html" title="GtkBuildable"><span class="type">GtkBuildable</span></a> *buildable</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkBuilder.html" title="GtkBuilder"><span class="type">GtkBuilder</span></a> *builder</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *name</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Generic-values.html#GValue"><span class="type">GValue</span></a> *value</code></em>);</pre>
+<p>
+Sets the property name <em class="parameter"><code>name</code></em> to <em class="parameter"><code>value</code></em> on the <em class="parameter"><code>buildable</code></em> object.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>buildable</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkBuildable.html" title="GtkBuildable"><span class="type">GtkBuildable</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>builder</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkBuilder.html" title="GtkBuilder"><span class="type">GtkBuilder</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>name</code></em> :</span></p></td>
+<td>name of property</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
+<td>value of property</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.12</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-buildable-construct-child"></a><h3>gtk_buildable_construct_child ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="returnvalue">GObject</span></a> *           gtk_buildable_construct_child       (<em class="parameter"><code><a class="link" href="GtkBuildable.html" title="GtkBuildable"><span class="type">GtkBuildable</span></a> *buildable</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkBuilder.html" title="GtkBuilder"><span class="type">GtkBuilder</span></a> *builder</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *name</code></em>);</pre>
+<p>
+Constructs a child of <em class="parameter"><code>buildable</code></em> with the name <em class="parameter"><code>name</code></em>.
+</p>
+<p>
+<a class="link" href="GtkBuilder.html" title="GtkBuilder"><span class="type">GtkBuilder</span></a> calls this function if a "constructor" has been
+specified in the UI definition.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>buildable</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkBuildable.html" title="GtkBuildable"><span class="type">GtkBuildable</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>builder</code></em> :</span></p></td>
+<td>
+<a class="link" href="GtkBuilder.html" title="GtkBuilder"><span class="type">GtkBuilder</span></a> used to construct this object</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>name</code></em> :</span></p></td>
+<td>name of child to construct</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the constructed child. <span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.12</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-buildable-custom-tag-start"></a><h3>gtk_buildable_custom_tag_start ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gtk_buildable_custom_tag_start      (<em class="parameter"><code><a class="link" href="GtkBuildable.html" title="GtkBuildable"><span class="type">GtkBuildable</span></a> *buildable</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkBuilder.html" title="GtkBuilder"><span class="type">GtkBuilder</span></a> *builder</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *child</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *tagname</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Simple-XML-Subset-Parser.html#GMarkupParser"><span class="type">GMarkupParser</span></a> *parser</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> *data</code></em>);</pre>
+<p>
+This is called for each unknown element under &lt;child&gt;.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>buildable</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkBuildable.html" title="GtkBuildable"><span class="type">GtkBuildable</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>builder</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkBuilder.html" title="GtkBuilder"><span class="type">GtkBuilder</span></a> used to construct this object</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>child</code></em> :</span></p></td>
+<td>child object or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> for non-child tags. <span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tagname</code></em> :</span></p></td>
+<td>name of tag</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>parser</code></em> :</span></p></td>
+<td>a <a href="http://library.gnome.org/devel/glib/unstable/glib-Simple-XML-Subset-Parser.html#GMarkupParser"><span class="type">GMarkupParser</span></a> structure to fill in. <span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td>return location for user data that will be passed in
+to parser functions. <span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if a object has a custom implementation, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a>
+if it doesn't.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.12</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-buildable-custom-tag-end"></a><h3>gtk_buildable_custom_tag_end ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_buildable_custom_tag_end        (<em class="parameter"><code><a class="link" href="GtkBuildable.html" title="GtkBuildable"><span class="type">GtkBuildable</span></a> *buildable</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkBuilder.html" title="GtkBuilder"><span class="type">GtkBuilder</span></a> *builder</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *child</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *tagname</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> *data</code></em>);</pre>
+<p>
+This is called at the end of each custom element handled by 
+the buildable.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>buildable</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkBuildable.html" title="GtkBuildable"><span class="type">GtkBuildable</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>builder</code></em> :</span></p></td>
+<td>
+<a class="link" href="GtkBuilder.html" title="GtkBuilder"><span class="type">GtkBuilder</span></a> used to construct this object</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>child</code></em> :</span></p></td>
+<td>child object or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> for non-child tags. <span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tagname</code></em> :</span></p></td>
+<td>name of tag</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td>user data that will be passed in to parser functions. <span class="annotation">[<acronym title="Override the parsed C type with given type"><span class="acronym">type</span></acronym> gpointer]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.12</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-buildable-custom-finished"></a><h3>gtk_buildable_custom_finished ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_buildable_custom_finished       (<em class="parameter"><code><a class="link" href="GtkBuildable.html" title="GtkBuildable"><span class="type">GtkBuildable</span></a> *buildable</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkBuilder.html" title="GtkBuilder"><span class="type">GtkBuilder</span></a> *builder</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *child</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *tagname</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> data</code></em>);</pre>
+<p>
+This is similar to <a class="link" href="GtkBuildable.html#gtk-buildable-parser-finished" title="gtk_buildable_parser_finished ()"><code class="function">gtk_buildable_parser_finished()</code></a> but is
+called once for each custom tag handled by the <em class="parameter"><code>buildable</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>buildable</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkBuildable.html" title="GtkBuildable"><span class="type">GtkBuildable</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>builder</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkBuilder.html" title="GtkBuilder"><span class="type">GtkBuilder</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>child</code></em> :</span></p></td>
+<td>child object or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> for non-child tags. <span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tagname</code></em> :</span></p></td>
+<td>the name of the tag</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td>user data created in custom_tag_start</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.12</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-buildable-parser-finished"></a><h3>gtk_buildable_parser_finished ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_buildable_parser_finished       (<em class="parameter"><code><a class="link" href="GtkBuildable.html" title="GtkBuildable"><span class="type">GtkBuildable</span></a> *buildable</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkBuilder.html" title="GtkBuilder"><span class="type">GtkBuilder</span></a> *builder</code></em>);</pre>
+<p>
+Called when the builder finishes the parsing of a 
+<a class="link" href="GtkBuilder.html#BUILDER-UI" title="GtkBuilder UI Definitions">GtkBuilder UI definition</a>. 
+Note that this will be called once for each time 
+<a class="link" href="GtkBuilder.html#gtk-builder-add-from-file" title="gtk_builder_add_from_file ()"><code class="function">gtk_builder_add_from_file()</code></a> or <a class="link" href="GtkBuilder.html#gtk-builder-add-from-string" title="gtk_builder_add_from_string ()"><code class="function">gtk_builder_add_from_string()</code></a> 
+is called on a builder.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>buildable</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkBuildable.html" title="GtkBuildable"><span class="type">GtkBuildable</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>builder</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkBuilder.html" title="GtkBuilder"><span class="type">GtkBuilder</span></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.12</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-buildable-get-internal-child"></a><h3>gtk_buildable_get_internal_child ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="returnvalue">GObject</span></a> *           gtk_buildable_get_internal_child    (<em class="parameter"><code><a class="link" href="GtkBuildable.html" title="GtkBuildable"><span class="type">GtkBuildable</span></a> *buildable</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkBuilder.html" title="GtkBuilder"><span class="type">GtkBuilder</span></a> *builder</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *childname</code></em>);</pre>
+<p>
+Get the internal child called <em class="parameter"><code>childname</code></em> of the <em class="parameter"><code>buildable</code></em> object.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>buildable</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkBuildable.html" title="GtkBuildable"><span class="type">GtkBuildable</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>builder</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkBuilder.html" title="GtkBuilder"><span class="type">GtkBuilder</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>childname</code></em> :</span></p></td>
+<td>name of child</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the internal child of the buildable object. <span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.12</p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

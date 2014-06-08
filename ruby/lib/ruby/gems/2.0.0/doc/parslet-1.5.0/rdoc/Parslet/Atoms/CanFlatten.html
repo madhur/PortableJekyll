@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>module Parslet::Atoms::CanFlatten - parslet-1.5.0 Documentation</title>
+
+<link type="text/css" media="screen" href="../../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/darkfish.js"></script>
+
+
+<body id="top" class="module">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../../index.html">Home</a>
+    <a href="../../table_of_contents.html#classes">Classes</a>
+    <a href="../../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/parslet/atoms/can_flatten.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    
+    
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li ><a href="#method-i-flatten">#flatten</a>
+    
+    <li ><a href="#method-i-flatten_repetition">#flatten_repetition</a>
+    
+    <li ><a href="#method-i-flatten_sequence">#flatten_sequence</a>
+    
+    <li ><a href="#method-i-foldl">#foldl</a>
+    
+    <li ><a href="#method-i-merge_fold">#merge_fold</a>
+    
+    <li ><a href="#method-i-warn_about_duplicate_keys">#warn_about_duplicate_keys</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="../../README.html">README</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../../Parslet.html">Parslet</a>
+  
+    <li><a href="../../Parslet/Atoms.html">Parslet::Atoms</a>
+  
+    <li><a href="../../Parslet/Atoms/Alternative.html">Parslet::Atoms::Alternative</a>
+  
+    <li><a href="../../Parslet/Atoms/Base.html">Parslet::Atoms::Base</a>
+  
+    <li><a href="../../Parslet/Atoms/CanFlatten.html">Parslet::Atoms::CanFlatten</a>
+  
+    <li><a href="../../Parslet/Atoms/Capture.html">Parslet::Atoms::Capture</a>
+  
+    <li><a href="../../Parslet/Atoms/Context.html">Parslet::Atoms::Context</a>
+  
+    <li><a href="../../Parslet/Atoms/DSL.html">Parslet::Atoms::DSL</a>
+  
+    <li><a href="../../Parslet/Atoms/Dynamic.html">Parslet::Atoms::Dynamic</a>
+  
+    <li><a href="../../Parslet/Atoms/Entity.html">Parslet::Atoms::Entity</a>
+  
+    <li><a href="../../Parslet/Atoms/Lookahead.html">Parslet::Atoms::Lookahead</a>
+  
+    <li><a href="../../Parslet/Atoms/Named.html">Parslet::Atoms::Named</a>
+  
+    <li><a href="../../Parslet/Atoms/Precedence.html">Parslet::Atoms::Precedence</a>
+  
+    <li><a href="../../Parslet/Atoms/Re.html">Parslet::Atoms::Re</a>
+  
+    <li><a href="../../Parslet/Atoms/Repetition.html">Parslet::Atoms::Repetition</a>
+  
+    <li><a href="../../Parslet/Atoms/Scope.html">Parslet::Atoms::Scope</a>
+  
+    <li><a href="../../Parslet/Atoms/Sequence.html">Parslet::Atoms::Sequence</a>
+  
+    <li><a href="../../Parslet/Atoms/Str.html">Parslet::Atoms::Str</a>
+  
+    <li><a href="../../Parslet/Cause.html">Parslet::Cause</a>
+  
+    <li><a href="../../Parslet/ClassMethods.html">Parslet::ClassMethods</a>
+  
+    <li><a href="../../Parslet/DelayedMatchConstructor.html">Parslet::DelayedMatchConstructor</a>
+  
+    <li><a href="../../Parslet/ErrorReporter.html">Parslet::ErrorReporter</a>
+  
+    <li><a href="../../Parslet/ErrorReporter/Deepest.html">Parslet::ErrorReporter::Deepest</a>
+  
+    <li><a href="../../Parslet/ErrorReporter/Tree.html">Parslet::ErrorReporter::Tree</a>
+  
+    <li><a href="../../Parslet/Expression.html">Parslet::Expression</a>
+  
+    <li><a href="../../Parslet/Expression/Treetop.html">Parslet::Expression::Treetop</a>
+  
+    <li><a href="../../Parslet/Expression/Treetop/Parser.html">Parslet::Expression::Treetop::Parser</a>
+  
+    <li><a href="../../Parslet/Expression/Treetop/Transform.html">Parslet::Expression::Treetop::Transform</a>
+  
+    <li><a href="../../Parslet/ParseFailed.html">Parslet::ParseFailed</a>
+  
+    <li><a href="../../Parslet/Parser.html">Parslet::Parser</a>
+  
+    <li><a href="../../Parslet/Parser/PrettyPrinter.html">Parslet::Parser::PrettyPrinter</a>
+  
+    <li><a href="../../Parslet/Parser/Visitors.html">Parslet::Parser::Visitors</a>
+  
+    <li><a href="../../Parslet/Parser/Visitors/Citrus.html">Parslet::Parser::Visitors::Citrus</a>
+  
+    <li><a href="../../Parslet/Parser/Visitors/Treetop.html">Parslet::Parser::Visitors::Treetop</a>
+  
+    <li><a href="../../Parslet/Pattern.html">Parslet::Pattern</a>
+  
+    <li><a href="../../Parslet/Pattern/SequenceBind.html">Parslet::Pattern::SequenceBind</a>
+  
+    <li><a href="../../Parslet/Pattern/SimpleBind.html">Parslet::Pattern::SimpleBind</a>
+  
+    <li><a href="../../Parslet/Pattern/SubtreeBind.html">Parslet::Pattern::SubtreeBind</a>
+  
+    <li><a href="../../Parslet/Scope.html">Parslet::Scope</a>
+  
+    <li><a href="../../Parslet/Scope/Binding.html">Parslet::Scope::Binding</a>
+  
+    <li><a href="../../Parslet/Scope/NotFound.html">Parslet::Scope::NotFound</a>
+  
+    <li><a href="../../Parslet/Slice.html">Parslet::Slice</a>
+  
+    <li><a href="../../Parslet/Source.html">Parslet::Source</a>
+  
+    <li><a href="../../Parslet/Source/LineCache.html">Parslet::Source::LineCache</a>
+  
+    <li><a href="../../Parslet/Source/RangeSearch.html">Parslet::Source::RangeSearch</a>
+  
+    <li><a href="../../Parslet/Transform.html">Parslet::Transform</a>
+  
+    <li><a href="../../Parslet/Transform/Context.html">Parslet::Transform::Context</a>
+  
+    <li><a href="../../RSpec.html">RSpec</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="module">module Parslet::Atoms::CanFlatten</h1>
+
+  <div id="description" class="description">
+    
+<p>A series of helper functions that have the common topic of flattening 
+result values into the intermediary tree that consists of Ruby Hashes and 
+Arrays.</p>
+
+<p>This module has one main function, <a
+href="CanFlatten.html#method-i-flatten">flatten</a>, that takes an
+annotated  structure as input and returns the reduced form that users
+expect from  Atom#parse.</p>
+
+<p>NOTE: Since all of these functions are just that, functions without  side
+effects, they are in a module and not in a class. Its hard to draw  the
+line sometimes, but this is beyond.</p>
+
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-flatten" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">flatten</span><span
+            class="method-args">(value, named=false)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Takes a mixed value coming out of a parslet and converts it to a return
+value for the user by dropping things and merging hashes.</p>
+
+<p><a href="Named.html">Named</a> is set to true if this result will be
+embedded in a Hash result from  naming something using
+<code>.as(...)</code>. It changes the folding  semantics of repetition.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="flatten-source">
+            <pre><span class="ruby-comment"># File lib/parslet/atoms/can_flatten.rb, line 23</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">flatten</span>(<span class="ruby-identifier">value</span>, <span class="ruby-identifier">named</span>=<span class="ruby-keyword">false</span>)
+  <span class="ruby-comment"># Passes through everything that isn&#39;t an array of things</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">value</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">instance_of?</span> <span class="ruby-constant">Array</span>
+
+  <span class="ruby-comment"># Extracts the s-expression tag</span>
+  <span class="ruby-identifier">tag</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">tail</span> = <span class="ruby-identifier">value</span>
+
+  <span class="ruby-comment"># Merges arrays:</span>
+  <span class="ruby-identifier">result</span> = <span class="ruby-identifier">tail</span>.
+    <span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-identifier">flatten</span>(<span class="ruby-identifier">e</span>) }            <span class="ruby-comment"># first flatten each element</span>
+
+  <span class="ruby-keyword">case</span> <span class="ruby-identifier">tag</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-value">:sequence</span>
+      <span class="ruby-keyword">return</span> <span class="ruby-identifier">flatten_sequence</span>(<span class="ruby-identifier">result</span>)
+    <span class="ruby-keyword">when</span> <span class="ruby-value">:maybe</span>
+      <span class="ruby-keyword">return</span> <span class="ruby-identifier">named</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">result</span>.<span class="ruby-identifier">first</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">result</span>.<span class="ruby-identifier">first</span> <span class="ruby-operator">||</span> <span class="ruby-string">&#39;&#39;</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-value">:repetition</span>
+      <span class="ruby-keyword">return</span> <span class="ruby-identifier">flatten_repetition</span>(<span class="ruby-identifier">result</span>, <span class="ruby-identifier">named</span>)
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">fail</span> <span class="ruby-node">&quot;BUG: Unknown tag #{tag.inspect}.&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- flatten-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- flatten-method -->
+
+    
+      <div id="method-i-flatten_repetition" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">flatten_repetition</span><span
+            class="method-args">(list, named)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Flatten results from a repetition of a single parslet. named indicates
+whether the user has named the result or not. If the user has named the
+results, we want to leave an empty list alone - otherwise it is  turned
+into an empty string.</p>
+
+<p>@api private</p>
+          
+          
+
+          
+          <div class="method-source-code" id="flatten_repetition-source">
+            <pre><span class="ruby-comment"># File lib/parslet/atoms/can_flatten.rb, line 104</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">flatten_repetition</span>(<span class="ruby-identifier">list</span>, <span class="ruby-identifier">named</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">list</span>.<span class="ruby-identifier">any?</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">instance_of?</span>(<span class="ruby-constant">Hash</span>) }
+    <span class="ruby-comment"># If keyed subtrees are in the array, we&#39;ll want to discard all </span>
+    <span class="ruby-comment"># strings inbetween. To keep them, name them. </span>
+    <span class="ruby-keyword">return</span> <span class="ruby-identifier">list</span>.<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">instance_of?</span>(<span class="ruby-constant">Hash</span>) }
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">list</span>.<span class="ruby-identifier">any?</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">instance_of?</span>(<span class="ruby-constant">Array</span>) }
+    <span class="ruby-comment"># If any arrays are nested in this array, flatten all arrays to this</span>
+    <span class="ruby-comment"># level. </span>
+    <span class="ruby-keyword">return</span> <span class="ruby-identifier">list</span>.
+      <span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">instance_of?</span>(<span class="ruby-constant">Array</span>) }.
+      <span class="ruby-identifier">flatten</span>(<span class="ruby-value">1</span>)
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-comment"># Consistent handling of empty lists, when we act on a named result        </span>
+  <span class="ruby-keyword">return</span> [] <span class="ruby-keyword">if</span> <span class="ruby-identifier">named</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">list</span>.<span class="ruby-identifier">empty?</span>
+
+  <span class="ruby-comment"># If there are only strings, concatenate them and return that. </span>
+  <span class="ruby-identifier">foldl</span>(<span class="ruby-identifier">list</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">s</span>,<span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-identifier">s</span><span class="ruby-operator">+</span><span class="ruby-identifier">e</span> }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- flatten_repetition-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- flatten_repetition-method -->
+
+    
+      <div id="method-i-flatten_sequence" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">flatten_sequence</span><span
+            class="method-args">(list)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Flatten results from a sequence of parslets.</p>
+
+<p>@api private</p>
+          
+          
+
+          
+          <div class="method-source-code" id="flatten_sequence-source">
+            <pre><span class="ruby-comment"># File lib/parslet/atoms/can_flatten.rb, line 58</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">flatten_sequence</span>(<span class="ruby-identifier">list</span>)
+  <span class="ruby-identifier">foldl</span>(<span class="ruby-identifier">list</span>.<span class="ruby-identifier">compact</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">r</span>, <span class="ruby-identifier">e</span><span class="ruby-operator">|</span>        <span class="ruby-comment"># and then merge flat elements</span>
+    <span class="ruby-identifier">merge_fold</span>(<span class="ruby-identifier">r</span>, <span class="ruby-identifier">e</span>)
+  }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- flatten_sequence-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- flatten_sequence-method -->
+
+    
+      <div id="method-i-foldl" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">foldl</span><span
+            class="method-args">(list, &block)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Lisp style fold left where the first element builds the basis for  an
+inject.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="foldl-source">
+            <pre><span class="ruby-comment"># File lib/parslet/atoms/can_flatten.rb, line 49</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">foldl</span>(<span class="ruby-identifier">list</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-string">&#39;&#39;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">list</span>.<span class="ruby-identifier">empty?</span>
+  <span class="ruby-identifier">list</span>[<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>].<span class="ruby-identifier">inject</span>(<span class="ruby-identifier">list</span>.<span class="ruby-identifier">first</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- foldl-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- foldl-method -->
+
+    
+      <div id="method-i-merge_fold" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">merge_fold</span><span
+            class="method-args">(l, r)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>@api private</p>
+          
+          
+
+          
+          <div class="method-source-code" id="merge_fold-source">
+            <pre><span class="ruby-comment"># File lib/parslet/atoms/can_flatten.rb, line 64</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">merge_fold</span>(<span class="ruby-identifier">l</span>, <span class="ruby-identifier">r</span>)
+  <span class="ruby-comment"># equal pairs: merge. ----------------------------------------------------</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">l</span>.<span class="ruby-identifier">class</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">r</span>.<span class="ruby-identifier">class</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">l</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>)
+      <span class="ruby-identifier">warn_about_duplicate_keys</span>(<span class="ruby-identifier">l</span>, <span class="ruby-identifier">r</span>)
+      <span class="ruby-keyword">return</span> <span class="ruby-identifier">l</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">r</span>)
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-keyword">return</span> <span class="ruby-identifier">l</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">r</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-comment"># unequal pairs: hoist to same level. ------------------------------------</span>
+
+  <span class="ruby-comment"># Maybe classes are not equal, but both are stringlike?</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">l</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:to_str</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">r</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:to_str</span>)
+    <span class="ruby-comment"># if we&#39;re merging a String with a Slice, the slice wins. </span>
+    <span class="ruby-keyword">return</span> <span class="ruby-identifier">r</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">r</span>.<span class="ruby-identifier">respond_to?</span> <span class="ruby-value">:to_slice</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-identifier">l</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">l</span>.<span class="ruby-identifier">respond_to?</span> <span class="ruby-value">:to_slice</span>
+
+    <span class="ruby-identifier">fail</span> <span class="ruby-string">&quot;NOTREACHED: What other stringlike classes are there?&quot;</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-comment"># special case: If one of them is a string/slice, the other is more important </span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">l</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">r</span>.<span class="ruby-identifier">respond_to?</span> <span class="ruby-value">:to_str</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">r</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">l</span>.<span class="ruby-identifier">respond_to?</span> <span class="ruby-value">:to_str</span>
+
+  <span class="ruby-comment"># otherwise just create an array for one of them to live in </span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">l</span> <span class="ruby-operator">+</span> [<span class="ruby-identifier">r</span>] <span class="ruby-keyword">if</span> <span class="ruby-identifier">r</span>.<span class="ruby-identifier">class</span> <span class="ruby-operator">==</span> <span class="ruby-constant">Hash</span>
+  <span class="ruby-keyword">return</span> [<span class="ruby-identifier">l</span>] <span class="ruby-operator">+</span> <span class="ruby-identifier">r</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">l</span>.<span class="ruby-identifier">class</span> <span class="ruby-operator">==</span> <span class="ruby-constant">Hash</span>
+
+  <span class="ruby-identifier">fail</span> <span class="ruby-string">&quot;Unhandled case when foldr&#39;ing sequence.&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- merge_fold-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- merge_fold-method -->
+
+    
+      <div id="method-i-warn_about_duplicate_keys" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">warn_about_duplicate_keys</span><span
+            class="method-args">(h1, h2)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>That annoying warning &#39;Duplicate subtrees while merging result&#39;
+comes  from here. You should add more &#39;.as(…)&#39; names to your
+intermediary tree.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="warn_about_duplicate_keys-source">
+            <pre><span class="ruby-comment"># File lib/parslet/atoms/can_flatten.rb, line 129</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">warn_about_duplicate_keys</span>(<span class="ruby-identifier">h1</span>, <span class="ruby-identifier">h2</span>)
+  <span class="ruby-identifier">d</span> = <span class="ruby-identifier">h1</span>.<span class="ruby-identifier">keys</span> <span class="ruby-operator">&amp;</span> <span class="ruby-identifier">h2</span>.<span class="ruby-identifier">keys</span>
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">d</span>.<span class="ruby-identifier">empty?</span>
+    <span class="ruby-identifier">warn</span> <span class="ruby-node">&quot;Duplicate subtrees while merging result of \n  #{self.inspect}\nonly the values&quot;</span><span class="ruby-operator">+</span>
+         <span class="ruby-node">&quot; of the latter will be kept. (keys: #{d.inspect})&quot;</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- warn_about_duplicate_keys-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- warn_about_duplicate_keys-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

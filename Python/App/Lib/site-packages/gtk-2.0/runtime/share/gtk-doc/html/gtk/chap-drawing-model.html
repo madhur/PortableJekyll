@@ -1,0 +1,496 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>The GTK+ Drawing Model</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="GTK+ 2 Reference Manual">
+<link rel="up" href="gtk.html" title="Part I. GTK+ Overview">
+<link rel="prev" href="gtk-question-index.html" title="Common Questions">
+<link rel="next" href="gtkbase.html" title="Part II. GTK+ Core Reference">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle">
+<td><a accesskey="p" href="gtk-question-index.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="gtk.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GTK+ 2 Reference Manual</th>
+<td><a accesskey="n" href="gtkbase.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="chap-drawing-model"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle">The GTK+ Drawing Model</span></h2>
+<p>The GTK+ Drawing Model — 
+    The GTK+ drawing model in detail
+</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="drawing-overview"></a><h2>Overview of the drawing model</h2>
+<p>
+      This chapter describes the GTK+ drawing model in detail.  If you
+      are interested in the procedure which GTK+ follows to draw its
+      widgets and windows, you should read this chapter; this will be
+      useful to know if you decide to implement your own widgets.  This
+      chapter will also clarify the reasons behind the ways certain
+      things are done in GTK+; for example, why you cannot change the
+      background color of all widgets with the same method.
+    </p>
+<p>
+      Programs that run in a windowing system generally create
+      rectangular regions in the screen called
+      <em class="firstterm">windows</em>.  Traditional windowing systems
+      do not automatically save the graphical content of windows, and
+      instead ask client programs to repaint those windows whenever it
+      is needed.  For example, if a window that is stacked below other
+      windows gets raised to the top, then a client program has to
+      repaint the area that was previously obscured.  When the
+      windowing system asks a client program to redraw part of a
+      window, it sends an <em class="firstterm">exposure event</em> to the
+      program for that window.
+    </p>
+<p>
+      Here, "windows" means "rectangular regions with automatic
+      clipping", instead of "toplevel application windows".  Most
+      windowing systems support nested windows, where the contents of
+      child windows get clipped by the boundaries of their parents.
+      Although GTK+ and GDK in particular may run on a windowing
+      system with no such notion of nested windows, GDK presents the
+      illusion of being under such a system.  A toplevel window may
+      contain many subwindows and sub-subwindows, for example, one for
+      the menu bar, one for the document area, one for each scrollbar,
+      and one for the status bar.  In addition, controls that receive
+      user input, such as clickable buttons, are likely to have their
+      own subwindows as well.
+    </p>
+<p>
+      Generally, the drawing cycle begins when GTK+ receives an
+      exposure event from the underlying windowing system:  if the
+      user drags a window over another one, the windowing system will
+      tell the underlying window that it needs to repaint itself.  The
+      drawing cycle can also be initiated when a widget itself decides
+      that it needs to update its display.  For example, when the user
+      types a character in a <a class="link" href="GtkEntry.html" title="GtkEntry"><code class="classname">GtkEntry</code></a>
+      widget, the entry asks GTK+ to queue a redraw operation for
+      itself.
+    </p>
+<p>
+      The following sections describe how GTK+ decides which widgets
+      need to be repainted, and how widgets work internally in terms
+      of the resources they use from the windowing system.
+    </p>
+<div class="refsect2">
+<a name="window-no-window-widgets"></a><h3>Window and no-window widgets</h3>
+<p>
+	A <a href="../gdk/gdk-Windows.html#GdkWindow"><code class="classname">GdkWindow</code></a>
+	represents a window from the underlying windowing system on which GTK+
+	is running.  For example, on X11 it corresponds to a
+	<span class="type">Window</span>; on Win32, it corresponds to a <span class="type">HANDLE</span>.
+	The windowing system generates events for these windows.  The GDK
+	interface to the windowing system translates such native events into
+	<a href="../gdk/gdk-Event-Structures.html#GdkEvent"><span class="structname">GdkEvent</span></a>
+	structures and sends them on to the GTK layer.  In turn, the GTK layer
+	finds the widget that corresponds to a particular
+	<code class="classname">GdkWindow</code> and emits the corresponding event
+	signals on that widget.
+      </p>
+<p>
+	When the program needs to redraw a region of a
+	<code class="classname">GdkWindow</code>, GDK generates an event of
+	type <code class="constant">GDK_EVENT_EXPOSE</code>
+	for that window.  The GTK+ widget layer in turn finds the
+	widget that corresponds to that window, and emits the <a class="link" href="GtkWidget.html#GtkWidget-expose-event" title='The "expose-event" signal'>expose-event signal</a>
+	for that widget.
+      </p>
+<p>
+	In principle, each widget could have a
+	<code class="classname">GdkWindow</code> of its own.  With such a
+	scheme, the drawing cycle would be trivial:  when GDK notifies
+	the GTK layer about an exposure event for a
+	<code class="classname">GdkWindow</code>, the GTK layer would simply
+	emit the <a class="link" href="GtkWidget.html#GtkWidget-expose-event" title='The "expose-event" signal'>expose-event
+	signal</a> for that widget.  The widget's expose event
+	handler would subsequently repaint the widget.  No further
+	work would be necessary; the windowing system would generate
+	exposure events for each window that needs it, and then each
+	corresponding widget would draw itself in turn.
+      </p>
+<p>
+	However, in practice it is convenient to have widgets which do
+	not have a <code class="classname">GdkWindow</code> of their own, but
+	rather share the one from their parent widget.  Such widgets
+	have called <code class="function">gtk_widget_set_has_window</code> to
+	disable it; this can be tested easily with the <a class="link" href="GtkWidget.html#gtk-widget-get-has-window" title="gtk_widget_get_has_window ()"><code class="function">gtk_widget_get_has_window()</code></a>
+	function.  As such, these are called <em class="firstterm">no-window
+	widgets</em>.
+      </p>
+<p>
+	No-window widgets are useful for various reasons:
+      </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">
+<p>
+	    Some widgets may want the parent's background to show through, even
+	    when they draw on parts of it.  For example, consider a theme that
+	    uses textured backgrounds, such as gradients or repeating
+	    patterns.  If each widget had its own window, and in turn its own
+	    gradient background, labels would look bad because there would be a
+	    visible break with respect to their surroundings.  <a class="xref" href="chap-drawing-model.html#figure-windowed-label" title="Figure 1. Windowed label vs. no-window label">Figure 1, “Windowed label vs. no-window label”</a> shows this undesirable effect.
+	  </p>
+<div class="figure">
+<a name="figure-windowed-label"></a><p class="title"><b>Figure 1. Windowed label vs. no-window label</b></p>
+<div class="figure-contents"><div><img src="figure-windowed-label.png" alt="Windowed label vs. no-window label"></div></div>
+</div>
+<br class="figure-break">
+</li>
+<li class="listitem"><p>
+	    Reducing the number of windows creates less traffic between GTK+ and
+	    the underlying windowing system, especially when getting events.
+	  </p></li>
+</ul></div>
+<p>
+	On the other hand, widgets that would benefit from having a "hard"
+	clipping region may find it more convenient to create their own
+	windows.  Also, widgets which want to receive events resulting from
+	user interaction may find it convenient to use windows of their own as
+	well.  Widgets may have more than one window if they want to
+	define different regions for capturing events.
+      </p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="hierarchical-drawing"></a><h3>Hierarchical drawing</h3>
+<p>
+	When the GTK layer receives an exposure event from GDK, it
+	finds the widget that corresponds to the window which received
+	the event.  By definition, this corresponds to a widget that
+	has the <code class="constant">GTK_NO_WINDOW</code> flag turned
+	<span class="emphasis"><em>off</em></span> (otherwise, the widget wouldn't own
+	the window!).  First this widget paints its background, and
+	then, if it is a container widget, it tells each of its
+	<code class="constant">GTK_NO_WINDOW</code> children to paint
+	themselves.  This process is applied recursively for all the
+	<code class="constant">GTK_NO_WINDOW</code> descendants of the original
+	widget.
+      </p>
+<p>
+	Note that this process does not get propagated to widgets
+	which have windows of their own, that is, to widgets which
+	have the <code class="constant">GTK_NO_WINDOW</code> flag turned off.
+	If such widgets require redrawing, then the windowing system
+	will already have sent exposure events to their corresponding
+	windows.  As such, there is no need to
+	<em class="firstterm">propagate</em> the exposure to them on the
+	GTK+ side.
+      </p>
+<p>
+	<a class="xref" href="chap-drawing-model.html#figure-hierarchical-drawing" title="Figure 2. Hierarchical drawing order">Figure 2, “Hierarchical drawing order”</a> shows how a simple toplevel window would
+	paint itself when it contains only <code class="constant">GTK_NO_WINDOW</code> descendants:
+
+	</p>
+<div class="orderedlist"><ol class="orderedlist" type="1">
+<li class="listitem"><p>
+	      The outermost, thick rectangle is a toplevel <a class="link" href="GtkWindow.html" title="GtkWindow"><code class="classname">GtkWindow</code></a>,
+	      which is not a <code class="constant">GTK_NO_WINDOW</code> widget —
+	      as such, it does receive its exposure event as it comes from GDK.
+	      First the <code class="classname">GtkWindow</code> would paint its own
+	      background.  Then, it would ask its only child to paint itself,
+	      numbered 2.
+	    </p></li>
+<li class="listitem"><p>
+	      The dotted rectangle represents a <a class="link" href="GtkVBox.html" title="GtkVBox"><code class="classname">GtkVBox</code></a>, which
+	      has been made the sole child of the
+	      <code class="classname">GtkWindow</code>.  Boxes are just layout
+	      containers that do not paint anything by themselves, so this
+	      <code class="classname">GtkVBox</code> would draw nothing, but rather ask
+	      its children to draw themselves.  The children are numbered 3 and
+	      6.
+	    </p></li>
+<li class="listitem"><p>
+	      The thin rectangle is a <a class="link" href="GtkFrame.html" title="GtkFrame"><code class="classname">GtkFrame</code></a>,
+	      which has two children:  a label for the frame, numbered 4, and
+	      another label inside, numbered 5.  First the frame would draw its
+	      own beveled box, then ask the frame label and its internal child to
+	      draw themselves.
+	    </p></li>
+<li class="listitem"><p>
+	      The frame label has no children, so it just draws its text:  "Frame Label".
+	    </p></li>
+<li class="listitem"><p>
+	      The internal label has no children, so it just draws its text:  "This
+	      is some text inside the frame!".
+	    </p></li>
+<li class="listitem"><p>
+	      The dotted rectangle represents a <a class="link" href="GtkHBox.html" title="GtkHBox"><code class="classname">GtkHBox</code></a>.  Again,
+	      this does not draw anything by itself, but rather asks its children
+	      to draw themselves.  The children are numbered 7 and 9.
+	    </p></li>
+<li class="listitem"><p>
+	      The thin rectangle is a <a class="link" href="GtkButton.html" title="GtkButton"><code class="classname">GtkButton</code></a> with
+	      a single child, numbered 8.  First the button would draw its
+	      beveled box, and then it would ask its child to draw itself.
+	    </p></li>
+<li class="listitem"><p>
+	      This is a text label which has no children, so it just draws its
+	      own text:  "Cancel".
+	    </p></li>
+<li class="listitem"><p>
+	      Similar to number 7, this is a button with a single child, numbered
+	      10.  First the button would draw its beveled box, and then it would
+	      ask its child to draw itself.
+	    </p></li>
+<li class="listitem"><p>
+	      Similar to number 8, this is a text label which has no children,
+	      so it just draws its own text:  "OK".
+	    </p></li>
+</ol></div>
+<p>
+      </p>
+<div class="figure">
+<a name="figure-hierarchical-drawing"></a><p class="title"><b>Figure 2. Hierarchical drawing order</b></p>
+<div class="figure-contents"><div><img src="figure-hierarchical-drawing.png" alt="Hierarchical drawing order"></div></div>
+</div>
+<br class="figure-break"><p>
+	To avoid the flickering that would result from each widget drawing
+	itself in turn, GTK+ uses a double-buffering mechanism.  The following
+	sections describe this mechanism in detail.
+      </p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="notes-on-drawing-no-window-widgets"></a><h3>Notes on drawing no-window widgets</h3>
+<p>
+	Remember that the coordinates in a <a href="../gdk/gdk-Event-Structures.html#GdkEventExpose">GdkEventExpose</a> are relative to
+	the <code class="classname">GdkWindow</code> that received the event,
+	<span class="emphasis"><em>not</em></span> to the widget whose expose-event
+	handler is being called.  If your widget owns the window, then
+	these coordinates are probably what you expect.  However, if
+	you have a <code class="constant">GTK_NO_WINDOW</code> widget that
+	shares its parent's window, then the event's coordinates will
+	be offset by your widget's allocation:  remember that the
+	allocation is always relative to the parent
+	<span class="emphasis"><em>window</em></span> of the widget, not to the parent
+	<span class="emphasis"><em>widget</em></span> itself.
+      </p>
+<p>
+	For example, if you have a no-window widget whose allocation
+	is { x=5, y=6,
+	<em class="replaceable"><code>width</code></em>, <em class="replaceable"><code>height</code></em> },
+	then your drawing origin should be at (5, 6), not at
+	(0, 0).
+      </p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="include-inferiors"></a><h3>Drawing over child windows</h3>
+<p>
+	When you draw on a <code class="classname">GdkWindow</code>, your
+	drawing gets clipped by any child windows that it may
+	intersect.  Sometimes you need to draw over your child windows
+	as well; for example, when drawing a drag-handle to resize
+	something.  In this case, turn on the <a href="../gdk/gdk-Graphics-Contexts.html#GDK-INCLUDE-INFERIORS:CAPS">GDK_INCLUDE_INFERIORS</a>
+	subwindow mode for the <a href="../gdk/gdk-Graphics-Contexts.html">GdkGC</a> which you use for
+	drawing.
+      </p>
+</div>
+</div>
+<div class="refsect1">
+<a name="double-buffering"></a><h2>Double buffering</h2>
+<p>
+      When the GTK layer receives an exposure event from GDK, it first finds
+      the <code class="literal">!<code class="constant">GTK_NO_WINDOW</code></code> widget that
+      corresponds to the event's window.  Then, it emits the <a class="link" href="GtkWidget.html#GtkWidget-expose-event" title='The "expose-event" signal'>expose-event signal</a> for that
+      widget.  As described above, that widget will first draw its background,
+      and then ask each of its <code class="constant">GTK_NO_WINDOW</code> children to
+      draw themselves.
+    </p>
+<p>
+      If each of the drawing calls made by each subwidget's
+      <code class="literal">expose-event</code> handler were sent directly to the
+      windowing system, flicker could result.  This is because areas may get
+      redrawn repeatedly:  the background, then decorative frames, then text
+      labels, etc.  To avoid flicker, GTK+ employs a <em class="firstterm">double
+	buffering</em> system at the GDK level.  Widgets normally don't
+      know that they are drawing to an off-screen buffer; they just issue their
+      normal drawing commands, and the buffer gets sent to the windowing system
+      when all drawing operations are done.
+    </p>
+<p>
+      Two basic functions in GDK form the core of the double-buffering
+      mechanism:  <code class="function">gdk_window_begin_paint_region()</code>
+      and <code class="function">gdk_window_end_paint()</code>.
+      The first function tells a <code class="classname">GdkWindow</code> to
+      create a temporary off-screen buffer for drawing.  All
+      subsequent drawing operations to this window get automatically
+      redirected to that buffer.  The second function actually paints
+      the buffer onto the on-screen window, and frees the buffer.
+    </p>
+<div class="refsect2">
+<a name="automatic-double-buffering"></a><h3>Automatic double buffering</h3>
+<p>
+	It would be inconvenient for all widgets to call
+	<code class="function">gdk_window_begin_paint_region()</code> and
+	<code class="function">gdk_window_end_paint()</code> at the beginning
+	and end of their expose-event handlers.
+      </p>
+<p>
+	To make this easier, most GTK+ widgets have the
+	<code class="constant">GTK_DOUBLE_BUFFERED</code> <a class="link" href="GtkWidget.html#GtkWidgetFlags" title="enum GtkWidgetFlags">widget flag</a> turned on by
+	default.  When GTK+ encounters such a widget, it automatically
+	calls <code class="function">gdk_window_begin_paint_region()</code>
+	before emitting the expose-event signal for the widget, and
+	then it calls <code class="function">gdk_window_end_paint()</code>
+	after the signal has been emitted.  This is convenient for
+	most widgets, as they do not need to worry about creating
+	their own temporary drawing buffers or about calling those
+	functions.
+      </p>
+<p>
+	However, some widgets may prefer to disable this kind of
+	automatic double buffering and do things on their own.  To do
+	this, turn off the <code class="constant">GTK_DOUBLE_BUFFERED</code>
+	flag in your widget's constructor.
+      </p>
+<div class="example">
+<a name="disabling-double-buffering"></a><p class="title"><b>Example 1. Disabling automatic double buffering</b></p>
+<div class="example-contents">
+  <table class="listing_frame" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+      <tr>
+        <td class="listing_lines" align="right"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></td>
+        <td class="listing_code"><pre class="programlisting"><span class="keyword">static</span><span class="normal"> </span><span class="type">void</span>
+<span class="function">my_widget_init</span><span class="normal"> </span><span class="symbol">(</span><span class="usertype">MyWidget</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">widget</span><span class="symbol">)</span>
+<span class="cbracket">{</span>
+<span class="normal">  </span><span class="symbol">...</span>
+
+<span class="normal">  </span><span class="function"><a href="GtkWidget.html#gtk-widget-set-double-buffered">gtk_widget_set_double_buffered</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">widget</span><span class="symbol">,</span><span class="normal"> <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS">FALSE</a></span><span class="symbol">);</span>
+
+<span class="normal">  </span><span class="symbol">...</span>
+<span class="cbracket">}</span></pre></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+</div>
+<br class="example-break"><p>
+	When is it convenient to disable double buffering?  Generally,
+	this is the case only if your widget gets drawn in such a way
+	that the different drawing operations do not overlap each
+	other.  For example, this may be the case for a simple image
+	viewer:  it can just draw the image in a single operation.
+	This would <span class="emphasis"><em>not</em></span> be the case with a word
+	processor, since it will need to draw and over-draw the page's
+	background, then the background for highlighted text, and then
+	the text itself.
+      </p>
+<p>
+	Even if you turn off the
+	<code class="constant">GTK_DOUBLE_BUFFERED</code> flag on a widget, you
+	can still call
+	<code class="function">gdk_window_begin_paint_region()</code> and
+	<code class="function">gdk_window_end_paint()</code> by hand to use
+	temporary drawing buffers.
+      </p>
+</div>
+</div>
+<div class="refsect1">
+<a name="app-paintable-widgets"></a><h2>App-paintable widgets</h2>
+<p>
+      Generally, applications use the pre-defined widgets in GTK+ and
+      they do not draw extra things on top of them (the exception
+      being <code class="classname">GtkDrawingArea</code>).  However,
+      applications may sometimes find it convenient to draw directly
+      on certain widgets like toplevel windows or event boxes.  When
+      this is the case, GTK+ needs to be told not to overwrite your
+      drawing afterwards, when the window gets to drawing its default
+      contents.
+    </p>
+<p>
+      <code class="classname">GtkWindow</code> and
+      <code class="classname">GtkEventBox</code> are the only two widgets
+      which will draw their default contents unless you turn on the
+      <code class="constant">GTK_APP_PAINTABLE</code> <a class="link" href="GtkWidget.html#GtkWidgetFlags" title="enum GtkWidgetFlags">widget flag</a>.  If you turn on
+      this flag, then they will not draw their contents and let you do
+      it instead.
+    </p>
+<p>
+      The expose-event handler for <code class="classname">GtkWindow</code> is
+      implemented effectively like this:
+    </p>
+<pre class="programlisting">
+static gint
+gtk_window_expose (GtkWidget      *widget,
+		   GdkEventExpose *event)
+{
+  if (!gtk_widget_get_app_paintable (widget))
+    gtk_paint_flat_box (widget-&gt;style, widget-&gt;window, GTK_STATE_NORMAL, 
+                        GTK_SHADOW_NONE, event-&gt;area, widget, "base", 0, 0, -1, -1);
+
+  if (GTK_WIDGET_CLASS (gtk_window_parent_class)-&gt;expose_event)
+    return GTK_WIDGET_CLASS (gtk_window_parent_class)-&gt;expose_event (widget, event);
+
+  return FALSE;
+}
+    </pre>
+<p>
+      The expose-event handler for <code class="classname">GtkEventBox</code>
+      is implemented in a similar fashion.
+    </p>
+<p>
+      Since the <a class="link" href="GtkWidget.html#GtkWidget-expose-event" title='The "expose-event" signal'>expose-event
+	signal</a> runs user-connected handlers
+      <span class="emphasis"><em>before</em></span> the widget's default handler, what
+      happens is this:
+    </p>
+<div class="orderedlist"><ol class="orderedlist" type="1">
+<li class="listitem"><p>
+	  Your own expose-event handler gets run.  It paints something
+	  on the window or the event box.
+	</p></li>
+<li class="listitem"><p>
+	  The widget's default expose-event handler gets run.  If
+	  <code class="constant">GTK_APP_PAINTABLE</code> is turned off (this
+	  is the default), <span class="emphasis"><em>your drawing will be
+	  overwritten</em></span>.  If that flag is turned on, the
+	  widget will not draw its default contents and preserve your
+	  drawing instead.
+	</p></li>
+<li class="listitem"><p>
+	  The expose-event handler for the parent class gets run.
+	  Since both <code class="classname">GtkWindow</code> and
+	  <code class="classname">GtkEventBox</code> are descendants of
+	  <code class="classname">GtkContainer</code>, their no-window
+	  children will be asked to draw themselves recursively, as
+	  described in <a class="xref" href="chap-drawing-model.html#hierarchical-drawing" title="Hierarchical drawing">the section called “Hierarchical drawing”</a>.
+	</p></li>
+</ol></div>
+<p><b>Summary of app-paintable widgets. </b>
+	Turn on the <code class="constant">GTK_APP_PAINTABLE</code> flag if you
+	intend to draw your own content directly on a
+	<code class="classname">GtkWindow</code> and
+	<code class="classname">GtkEventBox</code>.  You seldom need to draw
+	on top of other widgets, and
+	<code class="classname">GtkDrawingArea</code> ignores this flag, as it
+	<span class="emphasis"><em>is</em></span> intended to be drawn on.
+      </p>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

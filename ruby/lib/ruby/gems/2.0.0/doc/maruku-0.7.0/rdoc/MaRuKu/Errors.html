@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>module MaRuKu::Errors - maruku-0.7.0 Documentation</title>
+
+<link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/darkfish.js"></script>
+
+
+<body id="top" class="module">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../index.html">Home</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/maruku.rb
+    <li>lib/maruku/errors.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    
+    
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li ><a href="#method-i-create_frame">#create_frame</a>
+    
+    <li ><a href="#method-i-describe_error">#describe_error</a>
+    
+    <li ><a href="#method-i-maruku_error">#maruku_error</a>
+    
+    <li ><a href="#method-i-maruku_recover">#maruku_recover</a>
+    
+    <li ><a href="#method-i-raise_error">#raise_error</a>
+    
+    <li ><a href="#method-i-tell_user">#tell_user</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../MaRuKu.html">MaRuKu</a>
+  
+    <li><a href="../MaRuKu/AttributeList.html">MaRuKu::AttributeList</a>
+  
+    <li><a href="../MaRuKu/Errors.html">MaRuKu::Errors</a>
+  
+    <li><a href="../MaRuKu/Exception.html">MaRuKu::Exception</a>
+  
+    <li><a href="../MaRuKu/HTMLElement.html">MaRuKu::HTMLElement</a>
+  
+    <li><a href="../MaRuKu/HTMLFragment.html">MaRuKu::HTMLFragment</a>
+  
+    <li><a href="../MaRuKu/Helpers.html">MaRuKu::Helpers</a>
+  
+    <li><a href="../MaRuKu/In.html">MaRuKu::In</a>
+  
+    <li><a href="../MaRuKu/In.html">MaRuKu::In</a>
+  
+    <li><a href="../MaRuKu/In/Markdown.html">MaRuKu::In::Markdown</a>
+  
+    <li><a href="../MaRuKu/In/Markdown.html">MaRuKu::In::Markdown</a>
+  
+    <li><a href="../MaRuKu/In/Markdown/BlockLevelParser.html">MaRuKu::In::Markdown::BlockLevelParser</a>
+  
+    <li><a href="../MaRuKu/In/Markdown/BlockLevelParser/BlockContext.html">MaRuKu::In::Markdown::BlockLevelParser::BlockContext</a>
+  
+    <li><a href="../MaRuKu/In/Markdown/BlockLevelParser/LineSource.html">MaRuKu::In::Markdown::BlockLevelParser::LineSource</a>
+  
+    <li><a href="../MaRuKu/In/Markdown/SpanExtension.html">MaRuKu::In::Markdown::SpanExtension</a>
+  
+    <li><a href="../MaRuKu/In/Markdown/SpanLevelParser.html">MaRuKu::In::Markdown::SpanLevelParser</a>
+  
+    <li><a href="../MaRuKu/In/Markdown/SpanLevelParser/CaptureRule.html">MaRuKu::In::Markdown::SpanLevelParser::CaptureRule</a>
+  
+    <li><a href="../MaRuKu/In/Markdown/SpanLevelParser/CharSourceDebug.html">MaRuKu::In::Markdown::SpanLevelParser::CharSourceDebug</a>
+  
+    <li><a href="../MaRuKu/In/Markdown/SpanLevelParser/CharSourceManual.html">MaRuKu::In::Markdown::SpanLevelParser::CharSourceManual</a>
+  
+    <li><a href="../MaRuKu/In/Markdown/SpanLevelParser/CharSourceStrscan.html">MaRuKu::In::Markdown::SpanLevelParser::CharSourceStrscan</a>
+  
+    <li><a href="../MaRuKu/In/Markdown/SpanLevelParser/HTMLHelper.html">MaRuKu::In::Markdown::SpanLevelParser::HTMLHelper</a>
+  
+    <li><a href="../MaRuKu/In/Markdown/SpanLevelParser/ReplaceRule.html">MaRuKu::In::Markdown::SpanLevelParser::ReplaceRule</a>
+  
+    <li><a href="../MaRuKu/In/Markdown/SpanLevelParser/Rule.html">MaRuKu::In::Markdown::SpanLevelParser::Rule</a>
+  
+    <li><a href="../MaRuKu/In/Markdown/SpanLevelParser/SpanContext.html">MaRuKu::In::Markdown::SpanLevelParser::SpanContext</a>
+  
+    <li><a href="../MaRuKu/MDDocument.html">MaRuKu::MDDocument</a>
+  
+    <li><a href="../MaRuKu/MDElement.html">MaRuKu::MDElement</a>
+  
+    <li><a href="../MaRuKu/MDHTMLElement.html">MaRuKu::MDHTMLElement</a>
+  
+    <li><a href="../MaRuKu/MDLine.html">MaRuKu::MDLine</a>
+  
+    <li><a href="../MaRuKu/NokogiriHTMLFragment.html">MaRuKu::NokogiriHTMLFragment</a>
+  
+    <li><a href="../MaRuKu/Out.html">MaRuKu::Out</a>
+  
+    <li><a href="../MaRuKu/Out/EntityTable.html">MaRuKu::Out::EntityTable</a>
+  
+    <li><a href="../MaRuKu/Out/HTML.html">MaRuKu::Out::HTML</a>
+  
+    <li><a href="../MaRuKu/Out/HTML/HTMLElement.html">MaRuKu::Out::HTML::HTMLElement</a>
+  
+    <li><a href="../MaRuKu/Out/Latex.html">MaRuKu::Out::Latex</a>
+  
+    <li><a href="../MaRuKu/Out/Latex/MDDocumentExtensions.html">MaRuKu::Out::Latex::MDDocumentExtensions</a>
+  
+    <li><a href="../MaRuKu/Out/Markdown.html">MaRuKu::Out::Markdown</a>
+  
+    <li><a href="../MaRuKu/REXMLHTMLFragment.html">MaRuKu::REXMLHTMLFragment</a>
+  
+    <li><a href="../MaRuKu/Section.html">MaRuKu::Section</a>
+  
+    <li><a href="../MaRuKu/Strings.html">MaRuKu::Strings</a>
+  
+    <li><a href="../Maruku.html">Maruku</a>
+  
+    <li><a href="../Maruku.html">Maruku</a>
+  
+    <li><a href="../Maruku/In/Markdown/FencedCode.html">Maruku::In::Markdown::FencedCode</a>
+  
+    <li><a href="../Object.html">Object</a>
+  
+    <li><a href="../String.html">String</a>
+  
+    <li><a href="../Textile2Signature.html">Textile2Signature</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="module">module MaRuKu::Errors</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+    <!-- Constants -->
+    <section id="constants-list" class="section">
+      <h3 class="section-header">Constants</h3>
+      <dl>
+      
+        <dt id="FRAME_WIDTH">FRAME_WIDTH
+        
+        <dd class="description">
+        
+      
+      </dl>
+    </section>
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-maruku_error" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">maruku_error</span><span
+            class="method-args">(s, src=nil, con=nil, recover=nil)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Properly handles a formatting error. All such errors go through this
+method.</p>
+
+<p>The behavior depends on {MaRuKu::Globals `<a
+href="http://:on_error">MaRuKu::Globals</a>`}. If this is `:warning`, this
+prints the error to stderr (or `@error_stream` if it&#39;s defined) and
+tries to continue. If `:on_error` is `:ignore`, this doesn&#39;t print
+anything and tries to continue. If it&#39;s `:raise`, this raises a
+{MaRuKu::Exception}.</p>
+
+<p>By default, `:on_error` is set to `:warning`.</p>
+
+<p>@overload def <a
+href="Errors.html#method-i-maruku_error">#maruku_error</a>(s, src = nil,
+con = nil) @param s [String] The text of the error @param src [#describe,
+nil] The source of the error @param con [#describe, nil] The context of the
+error @param recover [String, nil] Recovery text @raise [MaRuKu::Exception]
+If `:on_error` is set to `:raise`</p>
+          
+          
+
+          
+          <div class="method-source-code" id="maruku_error-source">
+            <pre><span class="ruby-comment"># File lib/maruku/errors.rb, line 24</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">maruku_error</span>(<span class="ruby-identifier">s</span>, <span class="ruby-identifier">src</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">con</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">recover</span>=<span class="ruby-keyword">nil</span>)
+  <span class="ruby-identifier">policy</span> = <span class="ruby-identifier">get_setting</span>(<span class="ruby-value">:on_error</span>)
+
+  <span class="ruby-keyword">case</span> <span class="ruby-identifier">policy</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-value">:ignore</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-value">:raise</span>
+    <span class="ruby-identifier">raise_error</span> <span class="ruby-identifier">create_frame</span>(<span class="ruby-identifier">describe_error</span>(<span class="ruby-identifier">s</span>, <span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>, <span class="ruby-identifier">recover</span>))
+  <span class="ruby-keyword">when</span> <span class="ruby-value">:warning</span>
+    <span class="ruby-identifier">tell_user</span> <span class="ruby-identifier">create_frame</span>(<span class="ruby-identifier">describe_error</span>(<span class="ruby-identifier">s</span>, <span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>, <span class="ruby-identifier">recover</span>))
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Unknown on_error policy: #{policy.inspect}&quot;</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- maruku_error-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- maruku_error-method -->
+
+    
+      <div id="method-i-maruku_recover" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">maruku_recover</span><span
+            class="method-args">(s, src=nil, con=nil, recover=nil)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="maruku_recover-source">
+            <pre><span class="ruby-comment"># File lib/maruku/errors.rb, line 38</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">maruku_recover</span>(<span class="ruby-identifier">s</span>, <span class="ruby-identifier">src</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">con</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">recover</span>=<span class="ruby-keyword">nil</span>)
+  <span class="ruby-identifier">tell_user</span> <span class="ruby-identifier">create_frame</span>(<span class="ruby-identifier">describe_error</span>(<span class="ruby-identifier">s</span>, <span class="ruby-identifier">src</span>, <span class="ruby-identifier">con</span>, <span class="ruby-identifier">recover</span>))
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- maruku_recover-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- maruku_recover-method -->
+
+    
+      <div id="method-i-raise_error" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">raise_error</span><span
+            class="method-args">(s)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="raise_error-source">
+            <pre><span class="ruby-comment"># File lib/maruku/errors.rb, line 42</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">raise_error</span>(<span class="ruby-identifier">s</span>)
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">MaRuKu</span><span class="ruby-operator">::</span><span class="ruby-constant">Exception</span>, <span class="ruby-identifier">s</span>, <span class="ruby-identifier">caller</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- raise_error-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- raise_error-method -->
+
+    
+      <div id="method-i-tell_user" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">tell_user</span><span
+            class="method-args">(s)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="tell_user-source">
+            <pre><span class="ruby-comment"># File lib/maruku/errors.rb, line 46</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">tell_user</span>(<span class="ruby-identifier">s</span>)
+  (<span class="ruby-keyword">self</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value">:error_stream</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">$stderr</span>) <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&quot;\n&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- tell_user-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- tell_user-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+     <section id="private-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Private Instance Methods</h3>
+
+    
+      <div id="method-i-create_frame" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">create_frame</span><span
+            class="method-args">(s)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="create_frame-source">
+            <pre><span class="ruby-comment"># File lib/maruku/errors.rb, line 52</span>
+    <span class="ruby-keyword">def</span> <span class="ruby-identifier">create_frame</span>(<span class="ruby-identifier">s</span>)
+      <span class="ruby-string">&quot;\n&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-value">&lt;&lt;FRAME
+ #{&quot;_&quot; * FRAME_WIDTH}
+| Maruku tells you:
++#{&quot;-&quot; * FRAME_WIDTH}
+#{s.gsub(/^/, &#39;| &#39;).rstrip}
++#{&quot;-&quot; * FRAME_WIDTH}
+#{caller[1...5].join(&quot;\n&quot;).gsub(/^/, &#39;!&#39;)}
+\\#{&quot;_&quot; * FRAME_WIDTH}
+FRAME</span>
+    <span class="ruby-keyword">end</span></pre>
+          </div><!-- create_frame-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- create_frame-method -->
+
+    
+      <div id="method-i-describe_error" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">describe_error</span><span
+            class="method-args">(s, src=nil, con=nil, recover=nil)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="describe_error-source">
+            <pre><span class="ruby-comment"># File lib/maruku/errors.rb, line 64</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">describe_error</span>(<span class="ruby-identifier">s</span>, <span class="ruby-identifier">src</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">con</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">recover</span>=<span class="ruby-keyword">nil</span>)
+  <span class="ruby-identifier">s</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;\n#{src.describe}\n&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">src</span>
+  <span class="ruby-identifier">s</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;\n#{con.describe}\n&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">con</span>
+  <span class="ruby-identifier">s</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;\nRecovering: #{recover}\n&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">recover</span>
+  <span class="ruby-identifier">s</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- describe_error-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- describe_error-method -->
+
+    
+    </section><!-- private-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

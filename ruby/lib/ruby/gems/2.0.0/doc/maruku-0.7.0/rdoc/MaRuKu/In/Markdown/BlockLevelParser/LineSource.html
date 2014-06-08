@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>class MaRuKu::In::Markdown::BlockLevelParser::LineSource - maruku-0.7.0 Documentation</title>
+
+<link type="text/css" media="screen" href="../../../../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../../../../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../../../../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../../../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../../../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../../../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../../../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../../../js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../../../../index.html">Home</a>
+    <a href="../../../../table_of_contents.html#classes">Classes</a>
+    <a href="../../../../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/maruku/input/linesource.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link"><a href="../../../../Object.html">Object</a>
+  
+</nav>
+
+    
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li ><a href="#method-c-new">::new</a>
+    
+    <li ><a href="#method-i-cur_index">#cur_index</a>
+    
+    <li ><a href="#method-i-cur_line">#cur_line</a>
+    
+    <li ><a href="#method-i-describe">#describe</a>
+    
+    <li ><a href="#method-i-ignore_line">#ignore_line</a>
+    
+    <li ><a href="#method-i-next_line">#next_line</a>
+    
+    <li ><a href="#method-i-original_line_number">#original_line_number</a>
+    
+    <li ><a href="#method-i-shift_line">#shift_line</a>
+    
+    <li ><a href="#method-i-tell_me_the_future">#tell_me_the_future</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../../../../MaRuKu.html">MaRuKu</a>
+  
+    <li><a href="../../../../MaRuKu/AttributeList.html">MaRuKu::AttributeList</a>
+  
+    <li><a href="../../../../MaRuKu/Errors.html">MaRuKu::Errors</a>
+  
+    <li><a href="../../../../MaRuKu/Exception.html">MaRuKu::Exception</a>
+  
+    <li><a href="../../../../MaRuKu/HTMLElement.html">MaRuKu::HTMLElement</a>
+  
+    <li><a href="../../../../MaRuKu/HTMLFragment.html">MaRuKu::HTMLFragment</a>
+  
+    <li><a href="../../../../MaRuKu/Helpers.html">MaRuKu::Helpers</a>
+  
+    <li><a href="../../../../MaRuKu/In.html">MaRuKu::In</a>
+  
+    <li><a href="../../../../MaRuKu/In.html">MaRuKu::In</a>
+  
+    <li><a href="../../../../MaRuKu/In/Markdown.html">MaRuKu::In::Markdown</a>
+  
+    <li><a href="../../../../MaRuKu/In/Markdown.html">MaRuKu::In::Markdown</a>
+  
+    <li><a href="../../../../MaRuKu/In/Markdown/BlockLevelParser.html">MaRuKu::In::Markdown::BlockLevelParser</a>
+  
+    <li><a href="../../../../MaRuKu/In/Markdown/BlockLevelParser/BlockContext.html">MaRuKu::In::Markdown::BlockLevelParser::BlockContext</a>
+  
+    <li><a href="../../../../MaRuKu/In/Markdown/BlockLevelParser/LineSource.html">MaRuKu::In::Markdown::BlockLevelParser::LineSource</a>
+  
+    <li><a href="../../../../MaRuKu/In/Markdown/SpanExtension.html">MaRuKu::In::Markdown::SpanExtension</a>
+  
+    <li><a href="../../../../MaRuKu/In/Markdown/SpanLevelParser.html">MaRuKu::In::Markdown::SpanLevelParser</a>
+  
+    <li><a href="../../../../MaRuKu/In/Markdown/SpanLevelParser/CaptureRule.html">MaRuKu::In::Markdown::SpanLevelParser::CaptureRule</a>
+  
+    <li><a href="../../../../MaRuKu/In/Markdown/SpanLevelParser/CharSourceDebug.html">MaRuKu::In::Markdown::SpanLevelParser::CharSourceDebug</a>
+  
+    <li><a href="../../../../MaRuKu/In/Markdown/SpanLevelParser/CharSourceManual.html">MaRuKu::In::Markdown::SpanLevelParser::CharSourceManual</a>
+  
+    <li><a href="../../../../MaRuKu/In/Markdown/SpanLevelParser/CharSourceStrscan.html">MaRuKu::In::Markdown::SpanLevelParser::CharSourceStrscan</a>
+  
+    <li><a href="../../../../MaRuKu/In/Markdown/SpanLevelParser/HTMLHelper.html">MaRuKu::In::Markdown::SpanLevelParser::HTMLHelper</a>
+  
+    <li><a href="../../../../MaRuKu/In/Markdown/SpanLevelParser/ReplaceRule.html">MaRuKu::In::Markdown::SpanLevelParser::ReplaceRule</a>
+  
+    <li><a href="../../../../MaRuKu/In/Markdown/SpanLevelParser/Rule.html">MaRuKu::In::Markdown::SpanLevelParser::Rule</a>
+  
+    <li><a href="../../../../MaRuKu/In/Markdown/SpanLevelParser/SpanContext.html">MaRuKu::In::Markdown::SpanLevelParser::SpanContext</a>
+  
+    <li><a href="../../../../MaRuKu/MDDocument.html">MaRuKu::MDDocument</a>
+  
+    <li><a href="../../../../MaRuKu/MDElement.html">MaRuKu::MDElement</a>
+  
+    <li><a href="../../../../MaRuKu/MDHTMLElement.html">MaRuKu::MDHTMLElement</a>
+  
+    <li><a href="../../../../MaRuKu/MDLine.html">MaRuKu::MDLine</a>
+  
+    <li><a href="../../../../MaRuKu/NokogiriHTMLFragment.html">MaRuKu::NokogiriHTMLFragment</a>
+  
+    <li><a href="../../../../MaRuKu/Out.html">MaRuKu::Out</a>
+  
+    <li><a href="../../../../MaRuKu/Out/EntityTable.html">MaRuKu::Out::EntityTable</a>
+  
+    <li><a href="../../../../MaRuKu/Out/HTML.html">MaRuKu::Out::HTML</a>
+  
+    <li><a href="../../../../MaRuKu/Out/HTML/HTMLElement.html">MaRuKu::Out::HTML::HTMLElement</a>
+  
+    <li><a href="../../../../MaRuKu/Out/Latex.html">MaRuKu::Out::Latex</a>
+  
+    <li><a href="../../../../MaRuKu/Out/Latex/MDDocumentExtensions.html">MaRuKu::Out::Latex::MDDocumentExtensions</a>
+  
+    <li><a href="../../../../MaRuKu/Out/Markdown.html">MaRuKu::Out::Markdown</a>
+  
+    <li><a href="../../../../MaRuKu/REXMLHTMLFragment.html">MaRuKu::REXMLHTMLFragment</a>
+  
+    <li><a href="../../../../MaRuKu/Section.html">MaRuKu::Section</a>
+  
+    <li><a href="../../../../MaRuKu/Strings.html">MaRuKu::Strings</a>
+  
+    <li><a href="../../../../Maruku.html">Maruku</a>
+  
+    <li><a href="../../../../Maruku.html">Maruku</a>
+  
+    <li><a href="../../../../Maruku/In/Markdown/FencedCode.html">Maruku::In::Markdown::FencedCode</a>
+  
+    <li><a href="../../../../Object.html">Object</a>
+  
+    <li><a href="../../../../String.html">String</a>
+  
+    <li><a href="../../../../Textile2Signature.html">Textile2Signature</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class MaRuKu::In::Markdown::BlockLevelParser::LineSource</h1>
+
+  <div id="description" class="description">
+    
+<p>This represents a source of lines that can be consumed.</p>
+
+<p>It is the twin of CharSource.</p>
+
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+    <!-- Attributes -->
+    <section id="attribute-method-details" class="method-section section">
+      <h3 class="section-header">Attributes</h3>
+
+      
+      <div id="attribute-i-parent" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">parent</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+    </section><!-- attribute-method-details -->
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">(lines, parent=nil, parent_offset=nil)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/maruku/input/linesource.rb, line 11</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">lines</span>, <span class="ruby-identifier">parent</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">parent_offset</span>=<span class="ruby-keyword">nil</span>)
+  <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;NIL lines? &quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">lines</span>
+  <span class="ruby-ivar">@lines</span> = <span class="ruby-identifier">lines</span>.<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">l</span><span class="ruby-operator">|</span> <span class="ruby-identifier">l</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">MaRuKu</span><span class="ruby-operator">::</span><span class="ruby-constant">MDLine</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">l</span> <span class="ruby-operator">:</span> <span class="ruby-constant">MaRuKu</span><span class="ruby-operator">::</span><span class="ruby-constant">MDLine</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">l</span>) }
+  <span class="ruby-ivar">@lines_index</span> = <span class="ruby-value">0</span>
+  <span class="ruby-ivar">@parent</span> = <span class="ruby-identifier">parent</span>
+  <span class="ruby-ivar">@parent_offset</span> = <span class="ruby-identifier">parent_offset</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- new-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- new-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-cur_index" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">cur_index</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="cur_index-source">
+            <pre><span class="ruby-comment"># File lib/maruku/input/linesource.rb, line 66</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">cur_index</span>
+  <span class="ruby-ivar">@lines_index</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- cur_index-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- cur_index-method -->
+
+    
+      <div id="method-i-cur_line" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">cur_line</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="cur_line-source">
+            <pre><span class="ruby-comment"># File lib/maruku/input/linesource.rb, line 19</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">cur_line</span>
+  <span class="ruby-ivar">@lines</span>[<span class="ruby-ivar">@lines_index</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- cur_line-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- cur_line-method -->
+
+    
+      <div id="method-i-describe" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">describe</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="describe-source">
+            <pre><span class="ruby-comment"># File lib/maruku/input/linesource.rb, line 39</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">describe</span>
+  <span class="ruby-identifier">s</span> = <span class="ruby-node">&quot;At line #{original_line_number(@lines_index)}\n&quot;</span>
+
+  <span class="ruby-identifier">context</span> = <span class="ruby-value">3</span> <span class="ruby-comment"># lines</span>
+  <span class="ruby-identifier">from</span> = [<span class="ruby-ivar">@lines_index</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">context</span>, <span class="ruby-value">0</span>].<span class="ruby-identifier">max</span>
+  <span class="ruby-identifier">to</span>   = [<span class="ruby-ivar">@lines_index</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">context</span>, <span class="ruby-ivar">@lines</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>].<span class="ruby-identifier">min</span>
+
+  <span class="ruby-identifier">from</span>.<span class="ruby-identifier">upto</span>(<span class="ruby-identifier">to</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">prefix</span> = (<span class="ruby-identifier">i</span> <span class="ruby-operator">==</span> <span class="ruby-ivar">@lines_index</span>) <span class="ruby-operator">?</span> <span class="ruby-string">&#39;--&gt; &#39;</span> <span class="ruby-operator">:</span> <span class="ruby-string">&#39;    &#39;</span>;
+    <span class="ruby-identifier">l</span> = <span class="ruby-ivar">@lines</span>[<span class="ruby-identifier">i</span>]
+    <span class="ruby-identifier">s</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&quot;%10s %4s|%s&quot;</span> <span class="ruby-operator">%</span>
+      [<span class="ruby-ivar">@lines</span>[<span class="ruby-identifier">i</span>].<span class="ruby-identifier">md_type</span>.<span class="ruby-identifier">to_s</span>, <span class="ruby-identifier">prefix</span>, <span class="ruby-identifier">l</span>]
+
+    <span class="ruby-identifier">s</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&quot;|\n&quot;</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">s</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- describe-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- describe-method -->
+
+    
+      <div id="method-i-ignore_line" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">ignore_line</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="ignore_line-source">
+            <pre><span class="ruby-comment"># File lib/maruku/input/linesource.rb, line 34</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">ignore_line</span>
+  <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;Over the rainbow&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@lines_index</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-ivar">@lines</span>.<span class="ruby-identifier">size</span>
+  <span class="ruby-ivar">@lines_index</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- ignore_line-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- ignore_line-method -->
+
+    
+      <div id="method-i-next_line" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">next_line</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="next_line-source">
+            <pre><span class="ruby-comment"># File lib/maruku/input/linesource.rb, line 23</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">next_line</span>
+  <span class="ruby-ivar">@lines</span>[<span class="ruby-ivar">@lines_index</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- next_line-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- next_line-method -->
+
+    
+      <div id="method-i-original_line_number" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">original_line_number</span><span
+            class="method-args">(index)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="original_line_number-source">
+            <pre><span class="ruby-comment"># File lib/maruku/input/linesource.rb, line 58</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">original_line_number</span>(<span class="ruby-identifier">index</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@parent</span>
+    <span class="ruby-identifier">index</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@parent</span>.<span class="ruby-identifier">original_line_number</span>(<span class="ruby-ivar">@parent_offset</span>)
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-value">1</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">index</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- original_line_number-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- original_line_number-method -->
+
+    
+      <div id="method-i-shift_line" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">shift_line</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="shift_line-source">
+            <pre><span class="ruby-comment"># File lib/maruku/input/linesource.rb, line 27</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">shift_line</span>
+  <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;Over the rainbow&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@lines_index</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-ivar">@lines</span>.<span class="ruby-identifier">size</span>
+  <span class="ruby-identifier">l</span> = <span class="ruby-ivar">@lines</span>[<span class="ruby-ivar">@lines_index</span>]
+  <span class="ruby-ivar">@lines_index</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+  <span class="ruby-identifier">l</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- shift_line-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- shift_line-method -->
+
+    
+      <div id="method-i-tell_me_the_future" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">tell_me_the_future</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Returns the type of next line as a string breaks at first :definition</p>
+          
+          
+
+          
+          <div class="method-source-code" id="tell_me_the_future-source">
+            <pre><span class="ruby-comment"># File lib/maruku/input/linesource.rb, line 72</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">tell_me_the_future</span>
+  <span class="ruby-identifier">s</span> = <span class="ruby-string">&quot;&quot;</span>
+  <span class="ruby-identifier">num_e</span> = <span class="ruby-value">0</span>
+
+  <span class="ruby-ivar">@lines_index</span>.<span class="ruby-identifier">upto</span>(<span class="ruby-ivar">@lines</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">c</span> = <span class="ruby-keyword">case</span> <span class="ruby-ivar">@lines</span>[<span class="ruby-identifier">i</span>].<span class="ruby-identifier">md_type</span>
+        <span class="ruby-keyword">when</span> <span class="ruby-value">:text</span>; <span class="ruby-string">&quot;t&quot;</span>
+        <span class="ruby-keyword">when</span> <span class="ruby-value">:empty</span>; <span class="ruby-identifier">num_e</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>; <span class="ruby-string">&quot;e&quot;</span>
+        <span class="ruby-keyword">when</span> <span class="ruby-value">:definition</span>; <span class="ruby-string">&quot;d&quot;</span>
+        <span class="ruby-keyword">else</span> <span class="ruby-string">&quot;o&quot;</span>
+        <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">c</span>
+    <span class="ruby-keyword">break</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">c</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;d&quot;</span> <span class="ruby-keyword">or</span> <span class="ruby-identifier">num_e</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">s</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- tell_me_the_future-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- tell_me_the_future-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

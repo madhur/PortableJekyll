@@ -1,0 +1,293 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Migrating from SexyIconEntry to GtkEntry</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="GTK+ 2 Reference Manual">
+<link rel="up" href="migrating.html" title="Part IV. Migrating from Previous Versions of GTK+">
+<link rel="prev" href="gtk-migrating-tooltips.html" title="Migrating from GtkTooltips to GtkTooltip">
+<link rel="next" href="gtk-migrating-label-links.html" title="Migrating from SexyUrlLabel to GtkLabel">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle">
+<td><a accesskey="p" href="gtk-migrating-tooltips.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="migrating.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GTK+ 2 Reference Manual</th>
+<td><a accesskey="n" href="gtk-migrating-label-links.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="chapter">
+<div class="titlepage"><div><div><h2 class="title">
+<a name="gtk-migrating-entry-icons"></a>Migrating from SexyIconEntry to GtkEntry</h2></div></div></div>
+<p>
+    GTK+ 2.16 supports showing icons inside a <a class="link" href="GtkEntry.html" title="GtkEntry"><span class="type">GtkEntry</span></a>, similar to
+    SexyIconEntry. Porting from SexyIconEntry to GtkEntry is relatively
+    straightforward. The main difference between the two APIs is that
+    SexyIconEntry uses <a class="link" href="GtkImage.html" title="GtkImage"><span class="type">GtkImage</span></a> widgets in a somewhat awkward way as
+    storage vehicles for icons, while GtkEntry allows to specify icons
+    via pixbufs, stock ids, icon names or <a href="http://library.gnome.org/devel/gio/unstable/GIcon.html"><span class="type">GIcons</span></a>. So, if your code uses
+    e.g.:
+</p>
+<div class="informalexample">
+  <table class="listing_frame" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+      <tr>
+        <td class="listing_lines" align="right"><pre>1
+2</pre></td>
+        <td class="listing_code"><pre class="programlisting"><span class="normal">image </span><span class="symbol">=</span><span class="normal"> </span><span class="function"><a href="GtkImage.html#gtk-image-new-from-stock">gtk_image_new_from_stock</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal"><a href="gtk-Stock-Items.html#GTK-STOCK-NEW:CAPS">GTK_STOCK_NEW</a></span><span class="symbol">,</span><span class="normal"> GTK_ICON_SIZE_MENU</span><span class="symbol">);</span>
+<span class="function">sexy_icon_entry_set_icon</span><span class="normal"> </span><span class="symbol">(</span><span class="normal">entry</span><span class="symbol">,</span><span class="normal"> SEXY_ICON_ENTRY_PRIMARY</span><span class="symbol">,</span><span class="normal"> image</span><span class="symbol">);</span></pre></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+    you can get rid of the <em class="parameter"><code>image</code></em>, and directly write:
+</p>
+<div class="informalexample">
+  <table class="listing_frame" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+      <tr>
+        <td class="listing_lines" align="right"><pre>1</pre></td>
+        <td class="listing_code"><pre class="programlisting"><span class="function"><a href="GtkEntry.html#gtk-entry-set-icon-from-stock">gtk_entry_set_icon_from_stock</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">entry</span><span class="symbol">,</span><span class="normal"> <a href="GtkEntry.html#GTK-ENTRY-ICON-PRIMARY:CAPS">GTK_ENTRY_ICON_PRIMARY</a></span><span class="symbol">,</span><span class="normal"> <a href="gtk-Stock-Items.html#GTK-STOCK-NEW:CAPS">GTK_STOCK_NEW</a></span><span class="symbol">);</span></pre></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+  </p>
+<p>
+    The signals SexyIconEntry::icon-pressed and SexyIconEntry::icon-released
+    have been renamed to <a class="link" href="GtkEntry.html#GtkEntry-icon-press" title='The "icon-press" signal'><span class="type">"icon-press"</span></a> and <a class="link" href="GtkEntry.html#GtkEntry-icon-release" title='The "icon-release" signal'><span class="type">"icon-release"</span></a>
+    to avoid problems due to signal name clashes. Also, the signature of the
+    signals has changed from
+</p>
+<div class="informalexample">
+  <table class="listing_frame" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+      <tr>
+        <td class="listing_lines" align="right"><pre>1
+2
+3</pre></td>
+        <td class="listing_code"><pre class="programlisting"><span class="type">void</span><span class="normal"> </span><span class="symbol">(*</span><span class="normal">icon_pressed</span><span class="symbol">)</span><span class="normal"> </span><span class="symbol">(</span><span class="usertype">SexyIconEntry</span><span class="normal">         </span><span class="symbol">*</span><span class="normal">entry</span><span class="symbol">,</span><span class="normal"> </span>
+<span class="normal">                      </span><span class="usertype">SexyIconEntryPosition</span><span class="normal">  icon_pos</span><span class="symbol">,</span>
+<span class="normal">                      </span><span class="type">int</span><span class="normal">                    button</span><span class="symbol">)</span></pre></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+to
+</p>
+<div class="informalexample">
+  <table class="listing_frame" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+      <tr>
+        <td class="listing_lines" align="right"><pre>1
+2
+3</pre></td>
+        <td class="listing_code"><pre class="programlisting"><span class="type">void</span><span class="normal"> </span><span class="symbol">(*</span><span class="normal">icon_press</span><span class="symbol">)</span><span class="normal"> </span><span class="symbol">(</span><span class="usertype">GtkEntry</span><span class="normal">              </span><span class="symbol">*</span><span class="normal">entry</span><span class="symbol">,</span><span class="normal"> </span>
+<span class="normal">                    </span><span class="usertype">GtkEntryIconPosition</span><span class="normal">  icon_pos</span><span class="symbol">,</span>
+<span class="normal">                    </span><span class="usertype">GdkEventButton</span><span class="normal">       </span><span class="symbol">*</span><span class="normal">event</span><span class="symbol">)</span></pre></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+    The new signature has the advantage that the signal handler can use
+    the timestamp of the event, e.g. for passing it to <a class="link" href="GtkMenu.html#gtk-menu-popup" title="gtk_menu_popup ()"><code class="function">gtk_menu_popup()</code></a>.
+    When adapting an existing signal handler to the new signature, you 
+    should note that the button number is easily available as <em class="parameter"><code>event-&gt;button</code></em>,
+    as shown in the following example:
+</p>
+<div class="informalexample">
+  <table class="listing_frame" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+      <tr>
+        <td class="listing_lines" align="right"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12</pre></td>
+        <td class="listing_code"><pre class="programlisting"><span class="keyword">static</span><span class="normal"> </span><span class="type">void</span>
+<span class="function">icon_pressed_cb</span><span class="normal"> </span><span class="symbol">(</span><span class="usertype">SexyIconEntry</span><span class="normal">         </span><span class="symbol">*</span><span class="normal">entry</span><span class="symbol">,</span>
+<span class="normal">                 </span><span class="usertype">SexyIconEntryPosition</span><span class="normal">  position</span><span class="symbol">,</span>
+<span class="normal">                 </span><span class="type">int</span><span class="normal">                    button</span><span class="symbol">,</span>
+<span class="normal">                 </span><span class="usertype">gpointer</span><span class="normal">               data</span><span class="symbol">)</span>
+<span class="cbracket">{</span>
+<span class="normal">  </span><span class="usertype">GtkMenu</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">menu </span><span class="symbol">=</span><span class="normal"> data</span><span class="symbol">;</span>
+
+<span class="normal">  </span><span class="keyword">if</span><span class="normal"> </span><span class="symbol">(</span><span class="normal">position </span><span class="symbol">==</span><span class="normal"> SEXY_ICON_ENTRY_PRIMARY</span><span class="symbol">)</span>
+<span class="normal">    </span><span class="function"><a href="GtkMenu.html#gtk-menu-popup">gtk_menu_popup</a></span><span class="normal"> </span><span class="symbol">(</span><span class="function">GTK_MENU</span><span class="normal"> </span><span class="symbol">(</span><span class="normal">menu</span><span class="symbol">),</span><span class="normal"> <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS">NULL</a></span><span class="symbol">,</span><span class="normal"> <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS">NULL</a></span><span class="symbol">,</span><span class="normal"> <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS">NULL</a></span><span class="symbol">,</span><span class="normal"> <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS">NULL</a></span><span class="symbol">,</span>
+<span class="normal">                    button</span><span class="symbol">,</span><span class="normal"> <a href="../gdk/gdk-Events.html#GDK-CURRENT-TIME:CAPS">GDK_CURRENT_TIME</a></span><span class="symbol">);</span>
+<span class="cbracket">}</span></pre></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+    can be ported as:
+</p>
+<div class="informalexample">
+  <table class="listing_frame" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+      <tr>
+        <td class="listing_lines" align="right"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12</pre></td>
+        <td class="listing_code"><pre class="programlisting"><span class="keyword">static</span><span class="normal"> </span><span class="type">void</span>
+<span class="function">icon_press_cb</span><span class="normal"> </span><span class="symbol">(</span><span class="usertype">GtkEntry</span><span class="normal">             </span><span class="symbol">*</span><span class="normal">entry</span><span class="symbol">,</span>
+<span class="normal">               </span><span class="usertype">GtkEntryIconPosition</span><span class="normal">  position</span><span class="symbol">,</span>
+<span class="normal">               </span><span class="usertype">GdkEventButton</span><span class="normal">       </span><span class="symbol">*</span><span class="normal">event</span><span class="symbol">,</span>
+<span class="normal">               </span><span class="usertype">gpointer</span><span class="normal">              data</span><span class="symbol">)</span>
+<span class="cbracket">{</span>
+<span class="normal">  </span><span class="usertype">GtkMenu</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">menu </span><span class="symbol">=</span><span class="normal"> data</span><span class="symbol">;</span>
+
+<span class="normal">  </span><span class="keyword">if</span><span class="normal"> </span><span class="symbol">(</span><span class="normal">position </span><span class="symbol">==</span><span class="normal"> <a href="GtkEntry.html#GTK-ENTRY-ICON-PRIMARY:CAPS">GTK_ENTRY_ICON_PRIMARY</a></span><span class="symbol">)</span>
+<span class="normal">    </span><span class="function"><a href="GtkMenu.html#gtk-menu-popup">gtk_menu_popup</a></span><span class="normal"> </span><span class="symbol">(</span><span class="function">GTK_MENU</span><span class="normal"> </span><span class="symbol">(</span><span class="normal">menu</span><span class="symbol">),</span><span class="normal"> <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS">NULL</a></span><span class="symbol">,</span><span class="normal"> <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS">NULL</a></span><span class="symbol">,</span><span class="normal"> <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS">NULL</a></span><span class="symbol">,</span><span class="normal"> <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS">NULL</a></span><span class="symbol">,</span>
+<span class="normal">                    event</span><span class="symbol">-&gt;</span><span class="normal">button</span><span class="symbol">,</span><span class="normal"> event</span><span class="symbol">-&gt;</span><span class="normal">time</span><span class="symbol">);</span>
+<span class="cbracket">}</span></pre></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+  </p>
+<p>
+    Another difference is that SexyIconEntry offers manual control of
+    the icon prelighting, via <code class="function">sexy_icon_entry_set_icon_highlight()</code>. 
+    <a class="link" href="GtkEntry.html" title="GtkEntry"><span class="type">GtkEntry</span></a> prelights automatically when appropriate, depending on 
+    whether the icon is activatable and sensitive. You should make
+    sure that your icons are properly marked as activatable or nonactivatable
+    and sensitive or insensitive:
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem"><p>
+        Sensitive, but non-activatable icons are
+        good for purely informational purposes.
+      </p></li>
+<li class="listitem"><p>
+        Icons should be marked as insensitive if the
+        function that they trigger is currently not available.
+      </p></li>
+</ul></div>
+<p>
+  </p>
+<p>
+    GtkEntry has no direct equivalent of the special-purpose function
+    <code class="function">sexy_icon_entry_add_clear_button()</code>. If you need this functionality,
+    the following code works:
+</p>
+<div class="informalexample">
+  <table class="listing_frame" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+      <tr>
+        <td class="listing_lines" align="right"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36</pre></td>
+        <td class="listing_code"><pre class="programlisting"><span class="keyword">static</span><span class="normal"> </span><span class="type">void</span>
+<span class="function">icon_pressed_cb</span><span class="normal"> </span><span class="symbol">(</span><span class="usertype">GtkEntry</span><span class="normal">       </span><span class="symbol">*</span><span class="normal">entry</span><span class="symbol">,</span>
+<span class="normal">                 </span><span class="usertype">gint</span><span class="normal">            position</span><span class="symbol">,</span>
+<span class="normal">                 </span><span class="usertype">GdkEventButton</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">event</span><span class="symbol">,</span>
+<span class="normal">                 </span><span class="usertype">gpointer</span><span class="normal">        data</span><span class="symbol">)</span>
+<span class="cbracket">{</span>
+<span class="normal">  </span><span class="keyword">if</span><span class="normal"> </span><span class="symbol">(</span><span class="normal">position </span><span class="symbol">==</span><span class="normal"> <a href="GtkEntry.html#GTK-ENTRY-ICON-SECONDARY:CAPS">GTK_ENTRY_ICON_SECONDARY</a></span><span class="symbol">)</span>
+<span class="normal">    </span><span class="function"><a href="GtkEntry.html#gtk-entry-set-text">gtk_entry_set_text</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">entry</span><span class="symbol">,</span><span class="normal"> </span><span class="string">""</span><span class="symbol">);</span>
+<span class="cbracket">}</span>
+
+<span class="keyword">static</span><span class="normal"> </span><span class="type">void</span>
+<span class="function">text_changed_cb</span><span class="normal"> </span><span class="symbol">(</span><span class="usertype">GtkEntry</span><span class="normal">   </span><span class="symbol">*</span><span class="normal">entry</span><span class="symbol">,</span>
+<span class="normal">                 </span><span class="usertype">GParamSpec</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">pspec</span><span class="symbol">,</span>
+<span class="normal">                 </span><span class="usertype">GtkWidget</span><span class="normal">  </span><span class="symbol">*</span><span class="normal">button</span><span class="symbol">)</span>
+<span class="cbracket">{</span>
+<span class="normal">  </span><span class="usertype">gboolean</span><span class="normal"> has_text</span><span class="symbol">;</span>
+
+<span class="normal">  has_text </span><span class="symbol">=</span><span class="normal"> </span><span class="function"><a href="GtkEntry.html#gtk-entry-get-text-length">gtk_entry_get_text_length</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">entry</span><span class="symbol">)</span><span class="normal"> </span><span class="symbol">&gt;</span><span class="normal"> </span><span class="number">0</span><span class="symbol">;</span>
+<span class="normal">  </span><span class="function"><a href="GtkEntry.html#gtk-entry-set-icon-sensitive">gtk_entry_set_icon_sensitive</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">entry</span><span class="symbol">,</span>
+<span class="normal">                                <a href="GtkEntry.html#GTK-ENTRY-ICON-SECONDARY:CAPS">GTK_ENTRY_ICON_SECONDARY</a></span><span class="symbol">,</span>
+<span class="normal">                                has_text</span><span class="symbol">);</span>
+<span class="cbracket">}</span>
+
+
+<span class="normal">  </span><span class="comment">/* ... */</span>
+<span class="normal"> </span>
+<span class="normal">  </span><span class="comment">/* Set up the clear icon */</span>
+<span class="normal">  </span><span class="function"><a href="GtkEntry.html#gtk-entry-set-icon-from-stock">gtk_entry_set_icon_from_stock</a></span><span class="normal"> </span><span class="symbol">(</span><span class="function">GTK_ENTRY</span><span class="normal"> </span><span class="symbol">(</span><span class="normal">entry</span><span class="symbol">),</span>
+<span class="normal">                                 <a href="GtkEntry.html#GTK-ENTRY-ICON-SECONDARY:CAPS">GTK_ENTRY_ICON_SECONDARY</a></span><span class="symbol">,</span>
+<span class="normal">                                 <a href="gtk-Stock-Items.html#GTK-STOCK-CLEAR:CAPS">GTK_STOCK_CLEAR</a></span><span class="symbol">);</span>
+<span class="normal">  </span><span class="function"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#g-signal-connect">g_signal_connect</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">entry</span><span class="symbol">,</span><span class="normal"> </span><span class="string">"icon-press"</span><span class="symbol">,</span>
+<span class="normal">                    </span><span class="function"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Closures.html#G-CALLBACK:CAPS">G_CALLBACK</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">icon_pressed_cb</span><span class="symbol">),</span><span class="normal"> <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS">NULL</a></span><span class="symbol">);</span>
+<span class="normal">  </span><span class="function"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#g-signal-connect">g_signal_connect</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">entry</span><span class="symbol">,</span><span class="normal"> </span><span class="string">"notify::text"</span><span class="symbol">,</span>
+<span class="normal">                    </span><span class="function"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Closures.html#G-CALLBACK:CAPS">G_CALLBACK</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">text_changed_cb</span><span class="symbol">),</span><span class="normal"> find_button</span><span class="symbol">);</span>
+<span class="normal"> </span>
+<span class="normal">  </span><span class="comment">/* ... */</span></pre></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+  </p>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

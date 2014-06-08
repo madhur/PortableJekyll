@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+ Author: Paolo Borelli <pborelli@gnome.org>
+ Copyright (C) 2003-2007 Paolo Borelli
+
+ This library is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Library General Public
+ License as published by the Free Software Foundation; either
+ version 2 of the License, or (at your option) any later version.
+
+ This library is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ Library General Public License for more details.
+
+ You should have received a copy of the GNU Library General Public
+ License along with this library; if not, write to the
+ Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ Boston, MA 02111-1307, USA.
+
+-->
+<language id="verilog" _name="Verilog" version="2.0" _section="Sources">
+  <metadata>
+    <property name="mimetypes">text/x-verilog-src</property>
+    <property name="globs">*.v</property>
+    <property name="line-comment-start">//</property>
+    <property name="block-comment-start">/*</property>
+    <property name="block-comment-end">*/</property>
+  </metadata>
+
+  <styles>
+    <style id="comment" _name="Comment" map-to="def:comment"/>
+    <style id="error" _name="Error" map-to="def:error"/>
+    <style id="compiler-directive" _name="Compiler Directive" map-to="def:preprocessor"/>
+    <style id="keyword" _name="Keyword" map-to="def:keyword"/>
+    <style id="gate" _name="Gate" map-to="def:keyword"/>
+    <style id="type" _name="Type" map-to="def:type"/>
+    <style id="base-n-integer" _name="Base-N Integer" map-to="def:base-n-integer"/>
+  </styles>
+
+  <definitions>
+
+    <context id="line-comment" style-ref="comment" end-at-line-end="true" class="comment" class-disabled="no-spell-check">
+      <start>//</start>
+      <include>
+        <context ref="def:in-line-comment"/>
+      </include>
+    </context>
+
+    <context id="block-comment" style-ref="comment" class="comment" class-disabled="no-spell-check">
+      <start>/\*</start>
+      <end>\*/</end>
+      <include>
+        <context ref="def:in-comment"/>
+      </include>
+    </context>
+
+    <context id="close-comment-outside-comment" style-ref="error">
+      <match>\*/(?!\*)</match>
+    </context>
+
+    <context id="compiler-directive" style-ref="compiler-directive">
+      <prefix>`</prefix>
+      <keyword>celldefine</keyword>
+      <keyword>default_nettype</keyword>
+      <keyword>define</keyword>
+      <keyword>else</keyword>
+      <keyword>elsif</keyword>
+      <keyword>endcelldefine</keyword>
+      <keyword>endif</keyword>
+      <keyword>ifdef</keyword>
+      <keyword>ifndef</keyword>
+      <keyword>include</keyword>
+      <keyword>line</keyword>
+      <keyword>nounconnected_drive</keyword>
+      <keyword>resetall</keyword>
+      <keyword>timescale</keyword>
+      <keyword>unconnected_drive</keyword>
+      <keyword>undef</keyword>
+    </context>
+
+    <context id="keywords" style-ref="keyword">
+      <keyword>always</keyword>
+      <keyword>assign</keyword>
+      <keyword>attribute</keyword>
+      <keyword>begin</keyword>
+      <keyword>case</keyword>
+      <keyword>casex</keyword>
+      <keyword>casez</keyword>
+      <keyword>deassign</keyword>
+      <keyword>default</keyword>
+      <keyword>defparam</keyword>
+      <keyword>disable</keyword>
+      <keyword>edge</keyword>
+      <keyword>else</keyword>
+      <keyword>endattribute</keyword>
+      <keyword>endcase</keyword>
+      <keyword>endfunction</keyword>
+      <keyword>endmodule</keyword>
+      <keyword>endprimitive</keyword>
+      <keyword>endspecify</keyword>
+      <keyword>endtable</keyword>
+      <keyword>endtask</keyword>
+      <keyword>end</keyword>
+      <keyword>force</keyword>
+      <keyword>forever</keyword>
+      <keyword>fork</keyword>
+      <keyword>for</keyword>
+      <keyword>function</keyword>
+      <keyword>highz0</keyword>
+      <keyword>highz1</keyword>
+      <keyword>if</keyword>
+      <keyword>ifnone</keyword>
+      <keyword>initial</keyword>
+      <keyword>join</keyword>
+      <keyword>large</keyword>
+      <keyword>macromodule</keyword>
+      <keyword>medium</keyword>
+      <keyword>module</keyword>
+      <keyword>negedge</keyword>
+      <keyword>posedge</keyword>
+      <keyword>primitive</keyword>
+      <keyword>pull0</keyword>
+      <keyword>pull1</keyword>
+      <keyword>release</keyword>
+      <keyword>repeat</keyword>
+      <keyword>signed</keyword>
+      <keyword>small</keyword>
+      <keyword>specify</keyword>
+      <keyword>specparam</keyword>
+      <keyword>strength</keyword>
+      <keyword>strong0</keyword>
+      <keyword>strong1</keyword>
+      <keyword>table</keyword>
+      <keyword>task</keyword>
+      <keyword>unsigned</keyword>
+      <keyword>wait</keyword>
+      <keyword>weak0</keyword>
+      <keyword>weak1</keyword>
+      <keyword>while</keyword>
+    </context>
+
+    <context id="gates" style-ref="gate">
+      <keyword>and</keyword>
+      <keyword>buf</keyword>
+      <keyword>bufif0</keyword>
+      <keyword>bufif1</keyword>
+      <keyword>cmos</keyword>
+      <keyword>nand</keyword>
+      <keyword>nmos</keyword>
+      <keyword>nor</keyword>
+      <keyword>not</keyword>
+      <keyword>notif0</keyword>
+      <keyword>notif1</keyword>
+      <keyword>or</keyword>
+      <keyword>pmos</keyword>
+      <keyword>pullup</keyword>
+      <keyword>pulldown</keyword>
+      <keyword>rcmos</keyword>
+      <keyword>rnmos</keyword>
+      <keyword>rpmos</keyword>
+      <keyword>rtran</keyword>
+      <keyword>rtranif0</keyword>
+      <keyword>rtranif1</keyword>
+      <keyword>tran</keyword>
+      <keyword>tranif0</keyword>
+      <keyword>tranif1</keyword>
+      <keyword>xnor</keyword>
+      <keyword>xor</keyword>
+    </context>
+
+    <context id="types" style-ref="type">
+      <keyword>event</keyword>
+      <keyword>inout</keyword>
+      <keyword>input</keyword>
+      <keyword>integer</keyword>
+      <keyword>output</keyword>
+      <keyword>parameter</keyword>
+      <keyword>reg</keyword>
+      <keyword>real</keyword>
+      <keyword>realtime</keyword>
+      <keyword>scalared</keyword>
+      <keyword>supply0</keyword>
+      <keyword>supply1</keyword>
+      <keyword>time</keyword>
+      <keyword>tri</keyword>
+      <keyword>tri0</keyword>
+      <keyword>tri1</keyword>
+      <keyword>triand</keyword>
+      <keyword>trior</keyword>
+      <keyword>trireg</keyword>
+      <keyword>vectored</keyword>
+      <keyword>wand</keyword>
+      <keyword>wire</keyword>
+      <keyword>wor</keyword>
+    </context>
+
+    <context id="binary-number" style-ref="base-n-integer">
+      <match extended="true">
+        (?&lt;![\w\.])
+        [1-9][0-9]*'[bB][0-1_xXzZ?]+
+        (?![\w\.])
+      </match>
+    </context>
+
+    <context id="octal-number" style-ref="base-n-integer">
+      <match extended="true">
+        (?&lt;![\w\.])
+        [1-9][0-9]*'[oO][0-7_xXzZ?]+
+        (?![\w\.])
+      </match>
+    </context>
+
+    <context id="decimal-number" style-ref="base-n-integer">
+      <match extended="true">
+        (?&lt;![\w\.])
+        [1-9][0-9]*'[dD][0-9_xXzZ?]+
+        (?![\w\.])
+      </match>
+    </context>
+
+    <context id="hexadecimal-number" style-ref="base-n-integer">
+      <match extended="true">
+        (?&lt;![\w\.])
+        [1-9][0-9]*'[hH][0-9a-fA-F_xXzZ?]+
+        (?![\w\.])
+      </match>
+    </context>
+
+    <context id="verilog" class="no-spell-check">
+      <include>
+        <context ref="line-comment"/>
+        <context ref="block-comment"/>
+        <context ref="close-comment-outside-comment"/>
+        <context ref="compiler-directive"/>
+        <context ref="keywords"/>
+        <context ref="gates"/>
+        <context ref="types"/>
+        <context ref="binary-number"/>
+        <context ref="octal-number"/>
+        <context ref="decimal-number"/>
+        <context ref="hexadecimal-number"/>
+      </include>
+    </context>
+
+  </definitions>
+
+</language>

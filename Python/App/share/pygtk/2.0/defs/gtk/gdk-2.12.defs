@@ -1,0 +1,166 @@
+;; From gdkcolor.h
+
+(define-method to_string
+  (of-object "GdkColor")
+  (c-name "gdk_color_to_string")
+  (return-type "gchar*")
+)
+
+
+
+;; From gdkdisplay.h
+
+(define-method supports_composite
+  (of-object "GdkDisplay")
+  (c-name "gdk_display_supports_composite")
+  (return-type "gboolean")
+)
+
+
+
+;; From gdkevents.h
+
+(define-function event_request_motions
+  (c-name "gdk_event_request_motions")
+  (return-type "none")
+  (parameters
+    '("GdkEventMotion*" "event")
+  )
+)
+
+
+
+;; From gdkkeys.h
+
+(define-method have_bidi_layouts
+  (of-object "GdkKeymap")
+  (c-name "gdk_keymap_have_bidi_layouts")
+  (return-type "gboolean")
+)
+
+
+
+;; From gdkpango.h
+
+(define-function gdk_pango_attr_emboss_color_new
+  (c-name "gdk_pango_attr_emboss_color_new")
+  (is-constructor-of "GdkPangoAttrEmbossColor")
+  (return-type "PangoAttribute*")
+  (parameters
+    '("const-GdkColor*" "color")
+  )
+)
+
+
+
+;; From gdkwindow.h
+
+(define-method set_composited
+  (of-object "GdkWindow")
+  (c-name "gdk_window_set_composited")
+  (return-type "none")
+  (parameters
+    '("gboolean" "composited")
+  )
+)
+
+(define-method set_startup_id
+  (of-object "GdkWindow")
+  (c-name "gdk_window_set_startup_id")
+  (return-type "none")
+  (parameters
+    '("const-gchar*" "startup_id")
+  )
+)
+
+(define-method beep
+  (of-object "GdkWindow")
+  (c-name "gdk_window_beep")
+  (return-type "none")
+)
+
+(define-method set_opacity
+  (of-object "GdkWindow")
+  (c-name "gdk_window_set_opacity")
+  (return-type "none")
+  (parameters
+    '("gdouble" "opacity")
+  )
+)
+
+
+(ifdef GDK_TARGET_X11
+
+;; From gdkx.h
+
+(define-function x11_display_get_startup_notification_id
+  (c-name "gdk_x11_display_get_startup_notification_id")
+  (return-type "const-gchar*")
+  (parameters
+    '("GdkDisplay*" "display")
+  )
+)
+
+(define-function x11_display_broadcast_startup_message
+  (c-name "gdk_x11_display_broadcast_startup_message")
+  (return-type "none")
+  (parameters
+    '("GdkDisplay*" "display")
+    '("const-char*" "message_type")
+  )
+  (varargs #t)
+)
+
+)
+
+;; From gdk.h
+
+(define-function threads_add_idle_full
+  (c-name "gdk_threads_add_idle_full")
+  (return-type "guint")
+  (parameters
+    '("gint" "priority")
+    '("GSourceFunc" "function")
+    '("gpointer" "data")
+    '("GDestroyNotify" "notify")
+  )
+)
+
+(define-function threads_add_idle
+  (c-name "gdk_threads_add_idle")
+  (return-type "guint")
+  (parameters
+    '("GSourceFunc" "function")
+    '("gpointer" "data")
+  )
+)
+
+(define-function threads_add_timeout_full
+  (c-name "gdk_threads_add_timeout_full")
+  (return-type "guint")
+  (parameters
+    '("gint" "priority")
+    '("guint" "interval")
+    '("GSourceFunc" "function")
+    '("gpointer" "data")
+    '("GDestroyNotify" "notify")
+  )
+)
+
+(define-function threads_add_timeout
+  (c-name "gdk_threads_add_timeout")
+  (return-type "guint")
+  (parameters
+    '("guint" "interval")
+    '("GSourceFunc" "function")
+    '("gpointer" "data")
+  )
+)
+
+(define-function notify_startup_complete_with_id
+  (c-name "gdk_notify_startup_complete_with_id")
+  (return-type "none")
+  (parameters
+    '("const-gchar*" "startup_id")
+  )
+)

@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Migrating from GnomeDruid to GtkAssistant</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="GTK+ 2 Reference Manual">
+<link rel="up" href="migrating.html" title="Part IV. Migrating from Previous Versions of GTK+">
+<link rel="prev" href="gtk-migrating-GtkColorButton.html" title="Migrating from GnomeColorPicker to GtkColorButton">
+<link rel="next" href="decorating-the-assistant-pages.html" title="Decorating the assistant pages">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle">
+<td><a accesskey="p" href="gtk-migrating-GtkColorButton.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="migrating.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GTK+ 2 Reference Manual</th>
+<td><a accesskey="n" href="decorating-the-assistant-pages.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="chapter">
+<div class="titlepage"><div>
+<div><h2 class="title">
+<a name="gtk-migrating-GtkAssistant"></a>Migrating from GnomeDruid to GtkAssistant</h2></div>
+<div><div class="author">
+<h3 class="author">
+<span class="firstname">Carlos</span> <span class="surname">Garnacho</span>
+</h3>
+<div class="affiliation"><div class="address"><p><br>
+	  <code class="email">&lt;<a class="email" href="mailto:carlosggnome.org">carlosg<em class="parameter"><code>gnome.org</code></em></a>&gt;</code><br>
+	</p></div></div>
+</div></div>
+</div></div>
+<div class="toc"><dl>
+<dt><span class="section"><a href="gtk-migrating-GtkAssistant.html#inserting-pages">Inserting pages</a></span></dt>
+<dt><span class="section"><a href="decorating-the-assistant-pages.html">Decorating the assistant pages</a></span></dt>
+<dt><span class="section"><a href="setting-the-page-flow.html">Setting the page flow</a></span></dt>
+</dl></div>
+<p>
+    Since version 2.10, GTK+ provides the GtkAssistant widget as a replacement
+    for the <span class="structname">GnomeDruid</span> widget in the libgnomeui 
+    library.
+  </p>
+<p>
+    Conceptually, both <span class="structname">GtkAssistant</span> and
+    <span class="structname">GnomeDruid</span> do the same task, but there are 
+    several areas where the API has been completely redesigned, so this 
+    chapter covers the main changes between both widgets.
+  </p>
+<div class="section">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="inserting-pages"></a>Inserting pages</h2></div></div></div>
+<p>
+      <span class="structname">GnomeDruid</span> was implemented as a container for
+	 <span class="structname">GnomeDruidPage</span> abstract objects, which are
+         implemented by the <span class="structname">GnomeDruidPageEdge</span> and 
+         <span class="structname">GnomeDruidPageStandard</span> widgets. Instead, 
+         <span class="structname">GtkAssistant</span> allows any widget to be a page, 
+         and implements per-page settings (such as page type or title) as 
+         child properties. So instead of:
+    </p>
+<pre class="programlisting">
+/* Page 1 */
+page = gnome_druid_page_edge_new (GNOME_EDGE_START);
+gnome_druid_page_edge_set_test (GNOME_DRUID_PAGE_EDGE (page),
+                                "Welcome to the assistant, it will make your life easier");
+gtk_widget_show (page);
+gnome_druid_append_page (GNOME_DRUID (druid), GNOME_DRUID_PAGE (page));
+
+/* Page 2 */
+page = gnome_druid_page_standard_new ();
+gtk_container_add (GTK_CONTAINER (GNOME_DRUID_PAGE_STANDARD (page)-&gt;vbox,
+                   create_page1 ());
+gtk_widget_show_all (page);
+gnome_druid_append_page (GNOME_DRUID (druid), GNOME_DRUID_PAGE (page));
+
+/* Page 3 */
+page = gnome_druid_page_edge_new (GNOME_EDGE_FINISH);
+gnome_druid_page_edge_set_test (GNOME_DRUID_PAGE_EDGE (page),
+                                "Now you are done, your life is easier");
+gtk_widget_show (page);
+gnome_druid_append_page (GNOME_DRUID (druid), GNOME_DRUID_PAGE (page));
+    </pre>
+<p>
+      You have to write:
+    </p>
+<pre class="programlisting">
+gtk_assistant_append_page (GTK_ASSISTANT (assistant),
+                           gtk_label_new ("Welcome to the assistant, it will make your life easier"));
+gtk_assistant_append_page (GTK_ASSISTANT (assistant),
+                           create_page1 ());
+gtk_assistant_append_page (GTK_ASSISTANT (assistant),
+                           gtk_label_new ("Now you are done, your life is easier");
+    </pre>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

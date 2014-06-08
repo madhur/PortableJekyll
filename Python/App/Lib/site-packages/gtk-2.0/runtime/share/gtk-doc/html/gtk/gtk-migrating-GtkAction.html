@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Migrating from old menu and toolbar systems to GtkAction</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="GTK+ 2 Reference Manual">
+<link rel="up" href="migrating.html" title="Part IV. Migrating from Previous Versions of GTK+">
+<link rel="prev" href="gtkfilechooser-new-features.html" title="New features">
+<link rel="next" href="ui-manager.html" title="User Interface Manager Object">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle">
+<td><a accesskey="p" href="gtkfilechooser-new-features.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="migrating.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GTK+ 2 Reference Manual</th>
+<td><a accesskey="n" href="ui-manager.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="chapter">
+<div class="titlepage"><div>
+<div><h2 class="title">
+<a name="gtk-migrating-GtkAction"></a>Migrating from old menu and toolbar systems to GtkAction</h2></div>
+<div><div class="author">
+<h3 class="author">
+<span class="firstname">Federico</span> <span class="surname">Mena-Quintero</span>
+</h3>
+<div class="affiliation"><div class="address"><p><br>
+	  <code class="email">&lt;<a class="email" href="mailto:federicoximian.com">federico<em class="parameter"><code>ximian.com</code></em></a>&gt;</code><br>
+	</p></div></div>
+</div></div>
+</div></div>
+<div class="toc"><dl>
+<dt><span class="section"><a href="gtk-migrating-GtkAction.html#actions-and-action-groups">Actions and Action Groups</a></span></dt>
+<dt><span class="section"><a href="ui-manager.html">User Interface Manager Object</a></span></dt>
+<dt><span class="section"><a href="migrating-gnomeuiinfo.html">Migrating from GnomeUIInfo</a></span></dt>
+</dl></div>
+<p>
+    Prior to GTK+ 2.4, there were several APIs in use to create menus
+    and toolbars.  GTK+ itself included <a class="link" href="GtkItemFactory.html" title="GtkItemFactory"><span class="type">GtkItemFactory</span></a>, which was
+    historically used in the GIMP; libgnomeui provided the gnome-ui
+    set of macros; libbonoboui provided a complex mechanism to do menu
+    merging across embedded components.  GTK+ 2.4 includes a system
+    for creating menus and toolbars, with merging of items, based
+    around the <a class="link" href="GtkAction.html" title="GtkAction"><span class="type">GtkAction</span></a> mechanism.
+  </p>
+<div class="section">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="actions-and-action-groups"></a>Actions and Action Groups</h2></div></div></div>
+<p>
+      A <a class="link" href="GtkAction.html" title="GtkAction"><span class="type">GtkAction</span></a> represents an operation that the user can perform from 
+      the menus and toolbars of an application.  It is similar to "verbs" 
+      in other menu systems.  A <a class="link" href="GtkAction.html" title="GtkAction"><span class="type">GtkAction</span></a> has a name, which is its identifier, 
+      and it can have several widgets that represent it in the user interface.  
+      For example, an action for <span class="symbol">EditCopy</span> can have a menu item 
+      as well as a toolbar button associated to it.  If there is nothing selected
+      in the document, the application can simply de-sensitize the
+      <span class="symbol">EditCopy</span> action; this will cause both the menu
+      item and the toolbar button to be de-sensitized automatically.
+      Similarly, whenever the user selects the menu item or the
+      toolbar button associated to the <span class="symbol">EditCopy</span>
+      action, the corresponding <a class="link" href="GtkAction.html" title="GtkAction"><span class="type">GtkAction</span></a> object will emit an
+      "activate" signal.
+    </p>
+<p>
+      <a class="link" href="GtkActionGroup.html" title="GtkActionGroup"><span class="type">GtkActionGroup</span></a> is simply a group of <a class="link" href="GtkAction.html" title="GtkAction"><span class="type">GtkAction</span></a> objects.  An
+      application may want to have several groups:  one for global
+      actions such as "new document", "about", and "exit"; then one
+      group for each open document with actions specific to the
+      document, such as "cut", "copy", "paste", and "print".
+    </p>
+<p>
+      Normal actions are simply commands, such as
+      <span class="symbol">FileSave</span> or <span class="symbol">EditCopy</span>.  
+      Toggle actions can be active or inactive, such as
+      <span class="symbol">FormatBold</span> or <span class="symbol">ViewShowRulers</span>.
+      Radio actions define a set of items for which one and only one
+      can be active at a time, for example, {
+      <span class="symbol">ViewHighQuality</span>,
+      <span class="symbol">ViewNormalQuality</span>,
+      <span class="symbol">ViewLowQuality</span> }.
+    </p>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

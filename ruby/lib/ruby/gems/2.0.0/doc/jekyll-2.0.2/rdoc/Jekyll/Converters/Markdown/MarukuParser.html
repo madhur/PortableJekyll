@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>class Jekyll::Converters::Markdown::MarukuParser - jekyll-2.0.2 Documentation</title>
+
+<link type="text/css" media="screen" href="../../../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../../../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../../../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../../js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../../../index.html">Home</a>
+    <a href="../../../table_of_contents.html#classes">Classes</a>
+    <a href="../../../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/jekyll/converters/markdown/maruku_parser.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link"><a href="../../../Object.html">Object</a>
+  
+</nav>
+
+    
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li ><a href="#method-c-new">::new</a>
+    
+    <li ><a href="#method-i-convert">#convert</a>
+    
+    <li ><a href="#method-i-load_blahtext_library">#load_blahtext_library</a>
+    
+    <li ><a href="#method-i-load_divs_library">#load_divs_library</a>
+    
+    <li ><a href="#method-i-print_errors_and_fail">#print_errors_and_fail</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="../../../LICENSE.html">LICENSE</a>
+  
+    <li class="file"><a href="../../../README_markdown.html">README.markdown</a>
+  
+    <li class="file"><a href="../../../lib/jekyll/mime_types.html">mime.types</a>
+  
+    <li class="file"><a href="../../../lib/site_template/_includes/footer_html.html">footer.html</a>
+  
+    <li class="file"><a href="../../../lib/site_template/_includes/head_html.html">head.html</a>
+  
+    <li class="file"><a href="../../../lib/site_template/_includes/header_html.html">header.html</a>
+  
+    <li class="file"><a href="../../../lib/site_template/_layouts/default_html.html">default.html</a>
+  
+    <li class="file"><a href="../../../lib/site_template/_layouts/page_html.html">page.html</a>
+  
+    <li class="file"><a href="../../../lib/site_template/_layouts/post_html.html">post.html</a>
+  
+    <li class="file"><a href="../../../lib/site_template/about_md.html">about</a>
+  
+    <li class="file"><a href="../../../lib/site_template/css/main_css.html">main.css</a>
+  
+    <li class="file"><a href="../../../lib/site_template/feed_xml.html">feed.xml</a>
+  
+    <li class="file"><a href="../../../lib/site_template/index_html.html">index.html</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../../../Jekyll.html">Jekyll</a>
+  
+    <li><a href="../../../Jekyll/Collection.html">Jekyll::Collection</a>
+  
+    <li><a href="../../../Jekyll/Command.html">Jekyll::Command</a>
+  
+    <li><a href="../../../Jekyll/Commands.html">Jekyll::Commands</a>
+  
+    <li><a href="../../../Jekyll/Commands/Build.html">Jekyll::Commands::Build</a>
+  
+    <li><a href="../../../Jekyll/Commands/Docs.html">Jekyll::Commands::Docs</a>
+  
+    <li><a href="../../../Jekyll/Commands/Doctor.html">Jekyll::Commands::Doctor</a>
+  
+    <li><a href="../../../Jekyll/Commands/New.html">Jekyll::Commands::New</a>
+  
+    <li><a href="../../../Jekyll/Commands/Serve.html">Jekyll::Commands::Serve</a>
+  
+    <li><a href="../../../Jekyll/Configuration.html">Jekyll::Configuration</a>
+  
+    <li><a href="../../../Jekyll/Configuration/FrontmatterDefaults.html">Jekyll::Configuration::FrontmatterDefaults</a>
+  
+    <li><a href="../../../Jekyll/Converter.html">Jekyll::Converter</a>
+  
+    <li><a href="../../../Jekyll/Converters.html">Jekyll::Converters</a>
+  
+    <li><a href="../../../Jekyll/Converters/Identity.html">Jekyll::Converters::Identity</a>
+  
+    <li><a href="../../../Jekyll/Converters/Markdown.html">Jekyll::Converters::Markdown</a>
+  
+    <li><a href="../../../Jekyll/Converters/Markdown/KramdownParser.html">Jekyll::Converters::Markdown::KramdownParser</a>
+  
+    <li><a href="../../../Jekyll/Converters/Markdown/MarukuParser.html">Jekyll::Converters::Markdown::MarukuParser</a>
+  
+    <li><a href="../../../Jekyll/Converters/Markdown/RDiscountParser.html">Jekyll::Converters::Markdown::RDiscountParser</a>
+  
+    <li><a href="../../../Jekyll/Converters/Markdown/RedcarpetParser.html">Jekyll::Converters::Markdown::RedcarpetParser</a>
+  
+    <li><a href="../../../Jekyll/Converters/Markdown/RedcarpetParser/CommonMethods.html">Jekyll::Converters::Markdown::RedcarpetParser::CommonMethods</a>
+  
+    <li><a href="../../../Jekyll/Converters/Markdown/RedcarpetParser/WithPygments.html">Jekyll::Converters::Markdown::RedcarpetParser::WithPygments</a>
+  
+    <li><a href="../../../Jekyll/Converters/Markdown/RedcarpetParser/WithRouge.html">Jekyll::Converters::Markdown::RedcarpetParser::WithRouge</a>
+  
+    <li><a href="../../../Jekyll/Converters/Markdown/RedcarpetParser/WithoutHighlighting.html">Jekyll::Converters::Markdown::RedcarpetParser::WithoutHighlighting</a>
+  
+    <li><a href="../../../Jekyll/Converters/Textile.html">Jekyll::Converters::Textile</a>
+  
+    <li><a href="../../../Jekyll/Convertible.html">Jekyll::Convertible</a>
+  
+    <li><a href="../../../Jekyll/Deprecator.html">Jekyll::Deprecator</a>
+  
+    <li><a href="../../../Jekyll/Document.html">Jekyll::Document</a>
+  
+    <li><a href="../../../Jekyll/Draft.html">Jekyll::Draft</a>
+  
+    <li><a href="../../../Jekyll/EntryFilter.html">Jekyll::EntryFilter</a>
+  
+    <li><a href="../../../Jekyll/Excerpt.html">Jekyll::Excerpt</a>
+  
+    <li><a href="../../../Jekyll/FatalException.html">Jekyll::FatalException</a>
+  
+    <li><a href="../../../Jekyll/Filters.html">Jekyll::Filters</a>
+  
+    <li><a href="../../../Jekyll/Generator.html">Jekyll::Generator</a>
+  
+    <li><a href="../../../Jekyll/Generators.html">Jekyll::Generators</a>
+  
+    <li><a href="../../../Jekyll/Generators/Pagination.html">Jekyll::Generators::Pagination</a>
+  
+    <li><a href="../../../Jekyll/GistTag.html">Jekyll::GistTag</a>
+  
+    <li><a href="../../../Jekyll/Layout.html">Jekyll::Layout</a>
+  
+    <li><a href="../../../Jekyll/LayoutReader.html">Jekyll::LayoutReader</a>
+  
+    <li><a href="../../../Jekyll/LiquidExtensions.html">Jekyll::LiquidExtensions</a>
+  
+    <li><a href="../../../Jekyll/Page.html">Jekyll::Page</a>
+  
+    <li><a href="../../../Jekyll/Pager.html">Jekyll::Pager</a>
+  
+    <li><a href="../../../Jekyll/Plugin.html">Jekyll::Plugin</a>
+  
+    <li><a href="../../../Jekyll/PluginManager.html">Jekyll::PluginManager</a>
+  
+    <li><a href="../../../Jekyll/Post.html">Jekyll::Post</a>
+  
+    <li><a href="../../../Jekyll/Publisher.html">Jekyll::Publisher</a>
+  
+    <li><a href="../../../Jekyll/RelatedPosts.html">Jekyll::RelatedPosts</a>
+  
+    <li><a href="../../../Jekyll/Renderer.html">Jekyll::Renderer</a>
+  
+    <li><a href="../../../Jekyll/Site.html">Jekyll::Site</a>
+  
+    <li><a href="../../../Jekyll/Site/Cleaner.html">Jekyll::Site::Cleaner</a>
+  
+    <li><a href="../../../Jekyll/StaticFile.html">Jekyll::StaticFile</a>
+  
+    <li><a href="../../../Jekyll/Stevenson.html">Jekyll::Stevenson</a>
+  
+    <li><a href="../../../Jekyll/Tags.html">Jekyll::Tags</a>
+  
+    <li><a href="../../../Jekyll/Tags/HighlightBlock.html">Jekyll::Tags::HighlightBlock</a>
+  
+    <li><a href="../../../Jekyll/Tags/IncludeTag.html">Jekyll::Tags::IncludeTag</a>
+  
+    <li><a href="../../../Jekyll/Tags/IncludeTagError.html">Jekyll::Tags::IncludeTagError</a>
+  
+    <li><a href="../../../Jekyll/Tags/PostComparer.html">Jekyll::Tags::PostComparer</a>
+  
+    <li><a href="../../../Jekyll/Tags/PostUrl.html">Jekyll::Tags::PostUrl</a>
+  
+    <li><a href="../../../Jekyll/URL.html">Jekyll::URL</a>
+  
+    <li><a href="../../../Jekyll/Utils.html">Jekyll::Utils</a>
+  
+    <li><a href="../../../Liquid.html">Liquid</a>
+  
+    <li><a href="../../../Object.html">Object</a>
+  
+    <li><a href="../../../SafeYAML.html">SafeYAML</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class Jekyll::Converters::Markdown::MarukuParser</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">(config)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/jekyll/converters/markdown/maruku_parser.rb, line 5</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">config</span>)
+  <span class="ruby-identifier">require</span> <span class="ruby-string">&#39;maruku&#39;</span>
+  <span class="ruby-ivar">@config</span> = <span class="ruby-identifier">config</span>
+  <span class="ruby-ivar">@errors</span> = []
+  <span class="ruby-identifier">load_divs_library</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@config</span>[<span class="ruby-string">&#39;maruku&#39;</span>][<span class="ruby-string">&#39;use_divs&#39;</span>]
+  <span class="ruby-identifier">load_blahtext_library</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@config</span>[<span class="ruby-string">&#39;maruku&#39;</span>][<span class="ruby-string">&#39;use_tex&#39;</span>]
+
+  <span class="ruby-comment"># allow fenced code blocks (new in Maruku 0.7.0)</span>
+  <span class="ruby-constant">MaRuKu</span><span class="ruby-operator">::</span><span class="ruby-constant">Globals</span>[<span class="ruby-value">:fenced_code_blocks</span>] = <span class="ruby-operator">!</span><span class="ruby-operator">!</span><span class="ruby-ivar">@config</span>[<span class="ruby-string">&#39;maruku&#39;</span>][<span class="ruby-string">&#39;fenced_code_blocks&#39;</span>]
+
+<span class="ruby-keyword">rescue</span> <span class="ruby-constant">LoadError</span>
+  <span class="ruby-constant">STDERR</span>.<span class="ruby-identifier">puts</span> <span class="ruby-string">&#39;You are missing a library required for Markdown. Please run:&#39;</span>
+  <span class="ruby-constant">STDERR</span>.<span class="ruby-identifier">puts</span> <span class="ruby-string">&#39;  $ [sudo] gem install maruku&#39;</span>
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">FatalException</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;Missing dependency: maruku&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- new-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- new-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-convert" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">convert</span><span
+            class="method-args">(content)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="convert-source">
+            <pre><span class="ruby-comment"># File lib/jekyll/converters/markdown/maruku_parser.rb, line 47</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">convert</span>(<span class="ruby-identifier">content</span>)
+  <span class="ruby-identifier">converted</span> = <span class="ruby-constant">Maruku</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">content</span>, <span class="ruby-value">:error_stream</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@errors</span>).<span class="ruby-identifier">to_html</span>.<span class="ruby-identifier">strip</span>
+  <span class="ruby-identifier">print_errors_and_fail</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@errors</span>.<span class="ruby-identifier">empty?</span>
+  <span class="ruby-identifier">converted</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- convert-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- convert-method -->
+
+    
+      <div id="method-i-load_blahtext_library" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">load_blahtext_library</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="load_blahtext_library-source">
+            <pre><span class="ruby-comment"># File lib/jekyll/converters/markdown/maruku_parser.rb, line 26</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">load_blahtext_library</span>
+  <span class="ruby-identifier">require</span> <span class="ruby-string">&#39;maruku/ext/math&#39;</span>
+  <span class="ruby-constant">STDERR</span>.<span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Maruku: Using LaTeX extension. Images in `#{@config[&#39;maruku&#39;][&#39;png_dir&#39;]}`.&quot;</span>
+
+  <span class="ruby-comment"># Switch off MathML output</span>
+  <span class="ruby-constant">MaRuKu</span><span class="ruby-operator">::</span><span class="ruby-constant">Globals</span>[<span class="ruby-value">:html_math_output_mathml</span>] = <span class="ruby-keyword">false</span>
+  <span class="ruby-constant">MaRuKu</span><span class="ruby-operator">::</span><span class="ruby-constant">Globals</span>[<span class="ruby-value">:html_math_engine</span>] = <span class="ruby-string">&#39;none&#39;</span>
+
+  <span class="ruby-comment"># Turn on math to PNG support with blahtex</span>
+  <span class="ruby-comment"># Resulting PNGs stored in `images/latex`</span>
+  <span class="ruby-constant">MaRuKu</span><span class="ruby-operator">::</span><span class="ruby-constant">Globals</span>[<span class="ruby-value">:html_math_output_png</span>] = <span class="ruby-keyword">true</span>
+  <span class="ruby-constant">MaRuKu</span><span class="ruby-operator">::</span><span class="ruby-constant">Globals</span>[<span class="ruby-value">:html_png_engine</span>] =  <span class="ruby-ivar">@config</span>[<span class="ruby-string">&#39;maruku&#39;</span>][<span class="ruby-string">&#39;png_engine&#39;</span>]
+  <span class="ruby-constant">MaRuKu</span><span class="ruby-operator">::</span><span class="ruby-constant">Globals</span>[<span class="ruby-value">:html_png_dir</span>] = <span class="ruby-ivar">@config</span>[<span class="ruby-string">&#39;maruku&#39;</span>][<span class="ruby-string">&#39;png_dir&#39;</span>]
+  <span class="ruby-constant">MaRuKu</span><span class="ruby-operator">::</span><span class="ruby-constant">Globals</span>[<span class="ruby-value">:html_png_url</span>] = <span class="ruby-ivar">@config</span>[<span class="ruby-string">&#39;maruku&#39;</span>][<span class="ruby-string">&#39;png_url&#39;</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- load_blahtext_library-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- load_blahtext_library-method -->
+
+    
+      <div id="method-i-load_divs_library" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">load_divs_library</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="load_divs_library-source">
+            <pre><span class="ruby-comment"># File lib/jekyll/converters/markdown/maruku_parser.rb, line 21</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">load_divs_library</span>
+  <span class="ruby-identifier">require</span> <span class="ruby-string">&#39;maruku/ext/div&#39;</span>
+  <span class="ruby-constant">STDERR</span>.<span class="ruby-identifier">puts</span> <span class="ruby-string">&#39;Maruku: Using extended syntax for div elements.&#39;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- load_divs_library-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- load_divs_library-method -->
+
+    
+      <div id="method-i-print_errors_and_fail" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">print_errors_and_fail</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="print_errors_and_fail-source">
+            <pre><span class="ruby-comment"># File lib/jekyll/converters/markdown/maruku_parser.rb, line 42</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">print_errors_and_fail</span>
+  <span class="ruby-identifier">print</span> <span class="ruby-ivar">@errors</span>.<span class="ruby-identifier">join</span>
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">MaRuKu</span><span class="ruby-operator">::</span><span class="ruby-constant">Exception</span>, <span class="ruby-string">&quot;MaRuKu encountered problem(s) while converting your markup.&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- print_errors_and_fail-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- print_errors_and_fail-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

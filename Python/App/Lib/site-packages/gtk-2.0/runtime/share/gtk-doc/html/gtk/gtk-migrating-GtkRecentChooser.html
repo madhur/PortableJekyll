@@ -1,0 +1,310 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Migrating from EggRecent to GtkRecentChooser</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="GTK+ 2 Reference Manual">
+<link rel="up" href="migrating.html" title="Part IV. Migrating from Previous Versions of GTK+">
+<link rel="prev" href="setting-the-page-flow.html" title="Setting the page flow">
+<link rel="next" href="gtkrecent-chooser.html" title="Displaying the Recently Used Documents">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle">
+<td><a accesskey="p" href="setting-the-page-flow.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="migrating.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GTK+ 2 Reference Manual</th>
+<td><a accesskey="n" href="gtkrecent-chooser.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="chapter">
+<div class="titlepage"><div>
+<div><h2 class="title">
+<a name="gtk-migrating-GtkRecentChooser"></a>Migrating from EggRecent to GtkRecentChooser</h2></div>
+<div><div class="author">
+<h3 class="author"><span class="firstname">Emmanuele</span></h3>
+<div class="affiliation"><div class="address"><p><br>
+	  <code class="email">&lt;<a class="email" href="mailto:ebassigmail.com">ebassi<em class="parameter"><code>gmail.com</code></em></a>&gt;</code><br>
+	</p></div></div>
+</div></div>
+</div></div>
+<div class="toc"><dl>
+<dt><span class="section"><a href="gtk-migrating-GtkRecentChooser.html#gtkrecent-manager">Managing the Recently Used Documents</a></span></dt>
+<dt><span class="section"><a href="gtkrecent-chooser.html">Displaying the Recently Used Documents</a></span></dt>
+<dt><span class="section"><a href="gtkrecent-advanced.html">Advanced usage</a></span></dt>
+</dl></div>
+<p>
+    Since version 2.10, GTK+ provides a way of handling the recently used
+    documents. It is similar to the code that has lived inside the libegg
+    library and has been incorporated by many applications. The GTK+ version
+    aims to completely replace that code, and offers many distinctive features
+    that improve the registration and visualization of the recently used
+    documents, such as:
+  </p>
+<p>
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem"><p>
+        Better performances while reading and writing the list of recently used
+	files
+      </p></li>
+<li class="listitem"><p>
+        More meta-data available for each recent document, like the
+	applications that have registered a document inside the list, the last
+	time and the number of times the same application did register a
+	document inside the list, an optional user readable name and
+	description of the document
+      </p></li>
+<li class="listitem"><p>
+        Improved the ability to sort and filter the documents, also using
+	custom sorting and filtering functions
+      </p></li>
+<li class="listitem"><p>
+        New widgets for displaying the list, and better integration with
+	current <a class="link" href="GtkFileChooser.html" title="GtkFileChooser"><span class="type">GtkFileChooser</span></a> and <a class="link" href="GtkUIManager.html" title="GtkUIManager"><span class="type">GtkUIManager</span></a> widgets
+      </p></li>
+</ul></div>
+<p>
+  </p>
+<div class="section">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="gtkrecent-manager"></a>Managing the Recently Used Documents</h2></div></div></div>
+<p>
+      <a class="link" href="GtkRecentManager.html" title="GtkRecentManager"><span class="type">GtkRecentManager</span></a> is used to manage the Recently Used Documents. To
+      create a new <a class="link" href="GtkRecentManager.html" title="GtkRecentManager"><span class="type">GtkRecentManager</span></a>, you simply call <a class="link" href="GtkRecentManager.html#gtk-recent-manager-new" title="gtk_recent_manager_new ()"><code class="function">gtk_recent_manager_new()</code></a>.
+      Like the <span class="structname">EggRecentModel</span> inside EggRecent, the
+      <a class="link" href="GtkRecentManager.html" title="GtkRecentManager"><span class="type">GtkRecentManager</span></a> loads the list of the recent documents and notifies
+      you of changes inside the list.
+    </p>
+<p>
+      Usually, instead of creating a new <a class="link" href="GtkRecentManager.html" title="GtkRecentManager"><span class="type">GtkRecentManager</span></a> each time you
+      need it, you'll want to use the <a class="link" href="GtkRecentManager.html#gtk-recent-manager-get-default" title="gtk_recent_manager_get_default ()"><code class="function">gtk_recent_manager_get_default()</code></a>
+      function.
+    </p>
+<p>
+      To add a document to the list, you can use <a class="link" href="GtkRecentManager.html#gtk-recent-manager-add-item" title="gtk_recent_manager_add_item ()"><code class="function">gtk_recent_manager_add_item()</code></a>,
+      like:
+      </p>
+<div class="informalexample">
+  <table class="listing_frame" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+      <tr>
+        <td class="listing_lines" align="right"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10</pre></td>
+        <td class="listing_code"><pre class="programlisting"><span class="usertype">GtkRecentManager</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">manager</span><span class="symbol">;</span>
+
+<span class="normal">    manager </span><span class="symbol">=</span><span class="normal"> </span><span class="function"><a href="GtkRecentManager.html#gtk-recent-manager-new">gtk_recent_manager_new</a></span><span class="normal"> </span><span class="symbol">();</span>
+
+<span class="normal">    </span><span class="keyword">if</span><span class="normal"> </span><span class="symbol">(!</span><span class="function"><a href="GtkRecentManager.html#gtk-recent-manager-add-item">gtk_recent_manager_add_item</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">manager</span><span class="symbol">,</span><span class="normal"> document_uri</span><span class="symbol">))</span>
+<span class="normal">      </span><span class="cbracket">{</span>
+<span class="normal">        </span><span class="comment">/* warn about the error */</span>
+<span class="normal">      </span><span class="cbracket">}</span>
+<span class="normal">    </span>
+<span class="normal">    </span><span class="function"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref">g_object_unref</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">manager</span><span class="symbol">);</span></pre></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+      The <a class="link" href="GtkRecentManager.html#gtk-recent-manager-add-item" title="gtk_recent_manager_add_item ()"><code class="function">gtk_recent_manager_add_item()</code></a> function will try and guess some of the
+      meta-data associated to a URI. If you know some of meta-data about the
+      document yourself, set the desired fields of a <a class="link" href="GtkRecentManager.html#GtkRecentData" title="struct GtkRecentData"><span class="type">GtkRecentData</span></a> structure
+      and pass it to the <a class="link" href="GtkRecentManager.html#gtk-recent-manager-add-full" title="gtk_recent_manager_add_full ()"><code class="function">gtk_recent_manager_add_full()</code></a> function instead:
+      </p>
+<div class="informalexample">
+  <table class="listing_frame" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+      <tr>
+        <td class="listing_lines" align="right"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35</pre></td>
+        <td class="listing_code"><pre class="programlisting"><span class="usertype">GtkRecentManager</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">manager</span><span class="symbol">;</span>
+<span class="usertype">GtkRecentData</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">recent_data</span><span class="symbol">;</span>
+
+<span class="normal">    manager </span><span class="symbol">=</span><span class="normal"> </span><span class="function"><a href="GtkRecentManager.html#gtk-recent-manager-new">gtk_recent_manager_new</a></span><span class="normal"> </span><span class="symbol">();</span>
+<span class="normal">    </span>
+<span class="normal">    recent_data </span><span class="symbol">=</span><span class="normal"> </span><span class="function"><a href="http://library.gnome.org/devel/glib/unstable/glib-Memory-Allocation.html#g-new0">g_new0</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal"><a href="GtkRecentManager.html#GtkRecentData">GtkRecentData</a></span><span class="symbol">,</span><span class="normal"> </span><span class="number">1</span><span class="symbol">);</span>
+<span class="normal">    </span><span class="comment">/* the user visible name of the document (maybe its title); should</span>
+<span class="comment">     * be preferred when displaying the item into the list</span>
+<span class="comment">     */</span>
+<span class="normal">recent_data</span><span class="symbol">-&gt;</span><span class="normal">display_name </span><span class="symbol">=</span><span class="normal"> document_name</span><span class="symbol">;</span>
+<span class="normal">    </span>
+<span class="normal">    </span><span class="comment">/* the MIME type is mandatory */</span>
+<span class="normal">    recent_data</span><span class="symbol">-&gt;</span><span class="normal">mime_type </span><span class="symbol">=</span><span class="normal"> document_mime_type</span><span class="symbol">;</span>
+
+<span class="normal">    </span><span class="comment">/* the name of the application that is registering the document</span>
+<span class="comment">     * (also mandatory); usually, the same name you used with</span>
+<span class="comment">     * the g_set_application_name () function.</span>
+<span class="comment">     */</span>
+<span class="normal">    recent_data</span><span class="symbol">-&amp;</span><span class="normal">app_name </span><span class="symbol">=</span><span class="normal"> APP_NAME</span><span class="symbol">;</span>
+
+<span class="normal">    </span><span class="comment">/* the command to open a file; the %u string will be automagically</span>
+<span class="comment">     * expanded to the document's URI when getting the application's</span>
+<span class="comment">     * command line from the GtkRecentInfo object with</span>
+<span class="comment">     * gtk_recent_info_get_application_info ()</span>
+<span class="comment">     */</span>
+<span class="normal">    recent_data</span><span class="symbol">-&amp;</span><span class="normal">app_exec </span><span class="symbol">=</span><span class="normal"> </span><span class="function"><a href="http://library.gnome.org/devel/glib/unstable/glib-String-Utility-Functions.html#g-strjoin">g_strjoin</a></span><span class="normal"> </span><span class="symbol">(</span><span class="string">" "</span><span class="symbol">,</span><span class="normal"> </span><span class="function"><a href="http://library.gnome.org/devel/glib/unstable/glib-Miscellaneous-Utility-Functions.html#g-get-prgname">g_get_prgname</a></span><span class="normal"> </span><span class="symbol">(),</span><span class="normal"> </span><span class="string">"--open-file"</span><span class="symbol">,</span><span class="normal"> </span><span class="string">"%u"</span><span class="symbol">,</span><span class="normal"> <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS">NULL</a></span><span class="symbol">);</span>
+
+<span class="normal">    </span><span class="keyword">if</span><span class="normal"> </span><span class="symbol">(!</span><span class="function"><a href="GtkRecentManager.html#gtk-recent-manager-add-full">gtk_recent_manager_add_full</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">manager</span><span class="symbol">,</span><span class="normal"> document_uri</span><span class="symbol">,</span><span class="normal"> recent_data</span><span class="symbol">))</span>
+<span class="normal">      </span><span class="cbracket">{</span>
+<span class="normal">        </span><span class="comment">/* warn about the error */</span>
+<span class="normal">      </span><span class="cbracket">}</span>
+
+<span class="normal">    </span><span class="function"><a href="http://library.gnome.org/devel/glib/unstable/glib-Memory-Allocation.html#g-free">g_free</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">recent_data</span><span class="symbol">-&gt;</span><span class="normal">app_exec</span><span class="symbol">);</span>
+<span class="normal">    </span><span class="function"><a href="http://library.gnome.org/devel/glib/unstable/glib-Memory-Allocation.html#g-free">g_free</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">recent_data</span><span class="symbol">);</span>
+<span class="normal">    </span><span class="function"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref">g_object_unref</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">manager</span><span class="symbol">);</span></pre></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+    </p>
+<p>
+      Getting the list of items is also similar to
+      <span class="structname">EggRecentModel</span>; the GtkRecentInfo data is
+      allocated at look up time in order not to waste memory keeping it
+      around, so you must remember to free the data inside the list and then
+      the list itself when you are done using it:
+      </p>
+<div class="informalexample">
+  <table class="listing_frame" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+      <tr>
+        <td class="listing_lines" align="right"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16</pre></td>
+        <td class="listing_code"><pre class="programlisting"><span class="usertype">GtkRecentManager</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">manager</span><span class="symbol">;</span>
+<span class="usertype">GList</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">recent_items</span><span class="symbol">,</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">l</span><span class="symbol">;</span>
+
+<span class="normal">    manager </span><span class="symbol">=</span><span class="normal"> </span><span class="function"><a href="GtkRecentManager.html#gtk-recent-manager-get-default">gtk_recent_manager_get_default</a></span><span class="symbol">();</span>
+
+<span class="normal">    recent_items </span><span class="symbol">=</span><span class="normal"> </span><span class="function"><a href="GtkRecentManager.html#gtk-recent-manager-get-items">gtk_recent_manager_get_items</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">manager</span><span class="symbol">);</span>
+<span class="normal">    </span><span class="keyword">for</span><span class="normal"> </span><span class="symbol">(</span><span class="normal">l </span><span class="symbol">=</span><span class="normal"> recent_items</span><span class="symbol">;</span><span class="normal"> l </span><span class="symbol">!=</span><span class="normal"> <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS">NULL</a></span><span class="symbol">;</span><span class="normal"> l </span><span class="symbol">=</span><span class="normal"> l</span><span class="symbol">-&gt;</span><span class="normal">next</span><span class="symbol">)</span>
+<span class="normal">      </span><span class="cbracket">{</span>
+<span class="normal">        </span><span class="usertype">GtkRecentInfo</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">recent_info </span><span class="symbol">=</span><span class="normal"> l</span><span class="symbol">-&gt;</span><span class="normal">data</span><span class="symbol">;</span>
+
+<span class="normal">        </span><span class="function">do_something_with_the_item</span><span class="normal"> </span><span class="symbol">(</span><span class="normal">recent_info</span><span class="symbol">);</span>
+<span class="normal">      </span><span class="cbracket">}</span>
+<span class="normal">    </span>
+<span class="normal">    </span><span class="comment">/* free everything and the list */</span>
+<span class="normal">    </span><span class="function"><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#g-list-foreach">g_list_foreach</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">recent_items</span><span class="symbol">,</span><span class="normal"> </span><span class="symbol">(</span><span class="normal"><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GFunc">GFunc</a></span><span class="symbol">)</span><span class="normal"> <a href="GtkRecentManager.html#gtk-recent-info-unref">gtk_recent_info_unref</a></span><span class="symbol">,</span><span class="normal"> <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS">NULL</a></span><span class="symbol">);</span>
+<span class="normal">    </span><span class="function"><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#g-list-free">g_list_free</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">recent_items</span><span class="symbol">);</span></pre></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+      You can also look up a single item:
+      </p>
+<div class="informalexample">
+  <table class="listing_frame" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+      <tr>
+        <td class="listing_lines" align="right"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16</pre></td>
+        <td class="listing_code"><pre class="programlisting"><span class="usertype">GtkRecentInfo</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">recent_info</span><span class="symbol">;</span>
+<span class="normal">    </span><span class="usertype">GError</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">error </span><span class="symbol">=</span><span class="normal"> <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS">NULL</a></span><span class="symbol">;</span>
+
+<span class="normal">    recent_info </span><span class="symbol">=</span><span class="normal"> </span><span class="function"><a href="GtkRecentManager.html#gtk-recent-manager-lookup-item">gtk_recent_manager_lookup_item</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">manager</span><span class="symbol">,</span><span class="normal"> document_uri</span><span class="symbol">,</span><span class="normal"> </span><span class="symbol">&amp;</span><span class="normal">error</span><span class="symbol">);</span>
+<span class="normal">    </span><span class="keyword">if</span><span class="normal"> </span><span class="symbol">(</span><span class="normal">error</span><span class="symbol">)</span>
+<span class="normal">      </span><span class="cbracket">{</span>
+<span class="normal">        </span><span class="function">display_error</span><span class="normal"> </span><span class="symbol">(</span><span class="normal">error</span><span class="symbol">);</span>
+
+<span class="normal">        </span><span class="function"><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#g-error-free">g_error_free</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">error</span><span class="symbol">);</span>
+<span class="normal">      </span><span class="cbracket">}</span>
+<span class="normal">    </span><span class="keyword">else</span>
+<span class="normal">      </span><span class="cbracket">{</span>
+<span class="normal">        </span><span class="function">do_something_with_the_item</span><span class="normal"> </span><span class="symbol">(</span><span class="normal">recent_info</span><span class="symbol">);</span>
+
+<span class="normal">        </span><span class="function"><a href="GtkRecentManager.html#gtk-recent-info-unref">gtk_recent_info_unref</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">recent_info</span><span class="symbol">);</span>
+<span class="normal">      </span><span class="cbracket">}</span></pre></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+      The <a class="link" href="GtkRecentManager.html#GtkRecentInfo" title="GtkRecentInfo"><span class="type">GtkRecentInfo</span></a> is a reference counted boxed type, and it holds all
+      the meta-data of a recently used document, like its display name, its
+      description, the list of each application that has registered the
+      document or the list of groups to which the document belong.
+    </p>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Libglade Programming Notes</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.74.3">
+<link rel="home" href="index.html" title="Libglade - Graphical Interface Description Loader API">
+<link rel="up" href="index.html" title="Libglade - Graphical Interface Description Loader API">
+<link rel="prev" href="index.html" title="Libglade - Graphical Interface Description Loader API">
+<link rel="next" href="libglade-modules.html" title="Libglade Modules">
+<meta name="generator" content="GTK-Doc V1.12 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="libglade-notes.html" title="Libglade Programming Notes">
+<link rel="chapter" href="libglade-dtd.html" title="Glade 2.0 File Format">
+<link rel="part" href="libglade-lib.html" title="Part I. Libglade Library Reference">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle">
+<td><a accesskey="p" href="index.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td> </td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Libglade - Graphical Interface Description Loader API</th>
+<td><a accesskey="n" href="libglade-modules.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="chapter" lang="en">
+<div class="titlepage"><div><div><h2 class="title">
+<a name="libglade-notes"></a>Libglade Programming Notes</h2></div></div></div>
+<div class="toc"><dl>
+<dt><span class="sect1"><a href="libglade-notes.html#libglade-basics">Libglade Programming Basics</a></span></dt>
+<dt><span class="sect1"><a href="libglade-modules.html">Libglade Modules</a></span></dt>
+<dt><span class="sect1"><a href="libglade-i18n.html">Internationalisation with Libglade</a></span></dt>
+<dt><span class="sect1"><a href="libglade-extending.html">Extending Libglade</a></span></dt>
+<dt><span class="sect1"><a href="libglade-embedding.html">Embedding Libglade Interfaces</a></span></dt>
+</dl></div>
+<p>Libglade is an alternative to using Glade's code generation.
+    Instead of generating code from the XML interface description,
+    libglade loads and parses the description at runtime.  It also
+    provides functions that can be used to connect signal handlers to
+    parts of the interface.</p>
+<p>In this way, it allows you to separate your program code
+    from the interface code.  In fact, if you use the
+    glade_xml_signal_autoconnect() function, the GUI code could be as
+    simple as the <code class="filename">test-libglade.c</code> example that
+    comes with libglade.  Of course, you would also add your own
+    signal handlers to the code.  Note that the signals are connected
+    the same way as if you had hand coded the interface.  There is no
+    extra overhead to user interfaces constructed by libglade (after
+    the initial generating of course, and this is not much of an
+    overhead) when compared to a hand crafted interface.</p>
+<div class="sect1" lang="en">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="libglade-basics"></a>Libglade Programming Basics</h2></div></div></div>
+<p>Your basic libglade program will look something like this:</p>
+<pre class="programlisting">
+#include &lt;gtk/gtk.h&gt;
+#include &lt;glade/glade.h&gt;
+
+void some_signal_handler_func(GtkWidget *widget, gpointer user_data) {
+  /* do something useful here */
+}
+
+int main(int argc, char *argv[]) {
+    GladeXML *xml;
+
+    gtk_init(&amp;argc, &amp;argv);
+
+    /* load the interface */
+    xml = glade_xml_new("filename.glade", NULL, NULL);
+
+    /* connect the signals in the interface */
+    glade_xml_signal_autoconnect(xml);
+
+    /* start the event loop */
+    gtk_main();
+
+    return 0;
+}
+</pre>
+<p>This will create the interface from the file
+      <code class="filename">filename.glade</code>, then connect all the
+      signals in the interface.  The automatic signal connection is
+      done by looking up function names in the global symbol table
+      using gmodule.  This means that the interface file can use
+      standard GTK functions such as
+      <code class="function">gtk_widget_show</code>, or
+      <code class="function">gtk_main_quit</code>, or others in the interface
+      and not have to write any code to connect the signals.</p>
+<p>The <code class="function">some_signal_handler_func</code> function
+      is not referenced anywhere in the program explicitely, but if
+      any signals are defined in the interface description that use
+      "some_signal_handler_func" as the handler name, then this
+      function will automatically be connected.  Note that the
+      function can not be static, since we require it to apear in the
+      symbol table.  Here is an example of the XML that would cause
+      <code class="function">some_signal_handler_func</code> to be
+      connected:</p>
+<pre class="programlisting">
+&lt;widget class="GtkWindow" id="MainWindow"&gt;
+  &lt;property name="visible"&gt;yes&lt;/property&gt;
+  &lt;signal name="destroy" handler="some_signal_handler_func" /&gt;
+  ...
+&lt;/widget&gt;
+</pre>
+<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Note</h3>
+<p>If you wish to autoconnect handlers defined in the main
+	executable (not a shared library), you will need to pass a
+	linker flag to export the executable's symbols for dynamic
+	linking.  This flag is platform specific, but libtool can take
+	care of this for you.  Just add
+	<em class="parameter"><code>-export-dynamic</code></em> argument to your link
+	flags, and libtool will convert it to the correct
+	format.</p>
+<p>The easiest way to get the correct extra flags is to check 
+	for gmodule-export-2.0 with pkg-config.</p>
+</div>
+<p>To compile the program, we would use the following:</p>
+<pre class="programlisting">
+cc -o testprogram testprogram.c `pkg-config --cflags --libs libglade-2.0`
+</pre>
+<p>The <span class="command"><strong>pkg-config</strong></span> program is used to
+      deduce the compiler and link flags necessary to compile various
+      modules.  If you are using automake or autoconf, you probably
+      want to use the PKG_CHECK_MODULES macro.  This can be used to
+      check for the presence of a collection of a number of packages,
+      and set some shell variables:</p>
+<pre class="programlisting">
+PKG_CHECK_MODULES(MYPROG, libglade-2.0 libgnomeui-2.0 &gt;= 1.110.0)
+AC_SUBST(MYPROG_CFLAGS)
+AC_SUBST(MYPROG_LIBS)
+</pre>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.12</div>
+</body>
+</html>

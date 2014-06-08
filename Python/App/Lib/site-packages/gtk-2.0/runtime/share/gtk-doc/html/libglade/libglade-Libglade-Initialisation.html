@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Libglade Initialisation</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.74.3">
+<link rel="home" href="index.html" title="Libglade - Graphical Interface Description Loader API">
+<link rel="up" href="libglade-lib.html" title="Part I. Libglade Library Reference">
+<link rel="prev" href="libglade-lib.html" title="Part I. Libglade Library Reference">
+<link rel="next" href="GladeXML.html" title="GladeXML">
+<meta name="generator" content="GTK-Doc V1.12 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="libglade-notes.html" title="Libglade Programming Notes">
+<link rel="chapter" href="libglade-dtd.html" title="Glade 2.0 File Format">
+<link rel="part" href="libglade-lib.html" title="Part I. Libglade Library Reference">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="libglade-lib.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="libglade-lib.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Libglade - Graphical Interface Description Loader API</th>
+<td><a accesskey="n" href="GladeXML.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#libglade-Libglade-Initialisation.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#libglade-Libglade-Initialisation.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="libglade-Libglade-Initialisation"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="libglade-Libglade-Initialisation.top_of_page"></a>Libglade Initialisation</span></h2>
+<p>Libglade Initialisation — Routines used to initialise libglade.</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="libglade-Libglade-Initialisation.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+
+#include &lt;glade/glade-init.h&gt;
+
+void                <a class="link" href="libglade-Libglade-Initialisation.html#glade-init" title="glade_init ()">glade_init</a>                          (void);
+void                <a class="link" href="libglade-Libglade-Initialisation.html#glade-require" title="glade_require ()">glade_require</a>                       (const gchar *library);
+void                <a class="link" href="libglade-Libglade-Initialisation.html#glade-provide" title="glade_provide ()">glade_provide</a>                       (const gchar *library);
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="libglade-Libglade-Initialisation.description"></a><h2>Description</h2>
+<p>
+These routines are used to initialise libglade, and to load addon modules
+that recognise extra widget sets.  The <code class="filename">glade_init</code>
+routine must be called before any libglade routines are used, and the
+<code class="filename">glade_load_module</code> routine would be used to load
+extra modules.
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="libglade-Libglade-Initialisation.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="glade-init"></a><h3>glade_init ()</h3>
+<pre class="programlisting">void                glade_init                          (void);</pre>
+<p>
+It used to be necessary to call <a class="link" href="libglade-Libglade-Initialisation.html#glade-init" title="glade_init ()"><code class="function">glade_init()</code></a> before creating
+GladeXML objects.  This is now no longer the case, as libglade will
+be initialised on demand now.  Calling <a class="link" href="libglade-Libglade-Initialisation.html#glade-init" title="glade_init ()"><code class="function">glade_init()</code></a> manually will
+not cause any problems though.</p>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="glade-require"></a><h3>glade_require ()</h3>
+<pre class="programlisting">void                glade_require                       (const gchar *library);</pre>
+<p>
+Ensure that a required library is available.  If it is not already
+available, libglade will attempt to dynamically load a module that
+contains the handlers for that library.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>library</code></em> :</span></p></td>
+<td> the required library
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="glade-provide"></a><h3>glade_provide ()</h3>
+<pre class="programlisting">void                glade_provide                       (const gchar *library);</pre>
+<p>
+This function should be called by a module to assert that it
+provides wrappers for a particular library.  This should be called
+by the <code class="function">register_widgets()</code> function of a libglade module so that it
+isn't loaded twice, for instance.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>library</code></em> :</span></p></td>
+<td> the provided library
+</td>
+</tr></tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.12</div>
+</body>
+</html>

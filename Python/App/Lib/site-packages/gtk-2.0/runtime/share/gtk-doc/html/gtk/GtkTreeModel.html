@@ -1,0 +1,2402 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>GtkTreeModel</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="GTK+ 2 Reference Manual">
+<link rel="up" href="TreeWidgetObjects.html" title="Tree, List and Icon Grid Widgets">
+<link rel="prev" href="TreeWidget.html" title="Tree and List Widget Overview">
+<link rel="next" href="GtkTreeSelection.html" title="GtkTreeSelection">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="TreeWidget.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="TreeWidgetObjects.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GTK+ 2 Reference Manual</th>
+<td><a accesskey="n" href="GtkTreeSelection.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#GtkTreeModel.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#GtkTreeModel.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#GtkTreeModel.object-hierarchy" class="shortcut">Object Hierarchy</a>
+                   | 
+                  <a href="#GtkTreeModel.prerequisites" class="shortcut">Prerequisites</a>
+                   | 
+                  <a href="#GtkTreeModel.derived-interfaces" class="shortcut">Known Derived Interfaces</a>
+                   | 
+                  <a href="#GtkTreeModel.implementations" class="shortcut">Known Implementations</a>
+                   | 
+                  <a href="#GtkTreeModel.signals" class="shortcut">Signals</a>
+</td></tr>
+</table>
+<div class="refentry">
+<a name="GtkTreeModel"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="GtkTreeModel.top_of_page"></a>GtkTreeModel</span></h2>
+<p>GtkTreeModel — The tree interface used by GtkTreeView</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="GtkTreeModel.synopsis"></a><h2>Synopsis</h2>
+<a name="GtkTreeIter"></a><a name="GtkTreePath"></a><pre class="synopsis">
+#include &lt;gtk/gtk.h&gt;
+
+                    <a class="link" href="GtkTreeModel.html#GtkTreeModel-struct" title="GtkTreeModel">GtkTreeModel</a>;
+struct              <a class="link" href="GtkTreeModel.html#GtkTreeIter-struct" title="struct GtkTreeIter">GtkTreeIter</a>;
+                    <a class="link" href="GtkTreeModel.html#GtkTreePath-struct" title="GtkTreePath">GtkTreePath</a>;
+                    <a class="link" href="GtkTreeModel.html#GtkTreeRowReference" title="GtkTreeRowReference">GtkTreeRowReference</a>;
+struct              <a class="link" href="GtkTreeModel.html#GtkTreeModelIface" title="struct GtkTreeModelIface">GtkTreeModelIface</a>;
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            (<a class="link" href="GtkTreeModel.html#GtkTreeModelForeachFunc" title="GtkTreeModelForeachFunc ()">*GtkTreeModelForeachFunc</a>)          (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> data</code></em>);
+enum                <a class="link" href="GtkTreeModel.html#GtkTreeModelFlags" title="enum GtkTreeModelFlags">GtkTreeModelFlags</a>;
+<a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="returnvalue">GtkTreePath</span></a> *       <a class="link" href="GtkTreeModel.html#gtk-tree-path-new" title="gtk_tree_path_new ()">gtk_tree_path_new</a>                   (<em class="parameter"><code><span class="type">void</span></code></em>);
+<a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="returnvalue">GtkTreePath</span></a> *       <a class="link" href="GtkTreeModel.html#gtk-tree-path-new-from-string" title="gtk_tree_path_new_from_string ()">gtk_tree_path_new_from_string</a>       (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *path</code></em>);
+<a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="returnvalue">GtkTreePath</span></a> *       <a class="link" href="GtkTreeModel.html#gtk-tree-path-new-from-indices" title="gtk_tree_path_new_from_indices ()">gtk_tree_path_new_from_indices</a>      (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> first_index</code></em>,
+                                                         <em class="parameter"><code>...</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="GtkTreeModel.html#gtk-tree-path-to-string" title="gtk_tree_path_to_string ()">gtk_tree_path_to_string</a>             (<em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>);
+<a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="returnvalue">GtkTreePath</span></a> *       <a class="link" href="GtkTreeModel.html#gtk-tree-path-new-first" title="gtk_tree_path_new_first ()">gtk_tree_path_new_first</a>             (<em class="parameter"><code><span class="type">void</span></code></em>);
+#define             <a class="link" href="GtkTreeModel.html#gtk-tree-path-new-root" title="gtk_tree_path_new_root">gtk_tree_path_new_root</a>
+<span class="returnvalue">void</span>                <a class="link" href="GtkTreeModel.html#gtk-tree-path-append-index" title="gtk_tree_path_append_index ()">gtk_tree_path_append_index</a>          (<em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> index_</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkTreeModel.html#gtk-tree-path-prepend-index" title="gtk_tree_path_prepend_index ()">gtk_tree_path_prepend_index</a>         (<em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> index_</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                <a class="link" href="GtkTreeModel.html#gtk-tree-path-get-depth" title="gtk_tree_path_get_depth ()">gtk_tree_path_get_depth</a>             (<em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a> *              <a class="link" href="GtkTreeModel.html#gtk-tree-path-get-indices" title="gtk_tree_path_get_indices ()">gtk_tree_path_get_indices</a>           (<em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a> *              <a class="link" href="GtkTreeModel.html#gtk-tree-path-get-indices-with-depth" title="gtk_tree_path_get_indices_with_depth ()">gtk_tree_path_get_indices_with_depth</a>
+                                                        (<em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> *depth</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkTreeModel.html#gtk-tree-path-free" title="gtk_tree_path_free ()">gtk_tree_path_free</a>                  (<em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>);
+<a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="returnvalue">GtkTreePath</span></a> *       <a class="link" href="GtkTreeModel.html#gtk-tree-path-copy" title="gtk_tree_path_copy ()">gtk_tree_path_copy</a>                  (<em class="parameter"><code>const <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                <a class="link" href="GtkTreeModel.html#gtk-tree-path-compare" title="gtk_tree_path_compare ()">gtk_tree_path_compare</a>               (<em class="parameter"><code>const <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *a</code></em>,
+                                                         <em class="parameter"><code>const <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *b</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkTreeModel.html#gtk-tree-path-next" title="gtk_tree_path_next ()">gtk_tree_path_next</a>                  (<em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="GtkTreeModel.html#gtk-tree-path-prev" title="gtk_tree_path_prev ()">gtk_tree_path_prev</a>                  (<em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="GtkTreeModel.html#gtk-tree-path-up" title="gtk_tree_path_up ()">gtk_tree_path_up</a>                    (<em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkTreeModel.html#gtk-tree-path-down" title="gtk_tree_path_down ()">gtk_tree_path_down</a>                  (<em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="GtkTreeModel.html#gtk-tree-path-is-ancestor" title="gtk_tree_path_is_ancestor ()">gtk_tree_path_is_ancestor</a>           (<em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *descendant</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="GtkTreeModel.html#gtk-tree-path-is-descendant" title="gtk_tree_path_is_descendant ()">gtk_tree_path_is_descendant</a>         (<em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *ancestor</code></em>);
+<a class="link" href="GtkTreeModel.html#GtkTreeRowReference" title="GtkTreeRowReference"><span class="returnvalue">GtkTreeRowReference</span></a> * <a class="link" href="GtkTreeModel.html#gtk-tree-row-reference-new" title="gtk_tree_row_reference_new ()">gtk_tree_row_reference_new</a>        (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>);
+<a class="link" href="GtkTreeModel.html#GtkTreeRowReference" title="GtkTreeRowReference"><span class="returnvalue">GtkTreeRowReference</span></a> * <a class="link" href="GtkTreeModel.html#gtk-tree-row-reference-new-proxy" title="gtk_tree_row_reference_new_proxy ()">gtk_tree_row_reference_new_proxy</a>  (<em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *proxy</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>);
+<a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="returnvalue">GtkTreeModel</span></a> *      <a class="link" href="GtkTreeModel.html#gtk-tree-row-reference-get-model" title="gtk_tree_row_reference_get_model ()">gtk_tree_row_reference_get_model</a>    (<em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeRowReference" title="GtkTreeRowReference"><span class="type">GtkTreeRowReference</span></a> *reference</code></em>);
+<a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="returnvalue">GtkTreePath</span></a> *       <a class="link" href="GtkTreeModel.html#gtk-tree-row-reference-get-path" title="gtk_tree_row_reference_get_path ()">gtk_tree_row_reference_get_path</a>     (<em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeRowReference" title="GtkTreeRowReference"><span class="type">GtkTreeRowReference</span></a> *reference</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="GtkTreeModel.html#gtk-tree-row-reference-valid" title="gtk_tree_row_reference_valid ()">gtk_tree_row_reference_valid</a>        (<em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeRowReference" title="GtkTreeRowReference"><span class="type">GtkTreeRowReference</span></a> *reference</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkTreeModel.html#gtk-tree-row-reference-free" title="gtk_tree_row_reference_free ()">gtk_tree_row_reference_free</a>         (<em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeRowReference" title="GtkTreeRowReference"><span class="type">GtkTreeRowReference</span></a> *reference</code></em>);
+<a class="link" href="GtkTreeModel.html#GtkTreeRowReference" title="GtkTreeRowReference"><span class="returnvalue">GtkTreeRowReference</span></a> * <a class="link" href="GtkTreeModel.html#gtk-tree-row-reference-copy" title="gtk_tree_row_reference_copy ()">gtk_tree_row_reference_copy</a>       (<em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeRowReference" title="GtkTreeRowReference"><span class="type">GtkTreeRowReference</span></a> *reference</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkTreeModel.html#gtk-tree-row-reference-inserted" title="gtk_tree_row_reference_inserted ()">gtk_tree_row_reference_inserted</a>     (<em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *proxy</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkTreeModel.html#gtk-tree-row-reference-deleted" title="gtk_tree_row_reference_deleted ()">gtk_tree_row_reference_deleted</a>      (<em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *proxy</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkTreeModel.html#gtk-tree-row-reference-reordered" title="gtk_tree_row_reference_reordered ()">gtk_tree_row_reference_reordered</a>    (<em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *proxy</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> *new_order</code></em>);
+<a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="returnvalue">GtkTreeIter</span></a> *       <a class="link" href="GtkTreeModel.html#gtk-tree-iter-copy" title="gtk_tree_iter_copy ()">gtk_tree_iter_copy</a>                  (<em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkTreeModel.html#gtk-tree-iter-free" title="gtk_tree_iter_free ()">gtk_tree_iter_free</a>                  (<em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>);
+<a class="link" href="GtkTreeModel.html#GtkTreeModelFlags" title="enum GtkTreeModelFlags"><span class="returnvalue">GtkTreeModelFlags</span></a>   <a class="link" href="GtkTreeModel.html#gtk-tree-model-get-flags" title="gtk_tree_model_get_flags ()">gtk_tree_model_get_flags</a>            (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                <a class="link" href="GtkTreeModel.html#gtk-tree-model-get-n-columns" title="gtk_tree_model_get_n_columns ()">gtk_tree_model_get_n_columns</a>        (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model</code></em>);
+<a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#GType"><span class="returnvalue">GType</span></a>               <a class="link" href="GtkTreeModel.html#gtk-tree-model-get-column-type" title="gtk_tree_model_get_column_type ()">gtk_tree_model_get_column_type</a>      (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> index_</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="GtkTreeModel.html#gtk-tree-model-get-iter" title="gtk_tree_model_get_iter ()">gtk_tree_model_get_iter</a>             (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="GtkTreeModel.html#gtk-tree-model-get-iter-from-string" title="gtk_tree_model_get_iter_from_string ()">gtk_tree_model_get_iter_from_string</a> (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *path_string</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="GtkTreeModel.html#gtk-tree-model-get-iter-first" title="gtk_tree_model_get_iter_first ()">gtk_tree_model_get_iter_first</a>       (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>);
+#define             <a class="link" href="GtkTreeModel.html#gtk-tree-model-get-iter-root" title="gtk_tree_model_get_iter_root()">gtk_tree_model_get_iter_root</a>        (tree_model,
+                                                         iter)
+<a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="returnvalue">GtkTreePath</span></a> *       <a class="link" href="GtkTreeModel.html#gtk-tree-model-get-path" title="gtk_tree_model_get_path ()">gtk_tree_model_get_path</a>             (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkTreeModel.html#gtk-tree-model-get-value" title="gtk_tree_model_get_value ()">gtk_tree_model_get_value</a>            (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> column</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Generic-values.html#GValue"><span class="type">GValue</span></a> *value</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="GtkTreeModel.html#gtk-tree-model-iter-next" title="gtk_tree_model_iter_next ()">gtk_tree_model_iter_next</a>            (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="GtkTreeModel.html#gtk-tree-model-iter-children" title="gtk_tree_model_iter_children ()">gtk_tree_model_iter_children</a>        (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *parent</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="GtkTreeModel.html#gtk-tree-model-iter-has-child" title="gtk_tree_model_iter_has_child ()">gtk_tree_model_iter_has_child</a>       (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                <a class="link" href="GtkTreeModel.html#gtk-tree-model-iter-n-children" title="gtk_tree_model_iter_n_children ()">gtk_tree_model_iter_n_children</a>      (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="GtkTreeModel.html#gtk-tree-model-iter-nth-child" title="gtk_tree_model_iter_nth_child ()">gtk_tree_model_iter_nth_child</a>       (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *parent</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> n</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="GtkTreeModel.html#gtk-tree-model-iter-parent" title="gtk_tree_model_iter_parent ()">gtk_tree_model_iter_parent</a>          (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *child</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="GtkTreeModel.html#gtk-tree-model-get-string-from-iter" title="gtk_tree_model_get_string_from_iter ()">gtk_tree_model_get_string_from_iter</a> (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkTreeModel.html#gtk-tree-model-ref-node" title="gtk_tree_model_ref_node ()">gtk_tree_model_ref_node</a>             (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkTreeModel.html#gtk-tree-model-unref-node" title="gtk_tree_model_unref_node ()">gtk_tree_model_unref_node</a>           (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkTreeModel.html#gtk-tree-model-get" title="gtk_tree_model_get ()">gtk_tree_model_get</a>                  (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>,
+                                                         <em class="parameter"><code>...</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkTreeModel.html#gtk-tree-model-get-valist" title="gtk_tree_model_get_valist ()">gtk_tree_model_get_valist</a>           (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>,
+                                                         <em class="parameter"><code><span class="type">va_list</span> var_args</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkTreeModel.html#gtk-tree-model-foreach" title="gtk_tree_model_foreach ()">gtk_tree_model_foreach</a>              (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeModelForeachFunc" title="GtkTreeModelForeachFunc ()"><span class="type">GtkTreeModelForeachFunc</span></a> func</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkTreeModel.html#gtk-tree-model-row-changed" title="gtk_tree_model_row_changed ()">gtk_tree_model_row_changed</a>          (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkTreeModel.html#gtk-tree-model-row-inserted" title="gtk_tree_model_row_inserted ()">gtk_tree_model_row_inserted</a>         (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkTreeModel.html#gtk-tree-model-row-has-child-toggled" title="gtk_tree_model_row_has_child_toggled ()">gtk_tree_model_row_has_child_toggled</a>
+                                                        (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkTreeModel.html#gtk-tree-model-row-deleted" title="gtk_tree_model_row_deleted ()">gtk_tree_model_row_deleted</a>          (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkTreeModel.html#gtk-tree-model-rows-reordered" title="gtk_tree_model_rows_reordered ()">gtk_tree_model_rows_reordered</a>       (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> *new_order</code></em>);
+</pre>
+</div>
+<div class="refsect1">
+<a name="GtkTreeModel.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  GInterface
+   +----GtkTreeModel
+</pre>
+<pre class="synopsis">
+  GBoxed
+   +----GtkTreeIter
+</pre>
+<pre class="synopsis">
+  GBoxed
+   +----GtkTreePath
+</pre>
+</div>
+<div class="refsect1">
+<a name="GtkTreeModel.prerequisites"></a><h2>Prerequisites</h2>
+<p>
+GtkTreeModel requires
+ <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>.</p>
+</div>
+<div class="refsect1">
+<a name="GtkTreeModel.derived-interfaces"></a><h2>Known Derived Interfaces</h2>
+<p>
+GtkTreeModel is required by
+ <a class="link" href="GtkTreeSortable.html" title="GtkTreeSortable">GtkTreeSortable</a>.</p>
+</div>
+<div class="refsect1">
+<a name="GtkTreeModel.implementations"></a><h2>Known Implementations</h2>
+<p>
+GtkTreeModel is implemented by
+ <a class="link" href="GtkListStore.html" title="GtkListStore">GtkListStore</a>,  <a class="link" href="GtkTreeModelFilter.html" title="GtkTreeModelFilter">GtkTreeModelFilter</a>,  <a class="link" href="GtkTreeModelSort.html" title="GtkTreeModelSort">GtkTreeModelSort</a> and  <a class="link" href="GtkTreeStore.html" title="GtkTreeStore">GtkTreeStore</a>.</p>
+</div>
+<div class="refsect1">
+<a name="GtkTreeModel.signals"></a><h2>Signals</h2>
+<pre class="synopsis">
+  "<a class="link" href="GtkTreeModel.html#GtkTreeModel-row-changed" title='The "row-changed" signal'>row-changed</a>"                                    : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS"><code class="literal">Run Last</code></a>
+  "<a class="link" href="GtkTreeModel.html#GtkTreeModel-row-deleted" title='The "row-deleted" signal'>row-deleted</a>"                                    : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-FIRST:CAPS"><code class="literal">Run First</code></a>
+  "<a class="link" href="GtkTreeModel.html#GtkTreeModel-row-has-child-toggled" title='The "row-has-child-toggled" signal'>row-has-child-toggled</a>"                          : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS"><code class="literal">Run Last</code></a>
+  "<a class="link" href="GtkTreeModel.html#GtkTreeModel-row-inserted" title='The "row-inserted" signal'>row-inserted</a>"                                   : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-FIRST:CAPS"><code class="literal">Run First</code></a>
+  "<a class="link" href="GtkTreeModel.html#GtkTreeModel-rows-reordered" title='The "rows-reordered" signal'>rows-reordered</a>"                                 : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-FIRST:CAPS"><code class="literal">Run First</code></a>
+</pre>
+</div>
+<div class="refsect1">
+<a name="GtkTreeModel.description"></a><h2>Description</h2>
+<p>
+The <a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> interface defines a generic tree interface for use by
+the <a class="link" href="GtkTreeView.html" title="GtkTreeView"><span class="type">GtkTreeView</span></a> widget.  It is an abstract interface, and is designed
+to be usable with any appropriate data structure.  The programmer just
+has to implement this interface on their own data type for it to be
+viewable by a <a class="link" href="GtkTreeView.html" title="GtkTreeView"><span class="type">GtkTreeView</span></a> widget.
+</p>
+<p>
+The model is represented as a hierarchical tree of strongly-typed,
+columned data.  In other words, the model can be seen as a tree where
+every node has different values depending on which column is being
+queried.  The type of data found in a column is determined by using the
+GType system (ie. <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#G-TYPE-INT:CAPS"><span class="type">G_TYPE_INT</span></a>, <span class="type">GTK_TYPE_BUTTON</span>, <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#G-TYPE-POINTER:CAPS"><span class="type">G_TYPE_POINTER</span></a>, etc.).
+The types are homogeneous per column across all nodes.  It is important
+to note that this interface only provides a way of examining a model and
+observing changes.  The implementation of each individual model decides
+how and if changes are made.
+</p>
+<p>
+In order to make life simpler for programmers who do not need to write
+their own specialized model, two generic models are provided — the
+<a class="link" href="GtkTreeStore.html" title="GtkTreeStore"><span class="type">GtkTreeStore</span></a> and the <a class="link" href="GtkListStore.html" title="GtkListStore"><span class="type">GtkListStore</span></a>.  To use these, the developer simply
+pushes data into these models as necessary.  These models provide the
+data structure as well as all appropriate tree interfaces.  As a result,
+implementing drag and drop, sorting, and storing data is trivial.  For
+the vast majority of trees and lists, these two models are sufficient.
+</p>
+<p>
+Models are accessed on a node/column level of granularity.  One can
+query for the value of a model at a certain node and a certain column
+on that node.  There are two structures used to reference a particular
+node in a model.  They are the <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> and the <a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a>
+<sup>[<a name="id845604" href="#ftn.id845604" class="footnote">4</a>]</sup>
+Most of the interface consists of operations on a <a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a>.
+</p>
+<p>
+A path is essentially a potential node.  It is a location on a model
+that may or may not actually correspond to a node on a specific model.
+The <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> struct can be converted into either an array of
+unsigned integers or a string.  The string form is a list of numbers
+separated by a colon.  Each number refers to the offset at that level.
+Thus, the path <span class="quote">“<span class="quote">0</span>”</span> refers to the root node and the path
+<span class="quote">“<span class="quote">2:4</span>”</span> refers to the fifth child of the third node.
+</p>
+<p>
+By contrast, a <a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> is a reference to a specific node on a
+specific model.  It is a generic struct with an integer and three
+generic pointers.  These are filled in by the model in a model-specific
+way.  One can convert a path to an iterator by calling
+<a class="link" href="GtkTreeModel.html#gtk-tree-model-get-iter" title="gtk_tree_model_get_iter ()"><code class="function">gtk_tree_model_get_iter()</code></a>.  These iterators are the primary way of
+accessing a model and are similar to the iterators used by
+<a class="link" href="GtkTextBuffer.html" title="GtkTextBuffer"><span class="type">GtkTextBuffer</span></a>.  They are generally statically allocated on the stack and
+only used for a short time.  The model interface defines a set of
+operations using them for navigating the model.
+</p>
+<p>
+It is expected that models fill in the iterator with private data.  For
+example, the <a class="link" href="GtkListStore.html" title="GtkListStore"><span class="type">GtkListStore</span></a> model, which is internally a simple linked
+list, stores a list node in one of the pointers.  The <a class="link" href="GtkTreeModelSort.html" title="GtkTreeModelSort"><span class="type">GtkTreeModelSort</span></a>
+stores an array and an offset in two of the pointers.  Additionally,
+there is an integer field.  This field is generally filled with a unique
+stamp per model.  This stamp is for catching errors resulting from using
+invalid iterators with a model.
+</p>
+<p>
+The lifecycle of an iterator can be a little confusing at first.
+Iterators are expected to always be valid for as long as the model is
+unchanged (and doesn't emit a signal).  The model is considered to own
+all outstanding iterators and nothing needs to be done to free them from
+the user's point of view.  Additionally, some models guarantee that an
+iterator is valid for as long as the node it refers to is valid (most
+notably the <a class="link" href="GtkTreeStore.html" title="GtkTreeStore"><span class="type">GtkTreeStore</span></a> and <a class="link" href="GtkListStore.html" title="GtkListStore"><span class="type">GtkListStore</span></a>).  Although generally
+uninteresting, as one always has to allow for the case where iterators
+do not persist beyond a signal, some very important performance
+enhancements were made in the sort model.  As a result, the
+<a class="link" href="GtkTreeModel.html#GTK-TREE-MODEL-ITERS-PERSIST:CAPS"><span class="type">GTK_TREE_MODEL_ITERS_PERSIST</span></a> flag was added to indicate this behavior.
+</p>
+<p>
+To help show some common operation of a model, some examples are
+provided.  The first example shows three ways of getting the iter at the
+location <span class="quote">“<span class="quote">3:2:5</span>”</span>.  While the first method shown is easier,
+the second is much more common, as you often get paths from callbacks.
+</p>
+<p>
+</p>
+<div class="example">
+<a name="id845741"></a><p class="title"><b>Example 21. Acquiring a <span class="structname">GtkTreeIter</span></b></p>
+<div class="example-contents">
+  <table class="listing_frame" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+      <tr>
+        <td class="listing_lines" align="right"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19</pre></td>
+        <td class="listing_code"><pre class="programlisting"><span class="comment">/* Three ways of getting the iter pointing to the location</span>
+<span class="comment"> */</span>
+<span class="cbracket">{</span>
+<span class="normal">  </span><span class="usertype">GtkTreePath</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">path</span><span class="symbol">;</span>
+<span class="normal">  </span><span class="usertype">GtkTreeIter</span><span class="normal"> iter</span><span class="symbol">;</span>
+<span class="normal">  </span><span class="usertype">GtkTreeIter</span><span class="normal"> parent_iter</span><span class="symbol">;</span>
+<span class="normal">  </span><span class="comment">/* get the iterator from a string */</span>
+<span class="normal">  </span><span class="function"><a href="GtkTreeModel.html#gtk-tree-model-get-iter-from-string">gtk_tree_model_get_iter_from_string</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">model</span><span class="symbol">,</span><span class="normal"> </span><span class="symbol">&amp;</span><span class="normal">iter</span><span class="symbol">,</span><span class="normal"> </span><span class="string">"3:2:5"</span><span class="symbol">);</span>
+<span class="normal">  </span><span class="comment">/* get the iterator from a path */</span>
+<span class="normal">  path </span><span class="symbol">=</span><span class="normal"> </span><span class="function"><a href="GtkTreeModel.html#gtk-tree-path-new-from-string">gtk_tree_path_new_from_string</a></span><span class="normal"> </span><span class="symbol">(</span><span class="string">"3:2:5"</span><span class="symbol">);</span>
+<span class="normal">  </span><span class="function"><a href="GtkTreeModel.html#gtk-tree-model-get-iter">gtk_tree_model_get_iter</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">model</span><span class="symbol">,</span><span class="normal"> </span><span class="symbol">&amp;</span><span class="normal">iter</span><span class="symbol">,</span><span class="normal"> path</span><span class="symbol">);</span>
+<span class="normal">  </span><span class="function"><a href="GtkTreeModel.html#gtk-tree-path-free">gtk_tree_path_free</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">path</span><span class="symbol">);</span>
+<span class="normal">  </span><span class="comment">/* walk the tree to find the iterator */</span>
+<span class="normal">  </span><span class="function"><a href="GtkTreeModel.html#gtk-tree-model-iter-nth-child">gtk_tree_model_iter_nth_child</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">model</span><span class="symbol">,</span><span class="normal"> </span><span class="symbol">&amp;</span><span class="normal">iter</span><span class="symbol">,</span><span class="normal"> <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS">NULL</a></span><span class="symbol">,</span><span class="normal"> </span><span class="number">3</span><span class="symbol">);</span>
+<span class="normal">  parent_iter </span><span class="symbol">=</span><span class="normal"> iter</span><span class="symbol">;</span>
+<span class="normal">  </span><span class="function"><a href="GtkTreeModel.html#gtk-tree-model-iter-nth-child">gtk_tree_model_iter_nth_child</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">model</span><span class="symbol">,</span><span class="normal"> </span><span class="symbol">&amp;</span><span class="normal">iter</span><span class="symbol">,</span><span class="normal"> </span><span class="symbol">&amp;</span><span class="normal">parent_iter</span><span class="symbol">,</span><span class="normal"> </span><span class="number">2</span><span class="symbol">);</span>
+<span class="normal">  parent_iter </span><span class="symbol">=</span><span class="normal"> iter</span><span class="symbol">;</span>
+<span class="normal">  </span><span class="function"><a href="GtkTreeModel.html#gtk-tree-model-iter-nth-child">gtk_tree_model_iter_nth_child</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">model</span><span class="symbol">,</span><span class="normal"> </span><span class="symbol">&amp;</span><span class="normal">iter</span><span class="symbol">,</span><span class="normal"> </span><span class="symbol">&amp;</span><span class="normal">parent_iter</span><span class="symbol">,</span><span class="normal"> </span><span class="number">5</span><span class="symbol">);</span>
+<span class="cbracket">}</span></pre></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+</div>
+<p><br class="example-break">
+</p>
+<p>
+This second example shows a quick way of iterating through a list and
+getting a string and an integer from each row.  The
+<code class="function">populate_model</code> function used below is not shown, as
+it is specific to the <a class="link" href="GtkListStore.html" title="GtkListStore"><span class="type">GtkListStore</span></a>.  For information on how to write
+such a function, see the <a class="link" href="GtkListStore.html" title="GtkListStore"><span class="type">GtkListStore</span></a> documentation.
+</p>
+<div class="example">
+<a name="id845789"></a><p class="title"><b>Example 22. Reading data from a <span class="structname">GtkTreeModel</span></b></p>
+<div class="example-contents">
+  <table class="listing_frame" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+      <tr>
+        <td class="listing_lines" align="right"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36</pre></td>
+        <td class="listing_code"><pre class="programlisting"><span class="keyword">enum</span>
+<span class="cbracket">{</span>
+<span class="normal">  STRING_COLUMN</span><span class="symbol">,</span>
+<span class="normal">  INT_COLUMN</span><span class="symbol">,</span>
+<span class="normal">  N_COLUMNS</span>
+<span class="cbracket">}</span><span class="symbol">;</span>
+<span class="cbracket">{</span>
+<span class="normal">  </span><span class="usertype">GtkTreeModel</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">list_store</span><span class="symbol">;</span>
+<span class="normal">  </span><span class="usertype">GtkTreeIter</span><span class="normal"> iter</span><span class="symbol">;</span>
+<span class="normal">  </span><span class="usertype">gboolean</span><span class="normal"> valid</span><span class="symbol">;</span>
+<span class="normal">  </span><span class="usertype">gint</span><span class="normal"> row_count </span><span class="symbol">=</span><span class="normal"> </span><span class="number">0</span><span class="symbol">;</span>
+<span class="normal">  </span><span class="comment">/* make a new list_store */</span>
+<span class="normal">  list_store </span><span class="symbol">=</span><span class="normal"> </span><span class="function"><a href="GtkListStore.html#gtk-list-store-new">gtk_list_store_new</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">N_COLUMNS</span><span class="symbol">,</span><span class="normal"> <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#G-TYPE-STRING:CAPS">G_TYPE_STRING</a></span><span class="symbol">,</span><span class="normal"> <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#G-TYPE-INT:CAPS">G_TYPE_INT</a></span><span class="symbol">);</span>
+<span class="normal">  </span><span class="comment">/* Fill the list store with data */</span>
+<span class="normal">  </span><span class="function">populate_model</span><span class="normal"> </span><span class="symbol">(</span><span class="normal">list_store</span><span class="symbol">);</span>
+<span class="normal">  </span><span class="comment">/* Get the first iter in the list */</span>
+<span class="normal">  valid </span><span class="symbol">=</span><span class="normal"> </span><span class="function"><a href="GtkTreeModel.html#gtk-tree-model-get-iter-first">gtk_tree_model_get_iter_first</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">list_store</span><span class="symbol">,</span><span class="normal"> </span><span class="symbol">&amp;</span><span class="normal">iter</span><span class="symbol">);</span>
+<span class="normal">  </span><span class="keyword">while</span><span class="normal"> </span><span class="symbol">(</span><span class="normal">valid</span><span class="symbol">)</span>
+<span class="normal">    </span><span class="cbracket">{</span>
+<span class="normal">      </span><span class="comment">/* Walk through the list, reading each row */</span>
+<span class="normal">      </span><span class="usertype">gchar</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">str_data</span><span class="symbol">;</span>
+<span class="normal">      </span><span class="usertype">gint</span><span class="normal">   int_data</span><span class="symbol">;</span>
+<span class="normal">      </span><span class="comment">/* Make sure you terminate calls to gtk_tree_model_get()</span>
+<span class="comment">       * with a '-1' value</span>
+<span class="comment">       */</span>
+<span class="normal">      </span><span class="function"><a href="GtkTreeModel.html#gtk-tree-model-get">gtk_tree_model_get</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">list_store</span><span class="symbol">,</span><span class="normal"> </span><span class="symbol">&amp;</span><span class="normal">iter</span><span class="symbol">,</span>
+<span class="normal">                          STRING_COLUMN</span><span class="symbol">,</span><span class="normal"> </span><span class="symbol">&amp;</span><span class="normal">str_data</span><span class="symbol">,</span>
+<span class="normal">                          INT_COLUMN</span><span class="symbol">,</span><span class="normal"> </span><span class="symbol">&amp;</span><span class="normal">int_data</span><span class="symbol">,</span>
+<span class="normal">                          </span><span class="symbol">-</span><span class="number">1</span><span class="symbol">);</span>
+<span class="normal">      </span><span class="comment">/* Do something with the data */</span>
+<span class="normal">      </span><span class="function"><a href="http://library.gnome.org/devel/glib/unstable/glib-Warnings-and-Assertions.html#g-print">g_print</a></span><span class="normal"> </span><span class="symbol">(</span><span class="string">"Row %d: (%s,%d)</span><span class="specialchar">\n</span><span class="string">"</span><span class="symbol">,</span><span class="normal"> row_count</span><span class="symbol">,</span><span class="normal"> str_data</span><span class="symbol">,</span><span class="normal"> int_data</span><span class="symbol">);</span>
+<span class="normal">      </span><span class="function"><a href="http://library.gnome.org/devel/glib/unstable/glib-Memory-Allocation.html#g-free">g_free</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">str_data</span><span class="symbol">);</span>
+<span class="normal">      row_count </span><span class="symbol">++;</span>
+<span class="normal">      valid </span><span class="symbol">=</span><span class="normal"> </span><span class="function"><a href="GtkTreeModel.html#gtk-tree-model-iter-next">gtk_tree_model_iter_next</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">list_store</span><span class="symbol">,</span><span class="normal"> </span><span class="symbol">&amp;</span><span class="normal">iter</span><span class="symbol">);</span>
+<span class="normal">    </span><span class="cbracket">}</span>
+<span class="cbracket">}</span></pre></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+</div>
+<p><br class="example-break">
+</p>
+</div>
+<div class="refsect1">
+<a name="GtkTreeModel.details"></a><h2>Details</h2>
+<div class="refsect2">
+<a name="GtkTreeModel-struct"></a><h3>GtkTreeModel</h3>
+<pre class="programlisting">typedef struct _GtkTreeModel GtkTreeModel;</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkTreeIter-struct"></a><h3>struct GtkTreeIter</h3>
+<pre class="programlisting">struct GtkTreeIter {
+  gint stamp;
+  gpointer user_data;
+  gpointer user_data2;
+  gpointer user_data3;
+};
+</pre>
+<p>
+The <span class="structname">GtkTreeIter</span> is the primary structure for
+accessing a structure.  Models are expected to put a unique integer in
+the <em class="structfield"><code>stamp</code></em> member, and put model-specific
+data in the three <em class="structfield"><code>user_data</code></em> members.
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkTreePath-struct"></a><h3>GtkTreePath</h3>
+<pre class="programlisting">typedef struct _GtkTreePath GtkTreePath;</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkTreeRowReference"></a><h3>GtkTreeRowReference</h3>
+<pre class="programlisting">typedef struct _GtkTreeRowReference GtkTreeRowReference;</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkTreeModelIface"></a><h3>struct GtkTreeModelIface</h3>
+<pre class="programlisting">struct GtkTreeModelIface {
+  GTypeInterface g_iface;
+
+  /* Signals */
+  void         (* row_changed)           (GtkTreeModel *tree_model,
+					  GtkTreePath  *path,
+					  GtkTreeIter  *iter);
+  void         (* row_inserted)          (GtkTreeModel *tree_model,
+					  GtkTreePath  *path,
+					  GtkTreeIter  *iter);
+  void         (* row_has_child_toggled) (GtkTreeModel *tree_model,
+					  GtkTreePath  *path,
+					  GtkTreeIter  *iter);
+  void         (* row_deleted)           (GtkTreeModel *tree_model,
+					  GtkTreePath  *path);
+  void         (* rows_reordered)        (GtkTreeModel *tree_model,
+					  GtkTreePath  *path,
+					  GtkTreeIter  *iter,
+					  gint         *new_order);
+
+  /* Virtual Table */
+  GtkTreeModelFlags (* get_flags)  (GtkTreeModel *tree_model);
+
+  gint         (* get_n_columns)   (GtkTreeModel *tree_model);
+  GType        (* get_column_type) (GtkTreeModel *tree_model,
+				    gint          index_);
+  gboolean     (* get_iter)        (GtkTreeModel *tree_model,
+				    GtkTreeIter  *iter,
+				    GtkTreePath  *path);
+  GtkTreePath *(* get_path)        (GtkTreeModel *tree_model,
+				    GtkTreeIter  *iter);
+  void         (* get_value)       (GtkTreeModel *tree_model,
+				    GtkTreeIter  *iter,
+				    gint          column,
+				    GValue       *value);
+  gboolean     (* iter_next)       (GtkTreeModel *tree_model,
+				    GtkTreeIter  *iter);
+  gboolean     (* iter_children)   (GtkTreeModel *tree_model,
+				    GtkTreeIter  *iter,
+				    GtkTreeIter  *parent);
+  gboolean     (* iter_has_child)  (GtkTreeModel *tree_model,
+				    GtkTreeIter  *iter);
+  gint         (* iter_n_children) (GtkTreeModel *tree_model,
+				    GtkTreeIter  *iter);
+  gboolean     (* iter_nth_child)  (GtkTreeModel *tree_model,
+				    GtkTreeIter  *iter,
+				    GtkTreeIter  *parent,
+				    gint          n);
+  gboolean     (* iter_parent)     (GtkTreeModel *tree_model,
+				    GtkTreeIter  *iter,
+				    GtkTreeIter  *child);
+  void         (* ref_node)        (GtkTreeModel *tree_model,
+				    GtkTreeIter  *iter);
+  void         (* unref_node)      (GtkTreeModel *tree_model,
+				    GtkTreeIter  *iter);
+};
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkTreeModelForeachFunc"></a><h3>GtkTreeModelForeachFunc ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            (*GtkTreeModelForeachFunc)          (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> data</code></em>);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>model</code></em> :</span></p></td>
+<td>The <a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> currently being iterated</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
+<td>The current <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>iter</code></em> :</span></p></td>
+<td>The current <a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td>The user data passed to <a class="link" href="GtkTreeModel.html#gtk-tree-model-foreach" title="gtk_tree_model_foreach ()"><code class="function">gtk_tree_model_foreach()</code></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> to stop iterating, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> to continue.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkTreeModelFlags"></a><h3>enum GtkTreeModelFlags</h3>
+<pre class="programlisting">typedef enum {
+  GTK_TREE_MODEL_ITERS_PERSIST = 1 &lt;&lt; 0,
+  GTK_TREE_MODEL_LIST_ONLY = 1 &lt;&lt; 1
+} GtkTreeModelFlags;
+</pre>
+<p>
+These flags indicate various properties of a <a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a>.  They are
+returned by <a class="link" href="GtkTreeModel.html#gtk-tree-model-get-flags" title="gtk_tree_model_get_flags ()"><code class="function">gtk_tree_model_get_flags()</code></a>, and must be static for the
+lifetime of the object.  A more complete description of
+<a class="link" href="GtkTreeModel.html#GTK-TREE-MODEL-ITERS-PERSIST:CAPS"><span class="type">GTK_TREE_MODEL_ITERS_PERSIST</span></a> can be found in the overview of this
+section.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><a name="GTK-TREE-MODEL-ITERS-PERSIST:CAPS"></a><span class="term"><code class="literal">GTK_TREE_MODEL_ITERS_PERSIST</code></span></p></td>
+<td>Iterators survive all signals emitted by the tree.
+</td>
+</tr>
+<tr>
+<td><p><a name="GTK-TREE-MODEL-LIST-ONLY:CAPS"></a><span class="term"><code class="literal">GTK_TREE_MODEL_LIST_ONLY</code></span></p></td>
+<td>The model is a list only, and never has children
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-path-new"></a><h3>gtk_tree_path_new ()</h3>
+<pre class="programlisting"><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="returnvalue">GtkTreePath</span></a> *       gtk_tree_path_new                   (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+Creates a new <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a>.  This structure refers to a row.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>A newly created <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a>.</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-path-new-from-string"></a><h3>gtk_tree_path_new_from_string ()</h3>
+<pre class="programlisting"><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="returnvalue">GtkTreePath</span></a> *       gtk_tree_path_new_from_string       (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *path</code></em>);</pre>
+<p>
+Creates a new <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> initialized to <em class="parameter"><code>path</code></em>.  <em class="parameter"><code>path</code></em> is expected to be a
+colon separated list of numbers.  For example, the string "10:4:0" would
+create a path of depth 3 pointing to the 11th child of the root node, the 5th
+child of that 11th child, and the 1st child of that 5th child.  If an invalid
+path string is passed in, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> is returned.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
+<td>The string representation of a path.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>A newly-created <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a>, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-path-new-from-indices"></a><h3>gtk_tree_path_new_from_indices ()</h3>
+<pre class="programlisting"><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="returnvalue">GtkTreePath</span></a> *       gtk_tree_path_new_from_indices      (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> first_index</code></em>,
+                                                         <em class="parameter"><code>...</code></em>);</pre>
+<p>
+Creates a new path with <em class="parameter"><code>first_index</code></em> and <em class="parameter"><code>varargs</code></em> as indices.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>first_index</code></em> :</span></p></td>
+<td>first integer</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>A newly created <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a>.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-path-to-string"></a><h3>gtk_tree_path_to_string ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             gtk_tree_path_to_string             (<em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>);</pre>
+<p>
+Generates a string representation of the path.  This string is a ':'
+separated list of numbers.  For example, "4:10:0:3" would be an acceptable return value for this string.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>A newly-allocated string.  Must be freed with <a href="http://library.gnome.org/devel/glib/unstable/glib-Memory-Allocation.html#g-free"><code class="function">g_free()</code></a>.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-path-new-first"></a><h3>gtk_tree_path_new_first ()</h3>
+<pre class="programlisting"><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="returnvalue">GtkTreePath</span></a> *       gtk_tree_path_new_first             (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+Creates a new <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a>.  The string representation of this path is "0"
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>A new <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a>.</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-path-new-root"></a><h3>gtk_tree_path_new_root</h3>
+<pre class="programlisting">#define gtk_tree_path_new_root() gtk_tree_path_new_first()
+</pre>
+<div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Warning</h3>
+<p><code class="literal">gtk_tree_path_new_root</code> is deprecated and should not be used in newly-written code. Use <a class="link" href="GtkTreeModel.html#gtk-tree-path-new-first" title="gtk_tree_path_new_first ()"><code class="function">gtk_tree_path_new_first()</code></a> instead.</p>
+</div>
+<p>
+An alternate name for <a class="link" href="GtkTreeModel.html#gtk-tree-path-new-first" title="gtk_tree_path_new_first ()"><code class="function">gtk_tree_path_new_first()</code></a> provided for
+compatibility reasons.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>A new <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a>.</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-path-append-index"></a><h3>gtk_tree_path_append_index ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_tree_path_append_index          (<em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> index_</code></em>);</pre>
+<p>
+Appends a new index to a path.  As a result, the depth of the path is
+increased.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>index_</code></em> :</span></p></td>
+<td>The index.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-path-prepend-index"></a><h3>gtk_tree_path_prepend_index ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_tree_path_prepend_index         (<em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> index_</code></em>);</pre>
+<p>
+Prepends a new index to a path.  As a result, the depth of the path is
+increased.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>index_</code></em> :</span></p></td>
+<td>The index.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-path-get-depth"></a><h3>gtk_tree_path_get_depth ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                gtk_tree_path_get_depth             (<em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>);</pre>
+<p>
+Returns the current depth of <em class="parameter"><code>path</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The depth of <em class="parameter"><code>path</code></em>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-path-get-indices"></a><h3>gtk_tree_path_get_indices ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a> *              gtk_tree_path_get_indices           (<em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>);</pre>
+<p>
+Returns the current indices of <em class="parameter"><code>path</code></em>.  This is an array of integers, each
+representing a node in a tree.  This value should not be freed.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The current indices, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-path-get-indices-with-depth"></a><h3>gtk_tree_path_get_indices_with_depth ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a> *              gtk_tree_path_get_indices_with_depth
+                                                        (<em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> *depth</code></em>);</pre>
+<p>
+Returns the current indices of <em class="parameter"><code>path</code></em>.
+This is an array of integers, each representing a node in a tree.
+It also returns the number of elements in the array.
+The array should not be freed.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>depth</code></em> :</span></p></td>
+<td>Number of elements returned in the integer array</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The current indices, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<acronym title="Parameter points to an array of items."><span class="acronym">array</span></acronym> length=depth][<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.22</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-path-free"></a><h3>gtk_tree_path_free ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_tree_path_free                  (<em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>);</pre>
+<p>
+Frees <em class="parameter"><code>path</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a>.</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-path-copy"></a><h3>gtk_tree_path_copy ()</h3>
+<pre class="programlisting"><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="returnvalue">GtkTreePath</span></a> *       gtk_tree_path_copy                  (<em class="parameter"><code>const <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>);</pre>
+<p>
+Creates a new <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> as a copy of <em class="parameter"><code>path</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>A new <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a>.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-path-compare"></a><h3>gtk_tree_path_compare ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                gtk_tree_path_compare               (<em class="parameter"><code>const <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *a</code></em>,
+                                                         <em class="parameter"><code>const <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *b</code></em>);</pre>
+<p>
+Compares two paths.  If <em class="parameter"><code>a</code></em> appears before <em class="parameter"><code>b</code></em> in a tree, then -1 is returned.
+If <em class="parameter"><code>b</code></em> appears before <em class="parameter"><code>a</code></em>, then 1 is returned.  If the two nodes are equal,
+then 0 is returned.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>a</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>b</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> to compare with.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The relative positions of <em class="parameter"><code>a</code></em> and <em class="parameter"><code>b</code></em>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-path-next"></a><h3>gtk_tree_path_next ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_tree_path_next                  (<em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>);</pre>
+<p>
+Moves the <em class="parameter"><code>path</code></em> to point to the next node at the current depth.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a>.</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-path-prev"></a><h3>gtk_tree_path_prev ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gtk_tree_path_prev                  (<em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>);</pre>
+<p>
+Moves the <em class="parameter"><code>path</code></em> to point to the previous node at the current depth, 
+if it exists.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if <em class="parameter"><code>path</code></em> has a previous node, and the move was made.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-path-up"></a><h3>gtk_tree_path_up ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gtk_tree_path_up                    (<em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>);</pre>
+<p>
+Moves the <em class="parameter"><code>path</code></em> to point to its parent node, if it has a parent.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if <em class="parameter"><code>path</code></em> has a parent, and the move was made.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-path-down"></a><h3>gtk_tree_path_down ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_tree_path_down                  (<em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>);</pre>
+<p>
+Moves <em class="parameter"><code>path</code></em> to point to the first child of the current path.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a>.</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-path-is-ancestor"></a><h3>gtk_tree_path_is_ancestor ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gtk_tree_path_is_ancestor           (<em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *descendant</code></em>);</pre>
+<p>
+Returns <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if <em class="parameter"><code>descendant</code></em> is a descendant of <em class="parameter"><code>path</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>descendant</code></em> :</span></p></td>
+<td>another <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if <em class="parameter"><code>descendant</code></em> is contained inside <em class="parameter"><code>path</code></em>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-path-is-descendant"></a><h3>gtk_tree_path_is_descendant ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gtk_tree_path_is_descendant         (<em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *ancestor</code></em>);</pre>
+<p>
+Returns <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if <em class="parameter"><code>path</code></em> is a descendant of <em class="parameter"><code>ancestor</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ancestor</code></em> :</span></p></td>
+<td>another <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if <em class="parameter"><code>ancestor</code></em> contains <em class="parameter"><code>path</code></em> somewhere below it</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-row-reference-new"></a><h3>gtk_tree_row_reference_new ()</h3>
+<pre class="programlisting"><a class="link" href="GtkTreeModel.html#GtkTreeRowReference" title="GtkTreeRowReference"><span class="returnvalue">GtkTreeRowReference</span></a> * gtk_tree_row_reference_new        (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>);</pre>
+<p>
+Creates a row reference based on <em class="parameter"><code>path</code></em>.  This reference will keep pointing 
+to the node pointed to by <em class="parameter"><code>path</code></em>, so long as it exists.  It listens to all
+signals emitted by <em class="parameter"><code>model</code></em>, and updates its path appropriately.  If <em class="parameter"><code>path</code></em>
+isn't a valid path in <em class="parameter"><code>model</code></em>, then <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> is returned.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>model</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
+<td>A valid <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> to monitor</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>A newly allocated <a class="link" href="GtkTreeModel.html#GtkTreeRowReference" title="GtkTreeRowReference"><span class="type">GtkTreeRowReference</span></a>, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-row-reference-new-proxy"></a><h3>gtk_tree_row_reference_new_proxy ()</h3>
+<pre class="programlisting"><a class="link" href="GtkTreeModel.html#GtkTreeRowReference" title="GtkTreeRowReference"><span class="returnvalue">GtkTreeRowReference</span></a> * gtk_tree_row_reference_new_proxy  (<em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *proxy</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>);</pre>
+<p>
+You do not need to use this function.  Creates a row reference based on
+<em class="parameter"><code>path</code></em>.  This reference will keep pointing to the node pointed to by <em class="parameter"><code>path</code></em>, 
+so long as it exists.  If <em class="parameter"><code>path</code></em> isn't a valid path in <em class="parameter"><code>model</code></em>, then <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> is
+returned.  However, unlike references created with
+<a class="link" href="GtkTreeModel.html#gtk-tree-row-reference-new" title="gtk_tree_row_reference_new ()"><code class="function">gtk_tree_row_reference_new()</code></a>, it does not listen to the model for changes.
+The creator of the row reference must do this explicitly using
+<a class="link" href="GtkTreeModel.html#gtk-tree-row-reference-inserted" title="gtk_tree_row_reference_inserted ()"><code class="function">gtk_tree_row_reference_inserted()</code></a>, <a class="link" href="GtkTreeModel.html#gtk-tree-row-reference-deleted" title="gtk_tree_row_reference_deleted ()"><code class="function">gtk_tree_row_reference_deleted()</code></a>,
+<a class="link" href="GtkTreeModel.html#gtk-tree-row-reference-reordered" title="gtk_tree_row_reference_reordered ()"><code class="function">gtk_tree_row_reference_reordered()</code></a>.
+</p>
+<p>
+These functions must be called exactly once per proxy when the
+corresponding signal on the model is emitted. This single call
+updates all row references for that proxy. Since built-in GTK+
+objects like <a class="link" href="GtkTreeView.html" title="GtkTreeView"><span class="type">GtkTreeView</span></a> already use this mechanism internally,
+using them as the proxy object will produce unpredictable results.
+Further more, passing the same object as <em class="parameter"><code>model</code></em> and <em class="parameter"><code>proxy</code></em>
+doesn't work for reasons of internal implementation.
+</p>
+<p>
+This type of row reference is primarily meant by structures that need to
+carefully monitor exactly when a row reference updates itself, and is not
+generally needed by most applications.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>proxy</code></em> :</span></p></td>
+<td>A proxy <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>model</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
+<td>A valid <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> to monitor</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>A newly allocated <a class="link" href="GtkTreeModel.html#GtkTreeRowReference" title="GtkTreeRowReference"><span class="type">GtkTreeRowReference</span></a>, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-row-reference-get-model"></a><h3>gtk_tree_row_reference_get_model ()</h3>
+<pre class="programlisting"><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="returnvalue">GtkTreeModel</span></a> *      gtk_tree_row_reference_get_model    (<em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeRowReference" title="GtkTreeRowReference"><span class="type">GtkTreeRowReference</span></a> *reference</code></em>);</pre>
+<p>
+Returns the model that the row reference is monitoring.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>reference</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html#GtkTreeRowReference" title="GtkTreeRowReference"><span class="type">GtkTreeRowReference</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the model. <span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-row-reference-get-path"></a><h3>gtk_tree_row_reference_get_path ()</h3>
+<pre class="programlisting"><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="returnvalue">GtkTreePath</span></a> *       gtk_tree_row_reference_get_path     (<em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeRowReference" title="GtkTreeRowReference"><span class="type">GtkTreeRowReference</span></a> *reference</code></em>);</pre>
+<p>
+Returns a path that the row reference currently points to, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if the
+path pointed to is no longer valid.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>reference</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html#GtkTreeRowReference" title="GtkTreeRowReference"><span class="type">GtkTreeRowReference</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>A current path, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-row-reference-valid"></a><h3>gtk_tree_row_reference_valid ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gtk_tree_row_reference_valid        (<em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeRowReference" title="GtkTreeRowReference"><span class="type">GtkTreeRowReference</span></a> *reference</code></em>);</pre>
+<p>
+Returns <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the <em class="parameter"><code>reference</code></em> is non-<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> and refers to a current valid
+path.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>reference</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html#GtkTreeRowReference" title="GtkTreeRowReference"><span class="type">GtkTreeRowReference</span></a>, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if <em class="parameter"><code>reference</code></em> points to a valid path.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-row-reference-free"></a><h3>gtk_tree_row_reference_free ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_tree_row_reference_free         (<em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeRowReference" title="GtkTreeRowReference"><span class="type">GtkTreeRowReference</span></a> *reference</code></em>);</pre>
+<p>
+Free's <em class="parameter"><code>reference</code></em>. <em class="parameter"><code>reference</code></em> may be <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>reference</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html#GtkTreeRowReference" title="GtkTreeRowReference"><span class="type">GtkTreeRowReference</span></a>, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-row-reference-copy"></a><h3>gtk_tree_row_reference_copy ()</h3>
+<pre class="programlisting"><a class="link" href="GtkTreeModel.html#GtkTreeRowReference" title="GtkTreeRowReference"><span class="returnvalue">GtkTreeRowReference</span></a> * gtk_tree_row_reference_copy       (<em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeRowReference" title="GtkTreeRowReference"><span class="type">GtkTreeRowReference</span></a> *reference</code></em>);</pre>
+<p>
+Copies a <a class="link" href="GtkTreeModel.html#GtkTreeRowReference" title="GtkTreeRowReference"><span class="type">GtkTreeRowReference</span></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>reference</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkTreeModel.html#GtkTreeRowReference" title="GtkTreeRowReference"><span class="type">GtkTreeRowReference</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a copy of <em class="parameter"><code>reference</code></em>.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-row-reference-inserted"></a><h3>gtk_tree_row_reference_inserted ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_tree_row_reference_inserted     (<em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *proxy</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>);</pre>
+<p>
+Lets a set of row reference created by <a class="link" href="GtkTreeModel.html#gtk-tree-row-reference-new-proxy" title="gtk_tree_row_reference_new_proxy ()"><code class="function">gtk_tree_row_reference_new_proxy()</code></a>
+know that the model emitted the "row_inserted" signal.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>proxy</code></em> :</span></p></td>
+<td>A <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
+<td>The row position that was inserted</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-row-reference-deleted"></a><h3>gtk_tree_row_reference_deleted ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_tree_row_reference_deleted      (<em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *proxy</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>);</pre>
+<p>
+Lets a set of row reference created by <a class="link" href="GtkTreeModel.html#gtk-tree-row-reference-new-proxy" title="gtk_tree_row_reference_new_proxy ()"><code class="function">gtk_tree_row_reference_new_proxy()</code></a>
+know that the model emitted the "row_deleted" signal.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>proxy</code></em> :</span></p></td>
+<td>A <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
+<td>The path position that was deleted</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-row-reference-reordered"></a><h3>gtk_tree_row_reference_reordered ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_tree_row_reference_reordered    (<em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *proxy</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> *new_order</code></em>);</pre>
+<p>
+Lets a set of row reference created by <a class="link" href="GtkTreeModel.html#gtk-tree-row-reference-new-proxy" title="gtk_tree_row_reference_new_proxy ()"><code class="function">gtk_tree_row_reference_new_proxy()</code></a>
+know that the model emitted the "rows_reordered" signal.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>proxy</code></em> :</span></p></td>
+<td>A <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
+<td>The parent path of the reordered signal</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>iter</code></em> :</span></p></td>
+<td>The iter pointing to the parent of the reordered</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>new_order</code></em> :</span></p></td>
+<td>The new order of rows</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-iter-copy"></a><h3>gtk_tree_iter_copy ()</h3>
+<pre class="programlisting"><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="returnvalue">GtkTreeIter</span></a> *       gtk_tree_iter_copy                  (<em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>);</pre>
+<p>
+Creates a dynamically allocated tree iterator as a copy of <em class="parameter"><code>iter</code></em>.  
+This function is not intended for use in applications, because you 
+can just copy the structs by value 
+(<code class="literal">GtkTreeIter new_iter = iter;</code>).
+You must free this iter with <a class="link" href="GtkTreeModel.html#gtk-tree-iter-free" title="gtk_tree_iter_free ()"><code class="function">gtk_tree_iter_free()</code></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>iter</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a newly-allocated copy of <em class="parameter"><code>iter</code></em>.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-iter-free"></a><h3>gtk_tree_iter_free ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_tree_iter_free                  (<em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>);</pre>
+<p>
+Frees an iterator that has been allocated by <a class="link" href="GtkTreeModel.html#gtk-tree-iter-copy" title="gtk_tree_iter_copy ()"><code class="function">gtk_tree_iter_copy()</code></a>.
+This function is mainly used for language bindings.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>iter</code></em> :</span></p></td>
+<td>A dynamically allocated tree iterator.</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-model-get-flags"></a><h3>gtk_tree_model_get_flags ()</h3>
+<pre class="programlisting"><a class="link" href="GtkTreeModel.html#GtkTreeModelFlags" title="enum GtkTreeModelFlags"><span class="returnvalue">GtkTreeModelFlags</span></a>   gtk_tree_model_get_flags            (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model</code></em>);</pre>
+<p>
+Returns a set of flags supported by this interface.  The flags are a bitwise
+combination of <a class="link" href="GtkTreeModel.html#GtkTreeModelFlags" title="enum GtkTreeModelFlags"><span class="type">GtkTreeModelFlags</span></a>.  The flags supported should not change
+during the lifecycle of the <em class="parameter"><code>tree_model</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree_model</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The flags supported by this interface.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-model-get-n-columns"></a><h3>gtk_tree_model_get_n_columns ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                gtk_tree_model_get_n_columns        (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model</code></em>);</pre>
+<p>
+Returns the number of columns supported by <em class="parameter"><code>tree_model</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree_model</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The number of columns.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-model-get-column-type"></a><h3>gtk_tree_model_get_column_type ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#GType"><span class="returnvalue">GType</span></a>               gtk_tree_model_get_column_type      (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> index_</code></em>);</pre>
+<p>
+Returns the type of the column.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree_model</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>index_</code></em> :</span></p></td>
+<td>The column index.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The type of the column. <span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-model-get-iter"></a><h3>gtk_tree_model_get_iter ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gtk_tree_model_get_iter             (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>);</pre>
+<p>
+Sets <em class="parameter"><code>iter</code></em> to a valid iterator pointing to <em class="parameter"><code>path</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree_model</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>iter</code></em> :</span></p></td>
+<td>The uninitialized <a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a>. <span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
+<td>The <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a>, if <em class="parameter"><code>iter</code></em> was set.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-model-get-iter-from-string"></a><h3>gtk_tree_model_get_iter_from_string ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gtk_tree_model_get_iter_from_string (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *path_string</code></em>);</pre>
+<p>
+Sets <em class="parameter"><code>iter</code></em> to a valid iterator pointing to <em class="parameter"><code>path_string</code></em>, if it
+exists. Otherwise, <em class="parameter"><code>iter</code></em> is left invalid and <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> is returned.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree_model</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>iter</code></em> :</span></p></td>
+<td>An uninitialized <a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a>. <span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>path_string</code></em> :</span></p></td>
+<td>A string representation of a <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a>, if <em class="parameter"><code>iter</code></em> was set.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-model-get-iter-first"></a><h3>gtk_tree_model_get_iter_first ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gtk_tree_model_get_iter_first       (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>);</pre>
+<p>
+Initializes <em class="parameter"><code>iter</code></em> with the first iterator in the tree (the one at the path
+"0") and returns <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a>.  Returns <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> if the tree is empty.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree_model</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>iter</code></em> :</span></p></td>
+<td>The uninitialized <a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a>. <span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a>, if <em class="parameter"><code>iter</code></em> was set.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-model-get-iter-root"></a><h3>gtk_tree_model_get_iter_root()</h3>
+<pre class="programlisting">#define gtk_tree_model_get_iter_root(tree_model, iter) gtk_tree_model_get_iter_first(tree_model, iter)
+</pre>
+<div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Warning</h3>
+<p><code class="literal">gtk_tree_model_get_iter_root</code> is deprecated and should not be used in newly-written code.</p>
+</div>
+<p>
+A alternate name for <a class="link" href="GtkTreeModel.html#gtk-tree-model-get-iter-first" title="gtk_tree_model_get_iter_first ()"><code class="function">gtk_tree_model_get_iter_first()</code></a> provided for
+compatibility reasons; this macro will be deprecated in future
+versions of GTK+.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree_model</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>iter</code></em> :</span></p></td>
+<td>uninitialized <a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a>, if <em class="parameter"><code>iter</code></em> was set.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-model-get-path"></a><h3>gtk_tree_model_get_path ()</h3>
+<pre class="programlisting"><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="returnvalue">GtkTreePath</span></a> *       gtk_tree_model_get_path             (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>);</pre>
+<p>
+Returns a newly-created <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> referenced by <em class="parameter"><code>iter</code></em>.  This path should
+be freed with <a class="link" href="GtkTreeModel.html#gtk-tree-path-free" title="gtk_tree_path_free ()"><code class="function">gtk_tree_path_free()</code></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree_model</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>iter</code></em> :</span></p></td>
+<td>The <a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a newly-created <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a>.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-model-get-value"></a><h3>gtk_tree_model_get_value ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_tree_model_get_value            (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> column</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Generic-values.html#GValue"><span class="type">GValue</span></a> *value</code></em>);</pre>
+<p>
+Initializes and sets <em class="parameter"><code>value</code></em> to that at <em class="parameter"><code>column</code></em>.
+When done with <em class="parameter"><code>value</code></em>, <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Generic-values.html#g-value-unset"><code class="function">g_value_unset()</code></a> needs to be called 
+to free any allocated memory.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree_model</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>iter</code></em> :</span></p></td>
+<td>The <a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>column</code></em> :</span></p></td>
+<td>The column to lookup the value at.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
+<td>An empty <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Generic-values.html#GValue"><span class="type">GValue</span></a> to set. <span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>][<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-model-iter-next"></a><h3>gtk_tree_model_iter_next ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gtk_tree_model_iter_next            (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>);</pre>
+<p>
+Sets <em class="parameter"><code>iter</code></em> to point to the node following it at the current level.  If there
+is no next <em class="parameter"><code>iter</code></em>, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> is returned and <em class="parameter"><code>iter</code></em> is set to be invalid.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree_model</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>iter</code></em> :</span></p></td>
+<td>The <a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a>. <span class="annotation">[<acronym title="Parameter for input. Default is transfer none."><span class="acronym">in</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if <em class="parameter"><code>iter</code></em> has been changed to the next node.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-model-iter-children"></a><h3>gtk_tree_model_iter_children ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gtk_tree_model_iter_children        (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *parent</code></em>);</pre>
+<p>
+Sets <em class="parameter"><code>iter</code></em> to point to the first child of <em class="parameter"><code>parent</code></em>.  If <em class="parameter"><code>parent</code></em> has no
+children, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> is returned and <em class="parameter"><code>iter</code></em> is set to be invalid.  <em class="parameter"><code>parent</code></em>
+will remain a valid node after this function has been called.
+</p>
+<p>
+If <em class="parameter"><code>parent</code></em> is <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> returns the first node, equivalent to
+<code class="literal">gtk_tree_model_get_iter_first (tree_model, iter);</code>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree_model</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>iter</code></em> :</span></p></td>
+<td>The new <a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> to be set to the child. <span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>parent</code></em> :</span></p></td>
+<td>The <a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a>, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a>, if <em class="parameter"><code>child</code></em> has been set to the first child.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-model-iter-has-child"></a><h3>gtk_tree_model_iter_has_child ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gtk_tree_model_iter_has_child       (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>);</pre>
+<p>
+Returns <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if <em class="parameter"><code>iter</code></em> has children, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> otherwise.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree_model</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>iter</code></em> :</span></p></td>
+<td>The <a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> to test for children.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if <em class="parameter"><code>iter</code></em> has children.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-model-iter-n-children"></a><h3>gtk_tree_model_iter_n_children ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                gtk_tree_model_iter_n_children      (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>);</pre>
+<p>
+Returns the number of children that <em class="parameter"><code>iter</code></em> has.  As a special case, if <em class="parameter"><code>iter</code></em>
+is <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>, then the number of toplevel nodes is returned.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree_model</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>iter</code></em> :</span></p></td>
+<td>The <a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a>, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The number of children of <em class="parameter"><code>iter</code></em>.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-model-iter-nth-child"></a><h3>gtk_tree_model_iter_nth_child ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gtk_tree_model_iter_nth_child       (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *parent</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> n</code></em>);</pre>
+<p>
+Sets <em class="parameter"><code>iter</code></em> to be the child of <em class="parameter"><code>parent</code></em>, using the given index.  The first
+index is 0.  If <em class="parameter"><code>n</code></em> is too big, or <em class="parameter"><code>parent</code></em> has no children, <em class="parameter"><code>iter</code></em> is set
+to an invalid iterator and <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> is returned.  <em class="parameter"><code>parent</code></em> will remain a valid
+node after this function has been called.  As a special case, if <em class="parameter"><code>parent</code></em> is
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>, then the <em class="parameter"><code>n</code></em>th root node is set.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree_model</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>iter</code></em> :</span></p></td>
+<td>The <a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> to set to the nth child. <span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>parent</code></em> :</span></p></td>
+<td>The <a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> to get the child from, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td>Then index of the desired child.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a>, if <em class="parameter"><code>parent</code></em> has an <em class="parameter"><code>n</code></em>th child.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-model-iter-parent"></a><h3>gtk_tree_model_iter_parent ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gtk_tree_model_iter_parent          (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *child</code></em>);</pre>
+<p>
+Sets <em class="parameter"><code>iter</code></em> to be the parent of <em class="parameter"><code>child</code></em>.  If <em class="parameter"><code>child</code></em> is at the toplevel, and
+doesn't have a parent, then <em class="parameter"><code>iter</code></em> is set to an invalid iterator and <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a>
+is returned.  <em class="parameter"><code>child</code></em> will remain a valid node after this function has been
+called.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree_model</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>iter</code></em> :</span></p></td>
+<td>The new <a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> to set to the parent. <span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>child</code></em> :</span></p></td>
+<td>The <a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a>, if <em class="parameter"><code>iter</code></em> is set to the parent of <em class="parameter"><code>child</code></em>.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-model-get-string-from-iter"></a><h3>gtk_tree_model_get_string_from_iter ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             gtk_tree_model_get_string_from_iter (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>);</pre>
+<p>
+Generates a string representation of the iter. This string is a ':'
+separated list of numbers. For example, "4:10:0:3" would be an
+acceptable return value for this string.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree_model</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>iter</code></em> :</span></p></td>
+<td>An <a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>A newly-allocated string. Must be freed with <a href="http://library.gnome.org/devel/glib/unstable/glib-Memory-Allocation.html#g-free"><code class="function">g_free()</code></a>.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-model-ref-node"></a><h3>gtk_tree_model_ref_node ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_tree_model_ref_node             (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>);</pre>
+<p>
+Lets the tree ref the node.  This is an optional method for models to
+implement.  To be more specific, models may ignore this call as it exists
+primarily for performance reasons.
+</p>
+<p>
+This function is primarily meant as a way for views to let caching model 
+know when nodes are being displayed (and hence, whether or not to cache that
+node.)  For example, a file-system based model would not want to keep the
+entire file-hierarchy in memory, just the sections that are currently being
+displayed by every current view.
+</p>
+<p>
+A model should be expected to be able to get an iter independent of its
+reffed state.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree_model</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>iter</code></em> :</span></p></td>
+<td>The <a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a>.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-model-unref-node"></a><h3>gtk_tree_model_unref_node ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_tree_model_unref_node           (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>);</pre>
+<p>
+Lets the tree unref the node.  This is an optional method for models to
+implement.  To be more specific, models may ignore this call as it exists
+primarily for performance reasons.
+</p>
+<p>
+For more information on what this means, see <a class="link" href="GtkTreeModel.html#gtk-tree-model-ref-node" title="gtk_tree_model_ref_node ()"><code class="function">gtk_tree_model_ref_node()</code></a>.
+Please note that nodes that are deleted are not unreffed.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree_model</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>iter</code></em> :</span></p></td>
+<td>The <a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a>.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-model-get"></a><h3>gtk_tree_model_get ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_tree_model_get                  (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>,
+                                                         <em class="parameter"><code>...</code></em>);</pre>
+<p>
+Gets the value of one or more cells in the row referenced by <em class="parameter"><code>iter</code></em>.
+The variable argument list should contain integer column numbers,
+each column number followed by a place to store the value being
+retrieved.  The list is terminated by a -1. For example, to get a
+value from column 0 with type <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#G-TYPE-STRING:CAPS"><code class="literal">G_TYPE_STRING</code></a>, you would
+write: <code class="literal">gtk_tree_model_get (model, iter, 0, &amp;place_string_here, -1)</code>,
+where <code class="literal">place_string_here</code> is a <span class="type">gchar*</span> to be 
+filled with the string.
+</p>
+<p>
+Returned values with type <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#G-TYPE-OBJECT:CAPS"><code class="literal">G_TYPE_OBJECT</code></a> have to be unreferenced, values
+with type <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#G-TYPE-STRING:CAPS"><code class="literal">G_TYPE_STRING</code></a> or <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#G-TYPE-BOXED:CAPS"><code class="literal">G_TYPE_BOXED</code></a> have to be freed. Other values are
+passed by value.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree_model</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>iter</code></em> :</span></p></td>
+<td>a row in <em class="parameter"><code>tree_model</code></em>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-model-get-valist"></a><h3>gtk_tree_model_get_valist ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_tree_model_get_valist           (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>,
+                                                         <em class="parameter"><code><span class="type">va_list</span> var_args</code></em>);</pre>
+<p>
+See <a class="link" href="GtkTreeModel.html#gtk-tree-model-get" title="gtk_tree_model_get ()"><code class="function">gtk_tree_model_get()</code></a>, this version takes a <span class="type">va_list</span> 
+for language bindings to use.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree_model</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>iter</code></em> :</span></p></td>
+<td>a row in <em class="parameter"><code>tree_model</code></em>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>var_args</code></em> :</span></p></td>
+<td>
+<span class="type">va_list</span> of column/return location pairs</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-model-foreach"></a><h3>gtk_tree_model_foreach ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_tree_model_foreach              (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeModelForeachFunc" title="GtkTreeModelForeachFunc ()"><span class="type">GtkTreeModelForeachFunc</span></a> func</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<p>
+Calls func on each node in model in a depth-first fashion.
+If <em class="parameter"><code>func</code></em> returns <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a>, then the tree ceases to be walked, and
+<a class="link" href="GtkTreeModel.html#gtk-tree-model-foreach" title="gtk_tree_model_foreach ()"><code class="function">gtk_tree_model_foreach()</code></a> returns.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>model</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>func</code></em> :</span></p></td>
+<td>A function to be called on each row. <span class="annotation">[<acronym title="The callback is valid only during the call to the method."><span class="acronym">scope call</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>User data to passed to func.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-model-row-changed"></a><h3>gtk_tree_model_row_changed ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_tree_model_row_changed          (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>);</pre>
+<p>
+Emits the "row-changed" signal on <em class="parameter"><code>tree_model</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree_model</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> pointing to the changed row</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>iter</code></em> :</span></p></td>
+<td>A valid <a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> pointing to the changed row</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-model-row-inserted"></a><h3>gtk_tree_model_row_inserted ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_tree_model_row_inserted         (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>);</pre>
+<p>
+Emits the "row-inserted" signal on <em class="parameter"><code>tree_model</code></em>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree_model</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> pointing to the inserted row</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>iter</code></em> :</span></p></td>
+<td>A valid <a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> pointing to the inserted row</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-model-row-has-child-toggled"></a><h3>gtk_tree_model_row_has_child_toggled ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_tree_model_row_has_child_toggled
+                                                        (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>);</pre>
+<p>
+Emits the "row-has-child-toggled" signal on <em class="parameter"><code>tree_model</code></em>.  This should be
+called by models after the child state of a node changes.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree_model</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> pointing to the changed row</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>iter</code></em> :</span></p></td>
+<td>A valid <a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> pointing to the changed row</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-model-row-deleted"></a><h3>gtk_tree_model_row_deleted ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_tree_model_row_deleted          (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>);</pre>
+<p>
+Emits the "row-deleted" signal on <em class="parameter"><code>tree_model</code></em>.  This should be called by
+models after a row has been removed.  The location pointed to by <em class="parameter"><code>path</code></em> 
+should be the location that the row previously was at.  It may not be a 
+valid location anymore.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree_model</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> pointing to the previous location of the deleted row.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-tree-model-rows-reordered"></a><h3>gtk_tree_model_rows_reordered ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_tree_model_rows_reordered       (<em class="parameter"><code><a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> *path</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> *iter</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> *new_order</code></em>);</pre>
+<p>
+Emits the "rows-reordered" signal on <em class="parameter"><code>tree_model</code></em>.  This should be called by
+models when their rows have been reordered.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree_model</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
+<td>A <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> pointing to the tree node whose children have been
+reordered</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>iter</code></em> :</span></p></td>
+<td>A valid <a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> pointing to the node whose children have been
+reordered, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if the depth of <em class="parameter"><code>path</code></em> is 0.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>new_order</code></em> :</span></p></td>
+<td>an array of integers mapping the current position of each child
+to its old position before the re-ordering,
+i.e. <em class="parameter"><code>new_order</code></em><code class="literal">[newpos] = oldpos</code>.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect1">
+<a name="GtkTreeModel.signal-details"></a><h2>Signal Details</h2>
+<div class="refsect2">
+<a name="GtkTreeModel-row-changed"></a><h3>The <code class="literal">"row-changed"</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model,
+                                                        <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a>  *path,
+                                                        <a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a>  *iter,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>      user_data)       : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS"><code class="literal">Run Last</code></a></pre>
+<p>
+This signal is emitted when a row in the model has changed.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree_model</code></em> :</span></p></td>
+<td>the <a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> on which the signal is emitted</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> identifying the changed row</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>iter</code></em> :</span></p></td>
+<td>a valid <a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> pointing to the changed row</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkTreeModel-row-deleted"></a><h3>The <code class="literal">"row-deleted"</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model,
+                                                        <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a>  *path,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>      user_data)       : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-FIRST:CAPS"><code class="literal">Run First</code></a></pre>
+<p>
+This signal is emitted when a row has been deleted.
+</p>
+<p>
+Note that no iterator is passed to the signal handler,
+since the row is already deleted.
+</p>
+<p>
+This should be called by models after a row has been removed.
+The location pointed to by <em class="parameter"><code>path</code></em> should be the location that
+the row previously was at. It may not be a valid location anymore.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree_model</code></em> :</span></p></td>
+<td>the <a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> on which the signal is emitted</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> identifying the row</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkTreeModel-row-has-child-toggled"></a><h3>The <code class="literal">"row-has-child-toggled"</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model,
+                                                        <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a>  *path,
+                                                        <a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a>  *iter,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>      user_data)       : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS"><code class="literal">Run Last</code></a></pre>
+<p>
+This signal is emitted when a row has gotten the first child row or lost
+its last child row.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree_model</code></em> :</span></p></td>
+<td>the <a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> on which the signal is emitted</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> identifying the row</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>iter</code></em> :</span></p></td>
+<td>a valid <a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> pointing to the row</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkTreeModel-row-inserted"></a><h3>The <code class="literal">"row-inserted"</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model,
+                                                        <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a>  *path,
+                                                        <a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a>  *iter,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>      user_data)       : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-FIRST:CAPS"><code class="literal">Run First</code></a></pre>
+<p>
+This signal is emitted when a new row has been inserted in the model.
+</p>
+<p>
+Note that the row may still be empty at this point, since
+it is a common pattern to first insert an empty row, and
+then fill it with the desired values.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree_model</code></em> :</span></p></td>
+<td>the <a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> on which the signal is emitted</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> identifying the new row</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>iter</code></em> :</span></p></td>
+<td>a valid <a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> pointing to the new row</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkTreeModel-rows-reordered"></a><h3>The <code class="literal">"rows-reordered"</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> *tree_model,
+                                                        <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a>  *path,
+                                                        <a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a>  *iter,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>      new_order,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>      user_data)       : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-FIRST:CAPS"><code class="literal">Run First</code></a></pre>
+<p>
+This signal is emitted when the children of a node in the <a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a>
+have been reordered. 
+</p>
+<p>
+Note that this signal is <span class="emphasis"><em>not</em></span> emitted
+when rows are reordered by DND, since this is implemented
+by removing and then reinserting the row.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tree_model</code></em> :</span></p></td>
+<td>the <a class="link" href="GtkTreeModel.html" title="GtkTreeModel"><span class="type">GtkTreeModel</span></a> on which the signal is emitted</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkTreeModel.html#GtkTreePath"><span class="type">GtkTreePath</span></a> identifying the tree node whose children
+have been reordered</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>iter</code></em> :</span></p></td>
+<td>a valid <a class="link" href="GtkTreeModel.html#GtkTreeIter"><span class="type">GtkTreeIter</span></a> pointing to the node whose</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>new_order</code></em> :</span></p></td>
+<td>an array of integers mapping the current position of
+each child to its old position before the re-ordering,
+i.e. <em class="parameter"><code>new_order</code></em><code class="literal">[newpos] = oldpos</code>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect1">
+<a name="GtkTreeModel.see-also"></a><h2>See Also</h2>
+<p>
+<a class="link" href="GtkTreeView.html" title="GtkTreeView"><span class="type">GtkTreeView</span></a>, <a class="link" href="GtkTreeStore.html" title="GtkTreeStore"><span class="type">GtkTreeStore</span></a>, <a class="link" href="GtkListStore.html" title="GtkListStore"><span class="type">GtkListStore</span></a>, <a class="link" href="gtk-GtkTreeView-drag-and-drop.html" title="GtkTreeView drag-and-drop">GtkTreeDnd</a>, <a class="link" href="GtkTreeSortable.html" title="GtkTreeSortable"><span class="type">GtkTreeSortable</span></a>
+</p>
+</div>
+<div class="footnotes">
+<br><hr width="100" align="left">
+<div class="footnote"><p><sup>[<a id="ftn.id845604" href="#id845604" class="para">4</a>] </sup>
+Here, <abbr class="abbrev">iter</abbr> is short for <span class="quote">“<span class="quote">iterator</span>”</span>
+</p></div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

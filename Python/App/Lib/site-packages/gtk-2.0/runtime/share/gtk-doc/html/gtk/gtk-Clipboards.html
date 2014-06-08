@@ -1,0 +1,1525 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Clipboards</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="GTK+ 2 Reference Manual">
+<link rel="up" href="gtkbase.html" title="Part II. GTK+ Core Reference">
+<link rel="prev" href="gtk-Accelerator-Maps.html" title="Accelerator Maps">
+<link rel="next" href="gtk-Drag-and-Drop.html" title="Drag and Drop">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="gtk-Accelerator-Maps.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="gtkbase.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GTK+ 2 Reference Manual</th>
+<td><a accesskey="n" href="gtk-Drag-and-Drop.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#gtk-Clipboards.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#gtk-Clipboards.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#gtk-Clipboards.object-hierarchy" class="shortcut">Object Hierarchy</a>
+                   | 
+                  <a href="#gtk-Clipboards.signals" class="shortcut">Signals</a>
+</td></tr>
+</table>
+<div class="refentry">
+<a name="gtk-Clipboards"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="gtk-Clipboards.top_of_page"></a>Clipboards</span></h2>
+<p>Clipboards — Storing data on clipboards</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="gtk-Clipboards.synopsis"></a><h2>Synopsis</h2>
+<a name="GtkClipboard"></a><pre class="synopsis">
+#include &lt;gtk/gtk.h&gt;
+
+                    <a class="link" href="gtk-Clipboards.html#GtkClipboard-struct" title="GtkClipboard">GtkClipboard</a>;
+<span class="returnvalue">void</span>                (<a class="link" href="gtk-Clipboards.html#GtkClipboardReceivedFunc" title="GtkClipboardReceivedFunc ()">*GtkClipboardReceivedFunc</a>)         (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkWidget.html#GtkSelectionData"><span class="type">GtkSelectionData</span></a> *selection_data</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> data</code></em>);
+<span class="returnvalue">void</span>                (<a class="link" href="gtk-Clipboards.html#GtkClipboardTextReceivedFunc" title="GtkClipboardTextReceivedFunc ()">*GtkClipboardTextReceivedFunc</a>)     (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *text</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> data</code></em>);
+<span class="returnvalue">void</span>                (<a class="link" href="gtk-Clipboards.html#GtkClipboardImageReceivedFunc" title="GtkClipboardImageReceivedFunc ()">*GtkClipboardImageReceivedFunc</a>)    (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gdk-pixbuf/unstable/gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="type">GdkPixbuf</span></a> *pixbuf</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> data</code></em>);
+<span class="returnvalue">void</span>                (<a class="link" href="gtk-Clipboards.html#GtkClipboardTargetsReceivedFunc" title="GtkClipboardTargetsReceivedFunc ()">*GtkClipboardTargetsReceivedFunc</a>)  (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>,
+                                                         <em class="parameter"><code><a href="../gdk/gdk-Properties-and-Atoms.html#GdkAtom"><span class="type">GdkAtom</span></a> *atoms</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> n_atoms</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> data</code></em>);
+<span class="returnvalue">void</span>                (<a class="link" href="gtk-Clipboards.html#GtkClipboardRichTextReceivedFunc" title="GtkClipboardRichTextReceivedFunc ()">*GtkClipboardRichTextReceivedFunc</a>) (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>,
+                                                         <em class="parameter"><code><a href="../gdk/gdk-Properties-and-Atoms.html#GdkAtom"><span class="type">GdkAtom</span></a> format</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint8"><span class="type">guint8</span></a> *text</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gsize"><span class="type">gsize</span></a> length</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> data</code></em>);
+<span class="returnvalue">void</span>                (<a class="link" href="gtk-Clipboards.html#GtkClipboardURIReceivedFunc" title="GtkClipboardURIReceivedFunc ()">*GtkClipboardURIReceivedFunc</a>)      (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> **uris</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> data</code></em>);
+<span class="returnvalue">void</span>                (<a class="link" href="gtk-Clipboards.html#GtkClipboardGetFunc" title="GtkClipboardGetFunc ()">*GtkClipboardGetFunc</a>)              (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkWidget.html#GtkSelectionData"><span class="type">GtkSelectionData</span></a> *selection_data</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> info</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data_or_owner</code></em>);
+<span class="returnvalue">void</span>                (<a class="link" href="gtk-Clipboards.html#GtkClipboardClearFunc" title="GtkClipboardClearFunc ()">*GtkClipboardClearFunc</a>)            (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data_or_owner</code></em>);
+<a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="returnvalue">GtkClipboard</span></a> *      <a class="link" href="gtk-Clipboards.html#gtk-clipboard-get" title="gtk_clipboard_get ()">gtk_clipboard_get</a>                   (<em class="parameter"><code><a href="../gdk/gdk-Properties-and-Atoms.html#GdkAtom"><span class="type">GdkAtom</span></a> selection</code></em>);
+<a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="returnvalue">GtkClipboard</span></a> *      <a class="link" href="gtk-Clipboards.html#gtk-clipboard-get-for-display" title="gtk_clipboard_get_for_display ()">gtk_clipboard_get_for_display</a>       (<em class="parameter"><code><a href="../gdk/GdkDisplay.html"><span class="type">GdkDisplay</span></a> *display</code></em>,
+                                                         <em class="parameter"><code><a href="../gdk/gdk-Properties-and-Atoms.html#GdkAtom"><span class="type">GdkAtom</span></a> selection</code></em>);
+<a href="../gdk/GdkDisplay.html"><span class="returnvalue">GdkDisplay</span></a> *        <a class="link" href="gtk-Clipboards.html#gtk-clipboard-get-display" title="gtk_clipboard_get_display ()">gtk_clipboard_get_display</a>           (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="gtk-Clipboards.html#gtk-clipboard-set-with-data" title="gtk_clipboard_set_with_data ()">gtk_clipboard_set_with_data</a>         (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>,
+                                                         <em class="parameter"><code>const <a class="link" href="gtk-Selections.html#GtkTargetEntry" title="struct GtkTargetEntry"><span class="type">GtkTargetEntry</span></a> *targets</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> n_targets</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboardGetFunc" title="GtkClipboardGetFunc ()"><span class="type">GtkClipboardGetFunc</span></a> get_func</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboardClearFunc" title="GtkClipboardClearFunc ()"><span class="type">GtkClipboardClearFunc</span></a> clear_func</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="gtk-Clipboards.html#gtk-clipboard-set-with-owner" title="gtk_clipboard_set_with_owner ()">gtk_clipboard_set_with_owner</a>        (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>,
+                                                         <em class="parameter"><code>const <a class="link" href="gtk-Selections.html#GtkTargetEntry" title="struct GtkTargetEntry"><span class="type">GtkTargetEntry</span></a> *targets</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> n_targets</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboardGetFunc" title="GtkClipboardGetFunc ()"><span class="type">GtkClipboardGetFunc</span></a> get_func</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboardClearFunc" title="GtkClipboardClearFunc ()"><span class="type">GtkClipboardClearFunc</span></a> clear_func</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *owner</code></em>);
+<a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="returnvalue">GObject</span></a> *           <a class="link" href="gtk-Clipboards.html#gtk-clipboard-get-owner" title="gtk_clipboard_get_owner ()">gtk_clipboard_get_owner</a>             (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="gtk-Clipboards.html#gtk-clipboard-clear" title="gtk_clipboard_clear ()">gtk_clipboard_clear</a>                 (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="gtk-Clipboards.html#gtk-clipboard-set-text" title="gtk_clipboard_set_text ()">gtk_clipboard_set_text</a>              (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *text</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> len</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="gtk-Clipboards.html#gtk-clipboard-set-image" title="gtk_clipboard_set_image ()">gtk_clipboard_set_image</a>             (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gdk-pixbuf/unstable/gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="type">GdkPixbuf</span></a> *pixbuf</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="gtk-Clipboards.html#gtk-clipboard-request-contents" title="gtk_clipboard_request_contents ()">gtk_clipboard_request_contents</a>      (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>,
+                                                         <em class="parameter"><code><a href="../gdk/gdk-Properties-and-Atoms.html#GdkAtom"><span class="type">GdkAtom</span></a> target</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboardReceivedFunc" title="GtkClipboardReceivedFunc ()"><span class="type">GtkClipboardReceivedFunc</span></a> callback</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="gtk-Clipboards.html#gtk-clipboard-request-text" title="gtk_clipboard_request_text ()">gtk_clipboard_request_text</a>          (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboardTextReceivedFunc" title="GtkClipboardTextReceivedFunc ()"><span class="type">GtkClipboardTextReceivedFunc</span></a> callback</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="gtk-Clipboards.html#gtk-clipboard-request-image" title="gtk_clipboard_request_image ()">gtk_clipboard_request_image</a>         (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboardImageReceivedFunc" title="GtkClipboardImageReceivedFunc ()"><span class="type">GtkClipboardImageReceivedFunc</span></a> callback</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="gtk-Clipboards.html#gtk-clipboard-request-targets" title="gtk_clipboard_request_targets ()">gtk_clipboard_request_targets</a>       (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboardTargetsReceivedFunc" title="GtkClipboardTargetsReceivedFunc ()"><span class="type">GtkClipboardTargetsReceivedFunc</span></a> callback</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="gtk-Clipboards.html#gtk-clipboard-request-rich-text" title="gtk_clipboard_request_rich_text ()">gtk_clipboard_request_rich_text</a>     (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTextBuffer.html" title="GtkTextBuffer"><span class="type">GtkTextBuffer</span></a> *buffer</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboardRichTextReceivedFunc" title="GtkClipboardRichTextReceivedFunc ()"><span class="type">GtkClipboardRichTextReceivedFunc</span></a> callback</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="gtk-Clipboards.html#gtk-clipboard-request-uris" title="gtk_clipboard_request_uris ()">gtk_clipboard_request_uris</a>          (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboardURIReceivedFunc" title="GtkClipboardURIReceivedFunc ()"><span class="type">GtkClipboardURIReceivedFunc</span></a> callback</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);
+<a class="link" href="GtkWidget.html#GtkSelectionData"><span class="returnvalue">GtkSelectionData</span></a> *  <a class="link" href="gtk-Clipboards.html#gtk-clipboard-wait-for-contents" title="gtk_clipboard_wait_for_contents ()">gtk_clipboard_wait_for_contents</a>     (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>,
+                                                         <em class="parameter"><code><a href="../gdk/gdk-Properties-and-Atoms.html#GdkAtom"><span class="type">GdkAtom</span></a> target</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="gtk-Clipboards.html#gtk-clipboard-wait-for-text" title="gtk_clipboard_wait_for_text ()">gtk_clipboard_wait_for_text</a>         (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>);
+<a href="http://library.gnome.org/devel/gdk-pixbuf/unstable/gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="returnvalue">GdkPixbuf</span></a> *         <a class="link" href="gtk-Clipboards.html#gtk-clipboard-wait-for-image" title="gtk_clipboard_wait_for_image ()">gtk_clipboard_wait_for_image</a>        (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint8"><span class="returnvalue">guint8</span></a> *            <a class="link" href="gtk-Clipboards.html#gtk-clipboard-wait-for-rich-text" title="gtk_clipboard_wait_for_rich_text ()">gtk_clipboard_wait_for_rich_text</a>    (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTextBuffer.html" title="GtkTextBuffer"><span class="type">GtkTextBuffer</span></a> *buffer</code></em>,
+                                                         <em class="parameter"><code><a href="../gdk/gdk-Properties-and-Atoms.html#GdkAtom"><span class="type">GdkAtom</span></a> *format</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gsize"><span class="type">gsize</span></a> *length</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> **            <a class="link" href="gtk-Clipboards.html#gtk-clipboard-wait-for-uris" title="gtk_clipboard_wait_for_uris ()">gtk_clipboard_wait_for_uris</a>         (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="gtk-Clipboards.html#gtk-clipboard-wait-is-text-available" title="gtk_clipboard_wait_is_text_available ()">gtk_clipboard_wait_is_text_available</a>
+                                                        (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="gtk-Clipboards.html#gtk-clipboard-wait-is-image-available" title="gtk_clipboard_wait_is_image_available ()">gtk_clipboard_wait_is_image_available</a>
+                                                        (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="gtk-Clipboards.html#gtk-clipboard-wait-is-rich-text-available" title="gtk_clipboard_wait_is_rich_text_available ()">gtk_clipboard_wait_is_rich_text_available</a>
+                                                        (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTextBuffer.html" title="GtkTextBuffer"><span class="type">GtkTextBuffer</span></a> *buffer</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="gtk-Clipboards.html#gtk-clipboard-wait-is-uris-available" title="gtk_clipboard_wait_is_uris_available ()">gtk_clipboard_wait_is_uris_available</a>
+                                                        (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="gtk-Clipboards.html#gtk-clipboard-wait-for-targets" title="gtk_clipboard_wait_for_targets ()">gtk_clipboard_wait_for_targets</a>      (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>,
+                                                         <em class="parameter"><code><a href="../gdk/gdk-Properties-and-Atoms.html#GdkAtom"><span class="type">GdkAtom</span></a> **targets</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> *n_targets</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="gtk-Clipboards.html#gtk-clipboard-wait-is-target-available" title="gtk_clipboard_wait_is_target_available ()">gtk_clipboard_wait_is_target_available</a>
+                                                        (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>,
+                                                         <em class="parameter"><code><a href="../gdk/gdk-Properties-and-Atoms.html#GdkAtom"><span class="type">GdkAtom</span></a> target</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="gtk-Clipboards.html#gtk-clipboard-set-can-store" title="gtk_clipboard_set_can_store ()">gtk_clipboard_set_can_store</a>         (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>,
+                                                         <em class="parameter"><code>const <a class="link" href="gtk-Selections.html#GtkTargetEntry" title="struct GtkTargetEntry"><span class="type">GtkTargetEntry</span></a> *targets</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> n_targets</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="gtk-Clipboards.html#gtk-clipboard-store" title="gtk_clipboard_store ()">gtk_clipboard_store</a>                 (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>);
+</pre>
+</div>
+<div class="refsect1">
+<a name="gtk-Clipboards.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
+   +----GtkClipboard
+</pre>
+</div>
+<div class="refsect1">
+<a name="gtk-Clipboards.signals"></a><h2>Signals</h2>
+<pre class="synopsis">
+  "<a class="link" href="gtk-Clipboards.html#GtkClipboard-owner-change" title='The "owner-change" signal'>owner-change</a>"                                   : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-FIRST:CAPS"><code class="literal">Run First</code></a>
+</pre>
+</div>
+<div class="refsect1">
+<a name="gtk-Clipboards.description"></a><h2>Description</h2>
+<p>
+    The <a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> object represents a clipboard of data shared
+    between different processes or between different widgets in
+    the same process. Each clipboard is identified by a name encoded as a
+    <a href="../gdk/gdk-Properties-and-Atoms.html#GdkAtom"><span class="type">GdkAtom</span></a>. (Conversion to and from strings can be done with
+    <a href="../gdk/gdk-Properties-and-Atoms.html#gdk-atom-intern"><code class="function">gdk_atom_intern()</code></a> and <a href="../gdk/gdk-Properties-and-Atoms.html#gdk-atom-name"><code class="function">gdk_atom_name()</code></a>.) The default clipboard
+    corresponds to the "CLIPBOARD" atom; another commonly used clipboard
+    is the "PRIMARY" clipboard, which, in X, traditionally contains
+    the currently selected text.
+  </p>
+<p>
+    To support having a number of different formats on the clipboard
+    at the same time, the clipboard mechanism allows providing
+    callbacks instead of the actual data.  When you set the contents
+    of the clipboard, you can either supply the data directly (via
+    functions like <a class="link" href="gtk-Clipboards.html#gtk-clipboard-set-text" title="gtk_clipboard_set_text ()"><code class="function">gtk_clipboard_set_text()</code></a>), or you can supply a
+    callback to be called at a later time when the data is needed (via
+    <a class="link" href="gtk-Clipboards.html#gtk-clipboard-set-with-data" title="gtk_clipboard_set_with_data ()"><code class="function">gtk_clipboard_set_with_data()</code></a> or <a class="link" href="gtk-Clipboards.html#gtk-clipboard-set-with-owner" title="gtk_clipboard_set_with_owner ()"><code class="function">gtk_clipboard_set_with_owner()</code></a>.)
+    Providing a callback also avoids having to make copies of the data
+    when it is not needed.
+  </p>
+<p>
+    <a class="link" href="gtk-Clipboards.html#gtk-clipboard-set-with-data" title="gtk_clipboard_set_with_data ()"><code class="function">gtk_clipboard_set_with_data()</code></a> and <a class="link" href="gtk-Clipboards.html#gtk-clipboard-set-with-owner" title="gtk_clipboard_set_with_owner ()"><code class="function">gtk_clipboard_set_with_owner()</code></a>
+    are quite similar; the choice between the two depends mostly on
+    which is more convenient in a particular situation.
+    The former is most useful when you want to have a blob of data
+    with callbacks to convert it into the various data types that you
+    advertise. When the <em class="parameter"><code>clear_func</code></em> you provided is called, you
+    simply free the data blob. The latter is more useful when the
+    contents of clipboard reflect the internal state of a <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a>
+    (As an example, for the PRIMARY clipboard, when an entry widget
+    provides the clipboard's contents the contents are simply the
+    text within the selected region.) If the contents change, the
+    entry widget can call <a class="link" href="gtk-Clipboards.html#gtk-clipboard-set-with-owner" title="gtk_clipboard_set_with_owner ()"><code class="function">gtk_clipboard_set_with_owner()</code></a> to update
+    the timestamp for clipboard ownership, without having to worry
+    about <em class="parameter"><code>clear_func</code></em> being called.
+  </p>
+<p>
+    Requesting the data from the clipboard is essentially
+    asynchronous. If the contents of the clipboard are provided within
+    the same process, then a direct function call will be made to
+    retrieve the data, but if they are provided by another process,
+    then the data needs to be retrieved from the other process, which
+    may take some time. To avoid blocking the user interface, the call
+    to request the selection, <a class="link" href="gtk-Clipboards.html#gtk-clipboard-request-contents" title="gtk_clipboard_request_contents ()"><code class="function">gtk_clipboard_request_contents()</code></a> takes a
+    callback that will be called when the contents are received (or
+    when the request fails.) If you don't want to deal with providing
+    a separate callback, you can also use <a class="link" href="gtk-Clipboards.html#gtk-clipboard-wait-for-contents" title="gtk_clipboard_wait_for_contents ()"><code class="function">gtk_clipboard_wait_for_contents()</code></a>.
+    What this does is run the GLib main loop recursively waiting for
+    the contents. This can simplify the code flow, but you still have
+    to be aware that other callbacks in your program can be called
+    while this recursive mainloop is running.
+  </p>
+<p>
+    Along with the functions to get the clipboard contents as an
+    arbitrary data chunk, there are also functions to retrieve
+    it as text, <a class="link" href="gtk-Clipboards.html#gtk-clipboard-request-text" title="gtk_clipboard_request_text ()"><code class="function">gtk_clipboard_request_text()</code></a> and
+    <a class="link" href="gtk-Clipboards.html#gtk-clipboard-wait-for-text" title="gtk_clipboard_wait_for_text ()"><code class="function">gtk_clipboard_wait_for_text()</code></a>. These functions take care of
+    determining which formats are advertised by the clipboard
+    provider, asking for the clipboard in the best available format
+    and converting the results into the UTF-8 encoding. (The standard
+    form for representing strings in GTK+.)
+  </p>
+</div>
+<div class="refsect1">
+<a name="gtk-Clipboards.details"></a><h2>Details</h2>
+<div class="refsect2">
+<a name="GtkClipboard-struct"></a><h3>GtkClipboard</h3>
+<pre class="programlisting">typedef struct _GtkClipboard GtkClipboard;</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkClipboardReceivedFunc"></a><h3>GtkClipboardReceivedFunc ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                (*GtkClipboardReceivedFunc)         (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkWidget.html#GtkSelectionData"><span class="type">GtkSelectionData</span></a> *selection_data</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> data</code></em>);</pre>
+<p>
+    A function to be called when the results of <a class="link" href="gtk-Clipboards.html#gtk-clipboard-request-contents" title="gtk_clipboard_request_contents ()"><code class="function">gtk_clipboard_request_contents()</code></a>
+    are received, or when the request fails.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>clipboard</code></em> :</span></p></td>
+<td>the <a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>selection_data</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkWidget.html#GtkSelectionData"><span class="type">GtkSelectionData</span></a> containing the data was received.
+If retrieving the data failed, then then length field
+of <em class="parameter"><code>selection_data</code></em> will be negative.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td>the <em class="parameter"><code>user_data</code></em> supplied to <a class="link" href="gtk-Clipboards.html#gtk-clipboard-request-contents" title="gtk_clipboard_request_contents ()"><code class="function">gtk_clipboard_request_contents()</code></a>.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkClipboardTextReceivedFunc"></a><h3>GtkClipboardTextReceivedFunc ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                (*GtkClipboardTextReceivedFunc)     (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *text</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> data</code></em>);</pre>
+<p>
+    A function to be called when the results of <a class="link" href="gtk-Clipboards.html#gtk-clipboard-request-text" title="gtk_clipboard_request_text ()"><code class="function">gtk_clipboard_request_text()</code></a>
+    are received, or when the request fails.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>clipboard</code></em> :</span></p></td>
+<td>the <a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>text</code></em> :</span></p></td>
+<td>the text received, as a UTF-8 encoded string, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
+if retrieving the data failed.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td>the <em class="parameter"><code>user_data</code></em> supplied to <a class="link" href="gtk-Clipboards.html#gtk-clipboard-request-text" title="gtk_clipboard_request_text ()"><code class="function">gtk_clipboard_request_text()</code></a>.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkClipboardImageReceivedFunc"></a><h3>GtkClipboardImageReceivedFunc ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                (*GtkClipboardImageReceivedFunc)    (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gdk-pixbuf/unstable/gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="type">GdkPixbuf</span></a> *pixbuf</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> data</code></em>);</pre>
+<p>
+    A function to be called when the results of <a class="link" href="gtk-Clipboards.html#gtk-clipboard-request-image" title="gtk_clipboard_request_image ()"><code class="function">gtk_clipboard_request_image()</code></a>
+    are received, or when the request fails.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>clipboard</code></em> :</span></p></td>
+<td>the <a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>pixbuf</code></em> :</span></p></td>
+<td>the received image</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td>the <em class="parameter"><code>user_data</code></em> supplied to <a class="link" href="gtk-Clipboards.html#gtk-clipboard-request-image" title="gtk_clipboard_request_image ()"><code class="function">gtk_clipboard_request_image()</code></a>.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkClipboardTargetsReceivedFunc"></a><h3>GtkClipboardTargetsReceivedFunc ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                (*GtkClipboardTargetsReceivedFunc)  (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>,
+                                                         <em class="parameter"><code><a href="../gdk/gdk-Properties-and-Atoms.html#GdkAtom"><span class="type">GdkAtom</span></a> *atoms</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> n_atoms</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> data</code></em>);</pre>
+<p>
+    A function to be called when the results of <a class="link" href="gtk-Clipboards.html#gtk-clipboard-request-targets" title="gtk_clipboard_request_targets ()"><code class="function">gtk_clipboard_request_targets()</code></a>
+    are received, or when the request fails.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>clipboard</code></em> :</span></p></td>
+<td>the <a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>atoms</code></em> :</span></p></td>
+<td>the supported targets, as array of <a href="../gdk/gdk-Properties-and-Atoms.html#GdkAtom"><span class="type">GdkAtom</span></a>, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
+if retrieving the data failed.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n_atoms</code></em> :</span></p></td>
+<td>the length of the <em class="parameter"><code>atoms</code></em> array.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td>the <em class="parameter"><code>user_data</code></em> supplied to <a class="link" href="gtk-Clipboards.html#gtk-clipboard-request-targets" title="gtk_clipboard_request_targets ()"><code class="function">gtk_clipboard_request_targets()</code></a>.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.4</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkClipboardRichTextReceivedFunc"></a><h3>GtkClipboardRichTextReceivedFunc ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                (*GtkClipboardRichTextReceivedFunc) (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>,
+                                                         <em class="parameter"><code><a href="../gdk/gdk-Properties-and-Atoms.html#GdkAtom"><span class="type">GdkAtom</span></a> format</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint8"><span class="type">guint8</span></a> *text</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gsize"><span class="type">gsize</span></a> length</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> data</code></em>);</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkClipboardURIReceivedFunc"></a><h3>GtkClipboardURIReceivedFunc ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                (*GtkClipboardURIReceivedFunc)      (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> **uris</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> data</code></em>);</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkClipboardGetFunc"></a><h3>GtkClipboardGetFunc ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                (*GtkClipboardGetFunc)              (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkWidget.html#GtkSelectionData"><span class="type">GtkSelectionData</span></a> *selection_data</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> info</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data_or_owner</code></em>);</pre>
+<p>
+A function that will be called to provide the contents of the selection.
+If multiple types of data were advertised, the requested type can
+be determined from the <em class="parameter"><code>info</code></em> parameter or by checking the target field
+of <em class="parameter"><code>selection_data</code></em>. If the data could successfully be converted into
+then it should be stored into the <em class="parameter"><code>selection_data</code></em> object by
+calling <a class="link" href="gtk-Selections.html#gtk-selection-data-set" title="gtk_selection_data_set ()"><code class="function">gtk_selection_data_set()</code></a> (or related functions such
+as <a class="link" href="gtk-Selections.html#gtk-selection-data-set-text" title="gtk_selection_data_set_text ()"><code class="function">gtk_selection_data_set_text()</code></a>). If no data is set, the requestor
+will be informed that the attempt to get the data failed.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>clipboard</code></em> :</span></p></td>
+<td>the <a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>selection_data</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkWidget.html#GtkSelectionData"><span class="type">GtkSelectionData</span></a> argument in which the requested
+data should be stored.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>info</code></em> :</span></p></td>
+<td>the info field corresponding to the requested
+target from the <a class="link" href="gtk-Selections.html#GtkTargetEntry" title="struct GtkTargetEntry"><span class="type">GtkTargetEntry</span></a> array passed to
+<a class="link" href="gtk-Clipboards.html#gtk-clipboard-set-with-data" title="gtk_clipboard_set_with_data ()"><code class="function">gtk_clipboard_set_with_data()</code></a> or <a class="link" href="gtk-Clipboards.html#gtk-clipboard-set-with-owner" title="gtk_clipboard_set_with_owner ()"><code class="function">gtk_clipboard_set_with_owner()</code></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data_or_owner</code></em> :</span></p></td>
+<td>the <em class="parameter"><code>user_data</code></em> argument passed to <a class="link" href="gtk-Clipboards.html#gtk-clipboard-set-with-data" title="gtk_clipboard_set_with_data ()"><code class="function">gtk_clipboard_set_with_data()</code></a>, or
+the <em class="parameter"><code>owner</code></em> argument passed to <a class="link" href="gtk-Clipboards.html#gtk-clipboard-set-with-owner" title="gtk_clipboard_set_with_owner ()"><code class="function">gtk_clipboard_set_with_owner()</code></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkClipboardClearFunc"></a><h3>GtkClipboardClearFunc ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                (*GtkClipboardClearFunc)            (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data_or_owner</code></em>);</pre>
+<p>
+A function that will be called when the contents of the clipboard are changed
+or cleared. Once this has called, the <em class="parameter"><code>user_data_or_owner</code></em> argument
+will not be used again.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>clipboard</code></em> :</span></p></td>
+<td>the <a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data_or_owner</code></em> :</span></p></td>
+<td>the <em class="parameter"><code>user_data</code></em> argument passed to <a class="link" href="gtk-Clipboards.html#gtk-clipboard-set-with-data" title="gtk_clipboard_set_with_data ()"><code class="function">gtk_clipboard_set_with_data()</code></a>, or
+the <em class="parameter"><code>owner</code></em> argument passed to <a class="link" href="gtk-Clipboards.html#gtk-clipboard-set-with-owner" title="gtk_clipboard_set_with_owner ()"><code class="function">gtk_clipboard_set_with_owner()</code></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-clipboard-get"></a><h3>gtk_clipboard_get ()</h3>
+<pre class="programlisting"><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="returnvalue">GtkClipboard</span></a> *      gtk_clipboard_get                   (<em class="parameter"><code><a href="../gdk/gdk-Properties-and-Atoms.html#GdkAtom"><span class="type">GdkAtom</span></a> selection</code></em>);</pre>
+<p>
+Returns the clipboard object for the given selection.
+See <a class="link" href="gtk-Clipboards.html#gtk-clipboard-get-for-display" title="gtk_clipboard_get_for_display ()"><code class="function">gtk_clipboard_get_for_display()</code></a> for complete details.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>selection</code></em> :</span></p></td>
+<td>a <a href="../gdk/gdk-Properties-and-Atoms.html#GdkAtom"><span class="type">GdkAtom</span></a> which identifies the clipboard to use</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the appropriate clipboard object. If no clipboard
+already exists, a new one will be created. Once a clipboard
+object has been created, it is persistent and, since it is
+owned by GTK+, must not be freed or unreffed. <span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-clipboard-get-for-display"></a><h3>gtk_clipboard_get_for_display ()</h3>
+<pre class="programlisting"><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="returnvalue">GtkClipboard</span></a> *      gtk_clipboard_get_for_display       (<em class="parameter"><code><a href="../gdk/GdkDisplay.html"><span class="type">GdkDisplay</span></a> *display</code></em>,
+                                                         <em class="parameter"><code><a href="../gdk/gdk-Properties-and-Atoms.html#GdkAtom"><span class="type">GdkAtom</span></a> selection</code></em>);</pre>
+<p>
+Returns the clipboard object for the given selection.
+Cut/copy/paste menu items and keyboard shortcuts should use
+the default clipboard, returned by passing <a href="../gdk/gdk-Selections.html#GDK-SELECTION-CLIPBOARD:CAPS"><code class="literal">GDK_SELECTION_CLIPBOARD</code></a> for <em class="parameter"><code>selection</code></em>.
+(<a href="../gdk/gdk-Properties-and-Atoms.html#GDK-NONE:CAPS"><code class="literal">GDK_NONE</code></a> is supported as a synonym for GDK_SELECTION_CLIPBOARD
+for backwards compatibility reasons.)
+The currently-selected object or text should be provided on the clipboard
+identified by <a href="../gdk/gdk-Selections.html#GDK-SELECTION-PRIMARY:CAPS"><span class="type">GDK_SELECTION_PRIMARY</span></a>. Cut/copy/paste menu items
+conceptually copy the contents of the <a href="../gdk/gdk-Selections.html#GDK-SELECTION-PRIMARY:CAPS"><span class="type">GDK_SELECTION_PRIMARY</span></a> clipboard
+to the default clipboard, i.e. they copy the selection to what the
+user sees as the clipboard.
+</p>
+<p>
+(Passing <a href="../gdk/gdk-Properties-and-Atoms.html#GDK-NONE:CAPS"><span class="type">GDK_NONE</span></a> is the same as using <code class="literal">gdk_atom_intern
+("CLIPBOARD", FALSE)</code>. See <a class="ulink" href="http://www.freedesktop.org/Standards/clipboards-spec" target="_top">
+http://www.freedesktop.org/Standards/clipboards-spec</a>
+for a detailed discussion of the "CLIPBOARD" vs. "PRIMARY"
+selections under the X window system. On Win32 the
+<a href="../gdk/gdk-Selections.html#GDK-SELECTION-PRIMARY:CAPS"><span class="type">GDK_SELECTION_PRIMARY</span></a> clipboard is essentially ignored.)
+</p>
+<p>
+It's possible to have arbitrary named clipboards; if you do invent
+new clipboards, you should prefix the selection name with an
+underscore (because the ICCCM requires that nonstandard atoms are
+underscore-prefixed), and namespace it as well. For example,
+if your application called "Foo" has a special-purpose
+clipboard, you might call it "_FOO_SPECIAL_CLIPBOARD".
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>display</code></em> :</span></p></td>
+<td>the display for which the clipboard is to be retrieved or created</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>selection</code></em> :</span></p></td>
+<td>a <a href="../gdk/gdk-Properties-and-Atoms.html#GdkAtom"><span class="type">GdkAtom</span></a> which identifies the clipboard
+to use.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the appropriate clipboard object. If no
+clipboard already exists, a new one will
+be created. Once a clipboard object has
+been created, it is persistent and, since
+it is owned by GTK+, must not be freed or
+unrefd. <span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-clipboard-get-display"></a><h3>gtk_clipboard_get_display ()</h3>
+<pre class="programlisting"><a href="../gdk/GdkDisplay.html"><span class="returnvalue">GdkDisplay</span></a> *        gtk_clipboard_get_display           (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>);</pre>
+<p>
+Gets the <a href="../gdk/GdkDisplay.html"><span class="type">GdkDisplay</span></a> associated with <em class="parameter"><code>clipboard</code></em>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>clipboard</code></em> :</span></p></td>
+<td>a <a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the <a href="../gdk/GdkDisplay.html"><span class="type">GdkDisplay</span></a> associated with <em class="parameter"><code>clipboard</code></em>. <span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-clipboard-set-with-data"></a><h3>gtk_clipboard_set_with_data ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gtk_clipboard_set_with_data         (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>,
+                                                         <em class="parameter"><code>const <a class="link" href="gtk-Selections.html#GtkTargetEntry" title="struct GtkTargetEntry"><span class="type">GtkTargetEntry</span></a> *targets</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> n_targets</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboardGetFunc" title="GtkClipboardGetFunc ()"><span class="type">GtkClipboardGetFunc</span></a> get_func</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboardClearFunc" title="GtkClipboardClearFunc ()"><span class="type">GtkClipboardClearFunc</span></a> clear_func</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<p>
+Virtually sets the contents of the specified clipboard by providing
+a list of supported formats for the clipboard data and a function
+to call to get the actual data when it is requested.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>clipboard</code></em> :</span></p></td>
+<td>a <a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>targets</code></em> :</span></p></td>
+<td>array containing information about the available forms for the
+clipboard data</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n_targets</code></em> :</span></p></td>
+<td>number of elements in <em class="parameter"><code>targets</code></em>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>get_func</code></em> :</span></p></td>
+<td>function to call to get the actual clipboard data</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>clear_func</code></em> :</span></p></td>
+<td>when the clipboard contents are set again, this function will
+be called, and <em class="parameter"><code>get_func</code></em> will not be subsequently called.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data to pass to <em class="parameter"><code>get_func</code></em> and <em class="parameter"><code>clear_func</code></em>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if setting the clipboard data succeeded. If setting
+the clipboard data failed the provided callback functions
+will be ignored.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-clipboard-set-with-owner"></a><h3>gtk_clipboard_set_with_owner ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gtk_clipboard_set_with_owner        (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>,
+                                                         <em class="parameter"><code>const <a class="link" href="gtk-Selections.html#GtkTargetEntry" title="struct GtkTargetEntry"><span class="type">GtkTargetEntry</span></a> *targets</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> n_targets</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboardGetFunc" title="GtkClipboardGetFunc ()"><span class="type">GtkClipboardGetFunc</span></a> get_func</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboardClearFunc" title="GtkClipboardClearFunc ()"><span class="type">GtkClipboardClearFunc</span></a> clear_func</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *owner</code></em>);</pre>
+<p>
+Virtually sets the contents of the specified clipboard by providing
+a list of supported formats for the clipboard data and a function
+to call to get the actual data when it is requested.
+</p>
+<p>
+The difference between this function and <a class="link" href="gtk-Clipboards.html#gtk-clipboard-set-with-data" title="gtk_clipboard_set_with_data ()"><code class="function">gtk_clipboard_set_with_data()</code></a>
+is that instead of an generic <em class="parameter"><code>user_data</code></em> pointer, a <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> is passed
+in.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>clipboard</code></em> :</span></p></td>
+<td>a <a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>targets</code></em> :</span></p></td>
+<td>array containing information about the available forms for the
+clipboard data</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n_targets</code></em> :</span></p></td>
+<td>number of elements in <em class="parameter"><code>targets</code></em>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>get_func</code></em> :</span></p></td>
+<td>function to call to get the actual clipboard data</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>clear_func</code></em> :</span></p></td>
+<td>when the clipboard contents are set again, this function will
+be called, and <em class="parameter"><code>get_func</code></em> will not be subsequently called.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>owner</code></em> :</span></p></td>
+<td>an object that "owns" the data. This object will be passed
+to the callbacks when called.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if setting the clipboard data succeeded. If setting
+the clipboard data failed the provided callback functions
+will be ignored.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-clipboard-get-owner"></a><h3>gtk_clipboard_get_owner ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="returnvalue">GObject</span></a> *           gtk_clipboard_get_owner             (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>);</pre>
+<p>
+If the clipboard contents callbacks were set with 
+<a class="link" href="gtk-Clipboards.html#gtk-clipboard-set-with-owner" title="gtk_clipboard_set_with_owner ()"><code class="function">gtk_clipboard_set_with_owner()</code></a>, and the <a class="link" href="gtk-Clipboards.html#gtk-clipboard-set-with-data" title="gtk_clipboard_set_with_data ()"><code class="function">gtk_clipboard_set_with_data()</code></a> or 
+<a class="link" href="gtk-Clipboards.html#gtk-clipboard-clear" title="gtk_clipboard_clear ()"><code class="function">gtk_clipboard_clear()</code></a> has not subsequently called, returns the owner set 
+by <a class="link" href="gtk-Clipboards.html#gtk-clipboard-set-with-owner" title="gtk_clipboard_set_with_owner ()"><code class="function">gtk_clipboard_set_with_owner()</code></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>clipboard</code></em> :</span></p></td>
+<td>a <a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the owner of the clipboard, if any; otherwise <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-clipboard-clear"></a><h3>gtk_clipboard_clear ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_clipboard_clear                 (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>);</pre>
+<p>
+Clears the contents of the clipboard. Generally this should only
+be called between the time you call <a class="link" href="gtk-Clipboards.html#gtk-clipboard-set-with-owner" title="gtk_clipboard_set_with_owner ()"><code class="function">gtk_clipboard_set_with_owner()</code></a>
+or <a class="link" href="gtk-Clipboards.html#gtk-clipboard-set-with-data" title="gtk_clipboard_set_with_data ()"><code class="function">gtk_clipboard_set_with_data()</code></a>,
+and when the <em class="parameter"><code>clear_func</code></em> you supplied is called. Otherwise, the
+clipboard may be owned by someone else.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>clipboard</code></em> :</span></p></td>
+<td>a <a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-clipboard-set-text"></a><h3>gtk_clipboard_set_text ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_clipboard_set_text              (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *text</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> len</code></em>);</pre>
+<p>
+Sets the contents of the clipboard to the given UTF-8 string. GTK+ will
+make a copy of the text and take responsibility for responding
+for requests for the text, and for converting the text into
+the requested format.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>clipboard</code></em> :</span></p></td>
+<td>a <a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> object</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>text</code></em> :</span></p></td>
+<td>a UTF-8 string.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>len</code></em> :</span></p></td>
+<td>length of <em class="parameter"><code>text</code></em>, in bytes, or -1, in which case
+the length will be determined with <code class="function"><code class="function">strlen()</code></code>.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-clipboard-set-image"></a><h3>gtk_clipboard_set_image ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_clipboard_set_image             (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gdk-pixbuf/unstable/gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="type">GdkPixbuf</span></a> *pixbuf</code></em>);</pre>
+<p>
+Sets the contents of the clipboard to the given <a href="http://library.gnome.org/devel/gdk-pixbuf/unstable/gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="type">GdkPixbuf</span></a>. 
+GTK+ will take responsibility for responding for requests 
+for the image, and for converting the image into the 
+requested format.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>clipboard</code></em> :</span></p></td>
+<td>a <a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> object</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>pixbuf</code></em> :</span></p></td>
+<td>a <a href="http://library.gnome.org/devel/gdk-pixbuf/unstable/gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="type">GdkPixbuf</span></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-clipboard-request-contents"></a><h3>gtk_clipboard_request_contents ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_clipboard_request_contents      (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>,
+                                                         <em class="parameter"><code><a href="../gdk/gdk-Properties-and-Atoms.html#GdkAtom"><span class="type">GdkAtom</span></a> target</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboardReceivedFunc" title="GtkClipboardReceivedFunc ()"><span class="type">GtkClipboardReceivedFunc</span></a> callback</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<p>
+Requests the contents of clipboard as the given target.
+When the results of the result are later received the supplied callback
+will be called.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>clipboard</code></em> :</span></p></td>
+<td>a <a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>target</code></em> :</span></p></td>
+<td>an atom representing the form into which the clipboard
+owner should convert the selection.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>callback</code></em> :</span></p></td>
+<td>A function to call when the results are received
+(or the retrieval fails). If the retrieval fails
+the length field of <em class="parameter"><code>selection_data</code></em> will be
+negative.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data to pass to <em class="parameter"><code>callback</code></em>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-clipboard-request-text"></a><h3>gtk_clipboard_request_text ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_clipboard_request_text          (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboardTextReceivedFunc" title="GtkClipboardTextReceivedFunc ()"><span class="type">GtkClipboardTextReceivedFunc</span></a> callback</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<p>
+Requests the contents of the clipboard as text. When the text is
+later received, it will be converted to UTF-8 if necessary, and
+<em class="parameter"><code>callback</code></em> will be called. 
+</p>
+<p>
+The <em class="parameter"><code>text</code></em> parameter to <em class="parameter"><code>callback</code></em> will contain the resulting text if
+the request succeeded, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if it failed. This could happen for
+various reasons, in particular if the clipboard was empty or if the
+contents of the clipboard could not be converted into text form.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>clipboard</code></em> :</span></p></td>
+<td>a <a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>callback</code></em> :</span></p></td>
+<td>a function to call when the text is received,
+or the retrieval fails. (It will always be called
+one way or the other.)</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data to pass to <em class="parameter"><code>callback</code></em>.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-clipboard-request-image"></a><h3>gtk_clipboard_request_image ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_clipboard_request_image         (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboardImageReceivedFunc" title="GtkClipboardImageReceivedFunc ()"><span class="type">GtkClipboardImageReceivedFunc</span></a> callback</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<p>
+Requests the contents of the clipboard as image. When the image is
+later received, it will be converted to a <a href="http://library.gnome.org/devel/gdk-pixbuf/unstable/gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="type">GdkPixbuf</span></a>, and
+<em class="parameter"><code>callback</code></em> will be called. 
+</p>
+<p>
+The <em class="parameter"><code>pixbuf</code></em> parameter to <em class="parameter"><code>callback</code></em> will contain the resulting 
+<a href="http://library.gnome.org/devel/gdk-pixbuf/unstable/gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="type">GdkPixbuf</span></a> if the request succeeded, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if it failed. This 
+could happen for various reasons, in particular if the clipboard 
+was empty or if the contents of the clipboard could not be 
+converted into an image.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>clipboard</code></em> :</span></p></td>
+<td>a <a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>callback</code></em> :</span></p></td>
+<td>a function to call when the image is received,
+or the retrieval fails. (It will always be called
+one way or the other.)</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data to pass to <em class="parameter"><code>callback</code></em>.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-clipboard-request-targets"></a><h3>gtk_clipboard_request_targets ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_clipboard_request_targets       (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboardTargetsReceivedFunc" title="GtkClipboardTargetsReceivedFunc ()"><span class="type">GtkClipboardTargetsReceivedFunc</span></a> callback</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<p>
+Requests the contents of the clipboard as list of supported targets. 
+When the list is later received, <em class="parameter"><code>callback</code></em> will be called. 
+</p>
+<p>
+The <em class="parameter"><code>targets</code></em> parameter to <em class="parameter"><code>callback</code></em> will contain the resulting targets if
+the request succeeded, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if it failed.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>clipboard</code></em> :</span></p></td>
+<td>a <a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>callback</code></em> :</span></p></td>
+<td>a function to call when the targets are received,
+or the retrieval fails. (It will always be called
+one way or the other.)</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data to pass to <em class="parameter"><code>callback</code></em>.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.4</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-clipboard-request-rich-text"></a><h3>gtk_clipboard_request_rich_text ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_clipboard_request_rich_text     (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTextBuffer.html" title="GtkTextBuffer"><span class="type">GtkTextBuffer</span></a> *buffer</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboardRichTextReceivedFunc" title="GtkClipboardRichTextReceivedFunc ()"><span class="type">GtkClipboardRichTextReceivedFunc</span></a> callback</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<p>
+Requests the contents of the clipboard as rich text. When the rich
+text is later received, <em class="parameter"><code>callback</code></em> will be called.
+</p>
+<p>
+The <em class="parameter"><code>text</code></em> parameter to <em class="parameter"><code>callback</code></em> will contain the resulting rich
+text if the request succeeded, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if it failed. The <em class="parameter"><code>length</code></em>
+parameter will contain <em class="parameter"><code>text</code></em>'s length. This function can fail for
+various reasons, in particular if the clipboard was empty or if the
+contents of the clipboard could not be converted into rich text form.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>clipboard</code></em> :</span></p></td>
+<td>a <a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>buffer</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkTextBuffer.html" title="GtkTextBuffer"><span class="type">GtkTextBuffer</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>callback</code></em> :</span></p></td>
+<td>a function to call when the text is received,
+or the retrieval fails. (It will always be called
+one way or the other.)</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data to pass to <em class="parameter"><code>callback</code></em>.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.10</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-clipboard-request-uris"></a><h3>gtk_clipboard_request_uris ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_clipboard_request_uris          (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboardURIReceivedFunc" title="GtkClipboardURIReceivedFunc ()"><span class="type">GtkClipboardURIReceivedFunc</span></a> callback</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<p>
+Requests the contents of the clipboard as URIs. When the URIs are
+later received <em class="parameter"><code>callback</code></em> will be called.
+</p>
+<p>
+The <em class="parameter"><code>uris</code></em> parameter to <em class="parameter"><code>callback</code></em> will contain the resulting array of
+URIs if the request succeeded, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if it failed. This could happen
+for various reasons, in particular if the clipboard was empty or if the
+contents of the clipboard could not be converted into URI form.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>clipboard</code></em> :</span></p></td>
+<td>a <a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>callback</code></em> :</span></p></td>
+<td>a function to call when the URIs are received,
+or the retrieval fails. (It will always be called
+one way or the other.)</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data to pass to <em class="parameter"><code>callback</code></em>.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.14</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-clipboard-wait-for-contents"></a><h3>gtk_clipboard_wait_for_contents ()</h3>
+<pre class="programlisting"><a class="link" href="GtkWidget.html#GtkSelectionData"><span class="returnvalue">GtkSelectionData</span></a> *  gtk_clipboard_wait_for_contents     (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>,
+                                                         <em class="parameter"><code><a href="../gdk/gdk-Properties-and-Atoms.html#GdkAtom"><span class="type">GdkAtom</span></a> target</code></em>);</pre>
+<p>
+Requests the contents of the clipboard using the given target.
+This function waits for the data to be received using the main 
+loop, so events, timeouts, etc, may be dispatched during the wait.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>clipboard</code></em> :</span></p></td>
+<td>a <a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>target</code></em> :</span></p></td>
+<td>an atom representing the form into which the clipboard
+owner should convert the selection.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a newly-allocated <a class="link" href="GtkWidget.html#GtkSelectionData"><span class="type">GtkSelectionData</span></a> object or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
+if retrieving the given target failed. If non-<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>,
+this value must be freed with <a class="link" href="gtk-Selections.html#gtk-selection-data-free" title="gtk_selection_data_free ()"><code class="function">gtk_selection_data_free()</code></a>
+when you are finished with it.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-clipboard-wait-for-text"></a><h3>gtk_clipboard_wait_for_text ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             gtk_clipboard_wait_for_text         (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>);</pre>
+<p>
+Requests the contents of the clipboard as text and converts
+the result to UTF-8 if necessary. This function waits for
+the data to be received using the main loop, so events,
+timeouts, etc, may be dispatched during the wait.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>clipboard</code></em> :</span></p></td>
+<td>a <a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a newly-allocated UTF-8 string which must
+be freed with <a href="http://library.gnome.org/devel/glib/unstable/glib-Memory-Allocation.html#g-free"><code class="function">g_free()</code></a>, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if retrieving
+the selection data failed. (This could happen
+for various reasons, in particular if the
+clipboard was empty or if the contents of the
+clipboard could not be converted into text form.)</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-clipboard-wait-for-image"></a><h3>gtk_clipboard_wait_for_image ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/gdk-pixbuf/unstable/gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="returnvalue">GdkPixbuf</span></a> *         gtk_clipboard_wait_for_image        (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>);</pre>
+<p>
+Requests the contents of the clipboard as image and converts
+the result to a <a href="http://library.gnome.org/devel/gdk-pixbuf/unstable/gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="type">GdkPixbuf</span></a>. This function waits for
+the data to be received using the main loop, so events,
+timeouts, etc, may be dispatched during the wait.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>clipboard</code></em> :</span></p></td>
+<td>a <a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a newly-allocated <a href="http://library.gnome.org/devel/gdk-pixbuf/unstable/gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="type">GdkPixbuf</span></a> object which must
+be disposed with <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a>, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if
+retrieving the selection data failed. (This
+could happen for various reasons, in particular
+if the clipboard was empty or if the contents of
+the clipboard could not be converted into an image.). <span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-clipboard-wait-for-rich-text"></a><h3>gtk_clipboard_wait_for_rich_text ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint8"><span class="returnvalue">guint8</span></a> *            gtk_clipboard_wait_for_rich_text    (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTextBuffer.html" title="GtkTextBuffer"><span class="type">GtkTextBuffer</span></a> *buffer</code></em>,
+                                                         <em class="parameter"><code><a href="../gdk/gdk-Properties-and-Atoms.html#GdkAtom"><span class="type">GdkAtom</span></a> *format</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gsize"><span class="type">gsize</span></a> *length</code></em>);</pre>
+<p>
+Requests the contents of the clipboard as rich text.  This function
+waits for the data to be received using the main loop, so events,
+timeouts, etc, may be dispatched during the wait.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>clipboard</code></em> :</span></p></td>
+<td>a <a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>buffer</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkTextBuffer.html" title="GtkTextBuffer"><span class="type">GtkTextBuffer</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>format</code></em> :</span></p></td>
+<td>return location for the format of the returned data</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>length</code></em> :</span></p></td>
+<td>return location for the length of the returned data</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a
+newly-allocated binary block of data which must
+be freed with <a href="http://library.gnome.org/devel/glib/unstable/glib-Memory-Allocation.html#g-free"><code class="function">g_free()</code></a>, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if retrieving
+the selection data failed. (This could happen
+for various reasons, in particular if the
+clipboard was empty or if the contents of the
+clipboard could not be converted into text form.). <span class="annotation">[<acronym title="Parameter points to an array of items."><span class="acronym">array</span></acronym> length=length][<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.10</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-clipboard-wait-for-uris"></a><h3>gtk_clipboard_wait_for_uris ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> **            gtk_clipboard_wait_for_uris         (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>);</pre>
+<p>
+Requests the contents of the clipboard as URIs. This function waits
+for the data to be received using the main loop, so events,
+timeouts, etc, may be dispatched during the wait.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>clipboard</code></em> :</span></p></td>
+<td>a <a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a newly-allocated
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>-terminated array of strings which must
+be freed with <a href="http://library.gnome.org/devel/glib/unstable/glib-String-Utility-Functions.html#g-strfreev"><code class="function">g_strfreev()</code></a>, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if
+retrieving the selection data failed. (This
+could happen for various reasons, in particular
+if the clipboard was empty or if the contents of
+the clipboard could not be converted into URI form.). <span class="annotation">[<acronym title="Parameter points to an array of items."><span class="acronym">array</span></acronym> zero-terminated=1][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> utf8][<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.14</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-clipboard-wait-is-text-available"></a><h3>gtk_clipboard_wait_is_text_available ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gtk_clipboard_wait_is_text_available
+                                                        (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>);</pre>
+<p>
+Test to see if there is text available to be pasted
+This is done by requesting the TARGETS atom and checking
+if it contains any of the supported text targets. This function 
+waits for the data to be received using the main loop, so events, 
+timeouts, etc, may be dispatched during the wait.
+</p>
+<p>
+This function is a little faster than calling
+<a class="link" href="gtk-Clipboards.html#gtk-clipboard-wait-for-text" title="gtk_clipboard_wait_for_text ()"><code class="function">gtk_clipboard_wait_for_text()</code></a> since it doesn't need to retrieve
+the actual text.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>clipboard</code></em> :</span></p></td>
+<td>a <a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> is there is text available, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> otherwise.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-clipboard-wait-is-image-available"></a><h3>gtk_clipboard_wait_is_image_available ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gtk_clipboard_wait_is_image_available
+                                                        (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>);</pre>
+<p>
+Test to see if there is an image available to be pasted
+This is done by requesting the TARGETS atom and checking
+if it contains any of the supported image targets. This function 
+waits for the data to be received using the main loop, so events, 
+timeouts, etc, may be dispatched during the wait.
+</p>
+<p>
+This function is a little faster than calling
+<a class="link" href="gtk-Clipboards.html#gtk-clipboard-wait-for-image" title="gtk_clipboard_wait_for_image ()"><code class="function">gtk_clipboard_wait_for_image()</code></a> since it doesn't need to retrieve
+the actual image data.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>clipboard</code></em> :</span></p></td>
+<td>a <a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> is there is an image available, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> otherwise.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-clipboard-wait-is-rich-text-available"></a><h3>gtk_clipboard_wait_is_rich_text_available ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gtk_clipboard_wait_is_rich_text_available
+                                                        (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkTextBuffer.html" title="GtkTextBuffer"><span class="type">GtkTextBuffer</span></a> *buffer</code></em>);</pre>
+<p>
+Test to see if there is rich text available to be pasted
+This is done by requesting the TARGETS atom and checking
+if it contains any of the supported rich text targets. This function
+waits for the data to be received using the main loop, so events,
+timeouts, etc, may be dispatched during the wait.
+</p>
+<p>
+This function is a little faster than calling
+<a class="link" href="gtk-Clipboards.html#gtk-clipboard-wait-for-rich-text" title="gtk_clipboard_wait_for_rich_text ()"><code class="function">gtk_clipboard_wait_for_rich_text()</code></a> since it doesn't need to retrieve
+the actual text.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>clipboard</code></em> :</span></p></td>
+<td>a <a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>buffer</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkTextBuffer.html" title="GtkTextBuffer"><span class="type">GtkTextBuffer</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> is there is rich text available, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> otherwise.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.10</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-clipboard-wait-is-uris-available"></a><h3>gtk_clipboard_wait_is_uris_available ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gtk_clipboard_wait_is_uris_available
+                                                        (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>);</pre>
+<p>
+Test to see if there is a list of URIs available to be pasted
+This is done by requesting the TARGETS atom and checking
+if it contains the URI targets. This function
+waits for the data to be received using the main loop, so events, 
+timeouts, etc, may be dispatched during the wait.
+</p>
+<p>
+This function is a little faster than calling
+<a class="link" href="gtk-Clipboards.html#gtk-clipboard-wait-for-uris" title="gtk_clipboard_wait_for_uris ()"><code class="function">gtk_clipboard_wait_for_uris()</code></a> since it doesn't need to retrieve
+the actual URI data.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>clipboard</code></em> :</span></p></td>
+<td>a <a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> is there is an URI list available, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> otherwise.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.14</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-clipboard-wait-for-targets"></a><h3>gtk_clipboard_wait_for_targets ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gtk_clipboard_wait_for_targets      (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>,
+                                                         <em class="parameter"><code><a href="../gdk/gdk-Properties-and-Atoms.html#GdkAtom"><span class="type">GdkAtom</span></a> **targets</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> *n_targets</code></em>);</pre>
+<p>
+Returns a list of targets that are present on the clipboard, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
+if there aren't any targets available. The returned list must be 
+freed with <a href="http://library.gnome.org/devel/glib/unstable/glib-Memory-Allocation.html#g-free"><code class="function">g_free()</code></a>.
+This function waits for the data to be received using the main 
+loop, so events, timeouts, etc, may be dispatched during the wait.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>clipboard</code></em> :</span></p></td>
+<td>a <a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>targets</code></em> :</span></p></td>
+<td>location to store an array of targets. The result
+stored here must be freed with <a href="http://library.gnome.org/devel/glib/unstable/glib-Memory-Allocation.html#g-free"><code class="function">g_free()</code></a>. <span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>][<acronym title="Parameter points to an array of items."><span class="acronym">array</span></acronym> length=n_targets][<acronym title="Free data container after the code is done."><span class="acronym">transfer container</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n_targets</code></em> :</span></p></td>
+<td>location to store number of items in <em class="parameter"><code>targets</code></em>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if any targets are present on the clipboard,
+otherwise <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a>.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.4</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-clipboard-wait-is-target-available"></a><h3>gtk_clipboard_wait_is_target_available ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gtk_clipboard_wait_is_target_available
+                                                        (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>,
+                                                         <em class="parameter"><code><a href="../gdk/gdk-Properties-and-Atoms.html#GdkAtom"><span class="type">GdkAtom</span></a> target</code></em>);</pre>
+<p>
+Checks if a clipboard supports pasting data of a given type. This
+function can be used to determine if a "Paste" menu item should be
+insensitive or not.
+</p>
+<p>
+If you want to see if there's text available on the clipboard, use
+<a class="link" href="gtk-Clipboards.html#gtk-clipboard-wait-is-text-available" title="gtk_clipboard_wait_is_text_available ()"><code class="function">gtk_clipboard_wait_is_text_available()</code></a> instead.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>clipboard</code></em> :</span></p></td>
+<td>a <a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>target</code></em> :</span></p></td>
+<td>A <a href="../gdk/gdk-Properties-and-Atoms.html#GdkAtom"><span class="type">GdkAtom</span></a> indicating which target to look for.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the target is available, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> otherwise.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-clipboard-set-can-store"></a><h3>gtk_clipboard_set_can_store ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_clipboard_set_can_store         (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>,
+                                                         <em class="parameter"><code>const <a class="link" href="gtk-Selections.html#GtkTargetEntry" title="struct GtkTargetEntry"><span class="type">GtkTargetEntry</span></a> *targets</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> n_targets</code></em>);</pre>
+<p>
+Hints that the clipboard data should be stored somewhere when the
+application exits or when <a class="link" href="gtk-Clipboards.html#gtk-clipboard-store" title="gtk_clipboard_store ()"><code class="function">gtk_clipboard_store()</code></a> is called.
+</p>
+<p>
+This value is reset when the clipboard owner changes.
+Where the clipboard data is stored is platform dependent,
+see <a href="../gdk/GdkDisplay.html#gdk-display-store-clipboard"><code class="function">gdk_display_store_clipboard()</code></a> for more information.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>clipboard</code></em> :</span></p></td>
+<td>a <a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>targets</code></em> :</span></p></td>
+<td>array containing
+information about which forms should be stored or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
+to indicate that all forms should be stored. <span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>][<acronym title="Parameter points to an array of items."><span class="acronym">array</span></acronym> length=n_targets]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n_targets</code></em> :</span></p></td>
+<td>number of elements in <em class="parameter"><code>targets</code></em>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-clipboard-store"></a><h3>gtk_clipboard_store ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_clipboard_store                 (<em class="parameter"><code><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard</code></em>);</pre>
+<p>
+Stores the current clipboard data somewhere so that it will stay
+around after the application has quit.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>clipboard</code></em> :</span></p></td>
+<td>a <a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a>
+</td>
+</tr></tbody>
+</table></div>
+<p class="since">Since 2.6</p>
+</div>
+</div>
+<div class="refsect1">
+<a name="gtk-Clipboards.signal-details"></a><h2>Signal Details</h2>
+<div class="refsect2">
+<a name="GtkClipboard-owner-change"></a><h3>The <code class="literal">"owner-change"</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> *clipboard,
+                                                        <a href="../gdk/gdk-Event-Structures.html#GdkEvent"><span class="type">GdkEvent</span></a>     *event,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>      user_data)      : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-FIRST:CAPS"><code class="literal">Run First</code></a></pre>
+<p>
+The ::owner-change signal is emitted when GTK+ receives an
+event that indicates that the ownership of the selection
+associated with <em class="parameter"><code>clipboard</code></em> has changed.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>clipboard</code></em> :</span></p></td>
+<td>the <a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> on which the signal is emitted</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>event</code></em> :</span></p></td>
+<td>the <em class="parameter"><code>GdkEventOwnerChange</code></em> event</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.6</p>
+</div>
+</div>
+<div class="refsect1">
+<a name="gtk-Clipboards.see-also"></a><h2>See Also</h2>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="type">GtkSelection</span></span></p></td>
+<td><p><a class="link" href="gtk-Clipboards.html#GtkClipboard"><span class="type">GtkClipboard</span></a> provides a high-level wrapper around the
+	    lower level routines that deal with X selections. It is
+	    also possibly to directly manipulate the X selections,
+	    though it is seldom necessary to do so.</p></td>
+</tr></tbody>
+</table></div>
+<p>
+</p>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>class Listen::Listener - listen-1.3.1 Documentation</title>
+
+<link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../index.html">Home</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/listen/listener.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">Object
+  
+</nav>
+
+    
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li ><a href="#method-c-new">::new</a>
+    
+    <li ><a href="#method-i-build_directories_records">#build_directories_records</a>
+    
+    <li ><a href="#method-i-change">#change</a>
+    
+    <li ><a href="#method-i-fetch_records_changes">#fetch_records_changes</a>
+    
+    <li ><a href="#method-i-filter">#filter</a>
+    
+    <li ><a href="#method-i-filter-21">#filter!</a>
+    
+    <li ><a href="#method-i-force_adapter">#force_adapter</a>
+    
+    <li ><a href="#method-i-force_polling">#force_polling</a>
+    
+    <li ><a href="#method-i-ignore">#ignore</a>
+    
+    <li ><a href="#method-i-ignore-21">#ignore!</a>
+    
+    <li ><a href="#method-i-initialize_adapter">#initialize_adapter</a>
+    
+    <li ><a href="#method-i-initialize_directories_and_directories_records">#initialize_directories_and_directories_records</a>
+    
+    <li ><a href="#method-i-initialize_relative_paths_usage">#initialize_relative_paths_usage</a>
+    
+    <li ><a href="#method-i-latency">#latency</a>
+    
+    <li ><a href="#method-i-on_change">#on_change</a>
+    
+    <li ><a href="#method-i-pause">#pause</a>
+    
+    <li ><a href="#method-i-paused-3F">#paused?</a>
+    
+    <li ><a href="#method-i-polling_fallback_message">#polling_fallback_message</a>
+    
+    <li ><a href="#method-i-relative_paths">#relative_paths</a>
+    
+    <li ><a href="#method-i-setup">#setup</a>
+    
+    <li ><a href="#method-i-start">#start</a>
+    
+    <li ><a href="#method-i-start-21">#start!</a>
+    
+    <li ><a href="#method-i-stop">#stop</a>
+    
+    <li ><a href="#method-i-unpause">#unpause</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../Listen.html">Listen</a>
+  
+    <li><a href="../Listen/Adapter.html">Listen::Adapter</a>
+  
+    <li><a href="../Listen/Adapters.html">Listen::Adapters</a>
+  
+    <li><a href="../Listen/Adapters/Adapter.html">Listen::Adapters::Adapter</a>
+  
+    <li><a href="../Listen/Adapters/BSD.html">Listen::Adapters::BSD</a>
+  
+    <li><a href="../Listen/Adapters/Darwin.html">Listen::Adapters::Darwin</a>
+  
+    <li><a href="../Listen/Adapters/Linux.html">Listen::Adapters::Linux</a>
+  
+    <li><a href="../Listen/Adapters/Polling.html">Listen::Adapters::Polling</a>
+  
+    <li><a href="../Listen/Adapters/Windows.html">Listen::Adapters::Windows</a>
+  
+    <li><a href="../Listen/DirectoryRecord.html">Listen::DirectoryRecord</a>
+  
+    <li><a href="../Listen/Listener.html">Listen::Listener</a>
+  
+    <li><a href="../Listen/Turnstile.html">Listen::Turnstile</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class Listen::Listener</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+    <!-- Constants -->
+    <section id="constants-list" class="section">
+      <h3 class="section-header">Constants</h3>
+      <dl>
+      
+        <dt id="BLOCKING_PARAMETER_DEPRECATION_MESSAGE">BLOCKING_PARAMETER_DEPRECATION_MESSAGE
+        
+        <dd class="description">
+        
+      
+        <dt id="RELATIVE_PATHS_WITH_MULTIPLE_DIRECTORIES_WARNING_MESSAGE">RELATIVE_PATHS_WITH_MULTIPLE_DIRECTORIES_WARNING_MESSAGE
+        
+        <dd class="description">
+        
+      
+      </dl>
+    </section>
+    
+
+    
+    <!-- Attributes -->
+    <section id="attribute-method-details" class="method-section section">
+      <h3 class="section-header">Attributes</h3>
+
+      
+      <div id="attribute-i-adapter" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">adapter</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-adapter_options" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">adapter_options</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-block" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">block</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-directories" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">directories</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-directories_records" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">directories_records</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-use_relative_paths" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">use_relative_paths</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+    </section><!-- attribute-method-details -->
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">(*args, &block)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Initializes the directories listener.</p>
+
+<p>@param [String] directory the directories to listen to @param [Hash]
+options the listen options @option options [Regexp] ignore a pattern for
+ignoring paths @option options [Regexp] filter a pattern for filtering
+paths @option options [Float] latency the delay between checking for
+changes in seconds @option options [Boolean] <a
+href="Listener.html#method-i-relative_paths">#relative_paths</a> whether or
+not to use relative-paths in the callback @option options [Boolean] <a
+href="Listener.html#method-i-force_polling">#force_polling</a> whether to
+force the polling adapter or not @option options [String, Boolean] <a
+href="Listener.html#method-i-polling_fallback_message">#polling_fallback_message</a>
+to change polling fallback message or remove it @option options [Class] <a
+href="Listener.html#method-i-force_adapter">#force_adapter</a> force the
+use of this adapter class, skipping usual adapter selection</p>
+
+<p>@yield [modified, added, removed] the changed files @yieldparam
+[Array&lt;String&gt;] modified the list of modified files @yieldparam
+[Array&lt;String&gt;] added the list of added files @yieldparam
+[Array&lt;String&gt;] removed the list of removed files</p>
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/listen/listener.rb, line 31</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+  <span class="ruby-identifier">options</span>     = <span class="ruby-identifier">args</span>.<span class="ruby-identifier">last</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">pop</span> <span class="ruby-operator">:</span> {}
+  <span class="ruby-identifier">directories</span> = <span class="ruby-identifier">args</span>.<span class="ruby-identifier">flatten</span>
+  <span class="ruby-identifier">initialize_directories_and_directories_records</span>(<span class="ruby-identifier">directories</span>)
+  <span class="ruby-identifier">initialize_relative_paths_usage</span>(<span class="ruby-identifier">options</span>)
+  <span class="ruby-ivar">@block</span> = <span class="ruby-identifier">block</span>
+
+  <span class="ruby-identifier">ignore</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-value">:ignore</span>))
+  <span class="ruby-identifier">filter</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-value">:filter</span>))
+
+  <span class="ruby-ivar">@adapter_options</span> = <span class="ruby-identifier">options</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- new-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- new-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-change" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">change</span><span
+            class="method-args">(&block)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Sets the callback that gets called on changes.</p>
+
+<p>@example Assign a callback to be called on changes</p>
+
+<pre class="ruby"><span class="ruby-identifier">callback</span> = <span class="ruby-identifier">lambda</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">modified</span>, <span class="ruby-identifier">added</span>, <span class="ruby-identifier">removed</span><span class="ruby-operator">|</span> <span class="ruby-operator">...</span> }
+<span class="ruby-identifier">change</span> <span class="ruby-operator">&amp;</span><span class="ruby-identifier">callback</span>
+</pre>
+
+<p>@param [Proc] block the callback proc</p>
+
+<p>@return [Listen::Listener] the listener</p>
+          
+          
+
+          
+          <div class="method-source-code" id="change-source">
+            <pre><span class="ruby-comment"># File lib/listen/listener.rb, line 238</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">change</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>) <span class="ruby-comment"># modified, added, removed</span>
+  <span class="ruby-ivar">@block</span> = <span class="ruby-identifier">block</span>
+  <span class="ruby-keyword">self</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- change-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- change-method -->
+
+    
+      <div id="method-i-filter" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">filter</span><span
+            class="method-args">(*regexps)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Adds filtering patterns to the listener.</p>
+
+<p>@param (see <a
+href="DirectoryRecord.html#method-i-filter">Listen::DirectoryRecord#filter</a>)</p>
+
+<p>@return [Listen::Listener] the listener</p>
+
+<p>@see <a
+href="DirectoryRecord.html#method-i-filter">Listen::DirectoryRecord#filter</a></p>
+          
+          
+
+          
+          <div class="method-source-code" id="filter-source">
+            <pre><span class="ruby-comment"># File lib/listen/listener.rb, line 136</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">filter</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">regexps</span>)
+  <span class="ruby-identifier">directories_records</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span> <span class="ruby-identifier">r</span>.<span class="ruby-identifier">filter</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">regexps</span>) }
+  <span class="ruby-keyword">self</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- filter-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- filter-method -->
+
+    
+      <div id="method-i-filter-21" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">filter!</span><span
+            class="method-args">(*regexps)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Replaces filtering patterns in the listener.</p>
+
+<p>@param (see <a
+href="DirectoryRecord.html#method-i-filter-21">Listen::DirectoryRecord#filter!</a>)</p>
+
+<p>@return [Listen::Listener] the listener</p>
+
+<p>@see <a
+href="DirectoryRecord.html#method-i-filter-21">Listen::DirectoryRecord#filter!</a></p>
+          
+          
+
+          
+          <div class="method-source-code" id="filter-21-source">
+            <pre><span class="ruby-comment"># File lib/listen/listener.rb, line 149</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">filter!</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">regexps</span>)
+  <span class="ruby-identifier">directories_records</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span> <span class="ruby-identifier">r</span>.<span class="ruby-identifier">filter!</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">regexps</span>) }
+  <span class="ruby-keyword">self</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- filter-21-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- filter-21-method -->
+
+    
+      <div id="method-i-force_adapter" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">force_adapter</span><span
+            class="method-args">(adapter_class)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Sets whether to force the use of a particular adapter, rather than going
+through usual adapter selection process on start.</p>
+
+<p>@example Force use of Linux polling</p>
+
+<pre>force_adapter Listen::Adapters::Linux</pre>
+
+<p>@param [Class] adapter class to use for file system event notification.</p>
+
+<p>@return [Listen::Listener] the listener</p>
+          
+          
+
+          
+          <div class="method-source-code" id="force_adapter-source">
+            <pre><span class="ruby-comment"># File lib/listen/listener.rb, line 194</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">force_adapter</span>(<span class="ruby-identifier">adapter_class</span>)
+  <span class="ruby-ivar">@adapter_options</span>[<span class="ruby-value">:force_adapter</span>] = <span class="ruby-identifier">adapter_class</span>
+  <span class="ruby-keyword">self</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- force_adapter-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- force_adapter-method -->
+
+    
+      <div id="method-i-force_polling" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">force_polling</span><span
+            class="method-args">(value)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Sets whether the use of the polling adapter should be forced or not.</p>
+
+<p>@example Forcing the use of the polling adapter</p>
+
+<pre>force_polling true</pre>
+
+<p>@param [Boolean] value whether to force the polling adapter or not</p>
+
+<p>@return [Listen::Listener] the listener</p>
+          
+          
+
+          
+          <div class="method-source-code" id="force_polling-source">
+            <pre><span class="ruby-comment"># File lib/listen/listener.rb, line 179</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">force_polling</span>(<span class="ruby-identifier">value</span>)
+  <span class="ruby-ivar">@adapter_options</span>[<span class="ruby-value">:force_polling</span>] = <span class="ruby-identifier">value</span>
+  <span class="ruby-keyword">self</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- force_polling-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- force_polling-method -->
+
+    
+      <div id="method-i-ignore" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">ignore</span><span
+            class="method-args">(*regexps)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Adds ignoring patterns to the listener.</p>
+
+<p>@param (see <a
+href="DirectoryRecord.html#method-i-ignore">Listen::DirectoryRecord#ignore</a>)</p>
+
+<p>@return [Listen::Listener] the listener</p>
+
+<p>@see <a
+href="DirectoryRecord.html#method-i-ignore">Listen::DirectoryRecord#ignore</a></p>
+          
+          
+
+          
+          <div class="method-source-code" id="ignore-source">
+            <pre><span class="ruby-comment"># File lib/listen/listener.rb, line 110</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">ignore</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">regexps</span>)
+  <span class="ruby-identifier">directories_records</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span> <span class="ruby-identifier">r</span>.<span class="ruby-identifier">ignore</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">regexps</span>) }
+  <span class="ruby-keyword">self</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- ignore-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- ignore-method -->
+
+    
+      <div id="method-i-ignore-21" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">ignore!</span><span
+            class="method-args">(*regexps)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Replaces ignoring patterns in the listener.</p>
+
+<p>@param (see <a
+href="DirectoryRecord.html#method-i-ignore-21">Listen::DirectoryRecord#ignore!</a>)</p>
+
+<p>@return [Listen::Listener] the listener</p>
+
+<p>@see <a
+href="DirectoryRecord.html#method-i-ignore-21">Listen::DirectoryRecord#ignore!</a></p>
+          
+          
+
+          
+          <div class="method-source-code" id="ignore-21-source">
+            <pre><span class="ruby-comment"># File lib/listen/listener.rb, line 123</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">ignore!</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">regexps</span>)
+  <span class="ruby-identifier">directories_records</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span> <span class="ruby-identifier">r</span>.<span class="ruby-identifier">ignore!</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">regexps</span>) }
+  <span class="ruby-keyword">self</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- ignore-21-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- ignore-21-method -->
+
+    
+      <div id="method-i-latency" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">latency</span><span
+            class="method-args">(seconds)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Sets the latency for the adapter. This is a helper method to simplify
+changing the latency directly from the listener.</p>
+
+<p>@example Wait 0.5 seconds each time before checking changes</p>
+
+<pre>latency 0.5</pre>
+
+<p>@param [Float] seconds the amount of delay, in seconds</p>
+
+<p>@return [Listen::Listener] the listener</p>
+          
+          
+
+          
+          <div class="method-source-code" id="latency-source">
+            <pre><span class="ruby-comment"># File lib/listen/listener.rb, line 164</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">latency</span>(<span class="ruby-identifier">seconds</span>)
+  <span class="ruby-ivar">@adapter_options</span>[<span class="ruby-value">:latency</span>] = <span class="ruby-identifier">seconds</span>
+  <span class="ruby-keyword">self</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- latency-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- latency-method -->
+
+    
+      <div id="method-i-on_change" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">on_change</span><span
+            class="method-args">(directories, options = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Runs the callback passing it the changes if there are any.</p>
+
+<p>@param (see <a
+href="DirectoryRecord.html#method-i-fetch_changes">Listen::DirectoryRecord#fetch_changes</a>)</p>
+
+<p>@see <a
+href="DirectoryRecord.html#method-i-fetch_changes">Listen::DirectoryRecord#fetch_changes</a></p>
+          
+          
+
+          
+          <div class="method-source-code" id="on_change-source">
+            <pre><span class="ruby-comment"># File lib/listen/listener.rb, line 249</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">on_change</span>(<span class="ruby-identifier">directories</span>, <span class="ruby-identifier">options</span> = {})
+  <span class="ruby-identifier">changes</span> = <span class="ruby-identifier">fetch_records_changes</span>(<span class="ruby-identifier">directories</span>, <span class="ruby-identifier">options</span>)
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">changes</span>.<span class="ruby-identifier">values</span>.<span class="ruby-identifier">all?</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">paths</span><span class="ruby-operator">|</span> <span class="ruby-identifier">paths</span>.<span class="ruby-identifier">empty?</span> }
+    <span class="ruby-identifier">block</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">changes</span>[<span class="ruby-value">:modified</span>], <span class="ruby-identifier">changes</span>[<span class="ruby-value">:added</span>], <span class="ruby-identifier">changes</span>[<span class="ruby-value">:removed</span>])
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ex</span>
+  <span class="ruby-constant">Kernel</span>.<span class="ruby-identifier">warn</span> <span class="ruby-node">&quot;[Listen warning]: Change block raise an execption: #{$!}&quot;</span>
+  <span class="ruby-constant">Kernel</span>.<span class="ruby-identifier">warn</span> <span class="ruby-node">&quot;Backtrace:\n\t#{ex.backtrace.join(&quot;\n\t&quot;)}&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- on_change-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- on_change-method -->
+
+    
+      <div id="method-i-pause" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">pause</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Pauses the listener.</p>
+
+<p>@return [Listen::Listener] the listener</p>
+          
+          
+
+          
+          <div class="method-source-code" id="pause-source">
+            <pre><span class="ruby-comment"># File lib/listen/listener.rb, line 79</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">pause</span>
+  <span class="ruby-identifier">adapter</span>.<span class="ruby-identifier">pause</span>
+  <span class="ruby-keyword">self</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- pause-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- pause-method -->
+
+    
+      <div id="method-i-paused-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">paused?</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Returns whether the listener is paused or not.</p>
+
+<p>@return [Boolean] adapter paused status</p>
+          
+          
+
+          
+          <div class="method-source-code" id="paused-3F-source">
+            <pre><span class="ruby-comment"># File lib/listen/listener.rb, line 98</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">paused?</span>
+  <span class="ruby-operator">!</span><span class="ruby-operator">!</span><span class="ruby-identifier">adapter</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">adapter</span>.<span class="ruby-identifier">paused?</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- paused-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- paused-3F-method -->
+
+    
+      <div id="method-i-polling_fallback_message" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">polling_fallback_message</span><span
+            class="method-args">(value)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Defines a custom polling fallback message or disable it.</p>
+
+<p>@example Disabling the polling fallback message</p>
+
+<pre>polling_fallback_message false</pre>
+
+<p>@param [String, Boolean] value to change polling fallback message or remove
+it</p>
+
+<p>@return [Listen::Listener] the listener</p>
+          
+          
+
+          
+          <div class="method-source-code" id="polling_fallback_message-source">
+            <pre><span class="ruby-comment"># File lib/listen/listener.rb, line 223</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">polling_fallback_message</span>(<span class="ruby-identifier">value</span>)
+  <span class="ruby-ivar">@adapter_options</span>[<span class="ruby-value">:polling_fallback_message</span>] = <span class="ruby-identifier">value</span>
+  <span class="ruby-keyword">self</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- polling_fallback_message-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- polling_fallback_message-method -->
+
+    
+      <div id="method-i-relative_paths" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">relative_paths</span><span
+            class="method-args">(value)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Sets whether the paths in the callback should be relative or absolute.</p>
+
+<p>@example Enabling relative paths in the callback</p>
+
+<pre>relative_paths true</pre>
+
+<p>@param [Boolean] value whether to enable relative paths in the callback or
+not</p>
+
+<p>@return [Listen::Listener] the listener</p>
+          
+          
+
+          
+          <div class="method-source-code" id="relative_paths-source">
+            <pre><span class="ruby-comment"># File lib/listen/listener.rb, line 209</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">relative_paths</span>(<span class="ruby-identifier">value</span>)
+  <span class="ruby-ivar">@use_relative_paths</span> = <span class="ruby-identifier">value</span>
+  <span class="ruby-keyword">self</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- relative_paths-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- relative_paths-method -->
+
+    
+      <div id="method-i-start" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">start</span><span
+            class="method-args">(deprecated_blocking = nil)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Starts the listener by initializing the adapter and building the directory
+record concurrently, then it starts the adapter to watch for changes. The
+current thread is not blocked after starting.</p>
+
+<p>@see <a href="Listener.html#method-i-start-21">#start!</a></p>
+          
+          
+
+          
+          <div class="method-source-code" id="start-source">
+            <pre><span class="ruby-comment"># File lib/listen/listener.rb, line 50</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">start</span>(<span class="ruby-identifier">deprecated_blocking</span> = <span class="ruby-keyword">nil</span>)
+  <span class="ruby-constant">Kernel</span>.<span class="ruby-identifier">warn</span> <span class="ruby-node">&quot;[Listen warning]:\n#{BLOCKING_PARAMETER_DEPRECATION_MESSAGE}&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">deprecated_blocking</span>.<span class="ruby-identifier">nil?</span>
+  <span class="ruby-identifier">setup</span>
+  <span class="ruby-identifier">adapter</span>.<span class="ruby-identifier">start</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- start-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- start-method -->
+
+    
+      <div id="method-i-start-21" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">start!</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Starts the listener by initializing the adapter and building the directory
+record concurrently, then it starts the adapter to watch for changes. The
+current thread is blocked after starting.</p>
+
+<p>@see <a href="Listener.html#method-i-start">#start</a></p>
+
+<p>@since 1.0.0</p>
+          
+          
+
+          
+          <div class="method-source-code" id="start-21-source">
+            <pre><span class="ruby-comment"># File lib/listen/listener.rb, line 64</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">start!</span>
+  <span class="ruby-identifier">setup</span>
+  <span class="ruby-identifier">adapter</span>.<span class="ruby-identifier">start!</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- start-21-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- start-21-method -->
+
+    
+      <div id="method-i-stop" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">stop</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Stops the listener.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="stop-source">
+            <pre><span class="ruby-comment"># File lib/listen/listener.rb, line 71</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">stop</span>
+  <span class="ruby-identifier">adapter</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">adapter</span>.<span class="ruby-identifier">stop</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- stop-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- stop-method -->
+
+    
+      <div id="method-i-unpause" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">unpause</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Unpauses the listener.</p>
+
+<p>@return [Listen::Listener] the listener</p>
+          
+          
+
+          
+          <div class="method-source-code" id="unpause-source">
+            <pre><span class="ruby-comment"># File lib/listen/listener.rb, line 88</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">unpause</span>
+  <span class="ruby-identifier">build_directories_records</span>
+  <span class="ruby-identifier">adapter</span>.<span class="ruby-identifier">unpause</span>
+  <span class="ruby-keyword">self</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- unpause-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- unpause-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+     <section id="private-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Private Instance Methods</h3>
+
+    
+      <div id="method-i-build_directories_records" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">build_directories_records</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Build the watched directories&#39; records.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="build_directories_records-source">
+            <pre><span class="ruby-comment"># File lib/listen/listener.rb, line 296</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">build_directories_records</span>
+  <span class="ruby-identifier">directories_records</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span> <span class="ruby-identifier">r</span>.<span class="ruby-identifier">build</span> }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- build_directories_records-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- build_directories_records-method -->
+
+    
+      <div id="method-i-fetch_records_changes" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">fetch_records_changes</span><span
+            class="method-args">(directories_to_search, options)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Returns the sum of all the changes to the directories records</p>
+
+<p>@param (see <a
+href="DirectoryRecord.html#method-i-fetch_changes">Listen::DirectoryRecord#fetch_changes</a>)</p>
+
+<p>@return [Hash] the changes</p>
+          
+          
+
+          
+          <div class="method-source-code" id="fetch_records_changes-source">
+            <pre><span class="ruby-comment"># File lib/listen/listener.rb, line 306</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">fetch_records_changes</span>(<span class="ruby-identifier">directories_to_search</span>, <span class="ruby-identifier">options</span>)
+  <span class="ruby-identifier">directories_records</span>.<span class="ruby-identifier">inject</span>({}) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">h</span>, <span class="ruby-identifier">r</span><span class="ruby-operator">|</span>
+    <span class="ruby-comment"># directory records skips paths outside their range, so passing the</span>
+    <span class="ruby-comment"># whole `directories` array is not a problem.</span>
+    <span class="ruby-identifier">record_changes</span> = <span class="ruby-identifier">r</span>.<span class="ruby-identifier">fetch_changes</span>(<span class="ruby-identifier">directories_to_search</span>, <span class="ruby-identifier">options</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-value">:relative_paths</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">use_relative_paths</span>))
+
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">h</span>.<span class="ruby-identifier">empty?</span>
+      <span class="ruby-identifier">h</span>.<span class="ruby-identifier">merge!</span>(<span class="ruby-identifier">record_changes</span>)
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">h</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">h</span>[<span class="ruby-identifier">k</span>] <span class="ruby-operator">+=</span> <span class="ruby-identifier">record_changes</span>[<span class="ruby-identifier">k</span>] }
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-identifier">h</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- fetch_records_changes-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- fetch_records_changes-method -->
+
+    
+      <div id="method-i-initialize_adapter" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">initialize_adapter</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Initializes an adapter passing it the callback and adapters&#39; options.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="initialize_adapter-source">
+            <pre><span class="ruby-comment"># File lib/listen/listener.rb, line 289</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize_adapter</span>
+  <span class="ruby-identifier">callback</span> = <span class="ruby-identifier">lambda</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">changed_directories</span>, <span class="ruby-identifier">options</span><span class="ruby-operator">|</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">on_change</span>(<span class="ruby-identifier">changed_directories</span>, <span class="ruby-identifier">options</span>) }
+  <span class="ruby-constant">Adapter</span>.<span class="ruby-identifier">select_and_initialize</span>(<span class="ruby-identifier">directories</span>, <span class="ruby-identifier">adapter_options</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">callback</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- initialize_adapter-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- initialize_adapter-method -->
+
+    
+      <div id="method-i-initialize_directories_and_directories_records" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">initialize_directories_and_directories_records</span><span
+            class="method-args">(directories)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Initializes the directories to watch as well as the directories records.</p>
+
+<p>@see <a href="DirectoryRecord.html">Listen::DirectoryRecord</a></p>
+          
+          
+
+          
+          <div class="method-source-code" id="initialize_directories_and_directories_records-source">
+            <pre><span class="ruby-comment"># File lib/listen/listener.rb, line 265</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize_directories_and_directories_records</span>(<span class="ruby-identifier">directories</span>)
+  <span class="ruby-ivar">@directories</span> = <span class="ruby-identifier">directories</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span> <span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">d</span>).<span class="ruby-identifier">realpath</span>.<span class="ruby-identifier">to_s</span> }
+  <span class="ruby-ivar">@directories_records</span> = <span class="ruby-identifier">directories</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span> <span class="ruby-constant">DirectoryRecord</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">d</span>) }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- initialize_directories_and_directories_records-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- initialize_directories_and_directories_records-method -->
+
+    
+      <div id="method-i-initialize_relative_paths_usage" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">initialize_relative_paths_usage</span><span
+            class="method-args">(options)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Initializes whether or not using relative paths.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="initialize_relative_paths_usage-source">
+            <pre><span class="ruby-comment"># File lib/listen/listener.rb, line 272</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize_relative_paths_usage</span>(<span class="ruby-identifier">options</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">directories</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:relative_paths</span>]
+    <span class="ruby-constant">Kernel</span>.<span class="ruby-identifier">warn</span> <span class="ruby-node">&quot;[Listen warning]: #{RELATIVE_PATHS_WITH_MULTIPLE_DIRECTORIES_WARNING_MESSAGE}&quot;</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-ivar">@use_relative_paths</span> = <span class="ruby-identifier">directories</span>.<span class="ruby-identifier">one?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-value">:relative_paths</span>) { <span class="ruby-keyword">false</span> }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- initialize_relative_paths_usage-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- initialize_relative_paths_usage-method -->
+
+    
+      <div id="method-i-setup" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">setup</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Build the directory record concurrently and initialize the adapter.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="setup-source">
+            <pre><span class="ruby-comment"># File lib/listen/listener.rb, line 281</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">setup</span>
+  <span class="ruby-identifier">t</span> = <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">new</span> { <span class="ruby-identifier">build_directories_records</span> }
+  <span class="ruby-ivar">@adapter</span> = <span class="ruby-identifier">initialize_adapter</span>
+  <span class="ruby-identifier">t</span>.<span class="ruby-identifier">join</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- setup-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- setup-method -->
+
+    
+    </section><!-- private-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

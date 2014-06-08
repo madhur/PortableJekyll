@@ -1,0 +1,1222 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Cairo Rendering</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="Pango Reference Manual">
+<link rel="up" href="rendering.html" title="Rendering with Pango">
+<link rel="prev" href="pango-Xft-Fonts-and-Rendering.html" title="Xft Fonts and Rendering">
+<link rel="next" href="pango-ATSUI-Fonts.html" title="ATSUI Fonts">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="pango-Xft-Fonts-and-Rendering.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="rendering.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Pango Reference Manual</th>
+<td><a accesskey="n" href="pango-ATSUI-Fonts.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#pango-Cairo-Rendering.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#pango-Cairo-Rendering.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#pango-Cairo-Rendering.object-hierarchy" class="shortcut">Object Hierarchy</a>
+                   | 
+                  <a href="#pango-Cairo-Rendering.prerequisites" class="shortcut">Prerequisites</a>
+</td></tr>
+</table>
+<div class="refentry">
+<a name="pango-Cairo-Rendering"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="pango-Cairo-Rendering.top_of_page"></a>Cairo Rendering</span></h2>
+<p>Cairo Rendering — Rendering with the Cairo backend</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="pango-Cairo-Rendering.synopsis"></a><h2>Synopsis</h2>
+<a name="PangoCairoFont"></a><a name="PangoCairoFontMap"></a><pre class="synopsis">                    <a class="link" href="pango-Cairo-Rendering.html#PangoCairoFont-struct" title="PangoCairoFont">PangoCairoFont</a>;
+                    <a class="link" href="pango-Cairo-Rendering.html#PangoCairoFontMap-struct" title="PangoCairoFontMap">PangoCairoFontMap</a>;
+<a class="link" href="pango-Fonts.html#PangoFontMap"><span class="returnvalue">PangoFontMap</span></a> *      <a class="link" href="pango-Cairo-Rendering.html#pango-cairo-font-map-get-default" title="pango_cairo_font_map_get_default ()">pango_cairo_font_map_get_default</a>    (<em class="parameter"><code><span class="type">void</span></code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="pango-Cairo-Rendering.html#pango-cairo-font-map-set-default" title="pango_cairo_font_map_set_default ()">pango_cairo_font_map_set_default</a>    (<em class="parameter"><code><a class="link" href="pango-Cairo-Rendering.html#PangoCairoFontMap"><span class="type">PangoCairoFontMap</span></a> *fontmap</code></em>);
+<a class="link" href="pango-Fonts.html#PangoFontMap"><span class="returnvalue">PangoFontMap</span></a> *      <a class="link" href="pango-Cairo-Rendering.html#pango-cairo-font-map-new" title="pango_cairo_font_map_new ()">pango_cairo_font_map_new</a>            (<em class="parameter"><code><span class="type">void</span></code></em>);
+<a class="link" href="pango-Fonts.html#PangoFontMap"><span class="returnvalue">PangoFontMap</span></a> *      <a class="link" href="pango-Cairo-Rendering.html#pango-cairo-font-map-new-for-font-type" title="pango_cairo_font_map_new_for_font_type ()">pango_cairo_font_map_new_for_font_type</a>
+                                                        (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-font-face-t.html#cairo-font-type-t"><span class="type">cairo_font_type_t</span></a> fonttype</code></em>);
+<a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-font-face-t.html#cairo-font-type-t"><span class="returnvalue">cairo_font_type_t</span></a>   <a class="link" href="pango-Cairo-Rendering.html#pango-cairo-font-map-get-font-type" title="pango_cairo_font_map_get_font_type ()">pango_cairo_font_map_get_font_type</a>  (<em class="parameter"><code><a class="link" href="pango-Cairo-Rendering.html#PangoCairoFontMap"><span class="type">PangoCairoFontMap</span></a> *fontmap</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="pango-Cairo-Rendering.html#pango-cairo-font-map-set-resolution" title="pango_cairo_font_map_set_resolution ()">pango_cairo_font_map_set_resolution</a> (<em class="parameter"><code><a class="link" href="pango-Cairo-Rendering.html#PangoCairoFontMap"><span class="type">PangoCairoFontMap</span></a> *fontmap</code></em>,
+                                                         <em class="parameter"><code><span class="type">double</span> dpi</code></em>);
+<span class="returnvalue">double</span>              <a class="link" href="pango-Cairo-Rendering.html#pango-cairo-font-map-get-resolution" title="pango_cairo_font_map_get_resolution ()">pango_cairo_font_map_get_resolution</a> (<em class="parameter"><code><a class="link" href="pango-Cairo-Rendering.html#PangoCairoFontMap"><span class="type">PangoCairoFontMap</span></a> *fontmap</code></em>);
+<a class="link" href="pango-Text-Processing.html#PangoContext"><span class="returnvalue">PangoContext</span></a> *      <a class="link" href="pango-Cairo-Rendering.html#pango-cairo-font-map-create-context" title="pango_cairo_font_map_create_context ()">pango_cairo_font_map_create_context</a> (<em class="parameter"><code><a class="link" href="pango-Cairo-Rendering.html#PangoCairoFontMap"><span class="type">PangoCairoFontMap</span></a> *fontmap</code></em>);
+<a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-scaled-font-t.html#cairo-scaled-font-t"><span class="returnvalue">cairo_scaled_font_t</span></a> * <a class="link" href="pango-Cairo-Rendering.html#pango-cairo-font-get-scaled-font" title="pango_cairo_font_get_scaled_font ()">pango_cairo_font_get_scaled_font</a>  (<em class="parameter"><code><a class="link" href="pango-Cairo-Rendering.html#PangoCairoFont"><span class="type">PangoCairoFont</span></a> *font</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="pango-Cairo-Rendering.html#pango-cairo-context-set-resolution" title="pango_cairo_context_set_resolution ()">pango_cairo_context_set_resolution</a>  (<em class="parameter"><code><a class="link" href="pango-Text-Processing.html#PangoContext"><span class="type">PangoContext</span></a> *context</code></em>,
+                                                         <em class="parameter"><code><span class="type">double</span> dpi</code></em>);
+<span class="returnvalue">double</span>              <a class="link" href="pango-Cairo-Rendering.html#pango-cairo-context-get-resolution" title="pango_cairo_context_get_resolution ()">pango_cairo_context_get_resolution</a>  (<em class="parameter"><code><a class="link" href="pango-Text-Processing.html#PangoContext"><span class="type">PangoContext</span></a> *context</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="pango-Cairo-Rendering.html#pango-cairo-context-set-font-options" title="pango_cairo_context_set_font_options ()">pango_cairo_context_set_font_options</a>
+                                                        (<em class="parameter"><code><a class="link" href="pango-Text-Processing.html#PangoContext"><span class="type">PangoContext</span></a> *context</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-font-options-t.html#cairo-font-options-t"><span class="type">cairo_font_options_t</span></a> *options</code></em>);
+const <a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-font-options-t.html#cairo-font-options-t"><span class="returnvalue">cairo_font_options_t</span></a> * <a class="link" href="pango-Cairo-Rendering.html#pango-cairo-context-get-font-options" title="pango_cairo_context_get_font_options ()">pango_cairo_context_get_font_options</a>
+                                                        (<em class="parameter"><code><a class="link" href="pango-Text-Processing.html#PangoContext"><span class="type">PangoContext</span></a> *context</code></em>);
+<span class="returnvalue">void</span>                (<a class="link" href="pango-Cairo-Rendering.html#PangoCairoShapeRendererFunc" title="PangoCairoShapeRendererFunc ()">*PangoCairoShapeRendererFunc</a>)      (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-t.html#cairo-t"><span class="type">cairo_t</span></a> *cr</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Text-Attributes.html#PangoAttrShape" title="struct PangoAttrShape"><span class="type">PangoAttrShape</span></a> *attr</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> do_path</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> data</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="pango-Cairo-Rendering.html#pango-cairo-context-set-shape-renderer" title="pango_cairo_context_set_shape_renderer ()">pango_cairo_context_set_shape_renderer</a>
+                                                        (<em class="parameter"><code><a class="link" href="pango-Text-Processing.html#PangoContext"><span class="type">PangoContext</span></a> *context</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Cairo-Rendering.html#PangoCairoShapeRendererFunc" title="PangoCairoShapeRendererFunc ()"><span class="type">PangoCairoShapeRendererFunc</span></a> func</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> data</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> dnotify</code></em>);
+<a class="link" href="pango-Cairo-Rendering.html#PangoCairoShapeRendererFunc" title="PangoCairoShapeRendererFunc ()"><span class="returnvalue">PangoCairoShapeRendererFunc</span></a> <a class="link" href="pango-Cairo-Rendering.html#pango-cairo-context-get-shape-renderer" title="pango_cairo_context_get_shape_renderer ()">pango_cairo_context_get_shape_renderer</a>
+                                                        (<em class="parameter"><code><a class="link" href="pango-Text-Processing.html#PangoContext"><span class="type">PangoContext</span></a> *context</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> *data</code></em>);
+<a class="link" href="pango-Text-Processing.html#PangoContext"><span class="returnvalue">PangoContext</span></a> *      <a class="link" href="pango-Cairo-Rendering.html#pango-cairo-create-context" title="pango_cairo_create_context ()">pango_cairo_create_context</a>          (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-t.html#cairo-t"><span class="type">cairo_t</span></a> *cr</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="pango-Cairo-Rendering.html#pango-cairo-update-context" title="pango_cairo_update_context ()">pango_cairo_update_context</a>          (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-t.html#cairo-t"><span class="type">cairo_t</span></a> *cr</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Text-Processing.html#PangoContext"><span class="type">PangoContext</span></a> *context</code></em>);
+<a class="link" href="pango-Layout-Objects.html#PangoLayout"><span class="returnvalue">PangoLayout</span></a> *       <a class="link" href="pango-Cairo-Rendering.html#pango-cairo-create-layout" title="pango_cairo_create_layout ()">pango_cairo_create_layout</a>           (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-t.html#cairo-t"><span class="type">cairo_t</span></a> *cr</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="pango-Cairo-Rendering.html#pango-cairo-update-layout" title="pango_cairo_update_layout ()">pango_cairo_update_layout</a>           (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-t.html#cairo-t"><span class="type">cairo_t</span></a> *cr</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Layout-Objects.html#PangoLayout"><span class="type">PangoLayout</span></a> *layout</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="pango-Cairo-Rendering.html#pango-cairo-show-glyph-string" title="pango_cairo_show_glyph_string ()">pango_cairo_show_glyph_string</a>       (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-t.html#cairo-t"><span class="type">cairo_t</span></a> *cr</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Fonts.html#PangoFont"><span class="type">PangoFont</span></a> *font</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Glyph-Storage.html#PangoGlyphString"><span class="type">PangoGlyphString</span></a> *glyphs</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="pango-Cairo-Rendering.html#pango-cairo-show-glyph-item" title="pango_cairo_show_glyph_item ()">pango_cairo_show_glyph_item</a>         (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-t.html#cairo-t"><span class="type">cairo_t</span></a> *cr</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *text</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Glyph-Storage.html#PangoGlyphItem"><span class="type">PangoGlyphItem</span></a> *glyph_item</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="pango-Cairo-Rendering.html#pango-cairo-show-layout-line" title="pango_cairo_show_layout_line ()">pango_cairo_show_layout_line</a>        (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-t.html#cairo-t"><span class="type">cairo_t</span></a> *cr</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Layout-Objects.html#PangoLayoutLine"><span class="type">PangoLayoutLine</span></a> *line</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="pango-Cairo-Rendering.html#pango-cairo-show-layout" title="pango_cairo_show_layout ()">pango_cairo_show_layout</a>             (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-t.html#cairo-t"><span class="type">cairo_t</span></a> *cr</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Layout-Objects.html#PangoLayout"><span class="type">PangoLayout</span></a> *layout</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="pango-Cairo-Rendering.html#pango-cairo-show-error-underline" title="pango_cairo_show_error_underline ()">pango_cairo_show_error_underline</a>    (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-t.html#cairo-t"><span class="type">cairo_t</span></a> *cr</code></em>,
+                                                         <em class="parameter"><code><span class="type">double</span> x</code></em>,
+                                                         <em class="parameter"><code><span class="type">double</span> y</code></em>,
+                                                         <em class="parameter"><code><span class="type">double</span> width</code></em>,
+                                                         <em class="parameter"><code><span class="type">double</span> height</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="pango-Cairo-Rendering.html#pango-cairo-glyph-string-path" title="pango_cairo_glyph_string_path ()">pango_cairo_glyph_string_path</a>       (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-t.html#cairo-t"><span class="type">cairo_t</span></a> *cr</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Fonts.html#PangoFont"><span class="type">PangoFont</span></a> *font</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Glyph-Storage.html#PangoGlyphString"><span class="type">PangoGlyphString</span></a> *glyphs</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="pango-Cairo-Rendering.html#pango-cairo-layout-line-path" title="pango_cairo_layout_line_path ()">pango_cairo_layout_line_path</a>        (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-t.html#cairo-t"><span class="type">cairo_t</span></a> *cr</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Layout-Objects.html#PangoLayoutLine"><span class="type">PangoLayoutLine</span></a> *line</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="pango-Cairo-Rendering.html#pango-cairo-layout-path" title="pango_cairo_layout_path ()">pango_cairo_layout_path</a>             (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-t.html#cairo-t"><span class="type">cairo_t</span></a> *cr</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Layout-Objects.html#PangoLayout"><span class="type">PangoLayout</span></a> *layout</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="pango-Cairo-Rendering.html#pango-cairo-error-underline-path" title="pango_cairo_error_underline_path ()">pango_cairo_error_underline_path</a>    (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-t.html#cairo-t"><span class="type">cairo_t</span></a> *cr</code></em>,
+                                                         <em class="parameter"><code><span class="type">double</span> x</code></em>,
+                                                         <em class="parameter"><code><span class="type">double</span> y</code></em>,
+                                                         <em class="parameter"><code><span class="type">double</span> width</code></em>,
+                                                         <em class="parameter"><code><span class="type">double</span> height</code></em>);
+</pre>
+</div>
+<div class="refsect1">
+<a name="pango-Cairo-Rendering.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  GInterface
+   +----PangoCairoFont
+</pre>
+<pre class="synopsis">
+  GInterface
+   +----PangoCairoFontMap
+</pre>
+</div>
+<div class="refsect1">
+<a name="pango-Cairo-Rendering.prerequisites"></a><h2>Prerequisites</h2>
+<p>
+PangoCairoFont requires
+ <a class="link" href="pango-Fonts.html#PangoFont">PangoFont</a>.</p>
+<p>
+PangoCairoFontMap requires
+ <a class="link" href="pango-Fonts.html#PangoFontMap">PangoFontMap</a>.</p>
+</div>
+<div class="refsect1">
+<a name="pango-Cairo-Rendering.description"></a><h2>Description</h2>
+<p>
+The <a class="ulink" href="http://cairographics.org" target="_top">Cairo library</a> is a
+vector graphics library with a powerful rendering model. It has such
+features as anti-aliased primitives, alpha-compositing, and
+gradients. Multiple backends for Cairo are available, to allow
+rendering to images, to PDF files, and to the screen on X and on other
+windowing systems. The functions in this section allow using Pango
+to render to Cairo surfaces.
+</p>
+<p>
+Using Pango with Cairo is straightforward. A <a class="link" href="pango-Text-Processing.html#PangoContext"><span class="type">PangoContext</span></a> created
+with <a class="link" href="pango-Cairo-Rendering.html#pango-cairo-font-map-create-context" title="pango_cairo_font_map_create_context ()"><code class="function">pango_cairo_font_map_create_context()</code></a> can be used on any
+Cairo context (cairo_t), but needs to be updated to match the
+current transformation matrix and target surface of the Cairo context
+using <a class="link" href="pango-Cairo-Rendering.html#pango-cairo-update-context" title="pango_cairo_update_context ()"><code class="function">pango_cairo_update_context()</code></a>. The convenience functions
+<a class="link" href="pango-Cairo-Rendering.html#pango-cairo-create-layout" title="pango_cairo_create_layout ()"><code class="function">pango_cairo_create_layout()</code></a> and <a class="link" href="pango-Cairo-Rendering.html#pango-cairo-update-layout" title="pango_cairo_update_layout ()"><code class="function">pango_cairo_update_layout()</code></a> handle
+the common case where the program doesn't need to manipulate the
+properties of the <a class="link" href="pango-Text-Processing.html#PangoContext"><span class="type">PangoContext</span></a>.
+</p>
+<p>
+When you get the metrics of a layout or of a piece of a layout using
+functions such as <a class="link" href="pango-Layout-Objects.html#pango-layout-get-extents" title="pango_layout_get_extents ()"><code class="function">pango_layout_get_extents()</code></a>, the reported metrics
+are in user-space coordinates. If a piece of text is 10 units long,
+and you call cairo_scale (cr, 2.0), it still is more-or-less 10
+units long. However, the results will be affected by hinting
+(that is, the process of adjusting the text to look good on the
+pixel grid), so you shouldn't assume they are completely independent
+of the current transformation matrix. Note that the basic metrics
+functions in Pango report results in integer Pango units. To get
+to the floating point units used in Cairo divide by <a class="link" href="pango-Glyph-Storage.html#PANGO-SCALE:CAPS" title="PANGO_SCALE"><code class="literal">PANGO_SCALE</code></a>.
+</p>
+<div class="example">
+<a name="rotated-example"></a><p class="title"><b>Example 1. Using Pango with Cairo</b></p>
+<div class="example-contents">
+  <table class="listing_frame" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+      <tr>
+        <td class="listing_lines" align="right"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69</pre></td>
+        <td class="listing_code"><pre class="programlisting"><span class="preproc">#include</span><span class="normal"> </span><span class="string">&lt;math.h&gt;</span>
+<span class="preproc">#include</span><span class="normal"> </span><span class="string">&lt;pango/pangocairo.h&gt;</span>
+<span class="keyword">static</span><span class="normal"> </span><span class="type">void</span>
+<span class="function">draw_text</span><span class="normal"> </span><span class="symbol">(</span><span class="usertype">cairo_t</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">cr</span><span class="symbol">)</span>
+<span class="cbracket">{</span>
+<span class="preproc">#define</span><span class="normal"> RADIUS </span><span class="number">150</span>
+<span class="preproc">#define</span><span class="normal"> N_WORDS </span><span class="number">10</span>
+<span class="preproc">#define</span><span class="normal"> FONT </span><span class="string">"Sans Bold 27"</span>
+<span class="normal">  </span><span class="usertype">PangoLayout</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">layout</span><span class="symbol">;</span>
+<span class="normal">  </span><span class="usertype">PangoFontDescription</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">desc</span><span class="symbol">;</span>
+<span class="normal">  </span><span class="type">int</span><span class="normal"> i</span><span class="symbol">;</span>
+<span class="normal">  </span><span class="comment">/* Center coordinates on the middle of the region we are drawing</span>
+<span class="comment">   */</span>
+<span class="normal">  </span><span class="function"><a href="/usr/share/gtk-doc/html/cairo/cairo-Transformations.html#cairo-translate">cairo_translate</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">cr</span><span class="symbol">,</span><span class="normal"> RADIUS</span><span class="symbol">,</span><span class="normal"> RADIUS</span><span class="symbol">);</span>
+<span class="normal">  </span><span class="comment">/* Create a PangoLayout, set the font and text */</span>
+<span class="normal">  layout </span><span class="symbol">=</span><span class="normal"> </span><span class="function"><a href="pango-Cairo-Rendering.html#pango-cairo-create-layout">pango_cairo_create_layout</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">cr</span><span class="symbol">);</span>
+<span class="normal">  </span><span class="function"><a href="pango-Layout-Objects.html#pango-layout-set-text">pango_layout_set_text</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">layout</span><span class="symbol">,</span><span class="normal"> </span><span class="string">"Text"</span><span class="symbol">,</span><span class="normal"> </span><span class="symbol">-</span><span class="number">1</span><span class="symbol">);</span>
+<span class="normal">  desc </span><span class="symbol">=</span><span class="normal"> </span><span class="function"><a href="pango-Fonts.html#pango-font-description-from-string">pango_font_description_from_string</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">FONT</span><span class="symbol">);</span>
+<span class="normal">  </span><span class="function"><a href="pango-Layout-Objects.html#pango-layout-set-font-description">pango_layout_set_font_description</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">layout</span><span class="symbol">,</span><span class="normal"> desc</span><span class="symbol">);</span>
+<span class="normal">  </span><span class="function"><a href="pango-Fonts.html#pango-font-description-free">pango_font_description_free</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">desc</span><span class="symbol">);</span>
+<span class="normal">  </span><span class="comment">/* Draw the layout N_WORDS times in a circle */</span>
+<span class="normal">  </span><span class="keyword">for</span><span class="normal"> </span><span class="symbol">(</span><span class="normal">i </span><span class="symbol">=</span><span class="normal"> </span><span class="number">0</span><span class="symbol">;</span><span class="normal"> i </span><span class="symbol">&lt;</span><span class="normal"> N_WORDS</span><span class="symbol">;</span><span class="normal"> i</span><span class="symbol">++)</span>
+<span class="normal">    </span><span class="cbracket">{</span>
+<span class="normal">      </span><span class="type">int</span><span class="normal"> width</span><span class="symbol">,</span><span class="normal"> height</span><span class="symbol">;</span>
+<span class="normal">      </span><span class="type">double</span><span class="normal"> angle </span><span class="symbol">=</span><span class="normal"> </span><span class="symbol">(</span><span class="number">360</span><span class="symbol">.</span><span class="normal"> </span><span class="symbol">*</span><span class="normal"> i</span><span class="symbol">)</span><span class="normal"> </span><span class="symbol">/</span><span class="normal"> N_WORDS</span><span class="symbol">;</span>
+<span class="normal">      </span><span class="type">double</span><span class="normal"> red</span><span class="symbol">;</span>
+<span class="normal">      </span><span class="function"><a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-t.html#cairo-save">cairo_save</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">cr</span><span class="symbol">);</span>
+<span class="normal">      </span><span class="comment">/* Gradient from red at angle == 60 to blue at angle == 240 */</span>
+<span class="normal">      red   </span><span class="symbol">=</span><span class="normal"> </span><span class="symbol">(</span><span class="number">1</span><span class="normal"> </span><span class="symbol">+</span><span class="normal"> </span><span class="function">cos</span><span class="normal"> </span><span class="symbol">((</span><span class="normal">angle </span><span class="symbol">-</span><span class="normal"> </span><span class="number">60</span><span class="symbol">)</span><span class="normal"> </span><span class="symbol">*</span><span class="normal"> <a href="http://library.gnome.org/devel/glib/unstable/glib-Numerical-Definitions.html#G-PI:CAPS">G_PI</a> </span><span class="symbol">/</span><span class="normal"> </span><span class="number">180</span><span class="symbol">.))</span><span class="normal"> </span><span class="symbol">/</span><span class="normal"> </span><span class="number">2</span><span class="symbol">;</span>
+<span class="normal">      </span><span class="function"><a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-t.html#cairo-set-source-rgb">cairo_set_source_rgb</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">cr</span><span class="symbol">,</span><span class="normal"> red</span><span class="symbol">,</span><span class="normal"> </span><span class="number">0</span><span class="symbol">,</span><span class="normal"> </span><span class="number">1.0</span><span class="normal"> </span><span class="symbol">-</span><span class="normal"> red</span><span class="symbol">);</span>
+<span class="normal">      </span><span class="function"><a href="/usr/share/gtk-doc/html/cairo/cairo-Transformations.html#cairo-rotate">cairo_rotate</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">cr</span><span class="symbol">,</span><span class="normal"> angle </span><span class="symbol">*</span><span class="normal"> <a href="http://library.gnome.org/devel/glib/unstable/glib-Numerical-Definitions.html#G-PI:CAPS">G_PI</a> </span><span class="symbol">/</span><span class="normal"> </span><span class="number">180</span><span class="symbol">.);</span>
+<span class="normal">      </span><span class="comment">/* Inform Pango to re-layout the text with the new transformation */</span>
+<span class="normal">      </span><span class="function"><a href="pango-Cairo-Rendering.html#pango-cairo-update-layout">pango_cairo_update_layout</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">cr</span><span class="symbol">,</span><span class="normal"> layout</span><span class="symbol">);</span>
+<span class="normal">      </span><span class="function"><a href="pango-Layout-Objects.html#pango-layout-get-size">pango_layout_get_size</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">layout</span><span class="symbol">,</span><span class="normal"> </span><span class="symbol">&amp;</span><span class="normal">width</span><span class="symbol">,</span><span class="normal"> </span><span class="symbol">&amp;</span><span class="normal">height</span><span class="symbol">);</span>
+<span class="normal">      </span><span class="function"><a href="/usr/share/gtk-doc/html/cairo/cairo-Paths.html#cairo-move-to">cairo_move_to</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">cr</span><span class="symbol">,</span><span class="normal"> </span><span class="symbol">-</span><span class="normal"> </span><span class="symbol">((</span><span class="type">double</span><span class="symbol">)</span><span class="normal">width </span><span class="symbol">/</span><span class="normal"> <a href="pango-Glyph-Storage.html#PANGO-SCALE:CAPS">PANGO_SCALE</a></span><span class="symbol">)</span><span class="normal"> </span><span class="symbol">/</span><span class="normal"> </span><span class="number">2</span><span class="symbol">,</span><span class="normal"> </span><span class="symbol">-</span><span class="normal"> RADIUS</span><span class="symbol">);</span>
+<span class="normal">      </span><span class="function"><a href="pango-Cairo-Rendering.html#pango-cairo-show-layout">pango_cairo_show_layout</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">cr</span><span class="symbol">,</span><span class="normal"> layout</span><span class="symbol">);</span>
+<span class="normal">      </span><span class="function"><a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-t.html#cairo-restore">cairo_restore</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">cr</span><span class="symbol">);</span>
+<span class="normal">    </span><span class="cbracket">}</span>
+<span class="normal">  </span><span class="comment">/* free the layout object */</span>
+<span class="normal">  </span><span class="function"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref">g_object_unref</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">layout</span><span class="symbol">);</span>
+<span class="cbracket">}</span>
+<span class="type">int</span><span class="normal"> </span><span class="function">main</span><span class="normal"> </span><span class="symbol">(</span><span class="type">int</span><span class="normal"> argc</span><span class="symbol">,</span><span class="normal"> </span><span class="type">char</span><span class="normal"> </span><span class="symbol">**</span><span class="normal">argv</span><span class="symbol">)</span>
+<span class="cbracket">{</span>
+<span class="normal">  </span><span class="usertype">cairo_t</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">cr</span><span class="symbol">;</span>
+<span class="normal">  </span><span class="type">char</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">filename</span><span class="symbol">;</span>
+<span class="normal">  </span><span class="usertype">cairo_status_t</span><span class="normal"> status</span><span class="symbol">;</span>
+<span class="normal">  </span><span class="usertype">cairo_surface_t</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">surface</span><span class="symbol">;</span>
+<span class="normal">  </span><span class="keyword">if</span><span class="normal"> </span><span class="symbol">(</span><span class="normal">argc </span><span class="symbol">!=</span><span class="normal"> </span><span class="number">2</span><span class="symbol">)</span>
+<span class="normal">    </span><span class="cbracket">{</span>
+<span class="normal">      </span><span class="function"><a href="http://library.gnome.org/devel/glib/unstable/glib-Warnings-and-Assertions.html#g-printerr">g_printerr</a></span><span class="normal"> </span><span class="symbol">(</span><span class="string">"Usage: cairosimple OUTPUT_FILENAME</span><span class="specialchar">\n</span><span class="string">"</span><span class="symbol">);</span>
+<span class="normal">      </span><span class="keyword">return</span><span class="normal"> </span><span class="number">1</span><span class="symbol">;</span>
+<span class="normal">    </span><span class="cbracket">}</span>
+<span class="normal">  filename </span><span class="symbol">=</span><span class="normal"> argv</span><span class="symbol">[</span><span class="number">1</span><span class="symbol">];</span>
+<span class="normal">  surface </span><span class="symbol">=</span><span class="normal"> </span><span class="function"><a href="/usr/share/gtk-doc/html/cairo/cairo-Image-Surfaces.html#cairo-image-surface-create">cairo_image_surface_create</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal"><a href="/usr/share/gtk-doc/html/cairo/cairo-Image-Surfaces.html#CAIRO-FORMAT-ARGB32:CAPS">CAIRO_FORMAT_ARGB32</a></span><span class="symbol">,</span>
+<span class="normal">                    </span><span class="number">2</span><span class="normal"> </span><span class="symbol">*</span><span class="normal"> RADIUS</span><span class="symbol">,</span><span class="normal"> </span><span class="number">2</span><span class="normal"> </span><span class="symbol">*</span><span class="normal"> RADIUS</span><span class="symbol">);</span>
+<span class="normal">  cr </span><span class="symbol">=</span><span class="normal"> </span><span class="function"><a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-t.html#cairo-create">cairo_create</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">surface</span><span class="symbol">);</span>
+<span class="normal">  </span><span class="function"><a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-t.html#cairo-set-source-rgb">cairo_set_source_rgb</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">cr</span><span class="symbol">,</span><span class="normal"> </span><span class="number">1.0</span><span class="symbol">,</span><span class="normal"> </span><span class="number">1.0</span><span class="symbol">,</span><span class="normal"> </span><span class="number">1.0</span><span class="symbol">);</span>
+<span class="normal">  </span><span class="function"><a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-t.html#cairo-paint">cairo_paint</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">cr</span><span class="symbol">);</span>
+<span class="normal">  </span><span class="function">draw_text</span><span class="normal"> </span><span class="symbol">(</span><span class="normal">cr</span><span class="symbol">);</span>
+<span class="normal">  </span><span class="function"><a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-t.html#cairo-destroy">cairo_destroy</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">cr</span><span class="symbol">);</span>
+<span class="normal">  status </span><span class="symbol">=</span><span class="normal"> </span><span class="function"><a href="/usr/share/gtk-doc/html/cairo/cairo-PNG-Support.html#cairo-surface-write-to-png">cairo_surface_write_to_png</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">surface</span><span class="symbol">,</span><span class="normal"> filename</span><span class="symbol">);</span>
+<span class="normal">  </span><span class="function"><a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-surface-t.html#cairo-surface-destroy">cairo_surface_destroy</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">surface</span><span class="symbol">);</span>
+<span class="normal">  </span><span class="keyword">if</span><span class="normal"> </span><span class="symbol">(</span><span class="normal">status </span><span class="symbol">!=</span><span class="normal"> <a href="/usr/share/gtk-doc/html/cairo/cairo-Error-handling.html#CAIRO-STATUS-SUCCESS:CAPS">CAIRO_STATUS_SUCCESS</a></span><span class="symbol">)</span>
+<span class="normal">    </span><span class="cbracket">{</span>
+<span class="normal">      </span><span class="function"><a href="http://library.gnome.org/devel/glib/unstable/glib-Warnings-and-Assertions.html#g-printerr">g_printerr</a></span><span class="normal"> </span><span class="symbol">(</span><span class="string">"Could not save png to '%s'</span><span class="specialchar">\n</span><span class="string">"</span><span class="symbol">,</span><span class="normal"> filename</span><span class="symbol">);</span>
+<span class="normal">      </span><span class="keyword">return</span><span class="normal"> </span><span class="number">1</span><span class="symbol">;</span>
+<span class="normal">    </span><span class="cbracket">}</span>
+<span class="normal">  </span><span class="keyword">return</span><span class="normal"> </span><span class="number">0</span><span class="symbol">;</span>
+<span class="cbracket">}</span></pre></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+</div>
+<br class="example-break"><div class="figure">
+<a name="rotated-example-output"></a><p class="title"><b>Figure 2. Output of <a class="xref" href="pango-Cairo-Rendering.html#rotated-example" title="Example 1. Using Pango with Cairo">Example 1, “Using Pango with Cairo”</a></b></p>
+<div class="figure-contents"><div><img src="rotated-text.png" alt="Output of"></div></div>
+</div>
+<br class="figure-break">
+</div>
+<div class="refsect1">
+<a name="pango-Cairo-Rendering.details"></a><h2>Details</h2>
+<div class="refsect2">
+<a name="PangoCairoFont-struct"></a><h3>PangoCairoFont</h3>
+<pre class="programlisting">typedef struct _PangoCairoFont PangoCairoFont;</pre>
+<p>
+<a class="link" href="pango-Cairo-Rendering.html#PangoCairoFont"><span class="type">PangoCairoFont</span></a> is an interface exported by fonts for
+use with Cairo. The actual type of the font will depend
+on the particular font technology Cairo was compiled to use.
+</p>
+<p class="since">Since 1.18</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="PangoCairoFontMap-struct"></a><h3>PangoCairoFontMap</h3>
+<pre class="programlisting">typedef struct _PangoCairoFontMap PangoCairoFontMap;</pre>
+<p>
+<a class="link" href="pango-Cairo-Rendering.html#PangoCairoFontMap"><span class="type">PangoCairoFontMap</span></a> is an interface exported by font maps for
+use with Cairo. The actual type of the font map will depend
+on the particular font technology Cairo was compiled to use.
+</p>
+<p class="since">Since 1.10</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-cairo-font-map-get-default"></a><h3>pango_cairo_font_map_get_default ()</h3>
+<pre class="programlisting"><a class="link" href="pango-Fonts.html#PangoFontMap"><span class="returnvalue">PangoFontMap</span></a> *      pango_cairo_font_map_get_default    (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+Gets a default <a class="link" href="pango-Cairo-Rendering.html#PangoCairoFontMap"><span class="type">PangoCairoFontMap</span></a> to use with Cairo.
+</p>
+<p>
+Note that the type of the returned object will depend
+on the particular font backend Cairo was compiled to use;
+You generally should only use the <a class="link" href="pango-Fonts.html#PangoFontMap"><span class="type">PangoFontMap</span></a> and
+<a class="link" href="pango-Cairo-Rendering.html#PangoCairoFontMap"><span class="type">PangoCairoFontMap</span></a> interfaces on the returned object.
+</p>
+<p>
+The default Cairo fontmap can be changed by using
+<a class="link" href="pango-Cairo-Rendering.html#pango-cairo-font-map-set-default" title="pango_cairo_font_map_set_default ()"><code class="function">pango_cairo_font_map_set_default()</code></a>.  This can be used to
+change the Cairo font backend that the default fontmap
+uses for example.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the default Cairo fontmap
+for Pango. This object is owned by Pango and must not be freed. <span class="annotation">[<a href="http://foldoc.org/transfer%20none"><span class="acronym">transfer none</span></a>]</span>
+</td>
+</tr></tbody>
+</table></div>
+<p class="since">Since 1.10</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-cairo-font-map-set-default"></a><h3>pango_cairo_font_map_set_default ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                pango_cairo_font_map_set_default    (<em class="parameter"><code><a class="link" href="pango-Cairo-Rendering.html#PangoCairoFontMap"><span class="type">PangoCairoFontMap</span></a> *fontmap</code></em>);</pre>
+<p>
+Sets a default <a class="link" href="pango-Cairo-Rendering.html#PangoCairoFontMap"><span class="type">PangoCairoFontMap</span></a> to use with Cairo.
+</p>
+<p>
+This can be used to change the Cairo font backend that the
+default fontmap uses for example.  The old default font map
+is unreffed and the new font map referenced.
+</p>
+<p>
+A value of <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> for <em class="parameter"><code>fontmap</code></em> will cause the current default
+font map to be released and a new default font
+map to be created on demand, using <a class="link" href="pango-Cairo-Rendering.html#pango-cairo-font-map-new" title="pango_cairo_font_map_new ()"><code class="function">pango_cairo_font_map_new()</code></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>fontmap</code></em> :</span></p></td>
+<td>The new default font map, or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>
+</td>
+</tr></tbody>
+</table></div>
+<p class="since">Since 1.22</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-cairo-font-map-new"></a><h3>pango_cairo_font_map_new ()</h3>
+<pre class="programlisting"><a class="link" href="pango-Fonts.html#PangoFontMap"><span class="returnvalue">PangoFontMap</span></a> *      pango_cairo_font_map_new            (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+Creates a new <a class="link" href="pango-Cairo-Rendering.html#PangoCairoFontMap"><span class="type">PangoCairoFontMap</span></a> object; a fontmap is used
+to cache information about available fonts, and holds
+certain global parameters such as the resolution.
+In most cases, you can use <a class="link" href="pango-Cairo-Rendering.html#pango-cairo-font-map-get-default" title="pango_cairo_font_map_get_default ()"><code class="function">pango_cairo_font_map_get_default()</code></a>
+instead.
+</p>
+<p>
+Note that the type of the returned object will depend
+on the particular font backend Cairo was compiled to use;
+You generally should only use the <a class="link" href="pango-Fonts.html#PangoFontMap"><span class="type">PangoFontMap</span></a> and
+<a class="link" href="pango-Cairo-Rendering.html#PangoCairoFontMap"><span class="type">PangoCairoFontMap</span></a> interfaces on the returned object.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the newly allocated <a class="link" href="pango-Fonts.html#PangoFontMap"><span class="type">PangoFontMap</span></a>,
+which should be freed with <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a>. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>]</span>
+</td>
+</tr></tbody>
+</table></div>
+<p class="since">Since 1.10</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-cairo-font-map-new-for-font-type"></a><h3>pango_cairo_font_map_new_for_font_type ()</h3>
+<pre class="programlisting"><a class="link" href="pango-Fonts.html#PangoFontMap"><span class="returnvalue">PangoFontMap</span></a> *      pango_cairo_font_map_new_for_font_type
+                                                        (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-font-face-t.html#cairo-font-type-t"><span class="type">cairo_font_type_t</span></a> fonttype</code></em>);</pre>
+<p>
+Creates a new <a class="link" href="pango-Cairo-Rendering.html#PangoCairoFontMap"><span class="type">PangoCairoFontMap</span></a> object of the type suitable
+to be used with cairo font backend of type <em class="parameter"><code>fonttype</code></em>.
+</p>
+<p>
+In most cases one should simply use <em class="parameter"><code><a class="link" href="pango-Cairo-Rendering.html#pango-cairo-font-map-new" title="pango_cairo_font_map_new ()"><code class="function">pango_cairo_font_map_new()</code></a></code></em>,
+or in fact in most of those cases, just use
+<em class="parameter"><code><a class="link" href="pango-Cairo-Rendering.html#pango-cairo-font-map-get-default" title="pango_cairo_font_map_get_default ()"><code class="function">pango_cairo_font_map_get_default()</code></a></code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>fonttype</code></em> :</span></p></td>
+<td>desired <a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-font-face-t.html#cairo-font-type-t"><span class="type">cairo_font_type_t</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>(transfer full) : the newly allocated <a class="link" href="pango-Fonts.html#PangoFontMap"><span class="type">PangoFontMap</span></a>
+of suitable type which should be freed with
+<a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a>, or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> if the requested cairo
+font backend is not supported / compiled in.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.18</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-cairo-font-map-get-font-type"></a><h3>pango_cairo_font_map_get_font_type ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-font-face-t.html#cairo-font-type-t"><span class="returnvalue">cairo_font_type_t</span></a>   pango_cairo_font_map_get_font_type  (<em class="parameter"><code><a class="link" href="pango-Cairo-Rendering.html#PangoCairoFontMap"><span class="type">PangoCairoFontMap</span></a> *fontmap</code></em>);</pre>
+<p>
+Gets the type of Cairo font backend that <em class="parameter"><code>fontmap</code></em> uses.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>fontmap</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-Cairo-Rendering.html#PangoCairoFontMap"><span class="type">PangoCairoFontMap</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the <a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-font-face-t.html#cairo-font-type-t"><span class="type">cairo_font_type_t</span></a> cairo font backend type</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.18</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-cairo-font-map-set-resolution"></a><h3>pango_cairo_font_map_set_resolution ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                pango_cairo_font_map_set_resolution (<em class="parameter"><code><a class="link" href="pango-Cairo-Rendering.html#PangoCairoFontMap"><span class="type">PangoCairoFontMap</span></a> *fontmap</code></em>,
+                                                         <em class="parameter"><code><span class="type">double</span> dpi</code></em>);</pre>
+<p>
+Sets the resolution for the fontmap. This is a scale factor between
+points specified in a <a class="link" href="pango-Fonts.html#PangoFontDescription"><span class="type">PangoFontDescription</span></a> and Cairo units. The
+default value is 96, meaning that a 10 point font will be 13
+units high. (10 * 96. / 72. = 13.3).
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>fontmap</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-Cairo-Rendering.html#PangoCairoFontMap"><span class="type">PangoCairoFontMap</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dpi</code></em> :</span></p></td>
+<td>the resolution in "dots per inch". (Physical inches aren't actually
+involved; the terminology is conventional.)</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.10</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-cairo-font-map-get-resolution"></a><h3>pango_cairo_font_map_get_resolution ()</h3>
+<pre class="programlisting"><span class="returnvalue">double</span>              pango_cairo_font_map_get_resolution (<em class="parameter"><code><a class="link" href="pango-Cairo-Rendering.html#PangoCairoFontMap"><span class="type">PangoCairoFontMap</span></a> *fontmap</code></em>);</pre>
+<p>
+Gets the resolution for the fontmap. See <a class="link" href="pango-Cairo-Rendering.html#pango-cairo-font-map-set-resolution" title="pango_cairo_font_map_set_resolution ()"><code class="function">pango_cairo_font_map_set_resolution()</code></a>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>fontmap</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-Cairo-Rendering.html#PangoCairoFontMap"><span class="type">PangoCairoFontMap</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the resolution in "dots per inch"</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.10</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-cairo-font-map-create-context"></a><h3>pango_cairo_font_map_create_context ()</h3>
+<pre class="programlisting"><a class="link" href="pango-Text-Processing.html#PangoContext"><span class="returnvalue">PangoContext</span></a> *      pango_cairo_font_map_create_context (<em class="parameter"><code><a class="link" href="pango-Cairo-Rendering.html#PangoCairoFontMap"><span class="type">PangoCairoFontMap</span></a> *fontmap</code></em>);</pre>
+<div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Warning</h3>
+<p><code class="literal">pango_cairo_font_map_create_context</code> has been deprecated since version 1.22 and should not be used in newly-written code. Use <a class="link" href="pango-Fonts.html#pango-font-map-create-context" title="pango_font_map_create_context ()"><code class="function">pango_font_map_create_context()</code></a> instead.</p>
+</div>
+<p>
+Create a <a class="link" href="pango-Text-Processing.html#PangoContext"><span class="type">PangoContext</span></a> for the given fontmap.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>fontmap</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-Cairo-Rendering.html#PangoCairoFontMap"><span class="type">PangoCairoFontMap</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the newly created context; free with <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a>.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.10</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-cairo-font-get-scaled-font"></a><h3>pango_cairo_font_get_scaled_font ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-scaled-font-t.html#cairo-scaled-font-t"><span class="returnvalue">cairo_scaled_font_t</span></a> * pango_cairo_font_get_scaled_font  (<em class="parameter"><code><a class="link" href="pango-Cairo-Rendering.html#PangoCairoFont"><span class="type">PangoCairoFont</span></a> *font</code></em>);</pre>
+<p>
+Gets the <a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-scaled-font-t.html#cairo-scaled-font-t"><span class="type">cairo_scaled_font_t</span></a> used by <em class="parameter"><code>font</code></em>.
+The scaled font can be referenced and kept using
+<a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-scaled-font-t.html#cairo-scaled-font-reference"><code class="function">cairo_scaled_font_reference()</code></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>font</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-Fonts.html#PangoFont"><span class="type">PangoFont</span></a> from a <a class="link" href="pango-Cairo-Rendering.html#PangoCairoFontMap"><span class="type">PangoCairoFontMap</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the <a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-scaled-font-t.html#cairo-scaled-font-t"><span class="type">cairo_scaled_font_t</span></a> used by <em class="parameter"><code>font</code></em>,
+or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>font</code></em> is <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.18</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-cairo-context-set-resolution"></a><h3>pango_cairo_context_set_resolution ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                pango_cairo_context_set_resolution  (<em class="parameter"><code><a class="link" href="pango-Text-Processing.html#PangoContext"><span class="type">PangoContext</span></a> *context</code></em>,
+                                                         <em class="parameter"><code><span class="type">double</span> dpi</code></em>);</pre>
+<p>
+Sets the resolution for the context. This is a scale factor between
+points specified in a <a class="link" href="pango-Fonts.html#PangoFontDescription"><span class="type">PangoFontDescription</span></a> and Cairo units. The
+default value is 96, meaning that a 10 point font will be 13
+units high. (10 * 96. / 72. = 13.3).
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>context</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-Text-Processing.html#PangoContext"><span class="type">PangoContext</span></a>, from a pangocairo font map</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dpi</code></em> :</span></p></td>
+<td>the resolution in "dots per inch". (Physical inches aren't actually
+involved; the terminology is conventional.) A 0 or negative value
+means to use the resolution from the font map.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.10</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-cairo-context-get-resolution"></a><h3>pango_cairo_context_get_resolution ()</h3>
+<pre class="programlisting"><span class="returnvalue">double</span>              pango_cairo_context_get_resolution  (<em class="parameter"><code><a class="link" href="pango-Text-Processing.html#PangoContext"><span class="type">PangoContext</span></a> *context</code></em>);</pre>
+<p>
+Gets the resolution for the context. See <a class="link" href="pango-Cairo-Rendering.html#pango-cairo-context-set-resolution" title="pango_cairo_context_set_resolution ()"><code class="function">pango_cairo_context_set_resolution()</code></a>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>context</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-Text-Processing.html#PangoContext"><span class="type">PangoContext</span></a>, from a pangocairo font map</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the resolution in "dots per inch". A negative value will
+be returned if no resolution has previously been set.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.10</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-cairo-context-set-font-options"></a><h3>pango_cairo_context_set_font_options ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                pango_cairo_context_set_font_options
+                                                        (<em class="parameter"><code><a class="link" href="pango-Text-Processing.html#PangoContext"><span class="type">PangoContext</span></a> *context</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-font-options-t.html#cairo-font-options-t"><span class="type">cairo_font_options_t</span></a> *options</code></em>);</pre>
+<p>
+Sets the font options used when rendering text with this context.
+These options override any options that <a class="link" href="pango-Cairo-Rendering.html#pango-cairo-update-context" title="pango_cairo_update_context ()"><code class="function">pango_cairo_update_context()</code></a>
+derives from the target surface.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>context</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-Text-Processing.html#PangoContext"><span class="type">PangoContext</span></a>, from a pangocairo font map</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>options</code></em> :</span></p></td>
+<td>a <a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-font-options-t.html#cairo-font-options-t"><span class="type">cairo_font_options_t</span></a>, or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> to unset any previously set
+options. A copy is made.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.10</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-cairo-context-get-font-options"></a><h3>pango_cairo_context_get_font_options ()</h3>
+<pre class="programlisting">const <a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-font-options-t.html#cairo-font-options-t"><span class="returnvalue">cairo_font_options_t</span></a> * pango_cairo_context_get_font_options
+                                                        (<em class="parameter"><code><a class="link" href="pango-Text-Processing.html#PangoContext"><span class="type">PangoContext</span></a> *context</code></em>);</pre>
+<p>
+Retrieves any font rendering options previously set with
+<code class="function">pango_cairo_font_map_set_font_options()</code>. This function does not report options
+that are derived from the target surface by <a class="link" href="pango-Cairo-Rendering.html#pango-cairo-update-context" title="pango_cairo_update_context ()"><code class="function">pango_cairo_update_context()</code></a>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>context</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-Text-Processing.html#PangoContext"><span class="type">PangoContext</span></a>, from a pangocairo font map</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the font options previously set on the context, or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>
+if no options have been set. This value is owned by the context
+and must not be modified or freed.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.10</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="PangoCairoShapeRendererFunc"></a><h3>PangoCairoShapeRendererFunc ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                (*PangoCairoShapeRendererFunc)      (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-t.html#cairo-t"><span class="type">cairo_t</span></a> *cr</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Text-Attributes.html#PangoAttrShape" title="struct PangoAttrShape"><span class="type">PangoAttrShape</span></a> *attr</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> do_path</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> data</code></em>);</pre>
+<p>
+Function type for rendering attributes of type <a class="link" href="pango-Text-Attributes.html#PANGO-ATTR-SHAPE:CAPS"><code class="literal">PANGO_ATTR_SHAPE</code></a>
+with Pango's Cairo renderer.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>cr</code></em> :</span></p></td>
+<td>a Cairo context with current point set to where the shape should
+be rendered</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>attr</code></em> :</span></p></td>
+<td>the <a class="link" href="pango-Text-Attributes.html#PANGO-ATTR-SHAPE:CAPS"><code class="literal">PANGO_ATTR_SHAPE</code></a> to render</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>do_path</code></em> :</span></p></td>
+<td>whether only the shape path should be appended to current
+path of <em class="parameter"><code>cr</code></em> and no filling/stroking done.  This will be set
+to <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> when called from <a class="link" href="pango-Cairo-Rendering.html#pango-cairo-layout-path" title="pango_cairo_layout_path ()"><code class="function">pango_cairo_layout_path()</code></a> and
+<a class="link" href="pango-Cairo-Rendering.html#pango-cairo-layout-line-path" title="pango_cairo_layout_line_path ()"><code class="function">pango_cairo_layout_line_path()</code></a> rendering functions.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td>user data passed to <a class="link" href="pango-Cairo-Rendering.html#pango-cairo-context-set-shape-renderer" title="pango_cairo_context_set_shape_renderer ()"><code class="function">pango_cairo_context_set_shape_renderer()</code></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-cairo-context-set-shape-renderer"></a><h3>pango_cairo_context_set_shape_renderer ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                pango_cairo_context_set_shape_renderer
+                                                        (<em class="parameter"><code><a class="link" href="pango-Text-Processing.html#PangoContext"><span class="type">PangoContext</span></a> *context</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Cairo-Rendering.html#PangoCairoShapeRendererFunc" title="PangoCairoShapeRendererFunc ()"><span class="type">PangoCairoShapeRendererFunc</span></a> func</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> data</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> dnotify</code></em>);</pre>
+<p>
+Sets callback function for context to use for rendering attributes
+of type <a class="link" href="pango-Text-Attributes.html#PANGO-ATTR-SHAPE:CAPS"><code class="literal">PANGO_ATTR_SHAPE</code></a>.  See <a class="link" href="pango-Cairo-Rendering.html#PangoCairoShapeRendererFunc" title="PangoCairoShapeRendererFunc ()"><span class="type">PangoCairoShapeRendererFunc</span></a> for
+details.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>context</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-Text-Processing.html#PangoContext"><span class="type">PangoContext</span></a>, from a pangocairo font map</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>func</code></em> :</span></p></td>
+<td>Callback function for rendering attributes of type
+<a class="link" href="pango-Text-Attributes.html#PANGO-ATTR-SHAPE:CAPS"><code class="literal">PANGO_ATTR_SHAPE</code></a>, or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> to disable shape rendering.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td>User data that will be passed to <em class="parameter"><code>func</code></em>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dnotify</code></em> :</span></p></td>
+<td>Callback that will be called when the
+context is freed to release <em class="parameter"><code>data</code></em>, or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.18</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-cairo-context-get-shape-renderer"></a><h3>pango_cairo_context_get_shape_renderer ()</h3>
+<pre class="programlisting"><a class="link" href="pango-Cairo-Rendering.html#PangoCairoShapeRendererFunc" title="PangoCairoShapeRendererFunc ()"><span class="returnvalue">PangoCairoShapeRendererFunc</span></a> pango_cairo_context_get_shape_renderer
+                                                        (<em class="parameter"><code><a class="link" href="pango-Text-Processing.html#PangoContext"><span class="type">PangoContext</span></a> *context</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> *data</code></em>);</pre>
+<p>
+Sets callback function for context to use for rendering attributes
+of type <a class="link" href="pango-Text-Attributes.html#PANGO-ATTR-SHAPE:CAPS"><code class="literal">PANGO_ATTR_SHAPE</code></a>.  See <a class="link" href="pango-Cairo-Rendering.html#PangoCairoShapeRendererFunc" title="PangoCairoShapeRendererFunc ()"><span class="type">PangoCairoShapeRendererFunc</span></a> for
+details.
+</p>
+<p>
+Retrieves callback function and associated user data for rendering
+attributes of type <a class="link" href="pango-Text-Attributes.html#PANGO-ATTR-SHAPE:CAPS"><code class="literal">PANGO_ATTR_SHAPE</code></a> as set by
+<a class="link" href="pango-Cairo-Rendering.html#pango-cairo-context-set-shape-renderer" title="pango_cairo_context_set_shape_renderer ()"><code class="function">pango_cairo_context_set_shape_renderer()</code></a>, if any.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>context</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-Text-Processing.html#PangoContext"><span class="type">PangoContext</span></a>, from a pangocairo font map</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td>Pointer to <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> to return user data</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the shape rendering callback previously set on the context, or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>
+if no shape rendering callback have been set.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.18</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-cairo-create-context"></a><h3>pango_cairo_create_context ()</h3>
+<pre class="programlisting"><a class="link" href="pango-Text-Processing.html#PangoContext"><span class="returnvalue">PangoContext</span></a> *      pango_cairo_create_context          (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-t.html#cairo-t"><span class="type">cairo_t</span></a> *cr</code></em>);</pre>
+<p>
+Creates a context object set up to match the current transformation
+and target surface of the Cairo context.  This context can then be
+used to create a layout using <a class="link" href="pango-Layout-Objects.html#pango-layout-new" title="pango_layout_new ()"><code class="function">pango_layout_new()</code></a>.
+</p>
+<p>
+This function is a convenience function that creates a context using
+the default font map, then updates it to <em class="parameter"><code>cr</code></em>.  If you just need to
+create a layout for use with <em class="parameter"><code>cr</code></em> and do not need to access <a class="link" href="pango-Text-Processing.html#PangoContext"><span class="type">PangoContext</span></a>
+directly, you can use <a class="link" href="pango-Cairo-Rendering.html#pango-cairo-create-layout" title="pango_cairo_create_layout ()"><code class="function">pango_cairo_create_layout()</code></a> instead.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>cr</code></em> :</span></p></td>
+<td>a Cairo context</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the newly created <a class="link" href="pango-Text-Processing.html#PangoContext"><span class="type">PangoContext</span></a>. Free with
+<a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a>. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.22</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-cairo-update-context"></a><h3>pango_cairo_update_context ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                pango_cairo_update_context          (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-t.html#cairo-t"><span class="type">cairo_t</span></a> *cr</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Text-Processing.html#PangoContext"><span class="type">PangoContext</span></a> *context</code></em>);</pre>
+<p>
+Updates a <a class="link" href="pango-Text-Processing.html#PangoContext"><span class="type">PangoContext</span></a> previously created for use with Cairo to
+match the current transformation and target surface of a Cairo
+context. If any layouts have been created for the context,
+it's necessary to call <a class="link" href="pango-Layout-Objects.html#pango-layout-context-changed" title="pango_layout_context_changed ()"><code class="function">pango_layout_context_changed()</code></a> on those
+layouts.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>cr</code></em> :</span></p></td>
+<td>a Cairo context</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>context</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-Text-Processing.html#PangoContext"><span class="type">PangoContext</span></a>, from a pangocairo font map</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.10</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-cairo-create-layout"></a><h3>pango_cairo_create_layout ()</h3>
+<pre class="programlisting"><a class="link" href="pango-Layout-Objects.html#PangoLayout"><span class="returnvalue">PangoLayout</span></a> *       pango_cairo_create_layout           (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-t.html#cairo-t"><span class="type">cairo_t</span></a> *cr</code></em>);</pre>
+<p>
+Creates a layout object set up to match the current transformation
+and target surface of the Cairo context.  This layout can then be
+used for text measurement with functions like
+<a class="link" href="pango-Layout-Objects.html#pango-layout-get-size" title="pango_layout_get_size ()"><code class="function">pango_layout_get_size()</code></a> or drawing with functions like
+<a class="link" href="pango-Cairo-Rendering.html#pango-cairo-show-layout" title="pango_cairo_show_layout ()"><code class="function">pango_cairo_show_layout()</code></a>. If you change the transformation
+or target surface for <em class="parameter"><code>cr</code></em>, you need to call <a class="link" href="pango-Cairo-Rendering.html#pango-cairo-update-layout" title="pango_cairo_update_layout ()"><code class="function">pango_cairo_update_layout()</code></a>
+</p>
+<p>
+This function is the most convenient way to use Cairo with Pango,
+however it is slightly inefficient since it creates a separate
+<a class="link" href="pango-Text-Processing.html#PangoContext"><span class="type">PangoContext</span></a> object for each layout. This might matter in an
+application that was laying out large amounts of text.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>cr</code></em> :</span></p></td>
+<td>a Cairo context</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the newly created <a class="link" href="pango-Layout-Objects.html#PangoLayout"><span class="type">PangoLayout</span></a>. Free with
+<a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a>. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.10</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-cairo-update-layout"></a><h3>pango_cairo_update_layout ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                pango_cairo_update_layout           (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-t.html#cairo-t"><span class="type">cairo_t</span></a> *cr</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Layout-Objects.html#PangoLayout"><span class="type">PangoLayout</span></a> *layout</code></em>);</pre>
+<p>
+Updates the private <a class="link" href="pango-Text-Processing.html#PangoContext"><span class="type">PangoContext</span></a> of a <a class="link" href="pango-Layout-Objects.html#PangoLayout"><span class="type">PangoLayout</span></a> created with
+<a class="link" href="pango-Cairo-Rendering.html#pango-cairo-create-layout" title="pango_cairo_create_layout ()"><code class="function">pango_cairo_create_layout()</code></a> to match the current transformation
+and target surface of a Cairo context.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>cr</code></em> :</span></p></td>
+<td>a Cairo context</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>layout</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-Layout-Objects.html#PangoLayout"><span class="type">PangoLayout</span></a>, from <a class="link" href="pango-Cairo-Rendering.html#pango-cairo-create-layout" title="pango_cairo_create_layout ()"><code class="function">pango_cairo_create_layout()</code></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.10</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-cairo-show-glyph-string"></a><h3>pango_cairo_show_glyph_string ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                pango_cairo_show_glyph_string       (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-t.html#cairo-t"><span class="type">cairo_t</span></a> *cr</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Fonts.html#PangoFont"><span class="type">PangoFont</span></a> *font</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Glyph-Storage.html#PangoGlyphString"><span class="type">PangoGlyphString</span></a> *glyphs</code></em>);</pre>
+<p>
+Draws the glyphs in <em class="parameter"><code>glyphs</code></em> in the specified cairo context.
+The origin of the glyphs (the left edge of the baseline) will
+be drawn at the current point of the cairo context.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>cr</code></em> :</span></p></td>
+<td>a Cairo context</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>font</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-Fonts.html#PangoFont"><span class="type">PangoFont</span></a> from a <a class="link" href="pango-Cairo-Rendering.html#PangoCairoFontMap"><span class="type">PangoCairoFontMap</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>glyphs</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-Glyph-Storage.html#PangoGlyphString"><span class="type">PangoGlyphString</span></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.10</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-cairo-show-glyph-item"></a><h3>pango_cairo_show_glyph_item ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                pango_cairo_show_glyph_item         (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-t.html#cairo-t"><span class="type">cairo_t</span></a> *cr</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *text</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Glyph-Storage.html#PangoGlyphItem"><span class="type">PangoGlyphItem</span></a> *glyph_item</code></em>);</pre>
+<p>
+Draws the glyphs in <em class="parameter"><code>glyph_item</code></em> in the specified cairo context,
+embedding the text associated with the glyphs in the output if the
+output format supports it (PDF for example), otherwise it acts
+similar to <a class="link" href="pango-Cairo-Rendering.html#pango-cairo-show-glyph-string" title="pango_cairo_show_glyph_string ()"><code class="function">pango_cairo_show_glyph_string()</code></a>.
+</p>
+<p>
+The origin of the glyphs (the left edge of the baseline) will
+be drawn at the current point of the cairo context.
+</p>
+<p>
+Note that <em class="parameter"><code>text</code></em> is the start of the text for layout, which is then
+indexed by <code class="literal"><em class="parameter"><code>glyph_item-&gt;item-&gt;offset</code></em></code>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>cr</code></em> :</span></p></td>
+<td>a Cairo context</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>text</code></em> :</span></p></td>
+<td>the UTF-8 text that <em class="parameter"><code>glyph_item</code></em> refers to</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>glyph_item</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-Glyph-Storage.html#PangoGlyphItem"><span class="type">PangoGlyphItem</span></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.22</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-cairo-show-layout-line"></a><h3>pango_cairo_show_layout_line ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                pango_cairo_show_layout_line        (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-t.html#cairo-t"><span class="type">cairo_t</span></a> *cr</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Layout-Objects.html#PangoLayoutLine"><span class="type">PangoLayoutLine</span></a> *line</code></em>);</pre>
+<p>
+Draws a <a class="link" href="pango-Layout-Objects.html#PangoLayoutLine"><span class="type">PangoLayoutLine</span></a> in the specified cairo context.
+The origin of the glyphs (the left edge of the line) will
+be drawn at the current point of the cairo context.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>cr</code></em> :</span></p></td>
+<td>a Cairo context</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>line</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-Layout-Objects.html#PangoLayoutLine"><span class="type">PangoLayoutLine</span></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.10</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-cairo-show-layout"></a><h3>pango_cairo_show_layout ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                pango_cairo_show_layout             (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-t.html#cairo-t"><span class="type">cairo_t</span></a> *cr</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Layout-Objects.html#PangoLayout"><span class="type">PangoLayout</span></a> *layout</code></em>);</pre>
+<p>
+Draws a <a class="link" href="pango-Layout-Objects.html#PangoLayout"><span class="type">PangoLayout</span></a> in the specified cairo context.
+The top-left corner of the <a class="link" href="pango-Layout-Objects.html#PangoLayout"><span class="type">PangoLayout</span></a> will be drawn
+at the current point of the cairo context.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>cr</code></em> :</span></p></td>
+<td>a Cairo context</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>layout</code></em> :</span></p></td>
+<td>a Pango layout</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.10</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-cairo-show-error-underline"></a><h3>pango_cairo_show_error_underline ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                pango_cairo_show_error_underline    (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-t.html#cairo-t"><span class="type">cairo_t</span></a> *cr</code></em>,
+                                                         <em class="parameter"><code><span class="type">double</span> x</code></em>,
+                                                         <em class="parameter"><code><span class="type">double</span> y</code></em>,
+                                                         <em class="parameter"><code><span class="type">double</span> width</code></em>,
+                                                         <em class="parameter"><code><span class="type">double</span> height</code></em>);</pre>
+<p>
+Draw a squiggly line in the specified cairo context that approximately
+covers the given rectangle in the style of an underline used to indicate a
+spelling error.  (The width of the underline is rounded to an integer
+number of up/down segments and the resulting rectangle is centered in the
+original rectangle)
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>cr</code></em> :</span></p></td>
+<td>a Cairo context</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>x</code></em> :</span></p></td>
+<td>The X coordinate of one corner of the rectangle</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>y</code></em> :</span></p></td>
+<td>The Y coordinate of one corner of the rectangle</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>width</code></em> :</span></p></td>
+<td>Non-negative width of the rectangle</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>height</code></em> :</span></p></td>
+<td>Non-negative height of the rectangle</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.14</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-cairo-glyph-string-path"></a><h3>pango_cairo_glyph_string_path ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                pango_cairo_glyph_string_path       (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-t.html#cairo-t"><span class="type">cairo_t</span></a> *cr</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Fonts.html#PangoFont"><span class="type">PangoFont</span></a> *font</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Glyph-Storage.html#PangoGlyphString"><span class="type">PangoGlyphString</span></a> *glyphs</code></em>);</pre>
+<p>
+Adds the glyphs in <em class="parameter"><code>glyphs</code></em> to the current path in the specified
+cairo context. The origin of the glyphs (the left edge of the baseline)
+will be at the current point of the cairo context.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>cr</code></em> :</span></p></td>
+<td>a Cairo context</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>font</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-Fonts.html#PangoFont"><span class="type">PangoFont</span></a> from a <a class="link" href="pango-Cairo-Rendering.html#PangoCairoFontMap"><span class="type">PangoCairoFontMap</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>glyphs</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-Glyph-Storage.html#PangoGlyphString"><span class="type">PangoGlyphString</span></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.10</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-cairo-layout-line-path"></a><h3>pango_cairo_layout_line_path ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                pango_cairo_layout_line_path        (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-t.html#cairo-t"><span class="type">cairo_t</span></a> *cr</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Layout-Objects.html#PangoLayoutLine"><span class="type">PangoLayoutLine</span></a> *line</code></em>);</pre>
+<p>
+Adds the text in <a class="link" href="pango-Layout-Objects.html#PangoLayoutLine"><span class="type">PangoLayoutLine</span></a> to the current path in the
+specified cairo context.  The origin of the glyphs (the left edge
+of the line) will be at the current point of the cairo context.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>cr</code></em> :</span></p></td>
+<td>a Cairo context</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>line</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-Layout-Objects.html#PangoLayoutLine"><span class="type">PangoLayoutLine</span></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.10</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-cairo-layout-path"></a><h3>pango_cairo_layout_path ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                pango_cairo_layout_path             (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-t.html#cairo-t"><span class="type">cairo_t</span></a> *cr</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Layout-Objects.html#PangoLayout"><span class="type">PangoLayout</span></a> *layout</code></em>);</pre>
+<p>
+Adds the text in a <a class="link" href="pango-Layout-Objects.html#PangoLayout"><span class="type">PangoLayout</span></a> to the current path in the
+specified cairo context.  The top-left corner of the <a class="link" href="pango-Layout-Objects.html#PangoLayout"><span class="type">PangoLayout</span></a>
+will be at the current point of the cairo context.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>cr</code></em> :</span></p></td>
+<td>a Cairo context</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>layout</code></em> :</span></p></td>
+<td>a Pango layout</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.10</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-cairo-error-underline-path"></a><h3>pango_cairo_error_underline_path ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                pango_cairo_error_underline_path    (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/cairo/cairo-cairo-t.html#cairo-t"><span class="type">cairo_t</span></a> *cr</code></em>,
+                                                         <em class="parameter"><code><span class="type">double</span> x</code></em>,
+                                                         <em class="parameter"><code><span class="type">double</span> y</code></em>,
+                                                         <em class="parameter"><code><span class="type">double</span> width</code></em>,
+                                                         <em class="parameter"><code><span class="type">double</span> height</code></em>);</pre>
+<p>
+Add a squiggly line to the current path in the specified cairo context that
+approximately covers the given rectangle in the style of an underline used
+to indicate a spelling error.  (The width of the underline is rounded to an
+integer number of up/down segments and the resulting rectangle is centered
+in the original rectangle)
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>cr</code></em> :</span></p></td>
+<td>a Cairo context</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>x</code></em> :</span></p></td>
+<td>The X coordinate of one corner of the rectangle</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>y</code></em> :</span></p></td>
+<td>The Y coordinate of one corner of the rectangle</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>width</code></em> :</span></p></td>
+<td>Non-negative width of the rectangle</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>height</code></em> :</span></p></td>
+<td>Non-negative height of the rectangle</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.14</p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

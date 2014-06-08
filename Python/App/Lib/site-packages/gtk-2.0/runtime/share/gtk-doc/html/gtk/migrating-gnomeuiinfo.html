@@ -1,0 +1,351 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Migrating from GnomeUIInfo</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="GTK+ 2 Reference Manual">
+<link rel="up" href="gtk-migrating-GtkAction.html" title="Migrating from old menu and toolbar systems to GtkAction">
+<link rel="prev" href="ui-manager.html" title="User Interface Manager Object">
+<link rel="next" href="gtk-migrating-GtkComboBox.html" title="Migrating from GtkOptionMenu and GtkCombo to GtkComboBox and GtkComboBoxEntry">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle">
+<td><a accesskey="p" href="ui-manager.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="gtk-migrating-GtkAction.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GTK+ 2 Reference Manual</th>
+<td><a accesskey="n" href="gtk-migrating-GtkComboBox.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="section">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="migrating-gnomeuiinfo"></a>Migrating from GnomeUIInfo</h2></div></div></div>
+<p>
+      Prior to GTK+ 2.4, some applications used the GnomeUIInfo
+      mechanism from
+      <code class="filename">&lt;libgnomeui/gnome-app-helper.h&gt;</code> to
+      define their menus and toolbars.  With it, a program decleres an
+      array of <span class="structname">GnomeUIInfo</span> structures, which
+      contain information for menu or toolbar items such as their
+      label, icon, and accelerator key.  Then, one calls
+      <code class="function">gnome_app_fill_menu()</code> or <code class="function">gnome_app_fill_toolbar()</code>, or one of the
+      related functions, to create the appropriate widgets based on
+      these structures.
+    </p>
+<p>
+      A downside of this API is that the same structures are used to
+      pass back pointers to the widgets that got created.  This means
+      that the structures cannot simply be kept around if the program
+      requires multiple instances of the user interface (e.g. several
+      windows); each new invocation of <code class="function">gnome_app_fill_menu()</code> would 
+      overwrite the widget fields of the structures.
+    </p>
+<p>
+      Another disadvantage is that there is no automatic way to
+      synchronize the state of related controls.  If there are toolbar
+      toogle buttons for "Bold", "Italic", "Underline", and also
+      corresponding menu items under "Format/Bold", etc., one has to
+      synchronize their toggled states by hand whenever the user
+      selects any one of them.
+    </p>
+<p>
+      Finally, there is no way to do menu and toolbar merging for
+      applications that require embedded components.
+    </p>
+<p>
+      To convert an application that uses GnomeUIInfo into the new
+      GtkAction mechanism, you need to do several things:
+    </p>
+<div class="orderedlist"><ol class="orderedlist" type="1">
+<li class="listitem"><p>
+	  Separate your existing GnomeUIInfo entries into normal
+	  actions, toggle actions, and radio actions, and then create
+	  a separate array of <a class="link" href="GtkActionGroup.html#GtkActionEntry" title="struct GtkActionEntry"><span class="type">GtkActionEntry</span></a> structures
+	  for each group.  This will allow you to create the necessary
+	  <a class="link" href="GtkActionGroup.html" title="GtkActionGroup"><span class="type">GtkActionGroup</span></a> objects.  Note that this does not describe 
+          the actual "shape" that your menus and toolbars will have; 
+          it simply defines the set of commands that will appear in them.
+	</p></li>
+<li class="listitem"><p>
+	  Create an XML description of your menus and toolbars for use
+	  with <a class="link" href="GtkUIManager.html" title="GtkUIManager"><span class="type">GtkUIManager</span></a>.  This defines the actual shape of the menus 
+          and toolbars.
+	</p></li>
+<li class="listitem"><p>
+	  Port the code that uses gnome-app and gnome-app-helper to
+	  <a class="link" href="GtkAction.html" title="GtkAction"><span class="type">GtkAction</span></a> and <a class="link" href="GtkUIManager.html" title="GtkUIManager"><span class="type">GtkUIManager</span></a>.
+	</p></li>
+<li class="listitem"><p>
+         If your GnomeUIInfo entries use GNOME_APP_PIXMAP_DATA or 
+         GNOME_APP_PIXMAP_FILENAME for pixmaps, you have to create a 
+         <a class="link" href="gtk-Themeable-Stock-Images.html#GtkIconFactory"><span class="type">GtkIconFactory</span></a>, add it to the list of default factories, then 
+         create a <a class="link" href="gtk-Themeable-Stock-Images.html#GtkIconSet"><span class="type">GtkIconSet</span></a> for each of your own icons. Add the sets to 
+         the factory, and use the id in the <a class="link" href="GtkActionGroup.html#GtkActionEntry" title="struct GtkActionEntry"><span class="type">GtkActionEntry</span></a> like a regular 
+         GTK+ stock id.
+       </p></li>
+</ol></div>
+<div class="example">
+<a name="gnomeuiinfo-example"></a><p class="title"><b>Example 66. GnomeUIInfo Example</b></p>
+<div class="example-contents">
+<p>
+	The following code shows a declaration of a simple menu bar to
+	be used with <code class="function">gnome_app_fill_menu()</code> or similar.  The menu hierarchy i
+        looks like this:
+      </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">
+<p><span class="guimenu">File</span></p>
+<table border="0" summary="Simple list" class="simplelist">
+<tr><td><span class="guimenuitem">Open</span></td></tr>
+<tr><td><span class="guimenuitem">—</span></td></tr>
+<tr><td><span class="guimenuitem">Exit</span></td></tr>
+</table>
+</li>
+<li class="listitem">
+<p><span class="guimenu">View</span></p>
+<table border="0" summary="Simple list" class="simplelist">
+<tr><td><span class="guimenuitem">Zoom In</span></td></tr>
+<tr><td><span class="guimenuitem">Zoom Out</span></td></tr>
+<tr><td><span class="guimenuitem">—</span></td></tr>
+<tr><td><span class="guimenuitem">[ ] Full Screen</span></td></tr>
+<tr><td><span class="guimenuitem">—</span></td></tr>
+<tr><td><span class="guimenuitem">( ) High Quality</span></td></tr>
+<tr><td><span class="guimenuitem">( ) Normal Quality</span></td></tr>
+<tr><td><span class="guimenuitem">( ) Low Quality</span></td></tr>
+</table>
+</li>
+</ul></div>
+<pre class="programlisting">
+static GnomeUIInfo file_menu_items[] = {
+  { GNOME_APP_UI_ITEM, "_Open", "Open a file",
+    open_callback, NULL, NULL, GNOME_APP_PIXMAP_STOCK, GTK_STOCK_OPEN,
+    'o', GDK_CONTROL_MASK, NULL },
+  { GNOME_APP_UI_SEPARATOR },
+  { GNOME_APP_UI_ITEM, "E_xit", "Exit the program",
+    exit_callback, NULL, NULL, GNOME_APP_PIXMAP_STOCK, GTK_STOCK_QUIT,
+    'q', GDK_CONTROL_MASK, NULL},
+  { GNOME_APP_UI_ENDOFINFO }
+};
+
+static GnomeUIInfo view_radio_items[] = {
+  { GNOME_APP_UI_ITEM, "_High Quality", "Display images in high quality, slow mode",
+    high_quality_callback, NULL, NULL, GNOME_APP_PIXMAP_FILENAME, "high-quality.png",
+    0, 0, NULL },
+  { GNOME_APP_UI_ITEM, "_Normal Quality", "Display images in normal quality",
+    normal_quality_callback, NULL, NULL, GNOME_APP_PIXMAP_FILENAME, "normal-quality.png",
+    0, 0, NULL },
+  { GNOME_APP_UI_ITEM, "_Low Quality", "Display images in low quality, fast mode",
+    low_quality_callback, NULL, NULL, GNOME_APP_PIXMAP_FILENAME, "low-quality.png",
+    0, 0, NULL },
+  { GNOME_APP_UI_ENDOFINFO }
+};
+
+static GnomeUIInfo view_menu_items[] = {
+  { GNOME_APP_UI_ITEM, "Zoom _In", "Zoom into the image",
+    zoom_in_callback, NULL, NULL, GNOME_APP_PIXMAP_STOCK, GTK_STOCK_ZOOM_IN,
+    GDK_PLUS, 0, NULL },
+  { GNOME_APP_UI_ITEM, "Zoom _Out", "Zoom away from the image",
+    zoom_out_callback, NULL, NULL, GNOME_APP_PIXMAP_STOCK, GTK_STOCK_ZOOM_OUT,
+    GDK_MINUS, 0, NULL },
+  { GNOME_APP_UI_SEPARATOR },
+  { GNOME_APP_UI_TOGGLEITEM, "_Full Screen", "Switch between full screen and windowed mode",
+    full_screen_callback, NULL, NULL, GNOME_APP_PIXMAP_NONE, NULL,
+    GDK_F11, 0, NULL },
+  { GNOME_APP_UI_SEPARATOR },
+  { GNOME_APP_UI_RADIOITEMS, NULL, NULL, view_radio_items },
+  { GNOME_APP_UI_ENDOFINFO }
+};
+
+static GnomeUIInfo menubar[] = {
+  { GNOME_APP_UI_SUBTREE, "_File", NULL, file_menu_items },
+  { GNOME_APP_UI_SUBTREE, "_View", NULL, view_menu_items },
+  { GNOME_APP_UI_ENDOFINFO }
+}
+      </pre>
+</div>
+</div>
+<br class="example-break"><div class="example">
+<a name="gnomeuiinfo-action-entries"></a><p class="title"><b>Example 67. <span class="structname">GtkActionEntry</span> Structures</b></p>
+<div class="example-contents">
+<p>
+	The following code is the set of actions that are present in
+	the <a class="link" href="migrating-gnomeuiinfo.html#gnomeuiinfo-example" title="Example 66. GnomeUIInfo Example">previous
+	example</a>.  Note that the toggle and radio entries are
+	separate from normal actions.  Also, note that <a class="link" href="GtkActionGroup.html#GtkActionEntry" title="struct GtkActionEntry"><span class="type">GtkActionEntry</span></a> 
+        structures take key names in the format of <a class="link" href="gtk-Keyboard-Accelerators.html#gtk-accelerator-parse" title="gtk_accelerator_parse ()"><code class="function">gtk_accelerator_parse()</code></a> 
+        rather than key values plus modifiers; you will have to convert these
+	values by hand.  For example, <code class="literal">GDK_F11</code> with no modifiers is equivalent 
+        to a key name of <code class="literal">"F11"</code>.  Likewise, <code class="literal">"o"</code>
+	with <a href="../gdk/gdk-Windows.html#GDK-CONTROL-MASK:CAPS"><code class="literal">GDK_CONTROL_MASK</code></a> is equivalent to <code class="literal">"&lt;ontrol&gt;O"</code>.
+      </p>
+<pre class="programlisting">
+/* Normal items */
+static const GtkActionEntry entries[] = {
+  { "FileMenu", NULL, "_File" },
+  { "ViewMenu", NULL, "_View" },
+  { "Open", GTK_STOCK_OPEN, "_Open", "&lt;control&gt;O", "Open a file", open_action_callback },
+  { "Exit", GTK_STOCK_QUIT, "E_xit", "&lt;control&gt;Q", "Exit the program", exit_action_callback },
+  { "ZoomIn", GTK_STOCK_ZOOM_IN, "Zoom _In", "plus", "Zoom into the image", zoom_in_action_callback },
+  { "ZoomOut", GTK_STOCK_ZOOM_OUT, "Zoom _Out", "minus", "Zoom away from the image", zoom_out_action_callback },
+};
+
+/* Toggle items */
+static const GtkToggleActionEntry toggle_entries[] = {
+  { "FullScreen", NULL, "_Full Screen", "F11", "Switch between full screen and windowed mode", full_screen_action_callback, FALSE }
+};
+
+/* Radio items */
+static const GtkRadioActionEntry radio_entries[] = {
+  { "HighQuality", "my-stock-high-quality", "_High Quality", NULL, "Display images in high quality, slow mode", 0 },
+  { "NormalQuality", "my-stock-normal-quality", "_Normal Quality", NULL, "Display images in normal quality", 1 },
+  { "LowQuality", "my-stock-low-quality", "_Low Quality", NULL, "Display images in low quality, fast mode", 2 }
+};
+      </pre>
+</div>
+</div>
+<br class="example-break"><div class="example">
+<a name="gnomeuiinfo-xml"></a><p class="title"><b>Example 68. XML Description</b></p>
+<div class="example-contents">
+<p>
+	After extracting the actions, you will need to create an XML
+	description of the actual layout of your menus and toolbars
+	for use with <a class="link" href="GtkUIManager.html" title="GtkUIManager"><span class="type">GtkUIManager</span></a>. The following code shows a simple 
+        menu bar that corresponds to the <a class="link" href="migrating-gnomeuiinfo.html#gnomeuiinfo-example" title="Example 66. GnomeUIInfo Example">previous
+	example</a>.  Note that the <span class="guimenu">File</span> and
+	<span class="guimenu">View</span> menus have their names specified in
+	the <a class="link" href="migrating-gnomeuiinfo.html#gnomeuiinfo-action-entries" title="Example 67. GtkActionEntry Structures">action
+	entries</a>, not in the XML itself.  This is because the
+	XML description only contains <span class="emphasis"><em>identifiers</em></span>
+	for the items in the GUI, rather than human-readable names.
+      </p>
+<pre class="programlisting">
+static const char *ui_description =
+"&lt;ui&gt;"
+"  &lt;menubar name='MainMenu'&gt;"
+"    &lt;menu action='FileMenu'&gt;"
+"      &lt;menuitem action='Open'/&gt;"
+"      &lt;menuitem action='Exit'/&gt;"
+"    &lt;/menu&gt;"
+"    &lt;menu action='ViewMenu'&gt;"
+"      &lt;menuitem action='ZoomIn'/&gt;"
+"      &lt;menuitem action='ZoomOut'/&gt;"
+"      &lt;separator/&gt;"
+"      &lt;menuitem action='FullScreen'/&gt;"
+"      &lt;separator/&gt;"
+"      &lt;menuitem action='HighQuality'/&gt;"
+"      &lt;menuitem action='NormalQuality'/&gt;"
+"      &lt;menuitem action='LowQuality'/&gt;"
+"    &lt;/menu&gt;"
+"  &lt;/menubar&gt;"
+"&lt;/ui&gt;";
+      </pre>
+</div>
+</div>
+<br class="example-break"><div class="example">
+<a name="gnomeuiinfo-code"></a><p class="title"><b>Example 69. Creating the Menu Bar</b></p>
+<div class="example-contents">
+<p>
+	In this last example, we will create a <a class="link" href="GtkActionGroup.html" title="GtkActionGroup"><span class="type">GtkActionGroup</span></a> based on the
+	<a class="link" href="migrating-gnomeuiinfo.html#gnomeuiinfo-action-entries" title="Example 67. GtkActionEntry Structures">action entries</a> 
+        we created above.  We will then create a <a class="link" href="GtkUIManager.html" title="GtkUIManager"><span class="type">GtkUIManager</span></a> with the <a class="link" href="migrating-gnomeuiinfo.html#gnomeuiinfo-xml" title="Example 68. XML Description">XML description</a> of the menu
+	layout.  We will also extract the accelerator group and the
+	widgets from the <a class="link" href="GtkUIManager.html" title="GtkUIManager"><span class="type">GtkUIManager</span></a> put them into a window.
+      </p>
+<pre class="programlisting">
+GtkWidget *window;
+GtkWidget *vbox;
+GtkWidget *menubar;
+GtkActionGroup *action_group;
+GtkUIManager *ui_manager;
+GtkAccelGroup *accel_group;
+GError *error;
+
+register_my_stock_icons ();
+
+window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+
+vbox = gtk_vbox_new (FALSE, 0);
+gtk_container_add (GTK_CONTAINER (window), vbox);
+
+action_group = gtk_action_group_new ("MenuActions");
+gtk_action_group_add_actions (action_group, entries, G_N_ELEMENTS (entries), window);
+gtk_action_group_add_toggle_actions (action_group, toggle_entries, G_N_ELEMENTS (toggle_entries), window);
+gtk_action_group_add_radio_actions (action_group, radio_entries, G_N_ELEMENTS (radio_entries), 0, radio_action_callback, window);
+
+ui_manager = gtk_ui_manager_new ();
+gtk_ui_manager_insert_action_group (ui_manager, action_group, 0);
+
+accel_group = gtk_ui_manager_get_accel_group (ui_manager);
+gtk_window_add_accel_group (GTK_WINDOW (window), accel_group);
+
+error = NULL;
+if (!gtk_ui_manager_add_ui_from_string (ui_manager, ui_description, -1, &amp;error))
+  {
+    g_message ("building menus failed: %s", error-&gt;message);
+    g_error_free (error);
+    exit (EXIT_FAILURE);
+  }
+
+menubar = gtk_ui_manager_get_widget (ui_manager, "/MainMenu");
+gtk_box_pack_start (GTK_BOX (vbox), menubar, FALSE, FALSE, 0);
+
+gtk_widget_show_all (window);
+      </pre>
+</div>
+</div>
+<br class="example-break"><div class="example">
+<a name="gnomeuiinfo-icons"></a><p class="title"><b>Example 70. Registering the icons</b></p>
+<div class="example-contents">
+<p>
+	Here we show how the <code class="function">register_my_stock_icons()</code> function
+        used in the previous example could look like.
+      </p>
+<pre class="programlisting">
+static struct { 
+  gchar *filename;
+  gchar *stock_id;
+} stock_icons[] = {
+  { "high-quality.png", "my-stock-high-quality" },
+  { "normal-quality.png", "my-stock-normal-quality" },
+  { "low-quality.png", "my-stock-low-quality" },
+};
+ 
+static gint n_stock_icons = G_N_ELEMENTS (stock_icons);
+
+static void
+register_my_stock_icons (void)
+{
+   GtkIconFactory *icon_factory;
+   GtkIconSet *icon_set; 
+   GtkIconSource *icon_source;
+   gint i;
+
+   icon_factory = gtk_icon_factory_new ();
+   
+   for (i = 0; i &lt; n_stock_icons; i++) 
+    {
+      icon_set = gtk_icon_set_new ();
+      icon_source = gtk_icon_source_new ();
+      gtk_icon_source_set_filename (icon_source, stock_icons[i].filename);
+      gtk_icon_set_add_source (icon_set, icon_source);
+      gtk_icon_source_free (icon_source);
+      gtk_icon_factory_add (icon_factory, stock_icons[i].stock_id, icon_set);
+      gtk_icon_set_unref (icon_set);
+    }
+
+   gtk_icon_factory_add_default (icon_factory); 
+
+   g_object_unref (icon_factory);
+}
+      </pre>
+</div>
+</div>
+<br class="example-break">
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

@@ -1,0 +1,1255 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.6.6" />
+<title>git-submodule(1)</title>
+<style type="text/css">
+/* Shared CSS for AsciiDoc xhtml11 and html5 backends */
+
+/* Default font. */
+body {
+  font-family: Georgia,serif;
+}
+
+/* Title font. */
+h1, h2, h3, h4, h5, h6,
+div.title, caption.title,
+thead, p.table.header,
+#toctitle,
+#author, #revnumber, #revdate, #revremark,
+#footer {
+  font-family: Arial,Helvetica,sans-serif;
+}
+
+body {
+  margin: 1em 5% 1em 5%;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+}
+a:visited {
+  color: fuchsia;
+}
+
+em {
+  font-style: italic;
+  color: navy;
+}
+
+strong {
+  font-weight: bold;
+  color: #083194;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #527bbd;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+h1, h2, h3 {
+  border-bottom: 2px solid silver;
+}
+h2 {
+  padding-top: 0.5em;
+}
+h3 {
+  float: left;
+}
+h3 + * {
+  clear: left;
+}
+h5 {
+  font-size: 1.0em;
+}
+
+div.sectionbody {
+  margin-left: 0;
+}
+
+hr {
+  border: 1px solid silver;
+}
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+ul, ol, li > p {
+  margin-top: 0;
+}
+ul > li     { color: #aaa; }
+ul > li > * { color: black; }
+
+pre {
+  padding: 0;
+  margin: 0;
+}
+
+#author {
+  color: #527bbd;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+#email {
+}
+#revnumber, #revdate, #revremark {
+}
+
+#footer {
+  font-size: small;
+  border-top: 2px solid silver;
+  padding-top: 0.5em;
+  margin-top: 4.0em;
+}
+#footer-text {
+  float: left;
+  padding-bottom: 0.5em;
+}
+#footer-badges {
+  float: right;
+  padding-bottom: 0.5em;
+}
+
+#preamble {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.imageblock, div.exampleblock, div.verseblock,
+div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
+div.admonitionblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.admonitionblock {
+  margin-top: 2.0em;
+  margin-bottom: 2.0em;
+  margin-right: 10%;
+  color: #606060;
+}
+
+div.content { /* Block element content. */
+  padding: 0;
+}
+
+/* Block element titles. */
+div.title, caption.title {
+  color: #527bbd;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 1.0em;
+  margin-bottom: 0.5em;
+}
+div.title + * {
+  margin-top: 0;
+}
+
+td div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content + div.title {
+  margin-top: 0.0em;
+}
+
+div.sidebarblock > div.content {
+  background: #ffffee;
+  border: 1px solid #dddddd;
+  border-left: 4px solid #f0f0f0;
+  padding: 0.5em;
+}
+
+div.listingblock > div.content {
+  border: 1px solid #dddddd;
+  border-left: 5px solid #f0f0f0;
+  background: #f8f8f8;
+  padding: 0.5em;
+}
+
+div.quoteblock, div.verseblock {
+  padding-left: 1.0em;
+  margin-left: 1.0em;
+  margin-right: 10%;
+  border-left: 5px solid #f0f0f0;
+  color: #888;
+}
+
+div.quoteblock > div.attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock > pre.content {
+  font-family: inherit;
+  font-size: inherit;
+}
+div.verseblock > div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
+div.verseblock + div.attribution {
+  text-align: left;
+}
+
+div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 3px solid #dddddd;
+}
+
+div.exampleblock > div.content {
+  border-left: 3px solid #dddddd;
+  padding-left: 0.5em;
+}
+
+div.imageblock div.content { padding-left: 0; }
+span.image img { border-style: none; }
+a.image:visited { color: white; }
+
+dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: normal;
+  color: navy;
+}
+dd > *:first-child {
+  margin-top: 0.1em;
+}
+
+ul, ol {
+    list-style-position: outside;
+}
+ol.arabic {
+  list-style-type: decimal;
+}
+ol.loweralpha {
+  list-style-type: lower-alpha;
+}
+ol.upperalpha {
+  list-style-type: upper-alpha;
+}
+ol.lowerroman {
+  list-style-type: lower-roman;
+}
+ol.upperroman {
+  list-style-type: upper-roman;
+}
+
+div.compact ul, div.compact ol,
+div.compact p, div.compact p,
+div.compact div, div.compact div {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}
+
+tfoot {
+  font-weight: bold;
+}
+td > div.verse {
+  white-space: pre;
+}
+
+div.hdlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+div.hdlist tr {
+  padding-bottom: 15px;
+}
+dt.hdlist1.strong, td.hdlist1.strong {
+  font-weight: bold;
+}
+td.hdlist1 {
+  vertical-align: top;
+  font-style: normal;
+  padding-right: 0.8em;
+  color: navy;
+}
+td.hdlist2 {
+  vertical-align: top;
+}
+div.hdlist.compact tr {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.comment {
+  background: yellow;
+}
+
+.footnote, .footnoteref {
+  font-size: 0.8em;
+}
+
+span.footnote, span.footnoteref {
+  vertical-align: super;
+}
+
+#footnotes {
+  margin: 20px 0 20px 0;
+  padding: 7px 0 0 0;
+}
+
+#footnotes div.footnote {
+  margin: 0 0 5px 0;
+}
+
+#footnotes hr {
+  border: none;
+  border-top: 1px solid silver;
+  height: 1px;
+  text-align: left;
+  margin-left: 0;
+  width: 20%;
+  min-width: 100px;
+}
+
+div.colist td {
+  padding-right: 0.5em;
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+div.colist td img {
+  margin-top: 0.3em;
+}
+
+@media print {
+  #footer-badges { display: none; }
+}
+
+#toc {
+  margin-bottom: 2.5em;
+}
+
+#toctitle {
+  color: #527bbd;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}
+
+div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+  font-size: 0.9em;
+}
+div.toclevel3 {
+  margin-left: 4em;
+  font-size: 0.9em;
+}
+div.toclevel4 {
+  margin-left: 6em;
+  font-size: 0.9em;
+}
+
+span.aqua { color: aqua; }
+span.black { color: black; }
+span.blue { color: blue; }
+span.fuchsia { color: fuchsia; }
+span.gray { color: gray; }
+span.green { color: green; }
+span.lime { color: lime; }
+span.maroon { color: maroon; }
+span.navy { color: navy; }
+span.olive { color: olive; }
+span.purple { color: purple; }
+span.red { color: red; }
+span.silver { color: silver; }
+span.teal { color: teal; }
+span.white { color: white; }
+span.yellow { color: yellow; }
+
+span.aqua-background { background: aqua; }
+span.black-background { background: black; }
+span.blue-background { background: blue; }
+span.fuchsia-background { background: fuchsia; }
+span.gray-background { background: gray; }
+span.green-background { background: green; }
+span.lime-background { background: lime; }
+span.maroon-background { background: maroon; }
+span.navy-background { background: navy; }
+span.olive-background { background: olive; }
+span.purple-background { background: purple; }
+span.red-background { background: red; }
+span.silver-background { background: silver; }
+span.teal-background { background: teal; }
+span.white-background { background: white; }
+span.yellow-background { background: yellow; }
+
+span.big { font-size: 2em; }
+span.small { font-size: 0.6em; }
+
+span.underline { text-decoration: underline; }
+span.overline { text-decoration: overline; }
+span.line-through { text-decoration: line-through; }
+
+
+/*
+ * xhtml11 specific
+ *
+ * */
+
+tt {
+  font-family: monospace;
+  font-size: inherit;
+  color: navy;
+}
+
+div.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.tableblock > table {
+  border: 3px solid #527bbd;
+}
+thead, p.table.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.table {
+  margin-top: 0;
+}
+/* Because the table frame attribute is overriden by CSS in most browsers. */
+div.tableblock > table[frame="void"] {
+  border-style: none;
+}
+div.tableblock > table[frame="hsides"] {
+  border-left-style: none;
+  border-right-style: none;
+}
+div.tableblock > table[frame="vsides"] {
+  border-top-style: none;
+  border-bottom-style: none;
+}
+
+
+/*
+ * html5 specific
+ *
+ * */
+
+.monospaced {
+  font-family: monospace;
+  font-size: inherit;
+  color: navy;
+}
+
+table.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+thead, p.tableblock.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.tableblock {
+  margin-top: 0;
+}
+table.tableblock {
+  border-width: 3px;
+  border-spacing: 0px;
+  border-style: solid;
+  border-color: #527bbd;
+  border-collapse: collapse;
+}
+th.tableblock, td.tableblock {
+  border-width: 1px;
+  padding: 4px;
+  border-style: solid;
+  border-color: #527bbd;
+}
+
+table.tableblock.frame-topbot {
+  border-left-style: hidden;
+  border-right-style: hidden;
+}
+table.tableblock.frame-sides {
+  border-top-style: hidden;
+  border-bottom-style: hidden;
+}
+table.tableblock.frame-none {
+  border-style: hidden;
+}
+
+th.tableblock.halign-left, td.tableblock.halign-left {
+  text-align: left;
+}
+th.tableblock.halign-center, td.tableblock.halign-center {
+  text-align: center;
+}
+th.tableblock.halign-right, td.tableblock.halign-right {
+  text-align: right;
+}
+
+th.tableblock.valign-top, td.tableblock.valign-top {
+  vertical-align: top;
+}
+th.tableblock.valign-middle, td.tableblock.valign-middle {
+  vertical-align: middle;
+}
+th.tableblock.valign-bottom, td.tableblock.valign-bottom {
+  vertical-align: bottom;
+}
+
+
+/*
+ * manpage specific
+ *
+ * */
+
+body.manpage h1 {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  border-top: 2px solid silver;
+  border-bottom: 2px solid silver;
+}
+body.manpage h2 {
+  border-style: none;
+}
+body.manpage div.sectionbody {
+  margin-left: 3em;
+}
+
+@media print {
+  body.manpage div#toc { display: none; }
+}
+</style>
+<script type="text/javascript">
+/*<![CDATA[*/
+var asciidoc = {  // Namespace.
+
+/////////////////////////////////////////////////////////////////////
+// Table Of Contents generator
+/////////////////////////////////////////////////////////////////////
+
+/* Author: Mihai Bazon, September 2002
+ * http://students.infoiasi.ro/~mishoo
+ *
+ * Table Of Content generator
+ * Version: 0.4
+ *
+ * Feel free to use this script under the terms of the GNU General Public
+ * License, as long as you do not remove or alter this notice.
+ */
+
+ /* modified by Troy D. Hanson, September 2006. License: GPL */
+ /* modified by Stuart Rackham, 2006, 2009. License: GPL */
+
+// toclevels = 1..4.
+toc: function (toclevels) {
+
+  function getText(el) {
+    var text = "";
+    for (var i = el.firstChild; i != null; i = i.nextSibling) {
+      if (i.nodeType == 3 /* Node.TEXT_NODE */) // IE doesn't speak constants.
+        text += i.data;
+      else if (i.firstChild != null)
+        text += getText(i);
+    }
+    return text;
+  }
+
+  function TocEntry(el, text, toclevel) {
+    this.element = el;
+    this.text = text;
+    this.toclevel = toclevel;
+  }
+
+  function tocEntries(el, toclevels) {
+    var result = new Array;
+    var re = new RegExp('[hH]([2-'+(toclevels+1)+'])');
+    // Function that scans the DOM tree for header elements (the DOM2
+    // nodeIterator API would be a better technique but not supported by all
+    // browsers).
+    var iterate = function (el) {
+      for (var i = el.firstChild; i != null; i = i.nextSibling) {
+        if (i.nodeType == 1 /* Node.ELEMENT_NODE */) {
+          var mo = re.exec(i.tagName);
+          if (mo && (i.getAttribute("class") || i.getAttribute("className")) != "float") {
+            result[result.length] = new TocEntry(i, getText(i), mo[1]-1);
+          }
+          iterate(i);
+        }
+      }
+    }
+    iterate(el);
+    return result;
+  }
+
+  var toc = document.getElementById("toc");
+  if (!toc) {
+    return;
+  }
+
+  // Delete existing TOC entries in case we're reloading the TOC.
+  var tocEntriesToRemove = [];
+  var i;
+  for (i = 0; i < toc.childNodes.length; i++) {
+    var entry = toc.childNodes[i];
+    if (entry.nodeName == 'div'
+     && entry.getAttribute("class")
+     && entry.getAttribute("class").match(/^toclevel/))
+      tocEntriesToRemove.push(entry);
+  }
+  for (i = 0; i < tocEntriesToRemove.length; i++) {
+    toc.removeChild(tocEntriesToRemove[i]);
+  }
+
+  // Rebuild TOC entries.
+  var entries = tocEntries(document.getElementById("content"), toclevels);
+  for (var i = 0; i < entries.length; ++i) {
+    var entry = entries[i];
+    if (entry.element.id == "")
+      entry.element.id = "_toc_" + i;
+    var a = document.createElement("a");
+    a.href = "#" + entry.element.id;
+    a.appendChild(document.createTextNode(entry.text));
+    var div = document.createElement("div");
+    div.appendChild(a);
+    div.className = "toclevel" + entry.toclevel;
+    toc.appendChild(div);
+  }
+  if (entries.length == 0)
+    toc.parentNode.removeChild(toc);
+},
+
+
+/////////////////////////////////////////////////////////////////////
+// Footnotes generator
+/////////////////////////////////////////////////////////////////////
+
+/* Based on footnote generation code from:
+ * http://www.brandspankingnew.net/archive/2005/07/format_footnote.html
+ */
+
+footnotes: function () {
+  // Delete existing footnote entries in case we're reloading the footnodes.
+  var i;
+  var noteholder = document.getElementById("footnotes");
+  if (!noteholder) {
+    return;
+  }
+  var entriesToRemove = [];
+  for (i = 0; i < noteholder.childNodes.length; i++) {
+    var entry = noteholder.childNodes[i];
+    if (entry.nodeName == 'div' && entry.getAttribute("class") == "footnote")
+      entriesToRemove.push(entry);
+  }
+  for (i = 0; i < entriesToRemove.length; i++) {
+    noteholder.removeChild(entriesToRemove[i]);
+  }
+
+  // Rebuild footnote entries.
+  var cont = document.getElementById("content");
+  var spans = cont.getElementsByTagName("span");
+  var refs = {};
+  var n = 0;
+  for (i=0; i<spans.length; i++) {
+    if (spans[i].className == "footnote") {
+      n++;
+      var note = spans[i].getAttribute("data-note");
+      if (!note) {
+        // Use [\s\S] in place of . so multi-line matches work.
+        // Because JavaScript has no s (dotall) regex flag.
+        note = spans[i].innerHTML.match(/\s*\[([\s\S]*)]\s*/)[1];
+        spans[i].innerHTML =
+          "[<a id='_footnoteref_" + n + "' href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+        spans[i].setAttribute("data-note", note);
+      }
+      noteholder.innerHTML +=
+        "<div class='footnote' id='_footnote_" + n + "'>" +
+        "<a href='#_footnoteref_" + n + "' title='Return to text'>" +
+        n + "</a>. " + note + "</div>";
+      var id =spans[i].getAttribute("id");
+      if (id != null) refs["#"+id] = n;
+    }
+  }
+  if (n == 0)
+    noteholder.parentNode.removeChild(noteholder);
+  else {
+    // Process footnoterefs.
+    for (i=0; i<spans.length; i++) {
+      if (spans[i].className == "footnoteref") {
+        var href = spans[i].getElementsByTagName("a")[0].getAttribute("href");
+        href = href.match(/#.*/)[0];  // Because IE return full URL.
+        n = refs[href];
+        spans[i].innerHTML =
+          "[<a href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+      }
+    }
+  }
+},
+
+install: function(toclevels) {
+  var timerId;
+
+  function reinstall() {
+    asciidoc.footnotes();
+    if (toclevels) {
+      asciidoc.toc(toclevels);
+    }
+  }
+
+  function reinstallAndRemoveTimer() {
+    clearInterval(timerId);
+    reinstall();
+  }
+
+  timerId = setInterval(reinstall, 500);
+  if (document.addEventListener)
+    document.addEventListener("DOMContentLoaded", reinstallAndRemoveTimer, false);
+  else
+    window.onload = reinstallAndRemoveTimer;
+}
+
+}
+asciidoc.install();
+/*]]>*/
+</script>
+</head>
+<body class="manpage">
+<div id="header">
+<h1>
+git-submodule(1) Manual Page
+</h1>
+<h2>NAME</h2>
+<div class="sectionbody">
+<p>git-submodule -
+   Initialize, update or inspect submodules
+</p>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_synopsis">SYNOPSIS</h2>
+<div class="sectionbody">
+<div class="verseblock">
+<pre class="content"><em>git submodule</em> [--quiet] add [-b &lt;branch&gt;] [-f|--force] [--name &lt;name&gt;]
+              [--reference &lt;repository&gt;] [--depth &lt;depth&gt;] [--] &lt;repository&gt; [&lt;path&gt;]
+<em>git submodule</em> [--quiet] status [--cached] [--recursive] [--] [&lt;path&gt;&#8230;]
+<em>git submodule</em> [--quiet] init [--] [&lt;path&gt;&#8230;]
+<em>git submodule</em> [--quiet] deinit [-f|--force] [--] &lt;path&gt;&#8230;
+<em>git submodule</em> [--quiet] update [--init] [--remote] [-N|--no-fetch]
+              [-f|--force] [--rebase|--merge] [--reference &lt;repository&gt;]
+              [--depth &lt;depth&gt;] [--recursive] [--] [&lt;path&gt;&#8230;]
+<em>git submodule</em> [--quiet] summary [--cached|--files] [(-n|--summary-limit) &lt;n&gt;]
+              [commit] [--] [&lt;path&gt;&#8230;]
+<em>git submodule</em> [--quiet] foreach [--recursive] &lt;command&gt;
+<em>git submodule</em> [--quiet] sync [--] [&lt;path&gt;&#8230;]</pre>
+<div class="attribution">
+</div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_description">DESCRIPTION</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Submodules allow foreign repositories to be embedded within
+a dedicated subdirectory of the source tree, always pointed
+at a particular commit.</p></div>
+<div class="paragraph"><p>They are not to be confused with remotes, which are meant mainly
+for branches of the same project; submodules are meant for
+different projects you would like to make part of your source tree,
+while the history of the two projects still stays completely
+independent and you cannot modify the contents of the submodule
+from within the main project.
+If you want to merge the project histories and want to treat the
+aggregated whole as a single project from then on, you may want to
+add a remote for the other project and use the <em>subtree</em> merge strategy,
+instead of treating the other project as a submodule. Directories
+that come from both projects can be cloned and checked out as a whole
+if you choose to go that route.</p></div>
+<div class="paragraph"><p>Submodules are composed from a so-called <tt>gitlink</tt> tree entry
+in the main repository that refers to a particular commit object
+within the inner repository that is completely separate.
+A record in the <tt>.gitmodules</tt> (see <a href="gitmodules.html">gitmodules(5)</a>) file at the
+root of the source tree assigns a logical name to the submodule and
+describes the default URL the submodule shall be cloned from.
+The logical name can be used for overriding this URL within your
+local repository configuration (see <em>submodule init</em>).</p></div>
+<div class="paragraph"><p>This command will manage the tree entries and contents of the
+gitmodules file for you, as well as inspect the status of your
+submodules and update them.
+When adding a new submodule to the tree, the <em>add</em> subcommand
+is to be used.  However, when pulling a tree containing submodules,
+these will not be checked out by default;
+the <em>init</em> and <em>update</em> subcommands will maintain submodules
+checked out and at appropriate revision in your working tree.
+You can briefly inspect the up-to-date status of your submodules
+using the <em>status</em> subcommand and get a detailed overview of the
+difference between the index and checkouts using the <em>summary</em>
+subcommand.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_commands">COMMANDS</h2>
+<div class="sectionbody">
+<div class="dlist"><dl>
+<dt class="hdlist1">
+add
+</dt>
+<dd>
+<p>
+        Add the given repository as a submodule at the given path
+        to the changeset to be committed next to the current
+        project: the current project is termed the "superproject".
+</p>
+<div class="paragraph"><p>This requires at least one argument: &lt;repository&gt;. The optional
+argument &lt;path&gt; is the relative location for the cloned submodule
+to exist in the superproject. If &lt;path&gt; is not given, the
+"humanish" part of the source repository is used ("repo" for
+"/path/to/repo.git" and "foo" for "host.xz:foo/.git").
+The &lt;path&gt; is also used as the submodule&#8217;s logical name in its
+configuration entries unless <tt>--name</tt> is used to specify a logical name.</p></div>
+<div class="paragraph"><p>&lt;repository&gt; is the URL of the new submodule&#8217;s origin repository.
+This may be either an absolute URL, or (if it begins with ./
+or ../), the location relative to the superproject&#8217;s origin
+repository (Please note that to specify a repository <em>foo.git</em>
+which is located right next to a superproject <em>bar.git</em>, you&#8217;ll
+have to use <em>../foo.git</em> instead of <em>./foo.git</em> - as one might expect
+when following the rules for relative URLs - because the evaluation
+of relative URLs in Git is identical to that of relative directories).
+If the superproject doesn&#8217;t have an origin configured
+the superproject is its own authoritative upstream and the current
+working directory is used instead.</p></div>
+<div class="paragraph"><p>&lt;path&gt; is the relative location for the cloned submodule to
+exist in the superproject. If &lt;path&gt; does not exist, then the
+submodule is created by cloning from the named URL. If &lt;path&gt; does
+exist and is already a valid Git repository, then this is added
+to the changeset without cloning. This second form is provided
+to ease creating a new submodule from scratch, and presumes
+the user will later push the submodule to the given URL.</p></div>
+<div class="paragraph"><p>In either case, the given URL is recorded into .gitmodules for
+use by subsequent users cloning the superproject. If the URL is
+given relative to the superproject&#8217;s repository, the presumption
+is the superproject and submodule repositories will be kept
+together in the same relative location, and only the
+superproject&#8217;s URL needs to be provided: git-submodule will correctly
+locate the submodule using the relative URL in .gitmodules.</p></div>
+</dd>
+<dt class="hdlist1">
+status
+</dt>
+<dd>
+<p>
+        Show the status of the submodules. This will print the SHA-1 of the
+        currently checked out commit for each submodule, along with the
+        submodule path and the output of <em>git describe</em> for the
+        SHA-1. Each SHA-1 will be prefixed with <tt>-</tt> if the submodule is not
+        initialized, <tt>+</tt> if the currently checked out submodule commit
+        does not match the SHA-1 found in the index of the containing
+        repository and <tt>U</tt> if the submodule has merge conflicts.
+</p>
+<div class="paragraph"><p>If <tt>--recursive</tt> is specified, this command will recurse into nested
+submodules, and show their status as well.</p></div>
+<div class="paragraph"><p>If you are only interested in changes of the currently initialized
+submodules with respect to the commit recorded in the index or the HEAD,
+<a href="git-status.html">git-status(1)</a> and <a href="git-diff.html">git-diff(1)</a> will provide that information
+too (and can also report changes to a submodule&#8217;s work tree).</p></div>
+</dd>
+<dt class="hdlist1">
+init
+</dt>
+<dd>
+<p>
+        Initialize the submodules recorded in the index (which were
+        added and committed elsewhere) by copying submodule
+        names and urls from .gitmodules to .git/config.
+        Optional &lt;path&gt; arguments limit which submodules will be initialized.
+        It will also copy the value of <tt>submodule.$name.update</tt> into
+        .git/config.
+        The key used in .git/config is <tt>submodule.$name.url</tt>.
+        This command does not alter existing information in .git/config.
+        You can then customize the submodule clone URLs in .git/config
+        for your local setup and proceed to <tt>git submodule update</tt>;
+        you can also just use <tt>git submodule update --init</tt> without
+        the explicit <em>init</em> step if you do not intend to customize
+        any submodule locations.
+</p>
+</dd>
+<dt class="hdlist1">
+deinit
+</dt>
+<dd>
+<p>
+        Unregister the given submodules, i.e. remove the whole
+        <tt>submodule.$name</tt> section from .git/config together with their work
+        tree. Further calls to <tt>git submodule update</tt>, <tt>git submodule foreach</tt>
+        and <tt>git submodule sync</tt> will skip any unregistered submodules until
+        they are initialized again, so use this command if you don&#8217;t want to
+        have a local checkout of the submodule in your work tree anymore. If
+        you really want to remove a submodule from the repository and commit
+        that use <a href="git-rm.html">git-rm(1)</a> instead.
+</p>
+<div class="paragraph"><p>If <tt>--force</tt> is specified, the submodule&#8217;s work tree will be removed even if
+it contains local modifications.</p></div>
+</dd>
+<dt class="hdlist1">
+update
+</dt>
+<dd>
+<p>
+        Update the registered submodules, i.e. clone missing submodules and
+        checkout the commit specified in the index of the containing repository.
+        This will make the submodules HEAD be detached unless <tt>--rebase</tt> or
+        <tt>--merge</tt> is specified or the key <tt>submodule.$name.update</tt> is set to
+        <tt>rebase</tt>, <tt>merge</tt> or <tt>none</tt>. <tt>none</tt> can be overridden by specifying
+        <tt>--checkout</tt>. Setting the key <tt>submodule.$name.update</tt> to <tt>!command</tt>
+        will cause <tt>command</tt> to be run. <tt>command</tt> can be any arbitrary shell
+        command that takes a single argument, namely the sha1 to update to.
+</p>
+<div class="paragraph"><p>If the submodule is not yet initialized, and you just want to use the
+setting as stored in .gitmodules, you can automatically initialize the
+submodule with the <tt>--init</tt> option.</p></div>
+<div class="paragraph"><p>If <tt>--recursive</tt> is specified, this command will recurse into the
+registered submodules, and update any nested submodules within.</p></div>
+<div class="paragraph"><p>If <tt>--force</tt> is specified, the submodule will be checked out (using
+<tt>git checkout --force</tt> if appropriate), even if the commit specified in the
+index of the containing repository already matches the commit checked out in
+the submodule.</p></div>
+</dd>
+<dt class="hdlist1">
+summary
+</dt>
+<dd>
+<p>
+        Show commit summary between the given commit (defaults to HEAD) and
+        working tree/index. For a submodule in question, a series of commits
+        in the submodule between the given super project commit and the
+        index or working tree (switched by <tt>--cached</tt>) are shown. If the option
+        <tt>--files</tt> is given, show the series of commits in the submodule between
+        the index of the super project and the working tree of the submodule
+        (this option doesn&#8217;t allow to use the <tt>--cached</tt> option or to provide an
+        explicit commit).
+</p>
+<div class="paragraph"><p>Using the <tt>--submodule=log</tt> option with <a href="git-diff.html">git-diff(1)</a> will provide that
+information too.</p></div>
+</dd>
+<dt class="hdlist1">
+foreach
+</dt>
+<dd>
+<p>
+        Evaluates an arbitrary shell command in each checked out submodule.
+        The command has access to the variables $name, $path, $sha1 and
+        $toplevel:
+        $name is the name of the relevant submodule section in .gitmodules,
+        $path is the name of the submodule directory relative to the
+        superproject, $sha1 is the commit as recorded in the superproject,
+        and $toplevel is the absolute path to the top-level of the superproject.
+        Any submodules defined in the superproject but not checked out are
+        ignored by this command. Unless given <tt>--quiet</tt>, foreach prints the name
+        of each submodule before evaluating the command.
+        If <tt>--recursive</tt> is given, submodules are traversed recursively (i.e.
+        the given shell command is evaluated in nested submodules as well).
+        A non-zero return from the command in any submodule causes
+        the processing to terminate. This can be overridden by adding <em>|| :</em>
+        to the end of the command.
+</p>
+<div class="paragraph"><p>As an example, <tt>git submodule foreach 'echo $path &#96;git
+rev-parse HEAD&#96;'</tt> will show the path and currently checked out
+commit for each submodule.</p></div>
+</dd>
+<dt class="hdlist1">
+sync
+</dt>
+<dd>
+<p>
+        Synchronizes submodules' remote URL configuration setting
+        to the value specified in .gitmodules. It will only affect those
+        submodules which already have a URL entry in .git/config (that is the
+        case when they are initialized or freshly added). This is useful when
+        submodule URLs change upstream and you need to update your local
+        repositories accordingly.
+</p>
+<div class="paragraph"><p>"git submodule sync" synchronizes all submodules while
+"git submodule sync -- A" synchronizes submodule "A" only.</p></div>
+</dd>
+</dl></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_options">OPTIONS</h2>
+<div class="sectionbody">
+<div class="dlist"><dl>
+<dt class="hdlist1">
+-q
+</dt>
+<dt class="hdlist1">
+--quiet
+</dt>
+<dd>
+<p>
+        Only print error messages.
+</p>
+</dd>
+<dt class="hdlist1">
+-b
+</dt>
+<dt class="hdlist1">
+--branch
+</dt>
+<dd>
+<p>
+        Branch of repository to add as submodule.
+        The name of the branch is recorded as <tt>submodule.&lt;name&gt;.branch</tt> in
+        <tt>.gitmodules</tt> for <tt>update --remote</tt>.
+</p>
+</dd>
+<dt class="hdlist1">
+-f
+</dt>
+<dt class="hdlist1">
+--force
+</dt>
+<dd>
+<p>
+        This option is only valid for add, deinit and update commands.
+        When running add, allow adding an otherwise ignored submodule path.
+        When running deinit the submodule work trees will be removed even if
+        they contain local changes.
+        When running update, throw away local changes in submodules when
+        switching to a different commit; and always run a checkout operation
+        in the submodule, even if the commit listed in the index of the
+        containing repository matches the commit checked out in the submodule.
+</p>
+</dd>
+<dt class="hdlist1">
+--cached
+</dt>
+<dd>
+<p>
+        This option is only valid for status and summary commands.  These
+        commands typically use the commit found in the submodule HEAD, but
+        with this option, the commit stored in the index is used instead.
+</p>
+</dd>
+<dt class="hdlist1">
+--files
+</dt>
+<dd>
+<p>
+        This option is only valid for the summary command. This command
+        compares the commit in the index with that in the submodule HEAD
+        when this option is used.
+</p>
+</dd>
+<dt class="hdlist1">
+-n
+</dt>
+<dt class="hdlist1">
+--summary-limit
+</dt>
+<dd>
+<p>
+        This option is only valid for the summary command.
+        Limit the summary size (number of commits shown in total).
+        Giving 0 will disable the summary; a negative number means unlimited
+        (the default). This limit only applies to modified submodules. The
+        size is always limited to 1 for added/deleted/typechanged submodules.
+</p>
+</dd>
+<dt class="hdlist1">
+--remote
+</dt>
+<dd>
+<p>
+        This option is only valid for the update command.  Instead of using
+        the superproject&#8217;s recorded SHA-1 to update the submodule, use the
+        status of the submodule&#8217;s remote-tracking branch.  The remote used
+        is branch&#8217;s remote (<tt>branch.&lt;name&gt;.remote</tt>), defaulting to <tt>origin</tt>.
+        The remote branch used defaults to <tt>master</tt>, but the branch name may
+        be overridden by setting the <tt>submodule.&lt;name&gt;.branch</tt> option in
+        either <tt>.gitmodules</tt> or <tt>.git/config</tt> (with <tt>.git/config</tt> taking
+        precedence).
+</p>
+<div class="paragraph"><p>This works for any of the supported update procedures (<tt>--checkout</tt>,
+<tt>--rebase</tt>, etc.).  The only change is the source of the target SHA-1.
+For example, <tt>submodule update --remote --merge</tt> will merge upstream
+submodule changes into the submodules, while <tt>submodule update
+--merge</tt> will merge superproject gitlink changes into the submodules.</p></div>
+<div class="paragraph"><p>In order to ensure a current tracking branch state, <tt>update --remote</tt>
+fetches the submodule&#8217;s remote repository before calculating the
+SHA-1.  If you don&#8217;t want to fetch, you should use <tt>submodule update
+--remote --no-fetch</tt>.</p></div>
+<div class="paragraph"><p>Use this option to integrate changes from the upstream subproject with
+your submodule&#8217;s current HEAD.  Alternatively, you can run <tt>git pull</tt>
+from the submodule, which is equivalent except for the remote branch
+name: <tt>update --remote</tt> uses the default upstream repository and
+<tt>submodule.&lt;name&gt;.branch</tt>, while <tt>git pull</tt> uses the submodule&#8217;s
+<tt>branch.&lt;name&gt;.merge</tt>.  Prefer <tt>submodule.&lt;name&gt;.branch</tt> if you want
+to distribute the default upstream branch with the superproject and
+<tt>branch.&lt;name&gt;.merge</tt> if you want a more native feel while working in
+the submodule itself.</p></div>
+</dd>
+<dt class="hdlist1">
+-N
+</dt>
+<dt class="hdlist1">
+--no-fetch
+</dt>
+<dd>
+<p>
+        This option is only valid for the update command.
+        Don&#8217;t fetch new objects from the remote site.
+</p>
+</dd>
+<dt class="hdlist1">
+--checkout
+</dt>
+<dd>
+<p>
+        This option is only valid for the update command.
+        Checkout the commit recorded in the superproject on a detached HEAD
+        in the submodule. This is the default behavior, the main use of
+        this option is to override <tt>submodule.$name.update</tt> when set to
+        <tt>merge</tt>, <tt>rebase</tt> or <tt>none</tt>.
+        If the key <tt>submodule.$name.update</tt> is either not explicitly set or
+        set to <tt>checkout</tt>, this option is implicit.
+</p>
+</dd>
+<dt class="hdlist1">
+--merge
+</dt>
+<dd>
+<p>
+        This option is only valid for the update command.
+        Merge the commit recorded in the superproject into the current branch
+        of the submodule. If this option is given, the submodule&#8217;s HEAD will
+        not be detached. If a merge failure prevents this process, you will
+        have to resolve the resulting conflicts within the submodule with the
+        usual conflict resolution tools.
+        If the key <tt>submodule.$name.update</tt> is set to <tt>merge</tt>, this option is
+        implicit.
+</p>
+</dd>
+<dt class="hdlist1">
+--rebase
+</dt>
+<dd>
+<p>
+        This option is only valid for the update command.
+        Rebase the current branch onto the commit recorded in the
+        superproject. If this option is given, the submodule&#8217;s HEAD will not
+        be detached. If a merge failure prevents this process, you will have
+        to resolve these failures with <a href="git-rebase.html">git-rebase(1)</a>.
+        If the key <tt>submodule.$name.update</tt> is set to <tt>rebase</tt>, this option is
+        implicit.
+</p>
+</dd>
+<dt class="hdlist1">
+--init
+</dt>
+<dd>
+<p>
+        This option is only valid for the update command.
+        Initialize all submodules for which "git submodule init" has not been
+        called so far before updating.
+</p>
+</dd>
+<dt class="hdlist1">
+--name
+</dt>
+<dd>
+<p>
+        This option is only valid for the add command. It sets the submodule&#8217;s
+        name to the given string instead of defaulting to its path. The name
+        must be valid as a directory name and may not end with a <em>/</em>.
+</p>
+</dd>
+<dt class="hdlist1">
+--reference &lt;repository&gt;
+</dt>
+<dd>
+<p>
+        This option is only valid for add and update commands.  These
+        commands sometimes need to clone a remote repository. In this case,
+        this option will be passed to the <a href="git-clone.html">git-clone(1)</a> command.
+</p>
+<div class="paragraph"><p><strong>NOTE</strong>: Do <strong>not</strong> use this option unless you have read the note
+for <a href="git-clone.html">git-clone(1)</a>'s <tt>--reference</tt> and <tt>--shared</tt> options carefully.</p></div>
+</dd>
+<dt class="hdlist1">
+--recursive
+</dt>
+<dd>
+<p>
+        This option is only valid for foreach, update and status commands.
+        Traverse submodules recursively. The operation is performed not
+        only in the submodules of the current repo, but also
+        in any nested submodules inside those submodules (and so on).
+</p>
+</dd>
+<dt class="hdlist1">
+--depth
+</dt>
+<dd>
+<p>
+        This option is valid for add and update commands. Create a <em>shallow</em>
+        clone with a history truncated to the specified number of revisions.
+        See <a href="git-clone.html">git-clone(1)</a>
+</p>
+</dd>
+<dt class="hdlist1">
+&lt;path&gt;&#8230;
+</dt>
+<dd>
+<p>
+        Paths to submodule(s). When specified this will restrict the command
+        to only operate on the submodules found at the specified paths.
+        (This argument is required with add).
+</p>
+</dd>
+</dl></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_files">FILES</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>When initializing submodules, a .gitmodules file in the top-level directory
+of the containing repository is used to find the url of each submodule.
+This file should be formatted in the same way as <tt>$GIT_DIR/config</tt>. The key
+to each submodule url is "submodule.$name.url".  See <a href="gitmodules.html">gitmodules(5)</a>
+for details.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_git">GIT</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Part of the <a href="git.html">git(1)</a> suite</p></div>
+</div>
+</div>
+</div>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2014-04-02 15:40:12 PDT
+</div>
+</div>
+</body>
+</html>

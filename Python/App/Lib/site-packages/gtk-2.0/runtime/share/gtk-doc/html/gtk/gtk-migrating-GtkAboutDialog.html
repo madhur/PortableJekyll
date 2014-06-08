@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Migrating from GnomeAbout to GtkAboutDialog</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="GTK+ 2 Reference Manual">
+<link rel="up" href="migrating.html" title="Part IV. Migrating from Previous Versions of GTK+">
+<link rel="prev" href="gtk-migrating-GtkIconView.html" title="Migrating from GnomeIconList to GtkIconView">
+<link rel="next" href="gtk-migrating-GtkColorButton.html" title="Migrating from GnomeColorPicker to GtkColorButton">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle">
+<td><a accesskey="p" href="gtk-migrating-GtkIconView.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="migrating.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GTK+ 2 Reference Manual</th>
+<td><a accesskey="n" href="gtk-migrating-GtkColorButton.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="chapter">
+<div class="titlepage"><div><div><h2 class="title">
+<a name="gtk-migrating-GtkAboutDialog"></a>Migrating from GnomeAbout to GtkAboutDialog</h2></div></div></div>
+<p>
+    Since version 2.6, GTK+ provides the <a class="link" href="GtkAboutDialog.html" title="GtkAboutDialog"><span class="type">GtkAboutDialog</span></a> widget as a 
+    replacement for the <span class="structname">GnomeAbout</span> dialog in 
+    the libgnomeui library.
+  </p>
+<p>
+    <a class="link" href="GtkAboutDialog.html" title="GtkAboutDialog"><span class="type">GtkAboutDialog</span></a> supports all features found in <span class="structname">GnomeAbout</span>.
+    The <span class="structname">GtkAboutDialog</span> API is bigger, since it follows 
+    the GTK+ policy to have getters and setters for all widget properties, 
+    but it isn't much more complex than <span class="structname">GnomeAbout</span>.
+  </p>
+<p>
+    To convert an application that uses <span class="structname">GnomeAbout</span> to 
+    <span class="structname">GtkAboutDialog</span>, as a first step, replace calls 
+    like
+    </p>
+<div class="informalexample">
+  <table class="listing_frame" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+      <tr>
+        <td class="listing_lines" align="right"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19</pre></td>
+        <td class="listing_code"><pre class="programlisting"><span class="keyword">const</span><span class="normal"> </span><span class="usertype">gchar</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">documentors</span><span class="symbol">[]</span><span class="normal"> </span><span class="symbol">=</span><span class="normal"> </span><span class="cbracket">{</span><span class="normal"> </span>
+<span class="normal">  </span><span class="string">"Documenter 1"</span><span class="symbol">,</span><span class="normal"> </span>
+<span class="normal">  </span><span class="string">"Documenter 2"</span><span class="symbol">,</span><span class="normal"> </span>
+<span class="normal">  NULL </span>
+<span class="cbracket">}</span><span class="symbol">;</span>
+
+<span class="keyword">const</span><span class="normal"> </span><span class="usertype">gchar</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">documentors</span><span class="symbol">[]</span><span class="normal"> </span><span class="symbol">=</span><span class="normal"> </span><span class="cbracket">{</span><span class="normal"> </span>
+<span class="normal">  </span><span class="string">"Author 1"</span><span class="symbol">,</span><span class="normal"> </span>
+<span class="normal">  </span><span class="string">"Author 2"</span><span class="symbol">,</span><span class="normal"> </span>
+<span class="normal">  NULL </span>
+<span class="cbracket">}</span><span class="symbol">;</span>
+
+<span class="usertype">GtkWidget</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">about </span><span class="symbol">=</span><span class="normal"> </span><span class="function">gnome_about_new</span><span class="normal"> </span><span class="symbol">(</span><span class="string">"GNOME Test Program"</span><span class="symbol">,</span><span class="normal"> VERSION</span><span class="symbol">,</span>
+<span class="normal">                    </span><span class="string">"(C) 1998-2001 The Free Software Foundation"</span><span class="symbol">,</span>
+<span class="normal">                    </span><span class="string">"Program to display GNOME functions."</span><span class="symbol">,</span>
+<span class="normal">                    authors</span><span class="symbol">,</span>
+<span class="normal">                    documenters</span><span class="symbol">,</span>
+<span class="normal">                    </span><span class="function"><a href="http://library.gnome.org/devel/glib/unstable/glib-I18N.html#gettext-macro">_</a></span><span class="symbol">(</span><span class="string">"translator-credits"</span><span class="symbol">),</span>
+<span class="normal">                    </span><span class="string">"logo.png"</span><span class="symbol">);</span></pre></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+    by something like 
+    </p>
+<div class="informalexample">
+  <table class="listing_frame" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+      <tr>
+        <td class="listing_lines" align="right"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12</pre></td>
+        <td class="listing_code"><pre class="programlisting"><span class="usertype">GdkPixbuf</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">logo </span><span class="symbol">=</span><span class="normal"> </span><span class="function"><a href="http://library.gnome.org/devel/gdk-pixbuf/unstable/gdk-pixbuf-File-Loading.html#gdk-pixbuf-new-from-file">gdk_pixbuf_new_from_file</a></span><span class="normal"> </span><span class="symbol">(</span><span class="string">"logo.png"</span><span class="symbol">,</span><span class="normal"> <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS">NULL</a></span><span class="symbol">);</span>
+<span class="usertype">GtkWidget</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">about </span><span class="symbol">=</span><span class="normal"> </span><span class="function"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-new">g_object_new</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">GTK_TYPE_ABOUT_DIALOG</span><span class="symbol">,</span>
+<span class="normal">                                 </span><span class="string">"name"</span><span class="symbol">,</span><span class="normal"> </span><span class="string">"GNOME Test Program"</span><span class="symbol">,</span><span class="normal"> </span>
+<span class="normal">                                 </span><span class="string">"version"</span><span class="symbol">,</span><span class="normal"> VERSION</span><span class="symbol">,</span>
+<span class="normal">                         </span><span class="string">"copyright"</span><span class="symbol">,</span><span class="normal"> </span><span class="string">"(C) 1998-2001 The Free Software Foundation"</span><span class="symbol">,</span>
+<span class="normal">                     </span><span class="string">"comments"</span><span class="symbol">,</span><span class="normal"> </span><span class="string">"Program to display GNOME functions."</span><span class="symbol">,</span>
+<span class="normal">                         </span><span class="string">"authors"</span><span class="symbol">,</span><span class="normal"> authors</span><span class="symbol">,</span>
+<span class="normal">                         </span><span class="string">"documenters"</span><span class="symbol">,</span><span class="normal"> documenters</span><span class="symbol">,</span>
+<span class="normal">                         </span><span class="string">"translator-credits"</span><span class="symbol">,</span><span class="normal"> </span><span class="function"><a href="http://library.gnome.org/devel/glib/unstable/glib-I18N.html#gettext-macro">_</a></span><span class="symbol">(</span><span class="string">"translator-credits"</span><span class="symbol">),</span>
+<span class="normal">                     </span><span class="string">"logo"</span><span class="symbol">,</span><span class="normal"> logo</span><span class="symbol">,</span>
+<span class="normal">                                 <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS">NULL</a></span><span class="symbol">);</span>
+<span class="function"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref">g_object_unref</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">pixbuf</span><span class="symbol">);</span></pre></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+    If the <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-new"><code class="function">g_object_new()</code></a> construction scares you, you can also use 
+    <a class="link" href="GtkAboutDialog.html#gtk-about-dialog-new" title="gtk_about_dialog_new ()"><code class="function">gtk_about_dialog_new()</code></a> to construct the dialog and then use the 
+    setters for the individual properties.
+  </p>
+<p>
+    Once you are done with the initial conversion, you may want to look into 
+    using some of the features of <span class="structname">GtkAboutDialog</span> 
+    which are not present in <span class="structname">GnomeAbout</span>.
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem"><p>
+        You can specify license information with the 
+        <a class="link" href="GtkAboutDialog.html#GtkAboutDialog--license" title='The "license" property'><span class="type">"license"</span></a> property
+      </p></li>
+<li class="listitem"><p>
+        You can add separate credits for artists with the 
+        <a class="link" href="GtkAboutDialog.html#GtkAboutDialog--artists" title='The "artists" property'><span class="type">"artists"</span></a> property
+      </p></li>
+<li class="listitem"><p>
+        You can add a pointer to the website of your application, using the 
+        <a class="link" href="GtkAboutDialog.html#GtkAboutDialog--website" title='The "website" property'><span class="type">"website"</span></a> and <a class="link" href="GtkAboutDialog.html#GtkAboutDialog--website-label" title='The "website-label" property'><span class="type">"website-label"</span></a> properties.
+      </p></li>
+<li class="listitem"><p>
+        If your credits contain email addresses or URLs, you can turn them 
+        into clickable links using <a class="link" href="GtkAboutDialog.html#gtk-about-dialog-set-email-hook" title="gtk_about_dialog_set_email_hook ()"><code class="function">gtk_about_dialog_set_email_hook()</code></a> and 
+        <a class="link" href="GtkAboutDialog.html#gtk-about-dialog-set-url-hook" title="gtk_about_dialog_set_url_hook ()"><code class="function">gtk_about_dialog_set_url_hook()</code></a>. 
+      </p></li>
+</ul></div>
+<p>
+  </p>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

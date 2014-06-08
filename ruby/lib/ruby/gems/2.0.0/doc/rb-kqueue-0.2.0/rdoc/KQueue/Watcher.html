@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>class KQueue::Watcher - rb-kqueue-0.2.0 Documentation</title>
+
+<link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../index.html">Home</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/rb-kqueue/watcher.rb
+    <li>lib/rb-kqueue/watcher/file.rb
+    <li>lib/rb-kqueue/watcher/process.rb
+    <li>lib/rb-kqueue/watcher/read_write.rb
+    <li>lib/rb-kqueue/watcher/signal.rb
+    <li>lib/rb-kqueue/watcher/socket_read_write.rb
+    <li>lib/rb-kqueue/watcher/timer.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">Object
+  
+</nav>
+
+    
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li ><a href="#method-c-new">::new</a>
+    
+    <li ><a href="#method-i-add-21">#add!</a>
+    
+    <li ><a href="#method-i-callback-21">#callback!</a>
+    
+    <li ><a href="#method-i-delete-21">#delete!</a>
+    
+    <li ><a href="#method-i-disable-21">#disable!</a>
+    
+    <li ><a href="#method-i-enable-21">#enable!</a>
+    
+    <li ><a href="#method-i-kevent-21">#kevent!</a>
+    
+    <li ><a href="#method-i-native">#native</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="../README_md.html">README</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../KQueue.html">KQueue</a>
+  
+    <li><a href="../KQueue/Event.html">KQueue::Event</a>
+  
+    <li><a href="../KQueue/Native.html">KQueue::Native</a>
+  
+    <li><a href="../KQueue/Native/FFI.html">KQueue::Native::FFI</a>
+  
+    <li><a href="../KQueue/Native/FFI/Library.html">KQueue::Native::FFI::Library</a>
+  
+    <li><a href="../KQueue/Native/Flags.html">KQueue::Native::Flags</a>
+  
+    <li><a href="../KQueue/Native/KEvent.html">KQueue::Native::KEvent</a>
+  
+    <li><a href="../KQueue/Native/TimeSpec.html">KQueue::Native::TimeSpec</a>
+  
+    <li><a href="../KQueue/Queue.html">KQueue::Queue</a>
+  
+    <li><a href="../KQueue/Watcher.html">KQueue::Watcher</a>
+  
+    <li><a href="../KQueue/Watcher/File.html">KQueue::Watcher::File</a>
+  
+    <li><a href="../KQueue/Watcher/Process.html">KQueue::Watcher::Process</a>
+  
+    <li><a href="../KQueue/Watcher/ReadWrite.html">KQueue::Watcher::ReadWrite</a>
+  
+    <li><a href="../KQueue/Watcher/Signal.html">KQueue::Watcher::Signal</a>
+  
+    <li><a href="../KQueue/Watcher/SocketReadWrite.html">KQueue::Watcher::SocketReadWrite</a>
+  
+    <li><a href="../KQueue/Watcher/Timer.html">KQueue::Watcher::Timer</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class KQueue::Watcher</h1>
+
+  <div id="description" class="description">
+    
+<p>Watchers monitor for a single sort of event, specified by the specific
+subclass and its parameters. A watcher is usually created via one of the
+`watch_*` methods on {Queue}.</p>
+
+<p>One {Queue} may have many {Watcher}s. The <a href="Queue.html">Queue</a>
+actually takes care of the checking for events, via {Queue#run run} or
+{Queue#process process}.</p>
+
+<p><a href="Watcher.html">Watcher</a> objects themselves have several useful
+capabilities. Each subclass keeps track of its own specific information. In
+addition, all Watchers can be {#delete! deleted from the queue}, {#add!
+added back in}, {#disable! disabled}, and {#enable! enabled}.</p>
+
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+    <!-- Attributes -->
+    <section id="attribute-method-details" class="method-section section">
+      <h3 class="section-header">Attributes</h3>
+
+      
+      <div id="attribute-i-queue" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">queue</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>The {Queue} that created this <a href="Watcher.html">Watcher</a>.</p>
+
+<p>@return [Queue]</p>
+        
+        </div>
+      </div>
+      
+    </section><!-- attribute-method-details -->
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">(queue, ident, filter, fflags, data, callback)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Creates a new <a href="Watcher.html">Watcher</a>.</p>
+
+<p>@private @param queue [Queue] The queue for which this watcher will be
+used. @param ident [Fixnum] The underlying kqueue identifier for this
+watcher. @param filter [Symbol] The name of the underlying kqueue filter
+for this watcher. @param fflags [Array&lt;Symbol&gt;] Filter-specific
+flags. @param data [Fixnum] Filter-specific data. @param callback
+[Proc{Event -&gt; void}] The callback that will be called</p>
+
+<pre>on any events fired by this watcher.</pre>
+
+<p>@raise [SystemCallError] If something goes wrong when registering this <a
+href="Watcher.html">Watcher</a>.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/rb-kqueue/watcher.rb, line 32</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">queue</span>, <span class="ruby-identifier">ident</span>, <span class="ruby-identifier">filter</span>, <span class="ruby-identifier">fflags</span>, <span class="ruby-identifier">data</span>, <span class="ruby-identifier">callback</span>)
+  <span class="ruby-ivar">@queue</span> = <span class="ruby-identifier">queue</span>
+  <span class="ruby-ivar">@ident</span> = <span class="ruby-identifier">ident</span>
+  <span class="ruby-ivar">@filter</span> = <span class="ruby-identifier">filter</span>
+  <span class="ruby-ivar">@flags</span> = []
+  <span class="ruby-ivar">@fflags</span> = <span class="ruby-identifier">fflags</span>
+  <span class="ruby-ivar">@data</span> = <span class="ruby-identifier">data</span>
+  <span class="ruby-ivar">@callback</span> = <span class="ruby-identifier">callback</span>
+  <span class="ruby-identifier">add!</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- new-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- new-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-add-21" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">add!</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Adds this <a href="Watcher.html">Watcher</a> to {#queue its Queue}. Note
+that this is done automatically when the <a href="Watcher.html">Watcher</a>
+is created.</p>
+
+<p>@raise [SystemCallError] If something goes wrong when adding this <a
+href="Watcher.html">Watcher</a>. @return [void]</p>
+          
+          
+
+          
+          <div class="method-source-code" id="add-21-source">
+            <pre><span class="ruby-comment"># File lib/rb-kqueue/watcher.rb, line 48</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">add!</span>
+  <span class="ruby-identifier">kevent!</span> <span class="ruby-value">:add</span>, <span class="ruby-value">:clear</span> <span class="ruby-comment"># TODO: Don&#39;t always enable :clear</span>
+  <span class="ruby-ivar">@queue</span>.<span class="ruby-identifier">watchers</span>[[<span class="ruby-ivar">@filter</span>, <span class="ruby-ivar">@ident</span>]] = <span class="ruby-keyword">self</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- add-21-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- add-21-method -->
+
+    
+      <div id="method-i-callback-21" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">callback!</span><span
+            class="method-args">(event)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Calls this Watcher&#39;s callback with the given {Event}.</p>
+
+<p>@private @param event [Event] @return [void]</p>
+          
+          
+
+          
+          <div class="method-source-code" id="callback-21-source">
+            <pre><span class="ruby-comment"># File lib/rb-kqueue/watcher.rb, line 89</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">callback!</span>(<span class="ruby-identifier">event</span>)
+  <span class="ruby-ivar">@callback</span>.<span class="ruby-identifier">call</span> <span class="ruby-identifier">event</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- callback-21-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- callback-21-method -->
+
+    
+      <div id="method-i-delete-21" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">delete!</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Removes this <a href="Watcher.html">Watcher</a> from {#queue its Queue}.
+This means that events won&#39;t be fired or even checked for.</p>
+
+<p>@raise [SystemCallError] If something goes wrong when deleting this <a
+href="Watcher.html">Watcher</a>. @return [void]</p>
+          
+          
+
+          
+          <div class="method-source-code" id="delete-21-source">
+            <pre><span class="ruby-comment"># File lib/rb-kqueue/watcher.rb, line 59</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">delete!</span>
+  <span class="ruby-identifier">kevent!</span> <span class="ruby-value">:delete</span>
+  <span class="ruby-ivar">@queue</span>.<span class="ruby-identifier">watchers</span>.<span class="ruby-identifier">delete</span>([<span class="ruby-ivar">@filter</span>, <span class="ruby-ivar">@ident</span>])
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- delete-21-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- delete-21-method -->
+
+    
+      <div id="method-i-disable-21" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">disable!</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Disables this <a href="Watcher.html">Watcher</a>. This means that events
+won&#39;t be fired, but they&#39;ll still be checked for.</p>
+
+<p>@raise [SystemCallError] If something goes wrong when enabling this <a
+href="Watcher.html">Watcher</a>. @return [void]</p>
+          
+          
+
+          
+          <div class="method-source-code" id="disable-21-source">
+            <pre><span class="ruby-comment"># File lib/rb-kqueue/watcher.rb, line 80</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">disable!</span>
+  <span class="ruby-identifier">kevent!</span> <span class="ruby-value">:disable</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- disable-21-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- disable-21-method -->
+
+    
+      <div id="method-i-enable-21" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">enable!</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Enables this <a href="Watcher.html">Watcher</a>. Note that this is done
+automatically when the <a href="Watcher.html">Watcher</a> is created, as
+well as whenever {#add!} is called.</p>
+
+<p>@raise [SystemCallError] If something goes wrong when enabling this <a
+href="Watcher.html">Watcher</a>. @return [void]</p>
+          
+          
+
+          
+          <div class="method-source-code" id="enable-21-source">
+            <pre><span class="ruby-comment"># File lib/rb-kqueue/watcher.rb, line 70</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">enable!</span>
+  <span class="ruby-identifier">kevent!</span> <span class="ruby-value">:enable</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- enable-21-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- enable-21-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+     <section id="private-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Private Instance Methods</h3>
+
+    
+      <div id="method-i-kevent-21" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">kevent!</span><span
+            class="method-args">(*flags)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Runs the `kevent` C call with this Watcher&#39;s kevent struct as input.
+This effectively means telling kqueue to perform some action with this <a
+href="Watcher.html">Watcher</a> as an argument.</p>
+
+<p>@param flags [Array&lt;Symbol&gt;] Flags specifying the action to perform</p>
+
+<pre>as well as any additional flags.</pre>
+
+<p>@return [void] @raise [SystemCallError] If something goes wrong when
+performing the C call.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="kevent-21-source">
+            <pre><span class="ruby-comment"># File lib/rb-kqueue/watcher.rb, line 118</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">kevent!</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">flags</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-constant">Native</span>.<span class="ruby-identifier">kevent</span>(<span class="ruby-ivar">@queue</span>.<span class="ruby-identifier">fd</span>, <span class="ruby-identifier">native</span>(<span class="ruby-identifier">flags</span>).<span class="ruby-identifier">pointer</span>, <span class="ruby-value">1</span>, <span class="ruby-keyword">nil</span>, <span class="ruby-value">0</span>, <span class="ruby-keyword">nil</span>) <span class="ruby-operator">&lt;</span> <span class="ruby-value">0</span>
+    <span class="ruby-constant">KQueue</span>.<span class="ruby-identifier">handle_error</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- kevent-21-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- kevent-21-method -->
+
+    
+      <div id="method-i-native" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">native</span><span
+            class="method-args">(flags)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Returns a C struct corresponding to this watcher.</p>
+
+<p>@param flags [Array&lt;Symbol&gt;] Flags for the C struct&#39;s `flags`
+field,</p>
+
+<pre>in addition to the `@flags` var.</pre>
+
+<p>@return [Native::KEvent]</p>
+          
+          
+
+          
+          <div class="method-source-code" id="native-source">
+            <pre><span class="ruby-comment"># File lib/rb-kqueue/watcher.rb, line 100</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">native</span>(<span class="ruby-identifier">flags</span>)
+  <span class="ruby-identifier">native</span> = <span class="ruby-constant">Native</span><span class="ruby-operator">::</span><span class="ruby-constant">KEvent</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-identifier">native</span>[<span class="ruby-value">:ident</span>] = <span class="ruby-ivar">@ident</span>
+  <span class="ruby-identifier">native</span>[<span class="ruby-value">:filter</span>] = <span class="ruby-constant">Native</span><span class="ruby-operator">::</span><span class="ruby-constant">Flags</span>.<span class="ruby-identifier">to_flag</span>(<span class="ruby-string">&quot;EVFILT&quot;</span>, <span class="ruby-ivar">@filter</span>)
+  <span class="ruby-identifier">native</span>[<span class="ruby-value">:flags</span>] = <span class="ruby-constant">Native</span><span class="ruby-operator">::</span><span class="ruby-constant">Flags</span>.<span class="ruby-identifier">to_mask</span>(<span class="ruby-string">&quot;EV&quot;</span>, <span class="ruby-ivar">@flags</span> <span class="ruby-operator">|</span> <span class="ruby-identifier">flags</span>)
+  <span class="ruby-identifier">native</span>[<span class="ruby-value">:fflags</span>] = <span class="ruby-constant">Native</span><span class="ruby-operator">::</span><span class="ruby-constant">Flags</span>.<span class="ruby-identifier">to_mask</span>(<span class="ruby-node">&quot;NOTE_#{@filter.to_s.upcase}&quot;</span>, <span class="ruby-ivar">@fflags</span>)
+  <span class="ruby-identifier">native</span>[<span class="ruby-value">:data</span>] = <span class="ruby-ivar">@data</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@data</span>
+  <span class="ruby-identifier">native</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- native-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- native-method -->
+
+    
+    </section><!-- private-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

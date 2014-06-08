@@ -1,0 +1,595 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>GdkPixbufLoader</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="GDK-PixBuf Reference Manual">
+<link rel="up" href="rn01.html" title="API Reference">
+<link rel="prev" href="gdk-pixbuf-Animations.html" title="Animations">
+<link rel="next" href="gdk-pixbuf-Module-Interface.html" title="Module Interface">
+<meta name="generator" content="GTK-Doc V1.17.1 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="gdk-pixbuf-Animations.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="rn01.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GDK-PixBuf Reference Manual</th>
+<td><a accesskey="n" href="gdk-pixbuf-Module-Interface.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#GdkPixbufLoader.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#GdkPixbufLoader.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#GdkPixbufLoader.object-hierarchy" class="shortcut">Object Hierarchy</a>
+                   | 
+                  <a href="#GdkPixbufLoader.signals" class="shortcut">Signals</a>
+</td></tr>
+</table>
+<div class="refentry">
+<a name="GdkPixbufLoader"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="GdkPixbufLoader.top_of_page"></a>GdkPixbufLoader</span></h2>
+<p>GdkPixbufLoader — Application-driven progressive image loading.</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="GdkPixbufLoader.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+#include &lt;gdk-pixbuf/gdk-pixbuf.h&gt;
+
+struct              <a class="link" href="GdkPixbufLoader.html#GdkPixbufLoader-struct" title="struct GdkPixbufLoader">GdkPixbufLoader</a>;
+<a class="link" href="GdkPixbufLoader.html" title="GdkPixbufLoader"><span class="returnvalue">GdkPixbufLoader</span></a> *   <a class="link" href="GdkPixbufLoader.html#gdk-pixbuf-loader-new" title="gdk_pixbuf_loader_new ()">gdk_pixbuf_loader_new</a>               (<em class="parameter"><code><span class="type">void</span></code></em>);
+<a class="link" href="GdkPixbufLoader.html" title="GdkPixbufLoader"><span class="returnvalue">GdkPixbufLoader</span></a> *   <a class="link" href="GdkPixbufLoader.html#gdk-pixbuf-loader-new-with-type" title="gdk_pixbuf_loader_new_with_type ()">gdk_pixbuf_loader_new_with_type</a>     (<em class="parameter"><code>const <span class="type">char</span> *image_type</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);
+<a class="link" href="GdkPixbufLoader.html" title="GdkPixbufLoader"><span class="returnvalue">GdkPixbufLoader</span></a> *   <a class="link" href="GdkPixbufLoader.html#gdk-pixbuf-loader-new-with-mime-type" title="gdk_pixbuf_loader_new_with_mime_type ()">gdk_pixbuf_loader_new_with_mime_type</a>
+                                                        (<em class="parameter"><code>const <span class="type">char</span> *mime_type</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);
+<a class="link" href="gdk-pixbuf-Module-Interface.html#GdkPixbufFormat" title="struct GdkPixbufFormat"><span class="returnvalue">GdkPixbufFormat</span></a> *   <a class="link" href="GdkPixbufLoader.html#gdk-pixbuf-loader-get-format" title="gdk_pixbuf_loader_get_format ()">gdk_pixbuf_loader_get_format</a>        (<em class="parameter"><code><a class="link" href="GdkPixbufLoader.html" title="GdkPixbufLoader"><span class="type">GdkPixbufLoader</span></a> *loader</code></em>);
+<span class="returnvalue">gboolean</span>            <a class="link" href="GdkPixbufLoader.html#gdk-pixbuf-loader-write" title="gdk_pixbuf_loader_write ()">gdk_pixbuf_loader_write</a>             (<em class="parameter"><code><a class="link" href="GdkPixbufLoader.html" title="GdkPixbufLoader"><span class="type">GdkPixbufLoader</span></a> *loader</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">guchar</span> *buf</code></em>,
+                                                         <em class="parameter"><code><span class="type">gsize</span> count</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GdkPixbufLoader.html#gdk-pixbuf-loader-set-size" title="gdk_pixbuf_loader_set_size ()">gdk_pixbuf_loader_set_size</a>          (<em class="parameter"><code><a class="link" href="GdkPixbufLoader.html" title="GdkPixbufLoader"><span class="type">GdkPixbufLoader</span></a> *loader</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> width</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> height</code></em>);
+<a class="link" href="gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="returnvalue">GdkPixbuf</span></a> *         <a class="link" href="GdkPixbufLoader.html#gdk-pixbuf-loader-get-pixbuf" title="gdk_pixbuf_loader_get_pixbuf ()">gdk_pixbuf_loader_get_pixbuf</a>        (<em class="parameter"><code><a class="link" href="GdkPixbufLoader.html" title="GdkPixbufLoader"><span class="type">GdkPixbufLoader</span></a> *loader</code></em>);
+<a class="link" href="gdk-pixbuf-Animations.html#GdkPixbufAnimation"><span class="returnvalue">GdkPixbufAnimation</span></a> * <a class="link" href="GdkPixbufLoader.html#gdk-pixbuf-loader-get-animation" title="gdk_pixbuf_loader_get_animation ()">gdk_pixbuf_loader_get_animation</a>    (<em class="parameter"><code><a class="link" href="GdkPixbufLoader.html" title="GdkPixbufLoader"><span class="type">GdkPixbufLoader</span></a> *loader</code></em>);
+<span class="returnvalue">gboolean</span>            <a class="link" href="GdkPixbufLoader.html#gdk-pixbuf-loader-close" title="gdk_pixbuf_loader_close ()">gdk_pixbuf_loader_close</a>             (<em class="parameter"><code><a class="link" href="GdkPixbufLoader.html" title="GdkPixbufLoader"><span class="type">GdkPixbufLoader</span></a> *loader</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);
+</pre>
+</div>
+<div class="refsect1">
+<a name="GdkPixbufLoader.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  GObject
+   +----GdkPixbufLoader
+</pre>
+</div>
+<div class="refsect1">
+<a name="GdkPixbufLoader.signals"></a><h2>Signals</h2>
+<pre class="synopsis">
+  "<a class="link" href="GdkPixbufLoader.html#GdkPixbufLoader-area-prepared" title='The "area-prepared" signal'>area-prepared</a>"                                  : <code class="literal">Run Last</code>
+  "<a class="link" href="GdkPixbufLoader.html#GdkPixbufLoader-area-updated" title='The "area-updated" signal'>area-updated</a>"                                   : <code class="literal">Run Last</code>
+  "<a class="link" href="GdkPixbufLoader.html#GdkPixbufLoader-closed" title='The "closed" signal'>closed</a>"                                         : <code class="literal">Run Last</code>
+  "<a class="link" href="GdkPixbufLoader.html#GdkPixbufLoader-size-prepared" title='The "size-prepared" signal'>size-prepared</a>"                                  : <code class="literal">Run Last</code>
+</pre>
+</div>
+<div class="refsect1">
+<a name="GdkPixbufLoader.description"></a><h2>Description</h2>
+<p>
+<a class="link" href="GdkPixbufLoader.html" title="GdkPixbufLoader"><span class="type">GdkPixbufLoader</span></a> provides a way for applications to drive the
+process of loading an image, by letting them send the image data
+directly to the loader instead of having the loader read the data
+from a file.  Applications can use this functionality instead of
+<a class="link" href="gdk-pixbuf-File-Loading.html#gdk-pixbuf-new-from-file" title="gdk_pixbuf_new_from_file"><code class="function">gdk_pixbuf_new_from_file()</code></a> or <a class="link" href="gdk-pixbuf-Animations.html#gdk-pixbuf-animation-new-from-file" title="gdk_pixbuf_animation_new_from_file"><code class="function">gdk_pixbuf_animation_new_from_file()</code></a> 
+when they need to parse image data in
+small chunks.  For example, it should be used when reading an
+image from a (potentially) slow network connection, or when
+loading an extremely large file.
+</p>
+<p>
+To use <a class="link" href="GdkPixbufLoader.html" title="GdkPixbufLoader"><span class="type">GdkPixbufLoader</span></a> to load an image, just create a new one,
+and call <a class="link" href="GdkPixbufLoader.html#gdk-pixbuf-loader-write" title="gdk_pixbuf_loader_write ()"><code class="function">gdk_pixbuf_loader_write()</code></a> to send the data to it.  When
+done, <a class="link" href="GdkPixbufLoader.html#gdk-pixbuf-loader-close" title="gdk_pixbuf_loader_close ()"><code class="function">gdk_pixbuf_loader_close()</code></a> should be called to end the stream
+and finalize everything.  The loader will emit three important
+signals throughout the process.  The first, "<a class="link" href="GdkPixbufLoader.html#GdkPixbufLoader-size-prepared" title='The "size-prepared" signal'>size_prepared</a>",
+will be called as soon as the image has enough information to
+determine the size of the image to be used. If you want to scale
+the image while loading it, you can call <a class="link" href="GdkPixbufLoader.html#gdk-pixbuf-loader-set-size" title="gdk_pixbuf_loader_set_size ()"><code class="function">gdk_pixbuf_loader_set_size()</code></a>
+in response to this signal.
+</p>
+<p>
+The second signal, "<a class="link" href="GdkPixbufLoader.html#GdkPixbufLoader-area-prepared" title='The "area-prepared" signal'>area_prepared</a>",
+will be called as soon as the pixbuf of the desired has been 
+allocated.  You can obtain it by calling <a class="link" href="GdkPixbufLoader.html#gdk-pixbuf-loader-get-pixbuf" title="gdk_pixbuf_loader_get_pixbuf ()"><code class="function">gdk_pixbuf_loader_get_pixbuf()</code></a>. 
+If you want to use it, simply ref it.  
+In addition, no actual information will be passed in yet, so the
+pixbuf can be safely filled with any temporary graphics (or an
+initial color) as needed.  You can also call
+<a class="link" href="GdkPixbufLoader.html#gdk-pixbuf-loader-get-pixbuf" title="gdk_pixbuf_loader_get_pixbuf ()"><code class="function">gdk_pixbuf_loader_get_pixbuf()</code></a> later and get the same pixbuf.
+</p>
+<p>
+The last signal, "<a class="link" href="GdkPixbufLoader.html#GdkPixbufLoader-area-updated" title='The "area-updated" signal'>area_updated</a>" gets
+called every time a region is updated.  This way you can update a
+partially completed image.  Note that you do not know anything
+about the completeness of an image from the area updated.  For
+example, in an interlaced image, you need to make several passes
+before the image is done loading.
+</p>
+<p>
+</p>
+<div class="refsect2">
+<a name="id456443"></a><h3>Loading an animation</h3>
+<p>
+Loading an animation is almost as easy as loading an
+image. Once the first "<a class="link" href="GdkPixbufLoader.html#GdkPixbufLoader-area-prepared" title='The "area-prepared" signal'>area_prepared</a>" signal
+has been emitted, you can call <a class="link" href="GdkPixbufLoader.html#gdk-pixbuf-loader-get-animation" title="gdk_pixbuf_loader_get_animation ()"><code class="function">gdk_pixbuf_loader_get_animation()</code></a>
+to get the <a class="link" href="gdk-pixbuf-Animations.html#GdkPixbufAnimation"><span class="type">GdkPixbufAnimation</span></a> struct and <a class="link" href="gdk-pixbuf-Animations.html#gdk-pixbuf-animation-get-iter" title="gdk_pixbuf_animation_get_iter ()"><code class="function">gdk_pixbuf_animation_get_iter()</code></a>
+to get an <a class="link" href="gdk-pixbuf-Animations.html#GdkPixbufAnimationIter"><span class="type">GdkPixbufAnimationIter</span></a> for displaying it. 
+</p>
+</div>
+<p>
+</p>
+</div>
+<div class="refsect1">
+<a name="GdkPixbufLoader.details"></a><h2>Details</h2>
+<div class="refsect2">
+<a name="GdkPixbufLoader-struct"></a><h3>struct GdkPixbufLoader</h3>
+<pre class="programlisting">struct GdkPixbufLoader;</pre>
+<p>
+The <span class="structname">GdkPixbufLoader</span> struct contains only private
+fields.
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-pixbuf-loader-new"></a><h3>gdk_pixbuf_loader_new ()</h3>
+<pre class="programlisting"><a class="link" href="GdkPixbufLoader.html" title="GdkPixbufLoader"><span class="returnvalue">GdkPixbufLoader</span></a> *   gdk_pixbuf_loader_new               (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+Creates a new pixbuf loader object.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>A newly-created pixbuf loader.</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-pixbuf-loader-new-with-type"></a><h3>gdk_pixbuf_loader_new_with_type ()</h3>
+<pre class="programlisting"><a class="link" href="GdkPixbufLoader.html" title="GdkPixbufLoader"><span class="returnvalue">GdkPixbufLoader</span></a> *   gdk_pixbuf_loader_new_with_type     (<em class="parameter"><code>const <span class="type">char</span> *image_type</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);</pre>
+<p>
+Creates a new pixbuf loader object that always attempts to parse
+image data as if it were an image of type <em class="parameter"><code>image_type</code></em>, instead of
+identifying the type automatically. Useful if you want an error if
+the image isn't the expected type, for loading image formats
+that can't be reliably identified by looking at the data, or if
+the user manually forces a specific type.
+</p>
+<p>
+The list of supported image formats depends on what image loaders
+are installed, but typically "png", "jpeg", "gif", "tiff" and 
+"xpm" are among the supported formats. To obtain the full list of
+supported image formats, call <a class="link" href="gdk-pixbuf-Module-Interface.html#gdk-pixbuf-format-get-name" title="gdk_pixbuf_format_get_name ()"><code class="function">gdk_pixbuf_format_get_name()</code></a> on each 
+of the <a class="link" href="gdk-pixbuf-Module-Interface.html#GdkPixbufFormat" title="struct GdkPixbufFormat"><span class="type">GdkPixbufFormat</span></a> structs returned by <a class="link" href="gdk-pixbuf-Module-Interface.html#gdk-pixbuf-get-formats" title="gdk_pixbuf_get_formats ()"><code class="function">gdk_pixbuf_get_formats()</code></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>image_type</code></em> :</span></p></td>
+<td>name of the image format to be loaded with the image</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>return location for an allocated <span class="type">GError</span>, or <a href="/home/mclasen/gnome/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a> to ignore errors. <span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>A newly-created pixbuf loader.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-pixbuf-loader-new-with-mime-type"></a><h3>gdk_pixbuf_loader_new_with_mime_type ()</h3>
+<pre class="programlisting"><a class="link" href="GdkPixbufLoader.html" title="GdkPixbufLoader"><span class="returnvalue">GdkPixbufLoader</span></a> *   gdk_pixbuf_loader_new_with_mime_type
+                                                        (<em class="parameter"><code>const <span class="type">char</span> *mime_type</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);</pre>
+<p>
+Creates a new pixbuf loader object that always attempts to parse
+image data as if it were an image of mime type <em class="parameter"><code>mime_type</code></em>, instead of
+identifying the type automatically. Useful if you want an error if
+the image isn't the expected mime type, for loading image formats
+that can't be reliably identified by looking at the data, or if
+the user manually forces a specific mime type.
+</p>
+<p>
+The list of supported mime types depends on what image loaders
+are installed, but typically "image/png", "image/jpeg", "image/gif", 
+"image/tiff" and "image/x-xpixmap" are among the supported mime types. 
+To obtain the full list of supported mime types, call 
+<a class="link" href="gdk-pixbuf-Module-Interface.html#gdk-pixbuf-format-get-mime-types" title="gdk_pixbuf_format_get_mime_types ()"><code class="function">gdk_pixbuf_format_get_mime_types()</code></a> on each of the <a class="link" href="gdk-pixbuf-Module-Interface.html#GdkPixbufFormat" title="struct GdkPixbufFormat"><span class="type">GdkPixbufFormat</span></a> 
+structs returned by <a class="link" href="gdk-pixbuf-Module-Interface.html#gdk-pixbuf-get-formats" title="gdk_pixbuf_get_formats ()"><code class="function">gdk_pixbuf_get_formats()</code></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mime_type</code></em> :</span></p></td>
+<td>the mime type to be loaded</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>return location for an allocated <span class="type">GError</span>, or <a href="/home/mclasen/gnome/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a> to ignore errors. <span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>A newly-created pixbuf loader.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.4</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-pixbuf-loader-get-format"></a><h3>gdk_pixbuf_loader_get_format ()</h3>
+<pre class="programlisting"><a class="link" href="gdk-pixbuf-Module-Interface.html#GdkPixbufFormat" title="struct GdkPixbufFormat"><span class="returnvalue">GdkPixbufFormat</span></a> *   gdk_pixbuf_loader_get_format        (<em class="parameter"><code><a class="link" href="GdkPixbufLoader.html" title="GdkPixbufLoader"><span class="type">GdkPixbufLoader</span></a> *loader</code></em>);</pre>
+<p>
+Obtains the available information about the format of the 
+currently loading image file.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>loader</code></em> :</span></p></td>
+<td>A pixbuf loader.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>A <a class="link" href="gdk-pixbuf-Module-Interface.html#GdkPixbufFormat" title="struct GdkPixbufFormat"><span class="type">GdkPixbufFormat</span></a> or <a href="/home/mclasen/gnome/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a>. The return value is owned
+by GdkPixbuf and should not be freed.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-pixbuf-loader-write"></a><h3>gdk_pixbuf_loader_write ()</h3>
+<pre class="programlisting"><span class="returnvalue">gboolean</span>            gdk_pixbuf_loader_write             (<em class="parameter"><code><a class="link" href="GdkPixbufLoader.html" title="GdkPixbufLoader"><span class="type">GdkPixbufLoader</span></a> *loader</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">guchar</span> *buf</code></em>,
+                                                         <em class="parameter"><code><span class="type">gsize</span> count</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);</pre>
+<p>
+This will cause a pixbuf loader to parse the next <em class="parameter"><code>count</code></em> bytes of
+an image.  It will return <code class="literal">TRUE</code> if the data was loaded successfully,
+and <code class="literal">FALSE</code> if an error occurred.  In the latter case, the loader
+will be closed, and will not accept further writes. If <code class="literal">FALSE</code> is
+returned, <em class="parameter"><code>error</code></em> will be set to an error from the <a class="link" href="gdk-pixbuf-The-GdkPixbuf-Structure.html#GDK-PIXBUF-ERROR:CAPS" title="GDK_PIXBUF_ERROR"><span class="type">GDK_PIXBUF_ERROR</span></a>
+or <span class="type">G_FILE_ERROR</span> domains.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>loader</code></em> :</span></p></td>
+<td>A pixbuf loader.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>buf</code></em> :</span></p></td>
+<td>Pointer to image data. <span class="annotation">[<acronym title="Parameter points to an array of items."><span class="acronym">array</span></acronym> length=count]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>count</code></em> :</span></p></td>
+<td>Length of the <em class="parameter"><code>buf</code></em> buffer in bytes.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>return location for errors</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<code class="literal">TRUE</code> if the write was successful, or <code class="literal">FALSE</code> if the loader
+cannot parse the buffer.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-pixbuf-loader-set-size"></a><h3>gdk_pixbuf_loader_set_size ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gdk_pixbuf_loader_set_size          (<em class="parameter"><code><a class="link" href="GdkPixbufLoader.html" title="GdkPixbufLoader"><span class="type">GdkPixbufLoader</span></a> *loader</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> width</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> height</code></em>);</pre>
+<p>
+Causes the image to be scaled while it is loaded. The desired
+image size can be determined relative to the original size of
+the image by calling <a class="link" href="GdkPixbufLoader.html#gdk-pixbuf-loader-set-size" title="gdk_pixbuf_loader_set_size ()"><code class="function">gdk_pixbuf_loader_set_size()</code></a> from a
+signal handler for the ::size-prepared signal.
+</p>
+<p>
+Attempts to set the desired image size  are ignored after the 
+emission of the ::size-prepared signal.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>loader</code></em> :</span></p></td>
+<td>A pixbuf loader.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>width</code></em> :</span></p></td>
+<td>The desired width of the image being loaded.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>height</code></em> :</span></p></td>
+<td>The desired height of the image being loaded.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-pixbuf-loader-get-pixbuf"></a><h3>gdk_pixbuf_loader_get_pixbuf ()</h3>
+<pre class="programlisting"><a class="link" href="gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="returnvalue">GdkPixbuf</span></a> *         gdk_pixbuf_loader_get_pixbuf        (<em class="parameter"><code><a class="link" href="GdkPixbufLoader.html" title="GdkPixbufLoader"><span class="type">GdkPixbufLoader</span></a> *loader</code></em>);</pre>
+<p>
+Queries the <a class="link" href="gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="type">GdkPixbuf</span></a> that a pixbuf loader is currently creating.
+In general it only makes sense to call this function after the
+"area-prepared" signal has been emitted by the loader; this means
+that enough data has been read to know the size of the image that
+will be allocated.  If the loader has not received enough data via
+<a class="link" href="GdkPixbufLoader.html#gdk-pixbuf-loader-write" title="gdk_pixbuf_loader_write ()"><code class="function">gdk_pixbuf_loader_write()</code></a>, then this function returns <a href="/home/mclasen/gnome/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a>.  The
+returned pixbuf will be the same in all future calls to the loader,
+so simply calling <code class="function">g_object_ref()</code> should be sufficient to continue
+using it.  Additionally, if the loader is an animation, it will
+return the "static image" of the animation
+(see <a class="link" href="gdk-pixbuf-Animations.html#gdk-pixbuf-animation-get-static-image" title="gdk_pixbuf_animation_get_static_image ()"><code class="function">gdk_pixbuf_animation_get_static_image()</code></a>).
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>loader</code></em> :</span></p></td>
+<td>A pixbuf loader.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The <a class="link" href="gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="type">GdkPixbuf</span></a> that the loader is creating, or <a href="/home/mclasen/gnome/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a> if not
+enough data has been read to determine how to create the image buffer. <span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-pixbuf-loader-get-animation"></a><h3>gdk_pixbuf_loader_get_animation ()</h3>
+<pre class="programlisting"><a class="link" href="gdk-pixbuf-Animations.html#GdkPixbufAnimation"><span class="returnvalue">GdkPixbufAnimation</span></a> * gdk_pixbuf_loader_get_animation    (<em class="parameter"><code><a class="link" href="GdkPixbufLoader.html" title="GdkPixbufLoader"><span class="type">GdkPixbufLoader</span></a> *loader</code></em>);</pre>
+<p>
+Queries the <a class="link" href="gdk-pixbuf-Animations.html#GdkPixbufAnimation"><span class="type">GdkPixbufAnimation</span></a> that a pixbuf loader is currently creating.
+In general it only makes sense to call this function after the "area-prepared"
+signal has been emitted by the loader. If the loader doesn't have enough
+bytes yet (hasn't emitted the "area-prepared" signal) this function will 
+return <a href="/home/mclasen/gnome/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>loader</code></em> :</span></p></td>
+<td>A pixbuf loader</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The <a class="link" href="gdk-pixbuf-Animations.html#GdkPixbufAnimation"><span class="type">GdkPixbufAnimation</span></a> that the loader is loading, or <a href="/home/mclasen/gnome/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a> if
+not enough data has been read to determine the information. <span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-pixbuf-loader-close"></a><h3>gdk_pixbuf_loader_close ()</h3>
+<pre class="programlisting"><span class="returnvalue">gboolean</span>            gdk_pixbuf_loader_close             (<em class="parameter"><code><a class="link" href="GdkPixbufLoader.html" title="GdkPixbufLoader"><span class="type">GdkPixbufLoader</span></a> *loader</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);</pre>
+<p>
+Informs a pixbuf loader that no further writes with
+<a class="link" href="GdkPixbufLoader.html#gdk-pixbuf-loader-write" title="gdk_pixbuf_loader_write ()"><code class="function">gdk_pixbuf_loader_write()</code></a> will occur, so that it can free its
+internal loading structures. Also, tries to parse any data that
+hasn't yet been parsed; if the remaining data is partial or
+corrupt, an error will be returned.  If <code class="literal">FALSE</code> is returned, <em class="parameter"><code>error</code></em>
+will be set to an error from the <a class="link" href="gdk-pixbuf-The-GdkPixbuf-Structure.html#GDK-PIXBUF-ERROR:CAPS" title="GDK_PIXBUF_ERROR"><span class="type">GDK_PIXBUF_ERROR</span></a> or <span class="type">G_FILE_ERROR</span>
+domains. If you're just cancelling a load rather than expecting it
+to be finished, passing <a href="/home/mclasen/gnome/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a> for <em class="parameter"><code>error</code></em> to ignore it is
+reasonable.
+</p>
+<p>
+Remember that this does not unref the loader, so if you plan not to
+use it anymore, please <code class="function">g_object_unref()</code> it.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>loader</code></em> :</span></p></td>
+<td>A pixbuf loader.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>return location for a <span class="type">GError</span>, or <a href="/home/mclasen/gnome/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a> to ignore errors. <span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<code class="literal">TRUE</code> if all image data written so far was successfully
+passed out via the update_area signal</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect1">
+<a name="GdkPixbufLoader.signal-details"></a><h2>Signal Details</h2>
+<div class="refsect2">
+<a name="GdkPixbufLoader-area-prepared"></a><h3>The <code class="literal">"area-prepared"</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="GdkPixbufLoader.html" title="GdkPixbufLoader"><span class="type">GdkPixbufLoader</span></a> *loader,
+                                                        <span class="type">gpointer</span>         user_data)      : <code class="literal">Run Last</code></pre>
+<p>
+This signal is emitted when the pixbuf loader has allocated the
+pixbuf in the desired size.  After this signal is emitted, 
+applications can call <a class="link" href="GdkPixbufLoader.html#gdk-pixbuf-loader-get-pixbuf" title="gdk_pixbuf_loader_get_pixbuf ()"><code class="function">gdk_pixbuf_loader_get_pixbuf()</code></a> to fetch 
+the partially-loaded pixbuf.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>loader</code></em> :</span></p></td>
+<td>the object which received the signal.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GdkPixbufLoader-area-updated"></a><h3>The <code class="literal">"area-updated"</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="GdkPixbufLoader.html" title="GdkPixbufLoader"><span class="type">GdkPixbufLoader</span></a> *loader,
+                                                        <span class="type">gint</span>             x,
+                                                        <span class="type">gint</span>             y,
+                                                        <span class="type">gint</span>             width,
+                                                        <span class="type">gint</span>             height,
+                                                        <span class="type">gpointer</span>         user_data)      : <code class="literal">Run Last</code></pre>
+<p>
+This signal is emitted when a significant area of the image being
+loaded has been updated.  Normally it means that a complete
+scanline has been read in, but it could be a different area as
+well.  Applications can use this signal to know when to repaint
+areas of an image that is being loaded.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>loader</code></em> :</span></p></td>
+<td>the object which received the signal.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>x</code></em> :</span></p></td>
+<td>X offset of upper-left corner of the updated area.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>y</code></em> :</span></p></td>
+<td>Y offset of upper-left corner of the updated area.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>width</code></em> :</span></p></td>
+<td>Width of updated area.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>height</code></em> :</span></p></td>
+<td>Height of updated area.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GdkPixbufLoader-closed"></a><h3>The <code class="literal">"closed"</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="GdkPixbufLoader.html" title="GdkPixbufLoader"><span class="type">GdkPixbufLoader</span></a> *loader,
+                                                        <span class="type">gpointer</span>         user_data)      : <code class="literal">Run Last</code></pre>
+<p>
+This signal is emitted when <a class="link" href="GdkPixbufLoader.html#gdk-pixbuf-loader-close" title="gdk_pixbuf_loader_close ()"><code class="function">gdk_pixbuf_loader_close()</code></a> is called.
+It can be used by different parts of an application to receive
+notification when an image loader is closed by the code that
+drives it.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>loader</code></em> :</span></p></td>
+<td>the object which received the signal.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GdkPixbufLoader-size-prepared"></a><h3>The <code class="literal">"size-prepared"</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="GdkPixbufLoader.html" title="GdkPixbufLoader"><span class="type">GdkPixbufLoader</span></a> *loader,
+                                                        <span class="type">gint</span>             width,
+                                                        <span class="type">gint</span>             height,
+                                                        <span class="type">gpointer</span>         user_data)      : <code class="literal">Run Last</code></pre>
+<p>
+This signal is emitted when the pixbuf loader has been fed the
+initial amount of data that is required to figure out the size
+of the image that it will create.  Applications can call  
+<a class="link" href="GdkPixbufLoader.html#gdk-pixbuf-loader-set-size" title="gdk_pixbuf_loader_set_size ()"><code class="function">gdk_pixbuf_loader_set_size()</code></a> in response to this signal to set
+the desired size to which the image should be scaled.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>loader</code></em> :</span></p></td>
+<td>the object which received the signal.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>width</code></em> :</span></p></td>
+<td>the original width of the image</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>height</code></em> :</span></p></td>
+<td>the original height of the image</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect1">
+<a name="GdkPixbufLoader.see-also"></a><h2>See Also</h2>
+gdk_pixbuf_new_from_file(), <a class="link" href="gdk-pixbuf-Animations.html#gdk-pixbuf-animation-new-from-file" title="gdk_pixbuf_animation_new_from_file"><code class="function">gdk_pixbuf_animation_new_from_file()</code></a>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.17.1</div>
+</body>
+</html>

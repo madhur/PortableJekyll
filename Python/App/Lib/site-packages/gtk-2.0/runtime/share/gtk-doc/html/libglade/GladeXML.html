@@ -1,0 +1,796 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>GladeXML</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.74.3">
+<link rel="home" href="index.html" title="Libglade - Graphical Interface Description Loader API">
+<link rel="up" href="libglade-lib.html" title="Part I. Libglade Library Reference">
+<link rel="prev" href="libglade-Libglade-Initialisation.html" title="Libglade Initialisation">
+<link rel="next" href="libglade-Libglade-SAX-Parser.html" title="Libglade SAX Parser">
+<meta name="generator" content="GTK-Doc V1.12 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="libglade-notes.html" title="Libglade Programming Notes">
+<link rel="chapter" href="libglade-dtd.html" title="Glade 2.0 File Format">
+<link rel="part" href="libglade-lib.html" title="Part I. Libglade Library Reference">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="libglade-Libglade-Initialisation.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="libglade-lib.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Libglade - Graphical Interface Description Loader API</th>
+<td><a accesskey="n" href="libglade-Libglade-SAX-Parser.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#GladeXML.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#GladeXML.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#GladeXML.object-hierarchy" class="shortcut">Object Hierarchy</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="GladeXML"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="GladeXML.top_of_page"></a>GladeXML</span></h2>
+<p>GladeXML — Allows dynamic loading of user interfaces from XML descriptions.</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="GladeXML.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+
+#include &lt;glade/glade-xml.h&gt;
+
+                    <a class="link" href="GladeXML.html#GladeXML-struct" title="GladeXML">GladeXML</a>;
+                    <a class="link" href="GladeXML.html#GladeXMLClass" title="GladeXMLClass">GladeXMLClass</a>;
+<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *          <a class="link" href="GladeXML.html#glade-xml-new" title="glade_xml_new ()">glade_xml_new</a>                       (const char *fname,
+                                                         const char *root,
+                                                         const char *domain);
+<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *          <a class="link" href="GladeXML.html#glade-xml-new-from-buffer" title="glade_xml_new_from_buffer ()">glade_xml_new_from_buffer</a>           (const char *buffer,
+                                                         int size,
+                                                         const char *root,
+                                                         const char *domain);
+gboolean            <a class="link" href="GladeXML.html#glade-xml-construct" title="glade_xml_construct ()">glade_xml_construct</a>                 (<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *self,
+                                                         const char *fname,
+                                                         const char *root,
+                                                         const char *domain);
+gboolean            <a class="link" href="GladeXML.html#glade-xml-construct-from-buffer" title="glade_xml_construct_from_buffer ()">glade_xml_construct_from_buffer</a>     (<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *self,
+                                                         const char *buffer,
+                                                         int size,
+                                                         const char *root,
+                                                         const char *domain);
+
+void                <a class="link" href="GladeXML.html#glade-xml-signal-connect" title="glade_xml_signal_connect ()">glade_xml_signal_connect</a>            (<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *self,
+                                                         const char *handlername,
+                                                         GCallback func);
+void                <a class="link" href="GladeXML.html#glade-xml-signal-connect-data" title="glade_xml_signal_connect_data ()">glade_xml_signal_connect_data</a>       (<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *self,
+                                                         const char *handlername,
+                                                         GCallback func,
+                                                         gpointer user_data);
+void                <a class="link" href="GladeXML.html#glade-xml-signal-autoconnect" title="glade_xml_signal_autoconnect ()">glade_xml_signal_autoconnect</a>        (<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *self);
+
+GtkWidget *         <a class="link" href="GladeXML.html#glade-xml-get-widget" title="glade_xml_get_widget ()">glade_xml_get_widget</a>                (<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *self,
+                                                         const char *name);
+GList *             <a class="link" href="GladeXML.html#glade-xml-get-widget-prefix" title="glade_xml_get_widget_prefix ()">glade_xml_get_widget_prefix</a>         (<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *self,
+                                                         const char *name);
+const char *        <a class="link" href="GladeXML.html#glade-get-widget-name" title="glade_get_widget_name ()">glade_get_widget_name</a>               (GtkWidget *widget);
+<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *          <a class="link" href="GladeXML.html#glade-get-widget-tree" title="glade_get_widget_tree ()">glade_get_widget_tree</a>               (GtkWidget *widget);
+
+void                (<a class="link" href="GladeXML.html#GladeXMLConnectFunc" title="GladeXMLConnectFunc ()">*GladeXMLConnectFunc</a>)              (const gchar *handler_name,
+                                                         GObject *object,
+                                                         const gchar *signal_name,
+                                                         const gchar *signal_data,
+                                                         GObject *connect_object,
+                                                         gboolean after,
+                                                         gpointer user_data);
+void                <a class="link" href="GladeXML.html#glade-xml-signal-connect-full" title="glade_xml_signal_connect_full ()">glade_xml_signal_connect_full</a>       (<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *self,
+                                                         const gchar *handler_name,
+                                                         <a class="link" href="GladeXML.html#GladeXMLConnectFunc" title="GladeXMLConnectFunc ()">GladeXMLConnectFunc</a> func,
+                                                         gpointer user_data);
+void                <a class="link" href="GladeXML.html#glade-xml-signal-autoconnect-full" title="glade_xml_signal_autoconnect_full ()">glade_xml_signal_autoconnect_full</a>   (<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *self,
+                                                         <a class="link" href="GladeXML.html#GladeXMLConnectFunc" title="GladeXMLConnectFunc ()">GladeXMLConnectFunc</a> func,
+                                                         gpointer user_data);
+GtkWidget *         (<a class="link" href="GladeXML.html#GladeXMLCustomWidgetHandler" title="GladeXMLCustomWidgetHandler ()">*GladeXMLCustomWidgetHandler</a>)      (<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *xml,
+                                                         gchar *func_name,
+                                                         gchar *name,
+                                                         gchar *string1,
+                                                         gchar *string2,
+                                                         gint int1,
+                                                         gint int2,
+                                                         gpointer user_data);
+void                <a class="link" href="GladeXML.html#glade-set-custom-handler" title="glade_set_custom_handler ()">glade_set_custom_handler</a>            (<a class="link" href="GladeXML.html#GladeXMLCustomWidgetHandler" title="GladeXMLCustomWidgetHandler ()">GladeXMLCustomWidgetHandler</a> handler,
+                                                         gpointer user_data);
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="GladeXML.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  GObject
+   +----GladeXML
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="GladeXML.description"></a><h2>Description</h2>
+<p>
+This object represents an `instantiation' of an XML interface description.
+When one of these objects is created, the XML file is read, and the
+interface is created.  The GladeXML object then provides an interface for
+accessing the widgets in the interface by the names assigned to them
+inside the XML description.
+</p>
+<p>
+The GladeXML object can also be used to connect handlers to the named
+signals in the description.  Libglade also provides an interface by which
+it can look up the signal handler names in the program's symbol table and
+automatically connect as many handlers up as it can that way.
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="GladeXML.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="GladeXML-struct"></a><h3>GladeXML</h3>
+<pre class="programlisting">typedef struct {
+    GObject parent;
+
+    char *filename;
+} GladeXML;
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GladeXMLClass"></a><h3>GladeXMLClass</h3>
+<pre class="programlisting">typedef struct {
+    GObjectClass parent_class;
+
+    /* Virtual function: gets the appropriate gtype for the typename.*/
+    GType (* lookup_type) (GladeXML*self, const char *gtypename);
+} GladeXMLClass;
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="glade-xml-new"></a><h3>glade_xml_new ()</h3>
+<pre class="programlisting"><a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *          glade_xml_new                       (const char *fname,
+                                                         const char *root,
+                                                         const char *domain);</pre>
+<p>
+Creates a new GladeXML object (and the corresponding widgets) from the
+XML file <em class="parameter"><code>fname</code></em>.  Optionally it will only build the interface from the
+widget node <em class="parameter"><code>root</code></em> (if it is not <a href="/gnome/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>).  This feature is useful if you
+only want to build say a toolbar or menu from the XML file, but not the
+window it is embedded in.  Note also that the XML parse tree is cached
+to speed up creating another GladeXML object for the same file</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>fname</code></em> :</span></p></td>
+<td> the XML file name.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>root</code></em> :</span></p></td>
+<td> the widget node in <em class="parameter"><code>fname</code></em> to start building from (or <a href="/gnome/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>)
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>domain</code></em> :</span></p></td>
+<td> the translation domain for the XML file (or <a href="/gnome/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> for default)
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the newly created GladeXML object, or NULL on failure.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="glade-xml-new-from-buffer"></a><h3>glade_xml_new_from_buffer ()</h3>
+<pre class="programlisting"><a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *          glade_xml_new_from_buffer           (const char *buffer,
+                                                         int size,
+                                                         const char *root,
+                                                         const char *domain);</pre>
+<p>
+Creates a new GladeXML object (and the corresponding widgets) from the
+buffer <em class="parameter"><code>buffer</code></em>.  Optionally it will only build the interface from the
+widget node <em class="parameter"><code>root</code></em> (if it is not <a href="/gnome/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>).  This feature is useful if you
+only want to build say a toolbar or menu from the XML document, but not the
+window it is embedded in.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>buffer</code></em> :</span></p></td>
+<td> the memory buffer containing the XML document.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>size</code></em> :</span></p></td>
+<td> the size of the buffer.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>root</code></em> :</span></p></td>
+<td> the widget node in <em class="parameter"><code>buffer</code></em> to start building from (or <a href="/gnome/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>)
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>domain</code></em> :</span></p></td>
+<td> the translation domain to use for this interface (or <a href="/gnome/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>)
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the newly created GladeXML object, or NULL on failure.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="glade-xml-construct"></a><h3>glade_xml_construct ()</h3>
+<pre class="programlisting">gboolean            glade_xml_construct                 (<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *self,
+                                                         const char *fname,
+                                                         const char *root,
+                                                         const char *domain);</pre>
+<p>
+This routine can be used by bindings (such as gtkmm) to help construct
+a GladeXML object, if it is needed.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
+<td> the GladeXML object
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>fname</code></em> :</span></p></td>
+<td> the XML filename
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>root</code></em> :</span></p></td>
+<td> the root widget node (or <a href="/gnome/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> for none)
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>domain</code></em> :</span></p></td>
+<td> the translation domain (or <a href="/gnome/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> for the default)
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> TRUE if the construction succeeded.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="glade-xml-construct-from-buffer"></a><h3>glade_xml_construct_from_buffer ()</h3>
+<pre class="programlisting">gboolean            glade_xml_construct_from_buffer     (<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *self,
+                                                         const char *buffer,
+                                                         int size,
+                                                         const char *root,
+                                                         const char *domain);</pre>
+<p>
+In order to use this method you must already have a GladeXML
+object.  This two step creation process is typically used only 
+by language bindings, such as gtkmm, while constructing GladeXML 
+objects from compiled-in buffers, at runtime.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
+<td> the GladeXML object
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>buffer</code></em> :</span></p></td>
+<td> the memory buffer containing the XML document.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>size</code></em> :</span></p></td>
+<td> the size of the buffer.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>root</code></em> :</span></p></td>
+<td> the root widget node (or <a href="/gnome/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> for none)
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>domain</code></em> :</span></p></td>
+<td> the translation domain (or <a href="/gnome/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> for the default)
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> TRUE if the construction succeeded.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="glade-xml-signal-connect"></a><h3>glade_xml_signal_connect ()</h3>
+<pre class="programlisting">void                glade_xml_signal_connect            (<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *self,
+                                                         const char *handlername,
+                                                         GCallback func);</pre>
+<p>
+In the glade interface descriptions, signal handlers are specified for
+widgets by name.  This function allows you to connect a C function to
+all signals in the GladeXML file with the given signal handler name.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
+<td> the GladeXML object
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>handlername</code></em> :</span></p></td>
+<td> the signal handler name
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>func</code></em> :</span></p></td>
+<td> the signal handler function
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="glade-xml-signal-connect-data"></a><h3>glade_xml_signal_connect_data ()</h3>
+<pre class="programlisting">void                glade_xml_signal_connect_data       (<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *self,
+                                                         const char *handlername,
+                                                         GCallback func,
+                                                         gpointer user_data);</pre>
+<p>
+In the glade interface descriptions, signal handlers are specified for
+widgets by name.  This function allows you to connect a C function to
+all signals in the GladeXML file with the given signal handler name.
+</p>
+<p>
+It differs from glade_xml_signal_connect since it allows you to
+specify the data parameter for the signal handler.  It is also a small
+demonstration of how to use glade_xml_signal_connect_full.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
+<td> the GladeXML object
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>handlername</code></em> :</span></p></td>
+<td> the signal handler name
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>func</code></em> :</span></p></td>
+<td> the signal handler function
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td> the signal handler data
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="glade-xml-signal-autoconnect"></a><h3>glade_xml_signal_autoconnect ()</h3>
+<pre class="programlisting">void                glade_xml_signal_autoconnect        (<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *self);</pre>
+<p>
+This function is a variation of glade_xml_signal_connect.  It uses
+gmodule's introspective features (by openning the module <a href="/gnome/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>) to
+look at the application's symbol table.  From here it tries to match
+the signal handler names given in the interface description with
+symbols in the application and connects the signals.
+</p>
+<p>
+You should add gmodule-export-2.0 to your pkg-config checks to ensure 
+that your application's executable exports the signal handlers. This is not 
+necessary if the signal handlers are in a shared library.
+</p>
+<p>
+Note that this function will not work correctly if gmodule is not
+supported on the platform.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
+<td> the GladeXML object.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="glade-xml-get-widget"></a><h3>glade_xml_get_widget ()</h3>
+<pre class="programlisting">GtkWidget *         glade_xml_get_widget                (<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *self,
+                                                         const char *name);</pre>
+<p>
+This function is used to get a pointer to the GtkWidget corresponding to
+<em class="parameter"><code>name</code></em> in the interface description.  You would use this if you have to do
+anything to the widget after loading.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
+<td> the GladeXML object.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>name</code></em> :</span></p></td>
+<td> the name of the widget.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the widget matching <em class="parameter"><code>name</code></em>, or <a href="/gnome/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> if none exists.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="glade-xml-get-widget-prefix"></a><h3>glade_xml_get_widget_prefix ()</h3>
+<pre class="programlisting">GList *             glade_xml_get_widget_prefix         (<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *self,
+                                                         const char *name);</pre>
+<p>
+This function is used to get a list of pointers to the GtkWidget(s)
+with names that start with the string <em class="parameter"><code>name</code></em> in the interface description.
+You would use this if you have to do something  to all of these widgets
+after loading.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
+<td> the GladeXML object.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>name</code></em> :</span></p></td>
+<td> the name of the widget.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> A list of the widget that match <em class="parameter"><code>name</code></em> as the start of their
+name, or <a href="/gnome/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> if none exists.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="glade-get-widget-name"></a><h3>glade_get_widget_name ()</h3>
+<pre class="programlisting">const char *        glade_get_widget_name               (GtkWidget *widget);</pre>
+<p>
+Used to get the name of a widget that was generated by a GladeXML object.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>widget</code></em> :</span></p></td>
+<td> the widget
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the name of the widget.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="glade-get-widget-tree"></a><h3>glade_get_widget_tree ()</h3>
+<pre class="programlisting"><a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *          glade_get_widget_tree               (GtkWidget *widget);</pre>
+<p>
+This function is used to get the GladeXML object that built this widget.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>widget</code></em> :</span></p></td>
+<td> the widget
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the GladeXML object that built this widget.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GladeXMLConnectFunc"></a><h3>GladeXMLConnectFunc ()</h3>
+<pre class="programlisting">void                (*GladeXMLConnectFunc)              (const gchar *handler_name,
+                                                         GObject *object,
+                                                         const gchar *signal_name,
+                                                         const gchar *signal_data,
+                                                         GObject *connect_object,
+                                                         gboolean after,
+                                                         gpointer user_data);</pre>
+<p>
+This is the signature of a function used to connect signals.  It is used
+by the glade_xml_signal_connect_full and glade_xml_signal_autoconnect_full
+functions.  It is mainly intented for interpreted language bindings, but
+could be useful where the programmer wants more control over the signal
+connection process.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>handler_name</code></em> :</span></p></td>
+<td> the name of the handler function to connect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
+<td> the object to connect the signal to.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>signal_name</code></em> :</span></p></td>
+<td> the name of the signal.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>signal_data</code></em> :</span></p></td>
+<td> the string value of the signal data given in the XML file.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>connect_object</code></em> :</span></p></td>
+<td> non NULL if g_signal_connect_object should be used.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>after</code></em> :</span></p></td>
+<td> TRUE if the connection should be made with g_signal_connect_after.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td> the user data argument.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="glade-xml-signal-connect-full"></a><h3>glade_xml_signal_connect_full ()</h3>
+<pre class="programlisting">void                glade_xml_signal_connect_full       (<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *self,
+                                                         const gchar *handler_name,
+                                                         <a class="link" href="GladeXML.html#GladeXMLConnectFunc" title="GladeXMLConnectFunc ()">GladeXMLConnectFunc</a> func,
+                                                         gpointer user_data);</pre>
+<p>
+This function is similar to glade_xml_signal_connect, except that it
+allows you to give an arbitrary function that will be used for actually
+connecting the signals.  This is mainly useful for writers of interpreted
+language bindings, or applications where you need more control over the
+signal connection process.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
+<td> the GladeXML object.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>handler_name</code></em> :</span></p></td>
+<td> the name of the signal handler that we want to connect.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>func</code></em> :</span></p></td>
+<td> the function to use to connect the signals.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td> arbitrary data to pass to the connect function.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="glade-xml-signal-autoconnect-full"></a><h3>glade_xml_signal_autoconnect_full ()</h3>
+<pre class="programlisting">void                glade_xml_signal_autoconnect_full   (<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *self,
+                                                         <a class="link" href="GladeXML.html#GladeXMLConnectFunc" title="GladeXMLConnectFunc ()">GladeXMLConnectFunc</a> func,
+                                                         gpointer user_data);</pre>
+<p>
+This function is similar to glade_xml_signal_connect_full, except that it
+will try to connect all signals in the interface, not just a single
+named handler.  It can be thought of the interpeted language binding
+version of glade_xml_signal_autoconnect, except that it does not
+require gmodule to function correctly.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
+<td> the GladeXML object.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>func</code></em> :</span></p></td>
+<td> the function used to connect the signals.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td> arbitrary data that will be passed to the connection function.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GladeXMLCustomWidgetHandler"></a><h3>GladeXMLCustomWidgetHandler ()</h3>
+<pre class="programlisting">GtkWidget *         (*GladeXMLCustomWidgetHandler)      (<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *xml,
+                                                         gchar *func_name,
+                                                         gchar *name,
+                                                         gchar *string1,
+                                                         gchar *string2,
+                                                         gint int1,
+                                                         gint int2,
+                                                         gpointer user_data);</pre>
+<p>
+This prototype is for a function that creates custom widgets.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>xml</code></em> :</span></p></td>
+<td> the GladeXML object.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>func_name</code></em> :</span></p></td>
+<td> the function name.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>name</code></em> :</span></p></td>
+<td> the name of the widget to be created.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>string1</code></em> :</span></p></td>
+<td> the string1 property.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>string2</code></em> :</span></p></td>
+<td> the string2 property.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>int1</code></em> :</span></p></td>
+<td> the int1 property.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>int2</code></em> :</span></p></td>
+<td> the int2 property.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td> the data passed to <a class="link" href="GladeXML.html#glade-set-custom-handler" title="glade_set_custom_handler ()"><code class="function">glade_set_custom_handler()</code></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the GtkWidget.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="glade-set-custom-handler"></a><h3>glade_set_custom_handler ()</h3>
+<pre class="programlisting">void                glade_set_custom_handler            (<a class="link" href="GladeXML.html#GladeXMLCustomWidgetHandler" title="GladeXMLCustomWidgetHandler ()">GladeXMLCustomWidgetHandler</a> handler,
+                                                         gpointer user_data);</pre>
+<p>
+Calling this function allows you to override the default behaviour
+when a Custom widget is found in an interface.  This could be used by
+a language binding to call some other function, or to limit what
+functions can be called to create custom widgets.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>handler</code></em> :</span></p></td>
+<td> the custom widget handler
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td> user data passed to the custom handler
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.12</div>
+</body>
+</html>

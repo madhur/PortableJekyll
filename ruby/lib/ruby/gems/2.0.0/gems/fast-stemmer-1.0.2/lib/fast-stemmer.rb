@@ -1,0 +1,1 @@
+require 'fast_stemmer'

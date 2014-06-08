@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>unix64.S - ffi-1.9.3 Documentation</title>
+
+<link type="text/css" media="screen" href="../../../../../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../../../../../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../../../../../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../../../../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../../../../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../../../../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../../../../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../../../../js/darkfish.js"></script>
+
+
+<body class="file">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../../../../../index.html">Home</a>
+    <a href="../../../../../table_of_contents.html#classes">Classes</a>
+    <a href="../../../../../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/Makefile.html">Makefile</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/ffi_c-i386-mingw32_def.html">ffi_c-i386-mingw32.def</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi-i386-mingw32/Makefile.html">Makefile</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi-i386-mingw32/config_log.html">config.log</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi-i386-mingw32/config_status.html">config.status</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi-i386-mingw32/include/Makefile.html">Makefile</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi-i386-mingw32/libffi_la.html">libffi.la</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi-i386-mingw32/libffi_pc.html">libffi.pc</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi-i386-mingw32/libffi_convenience_la.html">libffi_convenience.la</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi-i386-mingw32/libtool.html">libtool</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi-i386-mingw32/man/Makefile.html">Makefile</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi-i386-mingw32/src/closures_lo.html">closures.lo</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi-i386-mingw32/src/debug_lo.html">debug.lo</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi-i386-mingw32/src/java_raw_api_lo.html">java_raw_api.lo</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi-i386-mingw32/src/prep_cif_lo.html">prep_cif.lo</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi-i386-mingw32/src/raw_api_lo.html">raw_api.lo</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi-i386-mingw32/src/types_lo.html">types.lo</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi-i386-mingw32/src/x86/ffi_lo.html">ffi.lo</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi-i386-mingw32/src/x86/win32_lo.html">win32.lo</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi-i386-mingw32/stamp-h1.html">stamp-h1</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi-i386-mingw32/testsuite/Makefile.html">Makefile</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/ChangeLog.html">ChangeLog</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/ChangeLog_libffi.html">ChangeLog.libffi</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/ChangeLog_libgcj.html">ChangeLog.libgcj</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/ChangeLog_v1.html">ChangeLog.v1</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/LICENSE.html">LICENSE</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/Makefile_am.html">Makefile.am</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/Makefile_in.html">Makefile.in</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/Makefile_vc.html">Makefile.vc</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/Makefile_vc64.html">Makefile.vc64</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/README.html">README</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/acinclude_m4.html">acinclude.m4</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/build-ios_sh.html">build-ios.sh</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/compile.html">compile</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/config_guess.html">config.guess</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/config_sub.html">config.sub</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/configure.html">configure</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/configure_ac.html">configure.ac</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/configure_host.html">configure.host</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/depcomp.html">depcomp</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/doc/libffi_info.html">libffi.info</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/doc/stamp-vti.html">stamp-vti</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/doc/version_texi.html">version.texi</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/fficonfig_h_in.html">fficonfig.h.in</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/include/Makefile_am.html">Makefile.am</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/include/Makefile_in.html">Makefile.in</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/install-sh.html">install-sh</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/libffi_pc_in.html">libffi.pc.in</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/libtool-version.html">libtool-version</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/ltmain_sh.html">ltmain.sh</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/m4/ax_cc_maxopt_m4.html">ax_cc_maxopt.m4</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/m4/ax_cflags_warn_all_m4.html">ax_cflags_warn_all.m4</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/m4/ax_check_compiler_flags_m4.html">ax_check_compiler_flags.m4</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/m4/ax_compiler_vendor_m4.html">ax_compiler_vendor.m4</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/m4/ax_configure_args_m4.html">ax_configure_args.m4</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/m4/ax_enable_builddir_m4.html">ax_enable_builddir.m4</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/m4/ax_gcc_archflag_m4.html">ax_gcc_archflag.m4</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/m4/ax_gcc_x86_cpuid_m4.html">ax_gcc_x86_cpuid.m4</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/man/Makefile_am.html">Makefile.am</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/man/Makefile_in.html">Makefile.in</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/man/ffi_3.html">ffi.3</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/man/ffi_call_3.html">ffi_call.3</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/man/ffi_prep_cif_3.html">ffi_prep_cif.3</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/mdate-sh.html">mdate-sh</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/missing.html">missing</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/msvcc_sh.html">msvcc.sh</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/src/alpha/osf_S.html">osf.S</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/src/arm/gentramp_sh.html">gentramp.sh</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/src/arm/sysv_S.html">sysv.S</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/src/arm/trampoline_S.html">trampoline.S</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/src/avr32/sysv_S.html">sysv.S</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/src/cris/sysv_S.html">sysv.S</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/src/frv/eabi_S.html">eabi.S</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/src/ia64/unix_S.html">unix.S</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/src/m32r/sysv_S.html">sysv.S</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/src/m68k/sysv_S.html">sysv.S</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/src/mips/n32_S.html">n32.S</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/src/mips/o32_S.html">o32.S</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/src/moxie/eabi_S.html">eabi.S</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/src/pa/hpux32_S.html">hpux32.S</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/src/pa/linux_S.html">linux.S</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/src/powerpc/aix_S.html">aix.S</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/src/powerpc/aix_closure_S.html">aix_closure.S</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/src/powerpc/darwin_S.html">darwin.S</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/src/powerpc/darwin_closure_S.html">darwin_closure.S</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/src/powerpc/linux64_S.html">linux64.S</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/src/powerpc/linux64_closure_S.html">linux64_closure.S</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/src/powerpc/ppc_closure_S.html">ppc_closure.S</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/src/powerpc/sysv_S.html">sysv.S</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/src/s390/sysv_S.html">sysv.S</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/src/sh/sysv_S.html">sysv.S</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/src/sh64/sysv_S.html">sysv.S</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/src/sparc/v8_S.html">v8.S</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/src/sparc/v9_S.html">v9.S</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/src/x86/darwin_S.html">darwin.S</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/src/x86/darwin64_S.html">darwin64.S</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/src/x86/freebsd_S.html">freebsd.S</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/src/x86/sysv_S.html">sysv.S</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/src/x86/unix64_S.html">unix64.S</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/src/x86/win32_S.html">win32.S</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/src/x86/win64_S.html">win64.S</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/testsuite/Makefile_am.html">Makefile.am</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/testsuite/Makefile_in.html">Makefile.in</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/testsuite/config/default_exp.html">default.exp</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/testsuite/lib/libffi-dg_exp.html">libffi-dg.exp</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/testsuite/lib/libffi_exp.html">libffi.exp</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/testsuite/lib/target-libpath_exp.html">target-libpath.exp</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/testsuite/lib/wrapper_exp.html">wrapper.exp</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/testsuite/libffi_call/call_exp.html">call.exp</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/testsuite/libffi_special/special_exp.html">special.exp</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/libffi/texinfo_tex.html">texinfo.tex</a>
+  
+    <li class="file"><a href="../../../../../ext/ffi_c/mkmf_log.html">mkmf.log</a>
+  
+    <li class="file"><a href="../../../../../lib/ffi/platform/arm-linux/types_conf.html">types.conf</a>
+  
+    <li class="file"><a href="../../../../../lib/ffi/platform/i386-cygwin/types_conf.html">types.conf</a>
+  
+    <li class="file"><a href="../../../../../lib/ffi/platform/i386-darwin/types_conf.html">types.conf</a>
+  
+    <li class="file"><a href="../../../../../lib/ffi/platform/i386-freebsd/types_conf.html">types.conf</a>
+  
+    <li class="file"><a href="../../../../../lib/ffi/platform/i386-gnu/types_conf.html">types.conf</a>
+  
+    <li class="file"><a href="../../../../../lib/ffi/platform/i386-linux/types_conf.html">types.conf</a>
+  
+    <li class="file"><a href="../../../../../lib/ffi/platform/i386-netbsd/types_conf.html">types.conf</a>
+  
+    <li class="file"><a href="../../../../../lib/ffi/platform/i386-openbsd/types_conf.html">types.conf</a>
+  
+    <li class="file"><a href="../../../../../lib/ffi/platform/i386-solaris/types_conf.html">types.conf</a>
+  
+    <li class="file"><a href="../../../../../lib/ffi/platform/i386-windows/types_conf.html">types.conf</a>
+  
+    <li class="file"><a href="../../../../../lib/ffi/platform/ia64-linux/types_conf.html">types.conf</a>
+  
+    <li class="file"><a href="../../../../../lib/ffi/platform/mips-linux/types_conf.html">types.conf</a>
+  
+    <li class="file"><a href="../../../../../lib/ffi/platform/mipsel-linux/types_conf.html">types.conf</a>
+  
+    <li class="file"><a href="../../../../../lib/ffi/platform/powerpc-aix/types_conf.html">types.conf</a>
+  
+    <li class="file"><a href="../../../../../lib/ffi/platform/powerpc-darwin/types_conf.html">types.conf</a>
+  
+    <li class="file"><a href="../../../../../lib/ffi/platform/powerpc-linux/types_conf.html">types.conf</a>
+  
+    <li class="file"><a href="../../../../../lib/ffi/platform/s390-linux/types_conf.html">types.conf</a>
+  
+    <li class="file"><a href="../../../../../lib/ffi/platform/s390x-linux/types_conf.html">types.conf</a>
+  
+    <li class="file"><a href="../../../../../lib/ffi/platform/sparc-linux/types_conf.html">types.conf</a>
+  
+    <li class="file"><a href="../../../../../lib/ffi/platform/sparc-solaris/types_conf.html">types.conf</a>
+  
+    <li class="file"><a href="../../../../../lib/ffi/platform/sparcv9-solaris/types_conf.html">types.conf</a>
+  
+    <li class="file"><a href="../../../../../lib/ffi/platform/x86_64-cygwin/types_conf.html">types.conf</a>
+  
+    <li class="file"><a href="../../../../../lib/ffi/platform/x86_64-darwin/types_conf.html">types.conf</a>
+  
+    <li class="file"><a href="../../../../../lib/ffi/platform/x86_64-freebsd/types_conf.html">types.conf</a>
+  
+    <li class="file"><a href="../../../../../lib/ffi/platform/x86_64-linux/types_conf.html">types.conf</a>
+  
+    <li class="file"><a href="../../../../../lib/ffi/platform/x86_64-netbsd/types_conf.html">types.conf</a>
+  
+    <li class="file"><a href="../../../../../lib/ffi/platform/x86_64-openbsd/types_conf.html">types.conf</a>
+  
+    <li class="file"><a href="../../../../../lib/ffi/platform/x86_64-solaris/types_conf.html">types.conf</a>
+  
+    <li class="file"><a href="../../../../../lib/ffi/platform/x86_64-windows/types_conf.html">types.conf</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../../../../../FFI.html">FFI</a>
+  
+    <li><a href="../../../../../FFI/AutoPointer.html">FFI::AutoPointer</a>
+  
+    <li><a href="../../../../../FFI/AutoPointer/CallableReleaser.html">FFI::AutoPointer::CallableReleaser</a>
+  
+    <li><a href="../../../../../FFI/AutoPointer/DefaultReleaser.html">FFI::AutoPointer::DefaultReleaser</a>
+  
+    <li><a href="../../../../../FFI/AutoPointer/Releaser.html">FFI::AutoPointer::Releaser</a>
+  
+    <li><a href="../../../../../FFI/ConstGenerator.html">FFI::ConstGenerator</a>
+  
+    <li><a href="../../../../../FFI/ConstGenerator/Constant.html">FFI::ConstGenerator::Constant</a>
+  
+    <li><a href="../../../../../FFI/Enum.html">FFI::Enum</a>
+  
+    <li><a href="../../../../../FFI/Enums.html">FFI::Enums</a>
+  
+    <li><a href="../../../../../FFI/Generator.html">FFI::Generator</a>
+  
+    <li><a href="../../../../../FFI/Generator/Task.html">FFI::Generator::Task</a>
+  
+    <li><a href="../../../../../FFI/IO.html">FFI::IO</a>
+  
+    <li><a href="../../../../../FFI/Library.html">FFI::Library</a>
+  
+    <li><a href="../../../../../FFI/ManagedStruct.html">FFI::ManagedStruct</a>
+  
+    <li><a href="../../../../../FFI/NotFoundError.html">FFI::NotFoundError</a>
+  
+    <li><a href="../../../../../FFI/Platform.html">FFI::Platform</a>
+  
+    <li><a href="../../../../../FFI/PlatformError.html">FFI::PlatformError</a>
+  
+    <li><a href="../../../../../FFI/Pointer.html">FFI::Pointer</a>
+  
+    <li><a href="../../../../../FFI/StrPtrConverter.html">FFI::StrPtrConverter</a>
+  
+    <li><a href="../../../../../FFI/Struct.html">FFI::Struct</a>
+  
+    <li><a href="../../../../../FFI/Struct/ManagedStructConverter.html">FFI::Struct::ManagedStructConverter</a>
+  
+    <li><a href="../../../../../FFI/StructGenerator.html">FFI::StructGenerator</a>
+  
+    <li><a href="../../../../../FFI/StructGenerator/Field.html">FFI::StructGenerator::Field</a>
+  
+    <li><a href="../../../../../FFI/StructLayout.html">FFI::StructLayout</a>
+  
+    <li><a href="../../../../../FFI/StructLayout/Enum.html">FFI::StructLayout::Enum</a>
+  
+    <li><a href="../../../../../FFI/StructLayout/InnerStruct.html">FFI::StructLayout::InnerStruct</a>
+  
+    <li><a href="../../../../../FFI/StructLayout/Mapped.html">FFI::StructLayout::Mapped</a>
+  
+    <li><a href="../../../../../FFI/StructLayoutBuilder.html">FFI::StructLayoutBuilder</a>
+  
+    <li><a href="../../../../../FFI/Type.html">FFI::Type</a>
+  
+    <li><a href="../../../../../FFI/TypesGenerator.html">FFI::TypesGenerator</a>
+  
+    <li><a href="../../../../../FFI/Union.html">FFI::Union</a>
+  
+    <li><a href="../../../../../FFI/VariadicInvoker.html">FFI::VariadicInvoker</a>
+  
+    <li><a href="../../../../../RbConfig.html">RbConfig</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation" class="description">
+  
+<pre>-----------------------------------------------------------------------
+unix64.S - Copyright (c) 2002  Bo Thorsen &lt;bo@suse.de&gt;
+           Copyright (c) 2008  Red Hat, Inc
+
+x86-64 Foreign Function Interface 
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+``Software&#39;&#39;), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be included
+in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED ``AS IS&#39;&#39;, WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT.  IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
+-----------------------------------------------------------------------</pre>
+
+<p>ifdef <em>x86_64</em> define LIBFFI_ASM</p>
+
+<p>include &lt;fficonfig.h&gt; include &lt;ffi.h&gt;</p>
+
+<p>.text</p>
+
+<pre>ffi_call_unix64 (void *args, unsigned long bytes, unsigned flags,
+                 void *raddr, void (*fnaddr)(void));
+
+Bit o trickiness here -- ARGS+BYTES is the base of the stack frame
+for this function.  This has been allocated by ffi_call.  We also
+deallocate some of the stack that has been alloca&#39;d.    
+
+     .align  2
+     .globl  ffi_call_unix64
+     .type   ffi_call_unix64,@function</pre>
+
+<p>ffi_call_unix64: .LUW0:</p>
+
+<pre>movq    (%rsp), %r10            /* Load return address.  */
+leaq    (%rdi, %rsi), %rax      /* Find local stack base.  */
+movq    %rdx, (%rax)            /* Save flags.  */
+movq    %rcx, 8(%rax)           /* Save raddr.  */
+movq    %rbp, 16(%rax)          /* Save old frame pointer.  */
+movq    %r10, 24(%rax)          /* Relocate return address.  */
+movq    %rax, %rbp              /* Finalize local stack frame.  */</pre>
+
+<p>.LUW1:</p>
+
+<pre>movq    %rdi, %r10              /* Save a copy of the register area. */
+movq    %r8, %r11               /* Save a copy of the target fn.  */
+movl    %r9d, %eax              /* Set number of SSE registers.  */
+
+/* Load up all argument registers.  */
+movq    (%r10), %rdi
+movq    8(%r10), %rsi
+movq    16(%r10), %rdx
+movq    24(%r10), %rcx
+movq    32(%r10), %r8
+movq    40(%r10), %r9
+testl   %eax, %eax
+jnz     .Lload_sse</pre>
+
+<p>.Lret_from_load_sse:</p>
+
+<pre>/* Deallocate the reg arg area.  */
+leaq    176(%r10), %rsp
+
+/* Call the user function.  */
+call    *%r11
+
+/* Deallocate stack arg area; local stack frame in redzone.  */
+leaq    24(%rbp), %rsp
+
+movq    0(%rbp), %rcx           /* Reload flags.  */
+movq    8(%rbp), %rdi           /* Reload raddr.  */
+movq    16(%rbp), %rbp          /* Reload old frame pointer.  */</pre>
+
+<p>.LUW2:</p>
+
+<pre>/* The first byte of the flags contains the FFI_TYPE.  */
+movzbl  %cl, %r10d
+leaq    .Lstore_table(%rip), %r11
+movslq  (%r11, %r10, 4), %r10
+addq    %r11, %r10
+jmp     *%r10</pre>
+
+<p>.Lstore_table:</p>
+
+<pre>.long   .Lst_void-.Lstore_table         /* FFI_TYPE_VOID */
+.long   .Lst_sint32-.Lstore_table       /* FFI_TYPE_INT */
+.long   .Lst_float-.Lstore_table        /* FFI_TYPE_FLOAT */
+.long   .Lst_double-.Lstore_table       /* FFI_TYPE_DOUBLE */
+.long   .Lst_ldouble-.Lstore_table      /* FFI_TYPE_LONGDOUBLE */
+.long   .Lst_uint8-.Lstore_table        /* FFI_TYPE_UINT8 */
+.long   .Lst_sint8-.Lstore_table        /* FFI_TYPE_SINT8 */
+.long   .Lst_uint16-.Lstore_table       /* FFI_TYPE_UINT16 */
+.long   .Lst_sint16-.Lstore_table       /* FFI_TYPE_SINT16 */
+.long   .Lst_uint32-.Lstore_table       /* FFI_TYPE_UINT32 */
+.long   .Lst_sint32-.Lstore_table       /* FFI_TYPE_SINT32 */
+.long   .Lst_int64-.Lstore_table        /* FFI_TYPE_UINT64 */
+.long   .Lst_int64-.Lstore_table        /* FFI_TYPE_SINT64 */
+.long   .Lst_struct-.Lstore_table       /* FFI_TYPE_STRUCT */
+.long   .Lst_int64-.Lstore_table        /* FFI_TYPE_POINTER */
+
+.align 2</pre>
+
+<p>.Lst_void:</p>
+
+<pre>ret
+.align 2</pre>
+
+<p>.Lst_uint8:</p>
+
+<pre>movzbq  %al, %rax
+movq    %rax, (%rdi)
+ret
+.align 2</pre>
+
+<p>.Lst_sint8:</p>
+
+<pre>movsbq  %al, %rax
+movq    %rax, (%rdi)
+ret
+.align 2</pre>
+
+<p>.Lst_uint16:</p>
+
+<pre>movzwq  %ax, %rax
+movq    %rax, (%rdi)
+.align 2</pre>
+
+<p>.Lst_sint16:</p>
+
+<pre>movswq  %ax, %rax
+movq    %rax, (%rdi)
+ret
+.align 2</pre>
+
+<p>.Lst_uint32:</p>
+
+<pre>movl    %eax, %eax
+movq    %rax, (%rdi)
+.align 2</pre>
+
+<p>.Lst_sint32:</p>
+
+<pre>cltq
+movq    %rax, (%rdi)
+ret
+.align 2</pre>
+
+<p>.Lst_int64:</p>
+
+<pre>movq    %rax, (%rdi)
+ret
+
+.align 2</pre>
+
+<p>.Lst_float:</p>
+
+<pre>movss   %xmm0, (%rdi)
+ret
+.align 2</pre>
+
+<p>.Lst_double:</p>
+
+<pre>movsd   %xmm0, (%rdi)
+ret</pre>
+
+<p>.Lst_ldouble:</p>
+
+<pre>fstpt   (%rdi)
+ret
+
+.align 2</pre>
+
+<p>.Lst_struct:</p>
+
+<pre>leaq    -20(%rsp), %rsi         /* Scratch area in redzone.  */
+
+/* We have to locate the values now, and since we don&#39;t want to
+   write too much data into the user&#39;s return value, we spill the
+   value to a 16 byte scratch area first.  Bits 8, 9, and 10
+   control where the values are located.  Only one of the three
+   bits will be set; see ffi_prep_cif_machdep for the pattern.  */
+movd    %xmm0, %r10
+movd    %xmm1, %r11
+testl   $0x100, %ecx
+cmovnz  %rax, %rdx
+cmovnz  %r10, %rax
+testl   $0x200, %ecx
+cmovnz  %r10, %rdx
+testl   $0x400, %ecx
+cmovnz  %r10, %rax
+cmovnz  %r11, %rdx
+movq    %rax, (%rsi)
+movq    %rdx, 8(%rsi)
+
+/* Bits 12-31 contain the true size of the structure.  Copy from
+   the scratch area to the true destination.  */
+shrl    $12, %ecx
+rep movsb
+ret
+
+/* Many times we can avoid loading any SSE registers at all.
+   It&#39;s not worth an indirect jump to load the exact set of
+   SSE registers needed; zero or all is a good compromise.  */
+.align 2</pre>
+
+<p>.LUW3: .Lload_sse:</p>
+
+<pre>movdqa  48(%r10), %xmm0
+movdqa  64(%r10), %xmm1
+movdqa  80(%r10), %xmm2
+movdqa  96(%r10), %xmm3
+movdqa  112(%r10), %xmm4
+movdqa  128(%r10), %xmm5
+movdqa  144(%r10), %xmm6
+movdqa  160(%r10), %xmm7
+jmp     .Lret_from_load_sse</pre>
+
+<p>.LUW4:</p>
+
+<pre>.size    ffi_call_unix64,.-ffi_call_unix64
+
+.align  2
+.globl ffi_closure_unix64
+.type   ffi_closure_unix64,@function</pre>
+
+<p>ffi_closure_unix64: .LUW5:</p>
+
+<pre>/* The carry flag is set by the trampoline iff SSE registers
+   are used.  Don&#39;t clobber it before the branch instruction.  */
+leaq    -200(%rsp), %rsp</pre>
+
+<p>.LUW6:</p>
+
+<pre>movq    %rdi, (%rsp)
+movq    %rsi, 8(%rsp)
+movq    %rdx, 16(%rsp)
+movq    %rcx, 24(%rsp)
+movq    %r8, 32(%rsp)
+movq    %r9, 40(%rsp)
+jc      .Lsave_sse</pre>
+
+<p>.Lret_from_save_sse:</p>
+
+<pre>movq    %r10, %rdi
+leaq    176(%rsp), %rsi
+movq    %rsp, %rdx
+leaq    208(%rsp), %rcx
+call    ffi_closure_unix64_inner@PLT
+
+/* Deallocate stack frame early; return value is now in redzone.  */
+addq    $200, %rsp</pre>
+
+<p>.LUW7:</p>
+
+<pre>/* The first byte of the return value contains the FFI_TYPE.  */
+movzbl  %al, %r10d
+leaq    .Lload_table(%rip), %r11
+movslq  (%r11, %r10, 4), %r10
+addq    %r11, %r10
+jmp     *%r10</pre>
+
+<p>.Lload_table:</p>
+
+<pre>.long   .Lld_void-.Lload_table          /* FFI_TYPE_VOID */
+.long   .Lld_int32-.Lload_table         /* FFI_TYPE_INT */
+.long   .Lld_float-.Lload_table         /* FFI_TYPE_FLOAT */
+.long   .Lld_double-.Lload_table        /* FFI_TYPE_DOUBLE */
+.long   .Lld_ldouble-.Lload_table       /* FFI_TYPE_LONGDOUBLE */
+.long   .Lld_int8-.Lload_table          /* FFI_TYPE_UINT8 */
+.long   .Lld_int8-.Lload_table          /* FFI_TYPE_SINT8 */
+.long   .Lld_int16-.Lload_table         /* FFI_TYPE_UINT16 */
+.long   .Lld_int16-.Lload_table         /* FFI_TYPE_SINT16 */
+.long   .Lld_int32-.Lload_table         /* FFI_TYPE_UINT32 */
+.long   .Lld_int32-.Lload_table         /* FFI_TYPE_SINT32 */
+.long   .Lld_int64-.Lload_table         /* FFI_TYPE_UINT64 */
+.long   .Lld_int64-.Lload_table         /* FFI_TYPE_SINT64 */
+.long   .Lld_struct-.Lload_table        /* FFI_TYPE_STRUCT */
+.long   .Lld_int64-.Lload_table         /* FFI_TYPE_POINTER */
+
+.align 2</pre>
+
+<p>.Lld_void:</p>
+
+<pre>ret
+
+.align 2</pre>
+
+<p>.Lld_int8:</p>
+
+<pre>movzbl  -24(%rsp), %eax
+ret
+.align 2</pre>
+
+<p>.Lld_int16:</p>
+
+<pre>movzwl  -24(%rsp), %eax
+ret
+.align 2</pre>
+
+<p>.Lld_int32:</p>
+
+<pre>movl    -24(%rsp), %eax
+ret
+.align 2</pre>
+
+<p>.Lld_int64:</p>
+
+<pre>movq    -24(%rsp), %rax
+ret
+
+.align 2</pre>
+
+<p>.Lld_float:</p>
+
+<pre>movss   -24(%rsp), %xmm0
+ret
+.align 2</pre>
+
+<p>.Lld_double:</p>
+
+<pre>movsd   -24(%rsp), %xmm0
+ret
+.align 2</pre>
+
+<p>.Lld_ldouble:</p>
+
+<pre>fldt    -24(%rsp)
+ret
+
+.align 2</pre>
+
+<p>.Lld_struct:</p>
+
+<pre>/* There are four possibilities here, %rax/%rdx, %xmm0/%rax,
+   %rax/%xmm0, %xmm0/%xmm1.  We collapse two by always loading
+   both rdx and xmm1 with the second word.  For the remaining,
+   bit 8 set means xmm0 gets the second word, and bit 9 means
+   that rax gets the second word.  */
+movq    -24(%rsp), %rcx
+movq    -16(%rsp), %rdx
+movq    -16(%rsp), %xmm1
+testl   $0x100, %eax
+cmovnz  %rdx, %rcx
+movd    %rcx, %xmm0
+testl   $0x200, %eax
+movq    -24(%rsp), %rax
+cmovnz  %rdx, %rax
+ret
+
+/* See the comment above .Lload_sse; the same logic applies here.  */
+.align 2</pre>
+
+<p>.LUW8: .Lsave_sse:</p>
+
+<pre>movdqa  %xmm0, 48(%rsp)
+movdqa  %xmm1, 64(%rsp)
+movdqa  %xmm2, 80(%rsp)
+movdqa  %xmm3, 96(%rsp)
+movdqa  %xmm4, 112(%rsp)
+movdqa  %xmm5, 128(%rsp)
+movdqa  %xmm6, 144(%rsp)
+movdqa  %xmm7, 160(%rsp)
+jmp     .Lret_from_save_sse</pre>
+
+<p>.LUW9:</p>
+
+<pre>.size   ffi_closure_unix64,.-ffi_closure_unix64</pre>
+
+<p>ifdef HAVE_AS_X86_64_UNWIND_SECTION_TYPE</p>
+
+<pre>.section        .eh_frame,&quot;a&quot;,@unwind</pre>
+
+<p>else</p>
+
+<pre>.section        .eh_frame,&quot;a&quot;,@progbits</pre>
+
+<p>endif .Lframe1:</p>
+
+<pre>.long   .LECIE1-.LSCIE1         /* CIE Length */</pre>
+
+<p>.LSCIE1:</p>
+
+<pre>.long   0                       /* CIE Identifier Tag */
+.byte   1                       /* CIE Version */
+.ascii &quot;zR\0&quot;                   /* CIE Augmentation */
+.uleb128 1                      /* CIE Code Alignment Factor */
+.sleb128 -8                     /* CIE Data Alignment Factor */
+.byte   0x10                    /* CIE RA Column */
+.uleb128 1                      /* Augmentation size */
+.byte   0x1b                    /* FDE Encoding (pcrel sdata4) */
+.byte   0xc                     /* DW_CFA_def_cfa, %rsp offset 8 */
+.uleb128 7
+.uleb128 8
+.byte   0x80+16                 /* DW_CFA_offset, %rip offset 1*-8 */
+.uleb128 1
+.align 8</pre>
+
+<p>.LECIE1: .LSFDE1:</p>
+
+<pre>.long   .LEFDE1-.LASFDE1        /* FDE Length */</pre>
+
+<p>.LASFDE1:</p>
+
+<pre>.long   .LASFDE1-.Lframe1       /* FDE CIE offset */</pre>
+
+<p>if HAVE_AS_X86_PCREL</p>
+
+<pre>.long   .LUW0-.                 /* FDE initial location */</pre>
+
+<p>else</p>
+
+<pre>.long   .LUW0@rel</pre>
+
+<p>endif</p>
+
+<pre>.long   .LUW4-.LUW0             /* FDE address range */
+.uleb128 0x0                    /* Augmentation size */
+
+.byte   0x4                     /* DW_CFA_advance_loc4 */
+.long   .LUW1-.LUW0
+
+/* New stack frame based off rbp.  This is a itty bit of unwind
+   trickery in that the CFA *has* changed.  There is no easy way
+   to describe it correctly on entry to the function.  Fortunately,
+   it doesn&#39;t matter too much since at all points we can correctly
+   unwind back to ffi_call.  Note that the location to which we
+   moved the return address is (the new) CFA-8, so from the
+   perspective of the unwind info, it hasn&#39;t moved.  */
+.byte   0xc                     /* DW_CFA_def_cfa, %rbp offset 32 */
+.uleb128 6
+.uleb128 32
+.byte   0x80+6                  /* DW_CFA_offset, %rbp offset 2*-8 */
+.uleb128 2
+.byte   0xa                     /* DW_CFA_remember_state */
+
+.byte   0x4                     /* DW_CFA_advance_loc4 */
+.long   .LUW2-.LUW1
+.byte   0xc                     /* DW_CFA_def_cfa, %rsp offset 8 */
+.uleb128 7
+.uleb128 8
+.byte   0xc0+6                  /* DW_CFA_restore, %rbp */
+
+.byte   0x4                     /* DW_CFA_advance_loc4 */
+.long   .LUW3-.LUW2
+.byte   0xb                     /* DW_CFA_restore_state */
+
+.align 8</pre>
+
+<p>.LEFDE1: .LSFDE3:</p>
+
+<pre>.long   .LEFDE3-.LASFDE3        /* FDE Length */</pre>
+
+<p>.LASFDE3:</p>
+
+<pre>.long   .LASFDE3-.Lframe1       /* FDE CIE offset */</pre>
+
+<p>if HAVE_AS_X86_PCREL</p>
+
+<pre>.long   .LUW5-.                 /* FDE initial location */</pre>
+
+<p>else</p>
+
+<pre>.long   .LUW5@rel</pre>
+
+<p>endif</p>
+
+<pre>.long   .LUW9-.LUW5             /* FDE address range */
+.uleb128 0x0                    /* Augmentation size */
+
+.byte   0x4                     /* DW_CFA_advance_loc4 */
+.long   .LUW6-.LUW5
+.byte   0xe                     /* DW_CFA_def_cfa_offset */
+.uleb128 208
+.byte   0xa                     /* DW_CFA_remember_state */
+
+.byte   0x4                     /* DW_CFA_advance_loc4 */
+.long   .LUW7-.LUW6
+.byte   0xe                     /* DW_CFA_def_cfa_offset */
+.uleb128 8
+
+.byte   0x4                     /* DW_CFA_advance_loc4 */
+.long   .LUW8-.LUW7
+.byte   0xb                     /* DW_CFA_restore_state */
+
+.align 8</pre>
+
+<p>.LEFDE3:</p>
+
+<p>endif /* <em>x86_64</em> */</p>
+
+<p>if defined __ELF__ &amp;&amp; defined __linux__</p>
+
+<pre>.section        .note.GNU-stack,&quot;&quot;,@progbits</pre>
+
+<p>endif</p>
+
+</div>
+
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

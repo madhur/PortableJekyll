@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>class Listen::Adapter - listen-1.3.1 Documentation</title>
+
+<link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../index.html">Home</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/listen/adapter.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">Object
+  
+</nav>
+
+    
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li ><a href="#method-c-load_dependent_adapter">::load_dependent_adapter</a>
+    
+    <li ><a href="#method-c-new">::new</a>
+    
+    <li ><a href="#method-c-select_and_initialize">::select_and_initialize</a>
+    
+    <li ><a href="#method-c-usable-3F">::usable?</a>
+    
+    <li ><a href="#method-c-usable_and_works-3F">::usable_and_works?</a>
+    
+    <li ><a href="#method-c-warn_polling_fallback">::warn_polling_fallback</a>
+    
+    <li ><a href="#method-c-works-3F">::works?</a>
+    
+    <li ><a href="#method-i-blocking_thread">#blocking_thread</a>
+    
+    <li ><a href="#method-i-default_latency">#default_latency</a>
+    
+    <li ><a href="#method-i-initialize_worker">#initialize_worker</a>
+    
+    <li ><a href="#method-i-pause">#pause</a>
+    
+    <li ><a href="#method-i-paused-3F">#paused?</a>
+    
+    <li ><a href="#method-i-poll_changed_directories">#poll_changed_directories</a>
+    
+    <li ><a href="#method-i-report_changes">#report_changes</a>
+    
+    <li ><a href="#method-i-start">#start</a>
+    
+    <li ><a href="#method-i-start-21">#start!</a>
+    
+    <li ><a href="#method-i-start_poller">#start_poller</a>
+    
+    <li ><a href="#method-i-start_worker">#start_worker</a>
+    
+    <li ><a href="#method-i-started-3F">#started?</a>
+    
+    <li ><a href="#method-i-stop">#stop</a>
+    
+    <li ><a href="#method-i-unpause">#unpause</a>
+    
+    <li ><a href="#method-i-wait_for_callback">#wait_for_callback</a>
+    
+    <li ><a href="#method-i-wait_for_changes">#wait_for_changes</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../Listen.html">Listen</a>
+  
+    <li><a href="../Listen/Adapter.html">Listen::Adapter</a>
+  
+    <li><a href="../Listen/Adapters.html">Listen::Adapters</a>
+  
+    <li><a href="../Listen/Adapters/Adapter.html">Listen::Adapters::Adapter</a>
+  
+    <li><a href="../Listen/Adapters/BSD.html">Listen::Adapters::BSD</a>
+  
+    <li><a href="../Listen/Adapters/Darwin.html">Listen::Adapters::Darwin</a>
+  
+    <li><a href="../Listen/Adapters/Linux.html">Listen::Adapters::Linux</a>
+  
+    <li><a href="../Listen/Adapters/Polling.html">Listen::Adapters::Polling</a>
+  
+    <li><a href="../Listen/Adapters/Windows.html">Listen::Adapters::Windows</a>
+  
+    <li><a href="../Listen/DirectoryRecord.html">Listen::DirectoryRecord</a>
+  
+    <li><a href="../Listen/Listener.html">Listen::Listener</a>
+  
+    <li><a href="../Listen/Turnstile.html">Listen::Turnstile</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class Listen::Adapter</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+    <!-- Constants -->
+    <section id="constants-list" class="section">
+      <h3 class="section-header">Constants</h3>
+      <dl>
+      
+        <dt id="ADAPTERS">ADAPTERS
+        
+        <dd class="description"><p>The list of all existing adapters.</p>
+        
+      
+        <dt id="DEFAULT_LATENCY">DEFAULT_LATENCY
+        
+        <dd class="description"><p>The default delay between checking for changes.</p>
+        
+      
+        <dt id="FALLBACK_ADAPTERS">FALLBACK_ADAPTERS
+        
+        <dd class="description"><p>The list of existing fallback adapters.</p>
+        
+      
+        <dt id="OPTIMIZED_ADAPTERS">OPTIMIZED_ADAPTERS
+        
+        <dd class="description"><p>The list of existing optimized adapters.</p>
+        
+      
+        <dt id="POLLING_FALLBACK_MESSAGE">POLLING_FALLBACK_MESSAGE
+        
+        <dd class="description"><p>The default warning message when falling back to polling adapter.</p>
+        
+      
+      </dl>
+    </section>
+    
+
+    
+    <!-- Attributes -->
+    <section id="attribute-method-details" class="method-section section">
+      <h3 class="section-header">Attributes</h3>
+
+      
+      <div id="attribute-i-callback" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">callback</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-changed_directories" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">changed_directories</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-directories" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">directories</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-latency" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">latency</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-mutex" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">mutex</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-paused" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">paused</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-poller_thread" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">poller_thread</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-stopped" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">stopped</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-turnstile" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">turnstile</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-worker" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">worker</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-worker_thread" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">worker_thread</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+    </section><!-- attribute-method-details -->
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-load_dependent_adapter" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">load_dependent_adapter</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Load the adapter gem</p>
+
+<p>@return [Boolean] whether loaded or not</p>
+          
+          
+
+          
+          <div class="method-source-code" id="load_dependent_adapter-source">
+            <pre><span class="ruby-comment"># File lib/listen/adapter.rb, line 205</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">load_dependent_adapter</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@loaded</span>
+  <span class="ruby-identifier">require</span> <span class="ruby-identifier">adapter_gem</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-ivar">@loaded</span> = <span class="ruby-keyword">true</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- load_dependent_adapter-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- load_dependent_adapter-method -->
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">(directories, options = {}, &callback)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Initializes the adapter.</p>
+
+<p>@param [String, Array&lt;String&gt;] directories the directories to watch
+@param [Hash] options the adapter options @option options [Float] latency
+the delay between checking for changes in seconds</p>
+
+<p>@yield [changed_directories, options] callback Callback called when a
+change happens @yieldparam [Array&lt;String&gt;] <a
+href="Adapter.html#attribute-i-changed_directories">#changed_directories</a>
+the changed directories @yieldparam [Hash] options callback options (like
+recursive: true)</p>
+
+<p>@return [Listen::Adapter] the adapter</p>
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/listen/adapter.rb, line 78</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">directories</span>, <span class="ruby-identifier">options</span> = {}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">callback</span>)
+  <span class="ruby-ivar">@directories</span>         = <span class="ruby-constant">Array</span>(<span class="ruby-identifier">directories</span>)
+  <span class="ruby-ivar">@callback</span>            = <span class="ruby-identifier">callback</span>
+  <span class="ruby-ivar">@stopped</span>             = <span class="ruby-keyword">true</span>
+  <span class="ruby-ivar">@paused</span>              = <span class="ruby-keyword">false</span>
+  <span class="ruby-ivar">@mutex</span>               = <span class="ruby-constant">Mutex</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-ivar">@changed_directories</span> = <span class="ruby-constant">Set</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-ivar">@turnstile</span>           = <span class="ruby-constant">Turnstile</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-ivar">@latency</span>             = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:latency</span>, <span class="ruby-identifier">default_latency</span>)
+  <span class="ruby-ivar">@worker</span>              = <span class="ruby-identifier">initialize_worker</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- new-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- new-method -->
+
+    
+      <div id="method-c-select_and_initialize" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">select_and_initialize</span><span
+            class="method-args">(directories, options = {}, &callback)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Selects the appropriate adapter implementation for the current OS and
+initializes it.</p>
+
+<p>@param [String, Array&lt;String&gt;] directories the directories to watch
+@param [Hash] options the adapter options @option options [Boolean]
+force_polling to force polling or not @option options [String, Boolean]
+polling_fallback_message to change polling fallback message or remove it
+@option options [Float] latency the delay between checking for changes in
+seconds</p>
+
+<p>@yield [changed_directories, options] callback the callback called when a
+change happens @yieldparam [Array&lt;String&gt;] <a
+href="Adapter.html#attribute-i-changed_directories">#changed_directories</a>
+the changed directories @yieldparam [Hash] options callback options (like
+recursive: true)</p>
+
+<p>@return [Listen::Adapter] the chosen adapter</p>
+          
+          
+
+          
+          <div class="method-source-code" id="select_and_initialize-source">
+            <pre><span class="ruby-comment"># File lib/listen/adapter.rb, line 44</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">select_and_initialize</span>(<span class="ruby-identifier">directories</span>, <span class="ruby-identifier">options</span> = {}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">callback</span>)
+  <span class="ruby-identifier">forced_adapter_class</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-value">:force_adapter</span>)
+  <span class="ruby-identifier">force_polling</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-value">:force_polling</span>)
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">forced_adapter_class</span>
+    <span class="ruby-identifier">forced_adapter_class</span>.<span class="ruby-identifier">load_dependent_adapter</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-identifier">forced_adapter_class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">directories</span>, <span class="ruby-identifier">options</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">callback</span>)
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">return</span> <span class="ruby-constant">Adapters</span><span class="ruby-operator">::</span><span class="ruby-constant">Polling</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">directories</span>, <span class="ruby-identifier">options</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">callback</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">force_polling</span>
+
+  <span class="ruby-constant">OPTIMIZED_ADAPTERS</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">adapter</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">namespaced_adapter</span> = <span class="ruby-constant">Adapters</span>.<span class="ruby-identifier">const_get</span>(<span class="ruby-identifier">adapter</span>)
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">namespaced_adapter</span>.<span class="ruby-identifier">send</span>(<span class="ruby-value">:usable_and_works?</span>, <span class="ruby-identifier">directories</span>, <span class="ruby-identifier">options</span>)
+      <span class="ruby-keyword">return</span> <span class="ruby-identifier">namespaced_adapter</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">directories</span>, <span class="ruby-identifier">options</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">callback</span>)
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">warn_polling_fallback</span>(<span class="ruby-identifier">options</span>)
+  <span class="ruby-constant">Adapters</span><span class="ruby-operator">::</span><span class="ruby-constant">Polling</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">directories</span>, <span class="ruby-identifier">options</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">callback</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- select_and_initialize-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- select_and_initialize-method -->
+
+    
+      <div id="method-c-usable-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">usable?</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Checks if the adapter is usable on target OS.</p>
+
+<p>@return [Boolean] whether usable or not</p>
+          
+          
+
+          
+          <div class="method-source-code" id="usable-3F-source">
+            <pre><span class="ruby-comment"># File lib/listen/adapter.rb, line 197</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">usable?</span>
+  <span class="ruby-identifier">load_dependent_adapter</span> <span class="ruby-keyword">if</span> <span class="ruby-constant">RbConfig</span><span class="ruby-operator">::</span><span class="ruby-constant">CONFIG</span>[<span class="ruby-string">&#39;target_os&#39;</span>] <span class="ruby-operator">=~</span> <span class="ruby-identifier">target_os_regex</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- usable-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- usable-3F-method -->
+
+    
+      <div id="method-c-usable_and_works-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">usable_and_works?</span><span
+            class="method-args">(directories, options = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Checks if the adapter is usable and works on the current OS.</p>
+
+<p>@param [String, Array&lt;String&gt;] directories the directories to watch
+@param [Hash] options the adapter options @option options [Float] latency
+the delay between checking for changes in seconds</p>
+
+<p>@return [Boolean] whether the adapter is usable and work or not</p>
+          
+          
+
+          
+          <div class="method-source-code" id="usable_and_works-3F-source">
+            <pre><span class="ruby-comment"># File lib/listen/adapter.rb, line 189</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">usable_and_works?</span>(<span class="ruby-identifier">directories</span>, <span class="ruby-identifier">options</span> = {})
+  <span class="ruby-identifier">usable?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">Array</span>(<span class="ruby-identifier">directories</span>).<span class="ruby-identifier">all?</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span> <span class="ruby-identifier">works?</span>(<span class="ruby-identifier">d</span>, <span class="ruby-identifier">options</span>) }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- usable_and_works-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- usable_and_works-3F-method -->
+
+    
+      <div id="method-c-works-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">works?</span><span
+            class="method-args">(directory, options = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Runs a tests to determine if the adapter can actually pick up changes in a
+given directory and returns the result.</p>
+
+<p>@note This test takes some time depending on the adapter latency.</p>
+
+<p>@param [String, Pathname] directory the directory to watch @param [Hash]
+options the adapter options @option options [Float] latency the delay
+between checking for changes in seconds</p>
+
+<p>@return [Boolean] whether the adapter works or not</p>
+          
+          
+
+          
+          <div class="method-source-code" id="works-3F-source">
+            <pre><span class="ruby-comment"># File lib/listen/adapter.rb, line 222</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">works?</span>(<span class="ruby-identifier">directory</span>, <span class="ruby-identifier">options</span> = {})
+  <span class="ruby-identifier">work</span>      = <span class="ruby-keyword">false</span>
+  <span class="ruby-identifier">test_file</span> = <span class="ruby-node">&quot;#{directory}/.listen_test&quot;</span>
+  <span class="ruby-identifier">callback</span>  = <span class="ruby-identifier">lambda</span> { <span class="ruby-operator">|</span><span class="ruby-operator">*</span><span class="ruby-operator">|</span> <span class="ruby-identifier">work</span> = <span class="ruby-keyword">true</span> }
+  <span class="ruby-identifier">adapter</span>   = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">directory</span>, <span class="ruby-identifier">options</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">callback</span>)
+  <span class="ruby-identifier">adapter</span>.<span class="ruby-identifier">start</span>
+
+  <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">touch</span>(<span class="ruby-identifier">test_file</span>)
+
+  <span class="ruby-identifier">t</span> = <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">new</span> { <span class="ruby-identifier">sleep</span>(<span class="ruby-identifier">adapter</span>.<span class="ruby-identifier">latency</span> <span class="ruby-operator">*</span> <span class="ruby-value">5</span>); <span class="ruby-identifier">adapter</span>.<span class="ruby-identifier">stop</span> }
+
+  <span class="ruby-identifier">adapter</span>.<span class="ruby-identifier">wait_for_callback</span>
+  <span class="ruby-identifier">work</span>
+<span class="ruby-keyword">ensure</span>
+  <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">kill</span>(<span class="ruby-identifier">t</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">t</span>
+  <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">rm</span>(<span class="ruby-identifier">test_file</span>, <span class="ruby-value">:force</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>)
+  <span class="ruby-identifier">adapter</span>.<span class="ruby-identifier">stop</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">adapter</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">adapter</span>.<span class="ruby-identifier">started?</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- works-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- works-3F-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+     <section id="private-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Private Class Methods</h3>
+
+    
+      <div id="method-c-warn_polling_fallback" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">warn_polling_fallback</span><span
+            class="method-args">(options)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Warn of polling fallback unless the :polling_fallback_message has been set
+to false.</p>
+
+<p>@param [String] warning an existing warning message @param [Hash] options
+the adapter options @option options [Boolean] polling_fallback_message to
+change polling fallback message or remove it</p>
+          
+          
+
+          
+          <div class="method-source-code" id="warn_polling_fallback-source">
+            <pre><span class="ruby-comment"># File lib/listen/adapter.rb, line 307</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">warn_polling_fallback</span>(<span class="ruby-identifier">options</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:polling_fallback_message</span>] <span class="ruby-operator">==</span> <span class="ruby-keyword">false</span>
+
+  <span class="ruby-identifier">warning</span> = <span class="ruby-identifier">options</span>[<span class="ruby-value">:polling_fallback_message</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">POLLING_FALLBACK_MESSAGE</span>
+  <span class="ruby-constant">Kernel</span>.<span class="ruby-identifier">warn</span> <span class="ruby-node">&quot;[Listen warning]:\n#{warning.gsub(/^(.*)/, &#39;  \1&#39;)}&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- warn_polling_fallback-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- warn_polling_fallback-method -->
+
+    
+    </section><!-- private-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-pause" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">pause</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Pauses the adapter.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="pause-source">
+            <pre><span class="ruby-comment"># File lib/listen/adapter.rb, line 132</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">pause</span>
+  <span class="ruby-ivar">@paused</span> = <span class="ruby-keyword">true</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- pause-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- pause-method -->
+
+    
+      <div id="method-i-paused-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">paused?</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Returns whether the adapter is paused or not.</p>
+
+<p>@return [Boolean] whether the adapter is paused or not</p>
+          
+          
+
+          
+          <div class="method-source-code" id="paused-3F-source">
+            <pre><span class="ruby-comment"># File lib/listen/adapter.rb, line 154</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">paused?</span>
+  <span class="ruby-identifier">paused</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- paused-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- paused-3F-method -->
+
+    
+      <div id="method-i-report_changes" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">report_changes</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Runs the callback and passes it the changes if there are any.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="report_changes-source">
+            <pre><span class="ruby-comment"># File lib/listen/adapter.rb, line 243</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">report_changes</span>
+  <span class="ruby-identifier">changed_dirs</span> = <span class="ruby-keyword">nil</span>
+
+  <span class="ruby-identifier">mutex</span>.<span class="ruby-identifier">synchronize</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@changed_directories</span>.<span class="ruby-identifier">empty?</span>
+    <span class="ruby-identifier">changed_dirs</span> = <span class="ruby-ivar">@changed_directories</span>.<span class="ruby-identifier">to_a</span>
+    <span class="ruby-ivar">@changed_directories</span>.<span class="ruby-identifier">clear</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">callback</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">changed_dirs</span>, {})
+  <span class="ruby-identifier">turnstile</span>.<span class="ruby-identifier">signal</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- report_changes-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- report_changes-method -->
+
+    
+      <div id="method-i-start" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">start</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Starts the adapter and don&#39;t block the current thread.</p>
+
+<p>@param [Boolean] blocking whether or not to block the current thread after
+starting</p>
+          
+          
+
+          
+          <div class="method-source-code" id="start-source">
+            <pre><span class="ruby-comment"># File lib/listen/adapter.rb, line 94</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">start</span>
+  <span class="ruby-identifier">mutex</span>.<span class="ruby-identifier">synchronize</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">stopped</span>
+    <span class="ruby-ivar">@stopped</span> = <span class="ruby-keyword">false</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">start_worker</span>
+  <span class="ruby-identifier">start_poller</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- start-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- start-method -->
+
+    
+      <div id="method-i-start-21" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">start!</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Starts the adapter and block the current thread.</p>
+
+<p>@since 1.0.0</p>
+          
+          
+
+          
+          <div class="method-source-code" id="start-21-source">
+            <pre><span class="ruby-comment"># File lib/listen/adapter.rb, line 108</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">start!</span>
+  <span class="ruby-identifier">start</span>
+  <span class="ruby-identifier">blocking_thread</span>.<span class="ruby-identifier">join</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- start-21-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- start-21-method -->
+
+    
+      <div id="method-i-started-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">started?</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Returns whether the adapter is started or not.</p>
+
+<p>@return [Boolean] whether the adapter is started or not</p>
+          
+          
+
+          
+          <div class="method-source-code" id="started-3F-source">
+            <pre><span class="ruby-comment"># File lib/listen/adapter.rb, line 146</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">started?</span>
+  <span class="ruby-operator">!</span><span class="ruby-identifier">stopped</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- started-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- started-3F-method -->
+
+    
+      <div id="method-i-stop" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">stop</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Stops the adapter.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="stop-source">
+            <pre><span class="ruby-comment"># File lib/listen/adapter.rb, line 115</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">stop</span>
+  <span class="ruby-identifier">mutex</span>.<span class="ruby-identifier">synchronize</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">stopped</span>
+    <span class="ruby-ivar">@stopped</span> = <span class="ruby-keyword">true</span>
+    <span class="ruby-identifier">turnstile</span>.<span class="ruby-identifier">signal</span> <span class="ruby-comment"># ensure no thread is blocked</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">worker</span>.<span class="ruby-identifier">stop</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">worker</span>
+  <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">kill</span>(<span class="ruby-identifier">worker_thread</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">worker_thread</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">poller_thread</span>
+    <span class="ruby-identifier">poller_thread</span>.<span class="ruby-identifier">kill</span>
+    <span class="ruby-identifier">poller_thread</span>.<span class="ruby-identifier">join</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- stop-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- stop-method -->
+
+    
+      <div id="method-i-unpause" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">unpause</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Unpauses the adapter.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="unpause-source">
+            <pre><span class="ruby-comment"># File lib/listen/adapter.rb, line 138</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">unpause</span>
+  <span class="ruby-ivar">@paused</span> = <span class="ruby-keyword">false</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- unpause-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- unpause-method -->
+
+    
+      <div id="method-i-wait_for_callback" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">wait_for_callback</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Blocks the main thread until the poll thread runs the callback.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="wait_for_callback-source">
+            <pre><span class="ruby-comment"># File lib/listen/adapter.rb, line 161</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">wait_for_callback</span>
+  <span class="ruby-identifier">turnstile</span>.<span class="ruby-identifier">wait</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">paused</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- wait_for_callback-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- wait_for_callback-method -->
+
+    
+      <div id="method-i-wait_for_changes" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">wait_for_changes</span><span
+            class="method-args">(threshold = 0)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Blocks the main thread until N changes are detected.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="wait_for_changes-source">
+            <pre><span class="ruby-comment"># File lib/listen/adapter.rb, line 168</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">wait_for_changes</span>(<span class="ruby-identifier">threshold</span> = <span class="ruby-value">0</span>)
+  <span class="ruby-identifier">changes</span> = <span class="ruby-value">0</span>
+
+  <span class="ruby-identifier">loop</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">mutex</span>.<span class="ruby-identifier">synchronize</span> { <span class="ruby-identifier">changes</span> = <span class="ruby-identifier">changed_directories</span>.<span class="ruby-identifier">size</span> }
+
+    <span class="ruby-keyword">return</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">paused</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">stopped</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">changes</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-identifier">threshold</span>
+
+    <span class="ruby-identifier">sleep</span>(<span class="ruby-identifier">latency</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- wait_for_changes-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- wait_for_changes-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+     <section id="private-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Private Instance Methods</h3>
+
+    
+      <div id="method-i-blocking_thread" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">blocking_thread</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>The thread on which the main thread should wait when the adapter has been
+started in blocking mode.</p>
+
+<p>@note This method can be overriden on a per-adapter basis.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="blocking_thread-source">
+            <pre><span class="ruby-comment"># File lib/listen/adapter.rb, line 271</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">blocking_thread</span>
+  <span class="ruby-identifier">worker_thread</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- blocking_thread-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- blocking_thread-method -->
+
+    
+      <div id="method-i-default_latency" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">default_latency</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>The default delay between checking for changes.</p>
+
+<p>@note This method can be overriden on a per-adapter basis.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="default_latency-source">
+            <pre><span class="ruby-comment"># File lib/listen/adapter.rb, line 262</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">default_latency</span>
+  <span class="ruby-constant">DEFAULT_LATENCY</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- default_latency-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- default_latency-method -->
+
+    
+      <div id="method-i-initialize_worker" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">initialize_worker</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Initialize the adpater&#39; specific worker.</p>
+
+<p>@note Each adapter must override this method</p>
+
+<pre>to initialize its own @worker.</pre>
+          
+          
+
+          
+          <div class="method-source-code" id="initialize_worker-source">
+            <pre><span class="ruby-comment"># File lib/listen/adapter.rb, line 280</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize_worker</span>
+  <span class="ruby-keyword">nil</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- initialize_worker-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- initialize_worker-method -->
+
+    
+      <div id="method-i-poll_changed_directories" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">poll_changed_directories</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Polls changed directories and reports them back when there are changes.</p>
+
+<p>@note This method can be overriden on a per-adapter basis.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="poll_changed_directories-source">
+            <pre><span class="ruby-comment"># File lib/listen/adapter.rb, line 318</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">poll_changed_directories</span>
+  <span class="ruby-keyword">until</span> <span class="ruby-identifier">stopped</span>
+    <span class="ruby-identifier">sleep</span>(<span class="ruby-identifier">latency</span>)
+    <span class="ruby-identifier">report_changes</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- poll_changed_directories-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- poll_changed_directories-method -->
+
+    
+      <div id="method-i-start_poller" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">start_poller</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method starts a new thread which poll for changes detected by the
+adapter and report them back to the user.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="start_poller-source">
+            <pre><span class="ruby-comment"># File lib/listen/adapter.rb, line 296</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">start_poller</span>
+  <span class="ruby-ivar">@poller_thread</span> = <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">new</span> { <span class="ruby-identifier">poll_changed_directories</span> }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- start_poller-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- start_poller-method -->
+
+    
+      <div id="method-i-start_worker" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">start_worker</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Should start the worker in a new thread.</p>
+
+<p>@note Each adapter must override this method</p>
+
+<pre>to start its worker on a new @worker_thread thread.</pre>
+          
+          
+
+          
+          <div class="method-source-code" id="start_worker-source">
+            <pre><span class="ruby-comment"># File lib/listen/adapter.rb, line 289</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">start_worker</span>
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-node">&quot;#{self.class} cannot respond to: #{__method__}&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- start_worker-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- start_worker-method -->
+
+    
+    </section><!-- private-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

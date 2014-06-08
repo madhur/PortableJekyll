@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+ Author: John Spray <jcspray@icculus.org>
+ Copyright (C) 2004, 2005, 2006 John Spray <jcs116@york.ac.uk>
+ Copyright (C) 2005 Jerry DeLisle <jvdelisle@verizon.net>
+
+ This library is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Library General Public
+ License as published by the Free Software Foundation; either
+ version 2 of the License, or (at your option) any later version.
+
+ This library is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ Library General Public License for more details.
+
+ You should have received a copy of the GNU Library General Public
+ License along with this library; if not, write to the
+ Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ Boston, MA 02111-1307, USA.
+
+-->
+<language id="fortran" _name="Fortran 95" version="2.0" _section="Sources">
+  <metadata>
+    <property name="mimetypes">text/x-fortran</property>
+    <property name="globs">*.f;*.f9[05];*.for</property>
+    <property name="line-comment-start">!</property>
+  </metadata>
+
+  <styles>
+    <style id="comment" _name="Comment" map-to="def:comment"/>
+    <style id="floating-point" _name="Floating Point" map-to="def:floating-point"/>
+    <style id="keyword" _name="Keyword" map-to="def:keyword"/>
+    <style id="intrinsic" _name="Intrinsic function" map-to="def:builtin"/>
+    <style id="boz-literal" _name="BOZ Literal" map-to="def:base-n-integer"/>
+    <style id="decimal" _name="Decimal" map-to="def:decimal"/>
+    <style id="type" _name="Data Type" map-to="def:type"/>
+  </styles>
+
+  <default-regex-options case-sensitive="false"/>
+
+  <definitions>
+
+    <!-- Note: contains an hack to avoid considering ^COMMON a comment -->
+    <context id="line-comment" style-ref="comment" end-at-line-end="true" class="comment" class-disabled="no-spell-check">
+      <start>!|(^[Cc](\b|[^Oo]))</start>
+      <include>
+        <context ref="def:escape"/>
+        <context ref="def:in-line-comment"/>
+      </include>
+    </context>
+
+    <context id="operators" style-ref="keyword">
+      <prefix>\.</prefix>
+      <suffix>\.</suffix>
+      <keyword>true</keyword>
+      <keyword>false</keyword>
+      <keyword>not</keyword>
+      <keyword>and</keyword>
+      <keyword>or</keyword>
+      <keyword>xor</keyword>
+      <keyword>eqv</keyword>
+      <keyword>neqv</keyword>
+      <keyword>eq</keyword>
+      <keyword>ne</keyword>
+      <keyword>gt</keyword>
+      <keyword>ge</keyword>
+      <keyword>lt</keyword>
+      <keyword>le</keyword>
+    </context>
+
+    <context id="keywords" style-ref="keyword">
+      <keyword>allocate</keyword>
+      <keyword>assign</keyword>
+      <keyword>assignment</keyword>
+      <keyword>block data</keyword>
+      <keyword>call</keyword>
+      <keyword>case</keyword>
+      <keyword>common</keyword>
+      <keyword>contains</keyword>
+      <keyword>continue</keyword>
+      <keyword>cycle</keyword>
+      <keyword>data</keyword>
+      <keyword>deallocate</keyword>
+      <keyword>default</keyword>
+      <keyword>do</keyword>
+      <keyword>elemental</keyword>
+      <keyword>elseif</keyword>
+      <keyword>else</keyword>
+      <keyword>elsewhere</keyword>
+      <keyword>enddo</keyword>
+      <keyword>endif</keyword>
+      <keyword>endselect</keyword>
+      <keyword>end</keyword>
+      <keyword>entry</keyword>
+      <keyword>equivalence</keyword>
+      <keyword>exit</keyword>
+      <keyword>external</keyword>
+      <keyword>forall</keyword>
+      <keyword>function</keyword>
+      <keyword>go to</keyword>
+      <keyword>goto</keyword>
+      <keyword>if</keyword>
+      <keyword>implicit none</keyword>
+      <keyword>in</keyword>
+      <keyword>include</keyword>
+      <keyword>inout</keyword>
+      <keyword>interface</keyword>
+      <keyword>intrinsic</keyword>
+      <keyword>kind</keyword>
+      <keyword>len</keyword>
+      <keyword>module</keyword>
+      <keyword>namelist</keyword>
+      <keyword>nullify</keyword>
+      <keyword>only</keyword>
+      <keyword>operator</keyword>
+      <keyword>out</keyword>
+      <keyword>pause</keyword>
+      <keyword>private</keyword>
+      <keyword>program</keyword>
+      <keyword>public</keyword>
+      <keyword>pure</keyword>
+      <keyword>recursive</keyword>
+      <keyword>result</keyword>
+      <keyword>return</keyword>
+      <keyword>save</keyword>
+      <keyword>select</keyword>
+      <keyword>stop</keyword>
+      <keyword>subroutine</keyword>
+      <keyword>then</keyword>
+      <keyword>type</keyword>
+      <keyword>use</keyword>
+      <keyword>where</keyword>
+      <keyword>while</keyword>
+    </context>
+
+    <context id="read-write" style-ref="keyword">
+      <keyword>backspace</keyword>
+      <keyword>close</keyword>
+      <keyword>endfile</keyword>
+      <keyword>format</keyword>
+      <keyword>inquire</keyword>
+      <keyword>open</keyword>
+      <keyword>print</keyword>
+      <keyword>read</keyword>
+      <keyword>rewind</keyword>
+      <keyword>write</keyword>
+    </context>
+
+    <context id="input-output" style-ref="keyword">
+      <keyword>access</keyword>
+      <keyword>action</keyword>
+      <keyword>advance</keyword>
+      <keyword>blank</keyword>
+      <keyword>delim</keyword>
+      <keyword>direct</keyword>
+      <keyword>end</keyword>
+      <keyword>eor</keyword>
+      <keyword>err</keyword>
+      <keyword>exist</keyword>
+      <keyword>file</keyword>
+      <keyword>fmt</keyword>
+      <keyword>form</keyword>
+      <keyword>formatted</keyword>
+      <keyword>iolength</keyword>
+      <keyword>iostat</keyword>
+      <keyword>name</keyword>
+      <keyword>named</keyword>
+      <keyword>nextrec</keyword>
+      <keyword>nml</keyword>
+      <keyword>number</keyword>
+      <keyword>opened</keyword>
+      <keyword>pad</keyword>
+      <keyword>position</keyword>
+      <keyword>readwrite</keyword>
+      <keyword>rec</keyword>
+      <keyword>recl</keyword>
+      <keyword>sequential</keyword>
+      <keyword>size</keyword>
+      <keyword>status</keyword>
+      <keyword>unformatted</keyword>
+      <keyword>unit</keyword>
+      <keyword>write</keyword>
+    </context>
+
+    <context id="intrinsics" style-ref="intrinsic">
+      <keyword>abs</keyword>
+      <keyword>achar</keyword>
+      <keyword>acos</keyword>
+      <keyword>adjustl</keyword>
+      <keyword>adjustr</keyword>
+      <keyword>aimag</keyword>
+      <keyword>aint</keyword>
+      <keyword>algama</keyword>
+      <keyword>allocated</keyword>
+      <keyword>all</keyword>
+      <keyword>alog10</keyword>
+      <keyword>alog</keyword>
+      <keyword>amax0</keyword>
+      <keyword>amax1</keyword>
+      <keyword>amin0</keyword>
+      <keyword>amin1</keyword>
+      <keyword>amod</keyword>
+      <keyword>anint</keyword>
+      <keyword>any</keyword>
+      <keyword>asin</keyword>
+      <keyword>associated</keyword>
+      <keyword>atan2</keyword>
+      <keyword>atan</keyword>
+      <keyword>bit_size</keyword>
+      <keyword>btest</keyword>
+      <keyword>c_associated</keyword>
+      <keyword>c_loc</keyword>
+      <keyword>c_funloc</keyword>
+      <keyword>c_f_pointer</keyword>
+      <keyword>c_f_procpointer</keyword>
+      <keyword>cabs</keyword>
+      <keyword>ccos</keyword>
+      <keyword>cdabs</keyword>
+      <keyword>cdcos</keyword>
+      <keyword>cdexp</keyword>
+      <keyword>cdlog</keyword>
+      <keyword>cdsin</keyword>
+      <keyword>cdsqrt</keyword>
+      <keyword>ceiling</keyword>
+      <keyword>cexp</keyword>
+      <keyword>char</keyword>
+      <keyword>clog</keyword>
+      <keyword>cmplx</keyword>
+      <keyword>command_argument_count</keyword>
+      <keyword>conjg</keyword>
+      <keyword>cosh</keyword>
+      <keyword>cos</keyword>
+      <keyword>count</keyword>
+      <keyword>cpu_time</keyword>
+      <keyword>cqabs</keyword>
+      <keyword>cqcos</keyword>
+      <keyword>cqexp</keyword>
+      <keyword>cqlog</keyword>
+      <keyword>cqsin</keyword>
+      <keyword>cqsqrt</keyword>
+      <keyword>cshift</keyword>
+      <keyword>csin</keyword>
+      <keyword>csqrt</keyword>
+      <keyword>dabs</keyword>
+      <keyword>dacos</keyword>
+      <keyword>dasin</keyword>
+      <keyword>datan2</keyword>
+      <keyword>datan</keyword>
+      <keyword>date_and_time</keyword>
+      <keyword>dble</keyword>
+      <keyword>dcmplx</keyword>
+      <keyword>dconjg</keyword>
+      <keyword>dcosh</keyword>
+      <keyword>dcos</keyword>
+      <keyword>ddim</keyword>
+      <keyword>derf</keyword>
+      <keyword>derfc</keyword>
+      <keyword>dexp</keyword>
+      <keyword>dfloat</keyword>
+      <keyword>dgamma</keyword>
+      <keyword>digits</keyword>
+      <keyword>dim</keyword>
+      <keyword>dimag</keyword>
+      <keyword>dint</keyword>
+      <keyword>dlgama</keyword>
+      <keyword>dlog10</keyword>
+      <keyword>dlog</keyword>
+      <keyword>dmax1</keyword>
+      <keyword>dmin1</keyword>
+      <keyword>dmod</keyword>
+      <keyword>dnint</keyword>
+      <keyword>dot_product</keyword>
+      <keyword>dprod</keyword>
+      <keyword>dsign</keyword>
+      <keyword>dsinh</keyword>
+      <keyword>dsin</keyword>
+      <keyword>dsqrt</keyword>
+      <keyword>dtanh</keyword>
+      <keyword>dtan</keyword>
+      <keyword>eoshift</keyword>
+      <keyword>epsilon</keyword>
+      <keyword>erfc</keyword>
+      <keyword>erf</keyword>
+      <keyword>exp</keyword>
+      <keyword>exponent</keyword>
+      <keyword>float</keyword>
+      <keyword>floor</keyword>
+      <keyword>fraction</keyword>
+      <keyword>gamma</keyword>
+      <keyword>getarg</keyword>
+      <keyword>get_command</keyword>
+      <keyword>get_command_argument</keyword>
+      <keyword>get_environment_variable</keyword>
+      <keyword>huge</keyword>
+      <keyword>iabs</keyword>
+      <keyword>iachar</keyword>
+      <keyword>iand</keyword>
+      <keyword>iargc</keyword>
+      <keyword>ibclr</keyword>
+      <keyword>ibits</keyword>
+      <keyword>ibset</keyword>
+      <keyword>ichar</keyword>
+      <keyword>idim</keyword>
+      <keyword>idint</keyword>
+      <keyword>idnint</keyword>
+      <keyword>ieor</keyword>
+      <keyword>ifix</keyword>
+      <keyword>index</keyword>
+      <keyword>int</keyword>
+      <keyword>ior</keyword>
+      <keyword>iqint</keyword>
+      <keyword>is_iostat_end</keyword>
+      <keyword>is_iostat_eor</keyword>
+      <keyword>ishftc</keyword>
+      <keyword>ishft</keyword>
+      <keyword>isign</keyword>
+      <keyword>kind</keyword>
+      <keyword>lbound</keyword>
+      <keyword>len_trim</keyword>
+      <keyword>len</keyword>
+      <keyword>lge</keyword>
+      <keyword>lgt</keyword>
+      <keyword>lle</keyword>
+      <keyword>llt</keyword>
+      <keyword>loc</keyword>
+      <keyword>log10</keyword>
+      <keyword>log</keyword>
+      <keyword>logical</keyword>
+      <keyword>matmul</keyword>
+      <keyword>max0</keyword>
+      <keyword>max1</keyword>
+      <keyword>maxexponent</keyword>
+      <keyword>maxloc</keyword>
+      <keyword>maxval</keyword>
+      <keyword>max</keyword>
+      <keyword>merge</keyword>
+      <keyword>min0</keyword>
+      <keyword>min1</keyword>
+      <keyword>minexponent</keyword>
+      <keyword>minloc</keyword>
+      <keyword>minval</keyword>
+      <keyword>min</keyword>
+      <keyword>mod</keyword>
+      <keyword>modulo</keyword>
+      <keyword>move_alloc</keyword>
+      <keyword>mvbits</keyword>
+      <keyword>nearest</keyword>
+      <keyword>new_line</keyword>
+      <keyword>nint</keyword>
+      <keyword>not</keyword>
+      <keyword>null</keyword>
+      <keyword>or</keyword>
+      <keyword>pack</keyword>
+      <keyword>precision</keyword>
+      <keyword>present</keyword>
+      <keyword>product</keyword>
+      <keyword>qabs</keyword>
+      <keyword>qacos</keyword>
+      <keyword>qasin</keyword>
+      <keyword>qatan2</keyword>
+      <keyword>qatan</keyword>
+      <keyword>qcmplx</keyword>
+      <keyword>qconjg</keyword>
+      <keyword>qcosh</keyword>
+      <keyword>qcos</keyword>
+      <keyword>qdim</keyword>
+      <keyword>qerf</keyword>
+      <keyword>qerfc</keyword>
+      <keyword>qexp</keyword>
+      <keyword>qgamma</keyword>
+      <keyword>qimag</keyword>
+      <keyword>qlgama</keyword>
+      <keyword>qlog10</keyword>
+      <keyword>qlog</keyword>
+      <keyword>qmax1</keyword>
+      <keyword>qmin1</keyword>
+      <keyword>qmod</keyword>
+      <keyword>qnint</keyword>
+      <keyword>qsign</keyword>
+      <keyword>qsinh</keyword>
+      <keyword>qsin</keyword>
+      <keyword>qsqrt</keyword>
+      <keyword>qtanh</keyword>
+      <keyword>qtan</keyword>
+      <keyword>radix</keyword>
+      <keyword>random_number</keyword>
+      <keyword>random_seed</keyword>
+      <keyword>range</keyword>
+      <keyword>real</keyword>
+      <keyword>repeat</keyword>
+      <keyword>reshape</keyword>
+      <keyword>rrspacing</keyword>
+      <keyword>scale</keyword>
+      <keyword>scan</keyword>
+      <keyword>selected_char_kind</keyword>
+      <keyword>selected_int_kind</keyword>
+      <keyword>selected_real_kind</keyword>
+      <keyword>set_exponent</keyword>
+      <keyword>shape</keyword>
+      <keyword>sign</keyword>
+      <keyword>sinh</keyword>
+      <keyword>sin</keyword>
+      <keyword>size</keyword>
+      <keyword>sngl</keyword>
+      <keyword>spacing</keyword>
+      <keyword>spread</keyword>
+      <keyword>sqrt</keyword>
+      <keyword>sum</keyword>
+      <keyword>system_clock</keyword>
+      <keyword>tanh</keyword>
+      <keyword>tan</keyword>
+      <keyword>tiny</keyword>
+      <keyword>transfer</keyword>
+      <keyword>transpose</keyword>
+      <keyword>trim</keyword>
+      <keyword>ubound</keyword>
+      <keyword>unpack</keyword>
+      <keyword>verify</keyword>
+      <keyword>zabs</keyword>
+      <keyword>zcos</keyword>
+      <keyword>zexp</keyword>
+      <keyword>zlog</keyword>
+      <keyword>zsin</keyword>
+      <keyword>zsqrt</keyword>
+    </context>
+
+    <context id="types" style-ref="type">
+      <keyword>byte</keyword>
+      <keyword>character</keyword>
+      <keyword>complex</keyword>
+      <keyword>double complex</keyword>
+      <keyword>double precision</keyword>
+      <keyword>integer</keyword>
+      <keyword>logical</keyword>
+      <keyword>procedure</keyword>
+      <keyword>real</keyword>
+    </context>
+
+    <context id="type-attributes" style-ref="type">
+      <keyword>allocatable</keyword>
+      <keyword>dimension</keyword>
+      <keyword>external</keyword>
+      <keyword>intent</keyword>
+      <keyword>intrinsic</keyword>
+      <keyword>optional</keyword>
+      <keyword>parameter</keyword>
+      <keyword>pointer</keyword>
+      <keyword>private</keyword>
+      <keyword>public</keyword>
+      <keyword>save</keyword>
+      <keyword>target</keyword>
+    </context>
+
+    <context id="attributes">
+      <start>,\s*\%[</start>
+      <end>\%[</end>
+      <include>
+        <context ref="type-attributes"/>
+      </include>
+    </context>
+
+    <context id="floating-point-number" style-ref="floating-point">
+      <match extended="true">
+        (?&lt;![\w\.])
+        [+-]?
+        ((\.[0-9]+ | [0-9]+\.[0-9]*) ([ed][+-]?[0-9]*)? |
+         ([0-9]+[ed][+-]?[0-9]*))
+         ([_]([0-9]+|[a-z][\w_]*))?
+        (?![\w\.])
+      </match>
+    </context>
+
+    <context id="decimal" style-ref="decimal">
+      <match extended="true">
+        (?&lt;![\w\.])
+        [+-]? ([1-9][0-9]*|0)
+        ([_]([0-9]+|[a-z][\w_]*))?
+        (?![\w\.])
+      </match>
+    </context>
+
+    <context id="boz-literal" style-ref="boz-literal">
+      <match extended="true">
+        \bb'[01]+'|\bb"[01]+"|
+        \bo'[0-7]+'|\bo"[0-7]+"|
+        \bz'[0-9a-f]+'|\bz"[0-9a-f]+"
+      </match>
+    </context>
+
+    <context id="fortran" class="no-spell-check">
+      <include>
+        <context ref="floating-point-number"/>
+        <context ref="decimal"/>
+        <context ref="boz-literal"/>
+        <context ref="def:string"/>
+        <context ref="def:single-quoted-string"/>
+        <context ref="line-comment"/>
+        <context ref="types"/>
+        <context ref="attributes"/>
+        <context ref="operators"/>
+        <context ref="keywords"/>
+        <context ref="read-write"/>
+        <context ref="input-output"/>
+        <context ref="intrinsics"/>
+      </include>
+    </context>
+
+  </definitions>
+</language>

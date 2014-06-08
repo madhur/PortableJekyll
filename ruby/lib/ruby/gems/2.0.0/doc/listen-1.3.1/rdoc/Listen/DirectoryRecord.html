@@ -1,0 +1,1411 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>class Listen::DirectoryRecord - listen-1.3.1 Documentation</title>
+
+<link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../index.html">Home</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/listen/directory_record.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">Object
+  
+</nav>
+
+    
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li ><a href="#method-c-generate_default_ignoring_patterns">::generate_default_ignoring_patterns</a>
+    
+    <li ><a href="#method-c-new">::new</a>
+    
+    <li ><a href="#method-i-build">#build</a>
+    
+    <li ><a href="#method-i-content_modified-3F">#content_modified?</a>
+    
+    <li ><a href="#method-i-detect_additions">#detect_additions</a>
+    
+    <li ><a href="#method-i-detect_modification">#detect_modification</a>
+    
+    <li ><a href="#method-i-detect_modification_or_removal_for_dir">#detect_modification_or_removal_for_dir</a>
+    
+    <li ><a href="#method-i-detect_modification_or_removal_for_file">#detect_modification_or_removal_for_file</a>
+    
+    <li ><a href="#method-i-detect_modifications_and_removals">#detect_modifications_and_removals</a>
+    
+    <li ><a href="#method-i-existing_path-3F">#existing_path?</a>
+    
+    <li ><a href="#method-i-fetch_changes">#fetch_changes</a>
+    
+    <li ><a href="#method-i-filter">#filter</a>
+    
+    <li ><a href="#method-i-filter-21">#filter!</a>
+    
+    <li ><a href="#method-i-filtered-3F">#filtered?</a>
+    
+    <li ><a href="#method-i-filtering_patterns">#filtering_patterns</a>
+    
+    <li ><a href="#method-i-ignore">#ignore</a>
+    
+    <li ><a href="#method-i-ignore-21">#ignore!</a>
+    
+    <li ><a href="#method-i-ignored-3F">#ignored?</a>
+    
+    <li ><a href="#method-i-ignoring_patterns">#ignoring_patterns</a>
+    
+    <li ><a href="#method-i-important_paths">#important_paths</a>
+    
+    <li ><a href="#method-i-insert_path">#insert_path</a>
+    
+    <li ><a href="#method-i-modification_detected">#modification_detected</a>
+    
+    <li ><a href="#method-i-mtime_of">#mtime_of</a>
+    
+    <li ><a href="#method-i-relative_to_base">#relative_to_base</a>
+    
+    <li ><a href="#method-i-removal_detected">#removal_detected</a>
+    
+    <li ><a href="#method-i-sha1_checksum">#sha1_checksum</a>
+    
+    <li ><a href="#method-i-update_sha1_checksum">#update_sha1_checksum</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../Listen.html">Listen</a>
+  
+    <li><a href="../Listen/Adapter.html">Listen::Adapter</a>
+  
+    <li><a href="../Listen/Adapters.html">Listen::Adapters</a>
+  
+    <li><a href="../Listen/Adapters/Adapter.html">Listen::Adapters::Adapter</a>
+  
+    <li><a href="../Listen/Adapters/BSD.html">Listen::Adapters::BSD</a>
+  
+    <li><a href="../Listen/Adapters/Darwin.html">Listen::Adapters::Darwin</a>
+  
+    <li><a href="../Listen/Adapters/Linux.html">Listen::Adapters::Linux</a>
+  
+    <li><a href="../Listen/Adapters/Polling.html">Listen::Adapters::Polling</a>
+  
+    <li><a href="../Listen/Adapters/Windows.html">Listen::Adapters::Windows</a>
+  
+    <li><a href="../Listen/DirectoryRecord.html">Listen::DirectoryRecord</a>
+  
+    <li><a href="../Listen/Listener.html">Listen::Listener</a>
+  
+    <li><a href="../Listen/Turnstile.html">Listen::Turnstile</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class Listen::DirectoryRecord</h1>
+
+  <div id="description" class="description">
+    
+<p>The directory record stores information about a directory and keeps track
+of changes to the structure of its childs.</p>
+
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+    <!-- Constants -->
+    <section id="constants-list" class="section">
+      <h3 class="section-header">Constants</h3>
+      <dl>
+      
+        <dt id="DEFAULT_IGNORED_DIRECTORIES">DEFAULT_IGNORED_DIRECTORIES
+        
+        <dd class="description"><p>The default list of directories that get ignored by the listener.</p>
+        
+      
+        <dt id="DEFAULT_IGNORED_EXTENSIONS">DEFAULT_IGNORED_EXTENSIONS
+        
+        <dd class="description"><p>The default list of files that get ignored by the listener.</p>
+        
+      
+        <dt id="HIGH_PRECISION_SUPPORTED">HIGH_PRECISION_SUPPORTED
+        
+        <dd class="description">
+        
+      
+        <dt id="MetaData">MetaData
+        
+        <dd class="description"><p>Data structure used to save meta data about a path</p>
+        
+      
+      </dl>
+    </section>
+    
+
+    
+    <!-- Attributes -->
+    <section id="attribute-method-details" class="method-section section">
+      <h3 class="section-header">Attributes</h3>
+
+      
+      <div id="attribute-i-directory" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">directory</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-paths" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">paths</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-sha1_checksums" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">sha1_checksums</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+    </section><!-- attribute-method-details -->
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-generate_default_ignoring_patterns" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">generate_default_ignoring_patterns</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Creates the ignoring patterns from the default ignored directories and
+extensions. It memoizes the generated patterns to avoid unnecessary
+computation.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="generate_default_ignoring_patterns-source">
+            <pre><span class="ruby-comment"># File lib/listen/directory_record.rb, line 41</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">generate_default_ignoring_patterns</span>
+  <span class="ruby-identifier">@@default_ignoring_patterns</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>.<span class="ruby-identifier">tap</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">default_patterns</span><span class="ruby-operator">|</span>
+    <span class="ruby-comment"># Add directories</span>
+    <span class="ruby-identifier">ignored_directories</span> = <span class="ruby-constant">DEFAULT_IGNORED_DIRECTORIES</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span> <span class="ruby-constant">Regexp</span>.<span class="ruby-identifier">escape</span>(<span class="ruby-identifier">d</span>) }
+    <span class="ruby-identifier">default_patterns</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">%r{^(?:#{ignored_directories.join(&#39;|&#39;)})/}</span>
+
+    <span class="ruby-comment"># Add extensions</span>
+    <span class="ruby-identifier">ignored_extensions</span> = <span class="ruby-constant">DEFAULT_IGNORED_EXTENSIONS</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-constant">Regexp</span>.<span class="ruby-identifier">escape</span>(<span class="ruby-identifier">e</span>) }
+    <span class="ruby-identifier">default_patterns</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">%r{(?:#{ignored_extensions.join(&#39;|&#39;)})$}</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- generate_default_ignoring_patterns-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- generate_default_ignoring_patterns-method -->
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">(directory)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Initializes a directory record.</p>
+
+<p>@option [String] directory the directory to keep track of</p>
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/listen/directory_record.rb, line 58</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">directory</span>)
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;The path &#39;#{directory}&#39; is not a directory!&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">directory</span>)
+
+  <span class="ruby-ivar">@directory</span>, <span class="ruby-ivar">@sha1_checksums</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-identifier">directory</span>), <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-ivar">@ignoring_patterns</span>, <span class="ruby-ivar">@filtering_patterns</span> = <span class="ruby-constant">Set</span>.<span class="ruby-identifier">new</span>, <span class="ruby-constant">Set</span>.<span class="ruby-identifier">new</span>
+
+  <span class="ruby-ivar">@ignoring_patterns</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-constant">DirectoryRecord</span>.<span class="ruby-identifier">generate_default_ignoring_patterns</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- new-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- new-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-build" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">build</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Finds the paths that should be stored and adds them to the paths&#39; hash.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="build-source">
+            <pre><span class="ruby-comment"># File lib/listen/directory_record.rb, line 157</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">build</span>
+  <span class="ruby-ivar">@paths</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">h</span>, <span class="ruby-identifier">k</span><span class="ruby-operator">|</span> <span class="ruby-identifier">h</span>[<span class="ruby-identifier">k</span>] = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span> }
+  <span class="ruby-identifier">important_paths</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">path</span><span class="ruby-operator">|</span> <span class="ruby-identifier">insert_path</span>(<span class="ruby-identifier">path</span>) }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- build-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- build-method -->
+
+    
+      <div id="method-i-fetch_changes" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">fetch_changes</span><span
+            class="method-args">(directories, options = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Detects changes in the passed directories, updates the record with the new
+changes and returns the changes.</p>
+
+<p>@param [Array] directories the list of directories to scan for changes
+@param [Hash] options @option options [Boolean] recursive scan all
+sub-directories recursively @option options [Boolean] relative_paths
+whether or not to use relative paths for changes</p>
+
+<p>@return [Hash&lt;Array&gt;] the changes</p>
+          
+          
+
+          
+          <div class="method-source-code" id="fetch_changes-source">
+            <pre><span class="ruby-comment"># File lib/listen/directory_record.rb, line 172</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">fetch_changes</span>(<span class="ruby-identifier">directories</span>, <span class="ruby-identifier">options</span> = {})
+  <span class="ruby-ivar">@changes</span>    = { <span class="ruby-value">:modified</span> =<span class="ruby-operator">&gt;</span> [], <span class="ruby-value">:added</span> =<span class="ruby-operator">&gt;</span> [], <span class="ruby-value">:removed</span> =<span class="ruby-operator">&gt;</span> [] }
+  <span class="ruby-identifier">directories</span> = <span class="ruby-identifier">directories</span>.<span class="ruby-identifier">sort_by</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">el</span><span class="ruby-operator">|</span> <span class="ruby-identifier">el</span>.<span class="ruby-identifier">length</span> }.<span class="ruby-identifier">reverse</span> <span class="ruby-comment"># diff sub-dir first</span>
+
+  <span class="ruby-identifier">directories</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">directory</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">next</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">directory</span>[<span class="ruby-ivar">@directory</span>] <span class="ruby-comment"># Path is or inside directory</span>
+
+    <span class="ruby-identifier">detect_modifications_and_removals</span>(<span class="ruby-identifier">directory</span>, <span class="ruby-identifier">options</span>)
+    <span class="ruby-identifier">detect_additions</span>(<span class="ruby-identifier">directory</span>, <span class="ruby-identifier">options</span>)
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-ivar">@changes</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- fetch_changes-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- fetch_changes-method -->
+
+    
+      <div id="method-i-filter" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">filter</span><span
+            class="method-args">(*regexps)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Adds filtering patterns to the record.</p>
+
+<p>@example Filter some files</p>
+
+<pre>filter /\.txt$/, /.*\.zip/</pre>
+
+<p>@param [Regexp] regexps a list of patterns for filtering files</p>
+          
+          
+
+          
+          <div class="method-source-code" id="filter-source">
+            <pre><span class="ruby-comment"># File lib/listen/directory_record.rb, line 114</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">filter</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">regexps</span>)
+  <span class="ruby-ivar">@filtering_patterns</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">regexps</span>).<span class="ruby-identifier">reject!</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span> <span class="ruby-identifier">r</span>.<span class="ruby-identifier">nil?</span> }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- filter-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- filter-method -->
+
+    
+      <div id="method-i-filter-21" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">filter!</span><span
+            class="method-args">(*regexps)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Replaces filtering patterns in the record.</p>
+
+<p>@example Filter only these files</p>
+
+<pre>filter! /\.txt$/, /.*\.zip/</pre>
+
+<p>@param [Regexp] regexps a list of patterns for filtering files</p>
+          
+          
+
+          
+          <div class="method-source-code" id="filter-21-source">
+            <pre><span class="ruby-comment"># File lib/listen/directory_record.rb, line 125</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">filter!</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">regexps</span>)
+  <span class="ruby-ivar">@filtering_patterns</span>.<span class="ruby-identifier">replace</span>(<span class="ruby-identifier">regexps</span>).<span class="ruby-identifier">reject!</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span> <span class="ruby-identifier">r</span>.<span class="ruby-identifier">nil?</span> }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- filter-21-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- filter-21-method -->
+
+    
+      <div id="method-i-filtered-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">filtered?</span><span
+            class="method-args">(path)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Returns whether a path should be filtered or not.</p>
+
+<p>@param [String] path the path to test</p>
+
+<p>@return [Boolean]</p>
+          
+          
+
+          
+          <div class="method-source-code" id="filtered-3F-source">
+            <pre><span class="ruby-comment"># File lib/listen/directory_record.rb, line 146</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">filtered?</span>(<span class="ruby-identifier">path</span>)
+  <span class="ruby-comment"># When no filtering patterns are set, ALL files are stored.</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@filtering_patterns</span>.<span class="ruby-identifier">empty?</span>
+
+  <span class="ruby-identifier">path</span> = <span class="ruby-identifier">relative_to_base</span>(<span class="ruby-identifier">path</span>)
+  <span class="ruby-ivar">@filtering_patterns</span>.<span class="ruby-identifier">any?</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">pattern</span><span class="ruby-operator">|</span> <span class="ruby-identifier">pattern</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">path</span> }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- filtered-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- filtered-3F-method -->
+
+    
+      <div id="method-i-filtering_patterns" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">filtering_patterns</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Returns the filtering patterns in the record to know which paths should be
+stored.</p>
+
+<p>@return [Array&lt;Regexp&gt;] the filtering patterns</p>
+          
+          
+
+          
+          <div class="method-source-code" id="filtering_patterns-source">
+            <pre><span class="ruby-comment"># File lib/listen/directory_record.rb, line 81</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">filtering_patterns</span>
+  <span class="ruby-ivar">@filtering_patterns</span>.<span class="ruby-identifier">to_a</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- filtering_patterns-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- filtering_patterns-method -->
+
+    
+      <div id="method-i-ignore" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">ignore</span><span
+            class="method-args">(*regexps)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Adds ignoring patterns to the record.</p>
+
+<p>@example Ignore some paths</p>
+
+<pre>ignore %r{^ignored/path/}, /man/</pre>
+
+<p>@param [Regexp] regexps a list of patterns for ignoring paths</p>
+          
+          
+
+          
+          <div class="method-source-code" id="ignore-source">
+            <pre><span class="ruby-comment"># File lib/listen/directory_record.rb, line 92</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">ignore</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">regexps</span>)
+  <span class="ruby-ivar">@ignoring_patterns</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">regexps</span>).<span class="ruby-identifier">reject!</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span> <span class="ruby-identifier">r</span>.<span class="ruby-identifier">nil?</span> }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- ignore-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- ignore-method -->
+
+    
+      <div id="method-i-ignore-21" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">ignore!</span><span
+            class="method-args">(*regexps)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Replaces ignoring patterns in the record.</p>
+
+<p>@example Ignore only these paths</p>
+
+<pre>ignore! %r{^ignored/path/}, /man/</pre>
+
+<p>@param [Regexp] regexps a list of patterns for ignoring paths</p>
+          
+          
+
+          
+          <div class="method-source-code" id="ignore-21-source">
+            <pre><span class="ruby-comment"># File lib/listen/directory_record.rb, line 103</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">ignore!</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">regexps</span>)
+  <span class="ruby-ivar">@ignoring_patterns</span>.<span class="ruby-identifier">replace</span>(<span class="ruby-identifier">regexps</span>).<span class="ruby-identifier">reject!</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span> <span class="ruby-identifier">r</span>.<span class="ruby-identifier">nil?</span> }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- ignore-21-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- ignore-21-method -->
+
+    
+      <div id="method-i-ignored-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">ignored?</span><span
+            class="method-args">(path)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Returns whether a path should be ignored or not.</p>
+
+<p>@param [String] path the path to test</p>
+
+<p>@return [Boolean]</p>
+          
+          
+
+          
+          <div class="method-source-code" id="ignored-3F-source">
+            <pre><span class="ruby-comment"># File lib/listen/directory_record.rb, line 135</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">ignored?</span>(<span class="ruby-identifier">path</span>)
+  <span class="ruby-identifier">path</span> = <span class="ruby-identifier">relative_to_base</span>(<span class="ruby-identifier">path</span>)
+  <span class="ruby-ivar">@ignoring_patterns</span>.<span class="ruby-identifier">any?</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">pattern</span><span class="ruby-operator">|</span> <span class="ruby-identifier">pattern</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">path</span> }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- ignored-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- ignored-3F-method -->
+
+    
+      <div id="method-i-ignoring_patterns" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">ignoring_patterns</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Returns the ignoring patterns in the record to know which paths should be
+ignored.</p>
+
+<p>@return [Array&lt;Regexp&gt;] the ignoring patterns</p>
+          
+          
+
+          
+          <div class="method-source-code" id="ignoring_patterns-source">
+            <pre><span class="ruby-comment"># File lib/listen/directory_record.rb, line 72</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">ignoring_patterns</span>
+  <span class="ruby-ivar">@ignoring_patterns</span>.<span class="ruby-identifier">to_a</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- ignoring_patterns-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- ignoring_patterns-method -->
+
+    
+      <div id="method-i-relative_to_base" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">relative_to_base</span><span
+            class="method-args">(path)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Converts an absolute path to a path that&#39;s relative to the base
+directory.</p>
+
+<p>@param [String] path the path to convert</p>
+
+<p>@return [String] the relative path</p>
+          
+          
+
+          
+          <div class="method-source-code" id="relative_to_base-source">
+            <pre><span class="ruby-comment"># File lib/listen/directory_record.rb, line 192</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">relative_to_base</span>(<span class="ruby-identifier">path</span>)
+  <span class="ruby-identifier">path</span> = <span class="ruby-identifier">path</span>.<span class="ruby-identifier">dup</span>
+  <span class="ruby-identifier">regexp</span> = <span class="ruby-node">&quot;\\A#{Regexp.quote directory}(#{File::SEPARATOR}|\\z)&quot;</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">path</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:force_encoding</span>)
+    <span class="ruby-identifier">path</span>.<span class="ruby-identifier">force_encoding</span>(<span class="ruby-string">&quot;BINARY&quot;</span>)
+    <span class="ruby-identifier">regexp</span>.<span class="ruby-identifier">force_encoding</span>(<span class="ruby-string">&quot;BINARY&quot;</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">path</span>.<span class="ruby-identifier">sub!</span>(<span class="ruby-constant">Regexp</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">regexp</span>), <span class="ruby-string">&#39;&#39;</span>)
+    <span class="ruby-identifier">path</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- relative_to_base-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- relative_to_base-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+     <section id="private-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Private Instance Methods</h3>
+
+    
+      <div id="method-i-content_modified-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">content_modified?</span><span
+            class="method-args">(path)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Returns whether or not a file&#39;s content has been modified by comparing
+the SHA1-checksum to a stored one. Ensure that the SHA1-checksum is
+inserted to the <a
+href="DirectoryRecord.html#attribute-i-sha1_checksums">#sha1_checksums</a>
+array for later comparaison if false.</p>
+
+<p>@param [String] path the file path</p>
+          
+          
+
+          
+          <div class="method-source-code" id="content_modified-3F-source">
+            <pre><span class="ruby-comment"># File lib/listen/directory_record.rb, line 319</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">content_modified?</span>(<span class="ruby-identifier">path</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span> <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">ftype</span>(<span class="ruby-identifier">path</span>) <span class="ruby-operator">==</span> <span class="ruby-string">&#39;file&#39;</span>
+  <span class="ruby-ivar">@sha1_checksum</span> = <span class="ruby-identifier">sha1_checksum</span>(<span class="ruby-identifier">path</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">sha1_checksums</span>[<span class="ruby-identifier">path</span>] <span class="ruby-operator">==</span> <span class="ruby-ivar">@sha1_checksum</span> <span class="ruby-operator">||</span> <span class="ruby-operator">!</span><span class="ruby-identifier">sha1_checksums</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">path</span>)
+    <span class="ruby-identifier">update_sha1_checksum</span>(<span class="ruby-identifier">path</span>)
+    <span class="ruby-keyword">false</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-keyword">true</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- content_modified-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- content_modified-3F-method -->
+
+    
+      <div id="method-i-detect_additions" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">detect_additions</span><span
+            class="method-args">(directory, options = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Detects additions in a directory.</p>
+
+<p>@param [String] directory the path to analyze @param [Hash] options @option
+options [Boolean] recursive scan all sub-directories recursively @option
+options [Boolean] relative_paths whether or not to use relative paths for
+changes</p>
+          
+          
+
+          
+          <div class="method-source-code" id="detect_additions-source">
+            <pre><span class="ruby-comment"># File lib/listen/directory_record.rb, line 288</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">detect_additions</span>(<span class="ruby-identifier">directory</span>, <span class="ruby-identifier">options</span> = {})
+  <span class="ruby-comment"># Don&#39;t process removed directories</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">directory</span>)
+
+  <span class="ruby-constant">Find</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">directory</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">path</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">path</span> <span class="ruby-operator">==</span> <span class="ruby-ivar">@directory</span>
+
+    <span class="ruby-keyword">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">path</span>)
+      <span class="ruby-comment"># Add a trailing slash to directories when checking if a directory is</span>
+      <span class="ruby-comment"># ignored to optimize finding them as Find.find doesn&#39;t.</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">ignored?</span>(<span class="ruby-identifier">path</span> <span class="ruby-operator">+</span> <span class="ruby-constant">File</span><span class="ruby-operator">::</span><span class="ruby-constant">SEPARATOR</span>) <span class="ruby-operator">||</span> (<span class="ruby-identifier">directory</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">path</span> <span class="ruby-operator">&amp;&amp;</span> (<span class="ruby-operator">!</span><span class="ruby-identifier">options</span>[<span class="ruby-value">:recursive</span>] <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">existing_path?</span>(<span class="ruby-identifier">path</span>)))
+        <span class="ruby-constant">Find</span>.<span class="ruby-identifier">prune</span> <span class="ruby-comment"># Don&#39;t look any further into this directory.</span>
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-identifier">insert_path</span>(<span class="ruby-identifier">path</span>)
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">elsif</span> <span class="ruby-operator">!</span><span class="ruby-identifier">ignored?</span>(<span class="ruby-identifier">path</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">filtered?</span>(<span class="ruby-identifier">path</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">existing_path?</span>(<span class="ruby-identifier">path</span>)
+      <span class="ruby-keyword">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">file?</span>(<span class="ruby-identifier">path</span>)
+        <span class="ruby-ivar">@changes</span>[<span class="ruby-value">:added</span>] <span class="ruby-operator">&lt;&lt;</span> (<span class="ruby-identifier">options</span>[<span class="ruby-value">:relative_paths</span>] <span class="ruby-operator">?</span> <span class="ruby-identifier">relative_to_base</span>(<span class="ruby-identifier">path</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">path</span>)
+        <span class="ruby-identifier">insert_path</span>(<span class="ruby-identifier">path</span>)
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- detect_additions-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- detect_additions-method -->
+
+    
+      <div id="method-i-detect_modification" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">detect_modification</span><span
+            class="method-args">(path, meta_data, options)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="detect_modification-source">
+            <pre><span class="ruby-comment"># File lib/listen/directory_record.rb, line 254</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">detect_modification</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">meta_data</span>, <span class="ruby-identifier">options</span>)
+  <span class="ruby-identifier">new_mtime</span> = <span class="ruby-identifier">mtime_of</span>(<span class="ruby-identifier">path</span>)
+
+  <span class="ruby-comment"># First check if we are in the same second (to update checksums)</span>
+  <span class="ruby-comment"># before checking the time difference</span>
+  <span class="ruby-keyword">if</span> (<span class="ruby-identifier">meta_data</span>.<span class="ruby-identifier">mtime</span>.<span class="ruby-identifier">to_i</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">new_mtime</span>.<span class="ruby-identifier">to_i</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">content_modified?</span>(<span class="ruby-identifier">path</span>)) <span class="ruby-operator">||</span> <span class="ruby-identifier">meta_data</span>.<span class="ruby-identifier">mtime</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">new_mtime</span>
+    <span class="ruby-identifier">modification_detected</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">meta_data</span>, <span class="ruby-identifier">new_mtime</span>, <span class="ruby-identifier">options</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- detect_modification-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- detect_modification-method -->
+
+    
+      <div id="method-i-detect_modification_or_removal_for_dir" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">detect_modification_or_removal_for_dir</span><span
+            class="method-args">(path, options)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="detect_modification_or_removal_for_dir-source">
+            <pre><span class="ruby-comment"># File lib/listen/directory_record.rb, line 229</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">detect_modification_or_removal_for_dir</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">options</span>)
+
+  <span class="ruby-comment"># Directory still exists</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">path</span>)
+    <span class="ruby-identifier">detect_modifications_and_removals</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">options</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:recursive</span>]
+
+  <span class="ruby-comment"># Directory has been removed</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">detect_modifications_and_removals</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">options</span>)
+    <span class="ruby-ivar">@paths</span>[<span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">path</span>)].<span class="ruby-identifier">delete</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">path</span>))
+    <span class="ruby-ivar">@paths</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-node">&quot;#{File.dirname(path)}/#{File.basename(path)}&quot;</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- detect_modification_or_removal_for_dir-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- detect_modification_or_removal_for_dir-method -->
+
+    
+      <div id="method-i-detect_modification_or_removal_for_file" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">detect_modification_or_removal_for_file</span><span
+            class="method-args">(path, meta_data, options)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="detect_modification_or_removal_for_file-source">
+            <pre><span class="ruby-comment"># File lib/listen/directory_record.rb, line 243</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">detect_modification_or_removal_for_file</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">meta_data</span>, <span class="ruby-identifier">options</span>)
+  <span class="ruby-comment"># File still exists</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">path</span>)
+    <span class="ruby-identifier">detect_modification</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">meta_data</span>, <span class="ruby-identifier">options</span>)
+
+  <span class="ruby-comment"># File has been removed</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">removal_detected</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">meta_data</span>, <span class="ruby-identifier">options</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- detect_modification_or_removal_for_file-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- detect_modification_or_removal_for_file-method -->
+
+    
+      <div id="method-i-detect_modifications_and_removals" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">detect_modifications_and_removals</span><span
+            class="method-args">(directory, options = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Detects modifications and removals recursively in a directory.</p>
+
+<p>@note Modifications detection begins by checking the modification time
+(mtime)</p>
+
+<pre>of files and then by checking content changes (using SHA1-checksum)
+when the mtime of files is not changed.</pre>
+
+<p>@param [String] directory the path to analyze @param [Hash] options @option
+options [Boolean] recursive scan all sub-directories recursively @option
+options [Boolean] relative_paths whether or not to use relative paths for
+changes</p>
+          
+          
+
+          
+          <div class="method-source-code" id="detect_modifications_and_removals-source">
+            <pre><span class="ruby-comment"># File lib/listen/directory_record.rb, line 217</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">detect_modifications_and_removals</span>(<span class="ruby-identifier">directory</span>, <span class="ruby-identifier">options</span> = {})
+  <span class="ruby-identifier">paths</span>[<span class="ruby-identifier">directory</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">basename</span>, <span class="ruby-identifier">meta_data</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">path</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">directory</span>, <span class="ruby-identifier">basename</span>)
+    <span class="ruby-keyword">case</span> <span class="ruby-identifier">meta_data</span>.<span class="ruby-identifier">type</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;Dir&#39;</span>
+      <span class="ruby-identifier">detect_modification_or_removal_for_dir</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">options</span>)
+    <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;File&#39;</span>
+      <span class="ruby-identifier">detect_modification_or_removal_for_file</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">meta_data</span>, <span class="ruby-identifier">options</span>)
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- detect_modifications_and_removals-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- detect_modifications_and_removals-method -->
+
+    
+      <div id="method-i-existing_path-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">existing_path?</span><span
+            class="method-args">(path)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Returns whether or not a path exists in the paths hash.</p>
+
+<p>@param [String] path the path to check</p>
+
+<p>@return [Boolean]</p>
+          
+          
+
+          
+          <div class="method-source-code" id="existing_path-3F-source">
+            <pre><span class="ruby-comment"># File lib/listen/directory_record.rb, line 392</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">existing_path?</span>(<span class="ruby-identifier">path</span>)
+  <span class="ruby-identifier">paths</span>[<span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">path</span>)][<span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">path</span>)] <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- existing_path-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- existing_path-3F-method -->
+
+    
+      <div id="method-i-important_paths" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">important_paths</span><span
+            class="method-args">() { |path| ... }</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Traverses the base directory looking for paths that should be stored; thus
+paths that are filtered or not ignored.</p>
+
+<p>@yield [path] an important path</p>
+          
+          
+
+          
+          <div class="method-source-code" id="important_paths-source">
+            <pre><span class="ruby-comment"># File lib/listen/directory_record.rb, line 356</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">important_paths</span>
+  <span class="ruby-constant">Find</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">directory</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">path</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">path</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">directory</span>
+
+    <span class="ruby-keyword">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">path</span>)
+      <span class="ruby-comment"># Add a trailing slash to directories when checking if a directory is</span>
+      <span class="ruby-comment"># ignored to optimize finding them as Find.find doesn&#39;t.</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">ignored?</span>(<span class="ruby-identifier">path</span> <span class="ruby-operator">+</span> <span class="ruby-constant">File</span><span class="ruby-operator">::</span><span class="ruby-constant">SEPARATOR</span>)
+        <span class="ruby-constant">Find</span>.<span class="ruby-identifier">prune</span> <span class="ruby-comment"># Don&#39;t look any further into this directory.</span>
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-keyword">yield</span>(<span class="ruby-identifier">path</span>)
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">elsif</span> <span class="ruby-operator">!</span><span class="ruby-identifier">ignored?</span>(<span class="ruby-identifier">path</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">filtered?</span>(<span class="ruby-identifier">path</span>)
+      <span class="ruby-keyword">yield</span>(<span class="ruby-identifier">path</span>)
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- important_paths-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- important_paths-method -->
+
+    
+      <div id="method-i-insert_path" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">insert_path</span><span
+            class="method-args">(path)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Inserts a path with its type (Dir or File) in paths hash.</p>
+
+<p>@param [String] path the path to insert in @paths.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="insert_path-source">
+            <pre><span class="ruby-comment"># File lib/listen/directory_record.rb, line 378</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">insert_path</span>(<span class="ruby-identifier">path</span>)
+  <span class="ruby-identifier">meta_data</span> = <span class="ruby-constant">MetaData</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-identifier">meta_data</span>.<span class="ruby-identifier">type</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">path</span>) <span class="ruby-operator">?</span> <span class="ruby-string">&#39;Dir&#39;</span> <span class="ruby-operator">:</span> <span class="ruby-string">&#39;File&#39;</span>
+  <span class="ruby-identifier">meta_data</span>.<span class="ruby-identifier">mtime</span> = <span class="ruby-identifier">mtime_of</span>(<span class="ruby-identifier">path</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">meta_data</span>.<span class="ruby-identifier">type</span> <span class="ruby-operator">==</span> <span class="ruby-string">&#39;Dir&#39;</span> <span class="ruby-comment"># mtimes of dirs are not used yet</span>
+  <span class="ruby-ivar">@paths</span>[<span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">path</span>)][<span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">path</span>)] = <span class="ruby-identifier">meta_data</span>
+<span class="ruby-keyword">rescue</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">ENOENT</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- insert_path-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- insert_path-method -->
+
+    
+      <div id="method-i-modification_detected" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">modification_detected</span><span
+            class="method-args">(path, meta_data, new_mtime, options)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="modification_detected-source">
+            <pre><span class="ruby-comment"># File lib/listen/directory_record.rb, line 264</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">modification_detected</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">meta_data</span>, <span class="ruby-identifier">new_mtime</span>, <span class="ruby-identifier">options</span>)
+  <span class="ruby-comment"># Update the sha1 checksum of the file</span>
+  <span class="ruby-identifier">update_sha1_checksum</span>(<span class="ruby-identifier">path</span>)
+
+  <span class="ruby-comment"># Update the meta data of the file</span>
+  <span class="ruby-identifier">meta_data</span>.<span class="ruby-identifier">mtime</span> = <span class="ruby-identifier">new_mtime</span>
+  <span class="ruby-ivar">@paths</span>[<span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">path</span>)][<span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">path</span>)] = <span class="ruby-identifier">meta_data</span>
+
+  <span class="ruby-ivar">@changes</span>[<span class="ruby-value">:modified</span>] <span class="ruby-operator">&lt;&lt;</span> (<span class="ruby-identifier">options</span>[<span class="ruby-value">:relative_paths</span>] <span class="ruby-operator">?</span> <span class="ruby-identifier">relative_to_base</span>(<span class="ruby-identifier">path</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">path</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- modification_detected-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- modification_detected-method -->
+
+    
+      <div id="method-i-mtime_of" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">mtime_of</span><span
+            class="method-args">(file)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Returns the modification time of a file based on the precision defined by
+the system</p>
+
+<p>@param [String] file the file for which the mtime must be returned</p>
+
+<p>@return [Fixnum, Float] the mtime of the file</p>
+          
+          
+
+          
+          <div class="method-source-code" id="mtime_of-source">
+            <pre><span class="ruby-comment"># File lib/listen/directory_record.rb, line 402</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">mtime_of</span>(<span class="ruby-identifier">file</span>)
+  <span class="ruby-constant">File</span>.<span class="ruby-identifier">lstat</span>(<span class="ruby-identifier">file</span>).<span class="ruby-identifier">mtime</span>.<span class="ruby-identifier">send</span>(<span class="ruby-constant">HIGH_PRECISION_SUPPORTED</span> <span class="ruby-operator">?</span> <span class="ruby-value">:to_f</span> <span class="ruby-operator">:</span> <span class="ruby-value">:to_i</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- mtime_of-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- mtime_of-method -->
+
+    
+      <div id="method-i-removal_detected" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">removal_detected</span><span
+            class="method-args">(path, meta_data, options)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="removal_detected-source">
+            <pre><span class="ruby-comment"># File lib/listen/directory_record.rb, line 275</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">removal_detected</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">meta_data</span>, <span class="ruby-identifier">options</span>)
+  <span class="ruby-ivar">@paths</span>[<span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">path</span>)].<span class="ruby-identifier">delete</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">path</span>))
+  <span class="ruby-ivar">@sha1_checksums</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">path</span>)
+  <span class="ruby-ivar">@changes</span>[<span class="ruby-value">:removed</span>] <span class="ruby-operator">&lt;&lt;</span> (<span class="ruby-identifier">options</span>[<span class="ruby-value">:relative_paths</span>] <span class="ruby-operator">?</span> <span class="ruby-identifier">relative_to_base</span>(<span class="ruby-identifier">path</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">path</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- removal_detected-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- removal_detected-method -->
+
+    
+      <div id="method-i-sha1_checksum" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">sha1_checksum</span><span
+            class="method-args">(path)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Returns the SHA1-checksum for the file path.</p>
+
+<p>@param [String] path the file path</p>
+          
+          
+
+          
+          <div class="method-source-code" id="sha1_checksum-source">
+            <pre><span class="ruby-comment"># File lib/listen/directory_record.rb, line 345</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">sha1_checksum</span>(<span class="ruby-identifier">path</span>)
+  <span class="ruby-constant">Digest</span><span class="ruby-operator">::</span><span class="ruby-constant">SHA1</span>.<span class="ruby-identifier">file</span>(<span class="ruby-identifier">path</span>).<span class="ruby-identifier">to_s</span>
+<span class="ruby-keyword">rescue</span>
+  <span class="ruby-keyword">nil</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- sha1_checksum-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- sha1_checksum-method -->
+
+    
+      <div id="method-i-update_sha1_checksum" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">update_sha1_checksum</span><span
+            class="method-args">(path)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Inserts a SHA1-checksum path in @SHA1-checksums hash.</p>
+
+<p>@param [String] path the SHA1-checksum path to insert in @sha1_checksums.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="update_sha1_checksum-source">
+            <pre><span class="ruby-comment"># File lib/listen/directory_record.rb, line 334</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">update_sha1_checksum</span>(<span class="ruby-identifier">path</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@sha1_checksum</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">sha1_checksum</span>(<span class="ruby-identifier">path</span>)
+    <span class="ruby-ivar">@sha1_checksums</span>[<span class="ruby-identifier">path</span>] = <span class="ruby-ivar">@sha1_checksum</span>
+    <span class="ruby-ivar">@sha1_checksum</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- update_sha1_checksum-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- update_sha1_checksum-method -->
+
+    
+    </section><!-- private-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

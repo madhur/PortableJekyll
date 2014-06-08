@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Migrating from GtkFileSelection to GtkFileChooser</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="GTK+ 2 Reference Manual">
+<link rel="up" href="migrating.html" title="Part IV. Migrating from Previous Versions of GTK+">
+<link rel="prev" href="gtk-changes-2-0.html" title="Changes from 1.2 to 2.0">
+<link rel="next" href="gtkfilechooser-selection-modes.html" title="Selection Modes">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle">
+<td><a accesskey="p" href="gtk-changes-2-0.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="migrating.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GTK+ 2 Reference Manual</th>
+<td><a accesskey="n" href="gtkfilechooser-selection-modes.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="chapter">
+<div class="titlepage"><div>
+<div><h2 class="title">
+<a name="gtk-migrating-GtkFileChooser"></a>Migrating from GtkFileSelection to GtkFileChooser</h2></div>
+<div><div class="author">
+<h3 class="author">
+<span class="firstname">Federico</span> <span class="surname">Mena-Quintero</span>
+</h3>
+<div class="affiliation"><div class="address"><p><br>
+	  <code class="email">&lt;<a class="email" href="mailto:federicoximian.com">federico<em class="parameter"><code>ximian.com</code></em></a>&gt;</code><br>
+	</p></div></div>
+</div></div>
+</div></div>
+<div class="toc"><dl>
+<dt><span class="section"><a href="gtk-migrating-GtkFileChooser.html#gtkfilechooser-creating">Creating a GtkFileChooserDialog</a></span></dt>
+<dt><span class="section"><a href="gtkfilechooser-selection-modes.html">Selection Modes</a></span></dt>
+<dt><span class="section"><a href="gtkfilechooser-installing-preview.html">Installing a Preview widget</a></span></dt>
+<dt><span class="section"><a href="gtkfilechooser-installing-extra-widgets.html">Installing Extra Widgets</a></span></dt>
+<dt><span class="section"><a href="gtkfilechooser-new-features.html">New features</a></span></dt>
+</dl></div>
+<p>
+    <a class="link" href="GtkFileChooser.html" title="GtkFileChooser"><span class="type">GtkFileChooser</span></a>, starting with GTK+ 2.4, is the new set of APIs for file 
+    selection widgets and dialogs.  Previous versions of GTK+ used <a class="link" href="GtkFileSelection.html" title="GtkFileSelection"><span class="type">GtkFileSelection</span></a>, 
+    which has numerous problems.
+  </p>
+<p>
+    <a class="link" href="GtkFileChooser.html" title="GtkFileChooser"><span class="type">GtkFileChooser</span></a> is an abstract interface that can be implemented by widgets 
+    that perform file selection tasks.  Two widgets in GTK+ implement this
+    interface:  <a class="link" href="GtkFileChooserDialog.html" title="GtkFileChooserDialog"><span class="type">GtkFileChooserDialog</span></a> and <a class="link" href="GtkFileChooserWidget.html" title="GtkFileChooserWidget"><span class="type">GtkFileChooserWidget</span></a>. Most applications 
+    simply need to use <a class="link" href="GtkFileChooserDialog.html" title="GtkFileChooserDialog"><span class="type">GtkFileChooserDialog</span></a>, which is a dialog box that allows the 
+    user to select existing files for opening them, or to pick new filenames for 
+    saving documents. <a class="link" href="GtkFileChooserWidget.html" title="GtkFileChooserWidget"><span class="type">GtkFileChooserWidget</span></a> is for special applications that need to 
+    embed a file selection widget inside a larger window.  In the context of GTK+, 
+    <a class="link" href="GtkFileChooserDialog.html" title="GtkFileChooserDialog"><span class="type">GtkFileChooserDialog</span></a> is simply a <a class="link" href="GtkDialog.html" title="GtkDialog"><span class="type">GtkDialog</span></a> box with a <a class="link" href="GtkFileChooserWidget.html" title="GtkFileChooserWidget"><span class="type">GtkFileChooserWidget</span></a>.
+    inside.
+  </p>
+<div class="section">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="gtkfilechooser-creating"></a>Creating a GtkFileChooserDialog</h2></div></div></div>
+<p>
+      To create a <a class="link" href="GtkFileChooserDialog.html" title="GtkFileChooserDialog"><span class="type">GtkFileChooserDialog</span></a>, you simply call <a class="link" href="GtkFileChooserDialog.html#gtk-file-chooser-dialog-new" title="gtk_file_chooser_dialog_new ()"><code class="function">gtk_file_chooser_dialog_new()</code></a>.
+      This function is similar to <a class="link" href="GtkDialog.html#gtk-dialog-new" title="gtk_dialog_new ()"><code class="function">gtk_dialog_new()</code></a> in that it takes parameters for the
+      title of the dialog box and its transient parent, as well as its
+      buttons.  In addition, it takes in an argument that determines
+      whether the file chooser dialog will be used for opening
+      existing files or for saving to a possibly new file.
+    </p>
+<p>
+      Please see <a class="xref" href="GtkFileChooserDialog.html#gtkfilechooser-typical-usage" title="Example 45. Typical usage">Example 45, “Typical usage”</a> for
+      how to create a simple file chooser dialog and extract the
+      selected filename from it.
+    </p>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

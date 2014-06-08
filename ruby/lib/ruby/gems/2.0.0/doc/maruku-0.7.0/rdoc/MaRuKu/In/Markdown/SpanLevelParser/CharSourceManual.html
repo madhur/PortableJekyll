@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>class MaRuKu::In::Markdown::SpanLevelParser::CharSourceManual - maruku-0.7.0 Documentation</title>
+
+<link type="text/css" media="screen" href="../../../../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../../../../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../../../../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../../../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../../../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../../../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../../../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../../../js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../../../../index.html">Home</a>
+    <a href="../../../../table_of_contents.html#classes">Classes</a>
+    <a href="../../../../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/maruku/input/charsource.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link"><a href="../../../../Object.html">Object</a>
+  
+</nav>
+
+    
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li ><a href="#method-c-new">::new</a>
+    
+    <li ><a href="#method-i-consume_whitespace">#consume_whitespace</a>
+    
+    <li ><a href="#method-i-cur_char">#cur_char</a>
+    
+    <li ><a href="#method-i-cur_chars">#cur_chars</a>
+    
+    <li ><a href="#method-i-cur_chars_are">#cur_chars_are</a>
+    
+    <li ><a href="#method-i-current_remaining_buffer">#current_remaining_buffer</a>
+    
+    <li ><a href="#method-i-describe">#describe</a>
+    
+    <li ><a href="#method-i-describe_pos">#describe_pos</a>
+    
+    <li ><a href="#method-i-ignore_char">#ignore_char</a>
+    
+    <li ><a href="#method-i-ignore_chars">#ignore_chars</a>
+    
+    <li ><a href="#method-i-next_char">#next_char</a>
+    
+    <li ><a href="#method-i-next_matches">#next_matches</a>
+    
+    <li ><a href="#method-i-read_regexp">#read_regexp</a>
+    
+    <li ><a href="#method-i-shift_char">#shift_char</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../../../../MaRuKu.html">MaRuKu</a>
+  
+    <li><a href="../../../../MaRuKu/AttributeList.html">MaRuKu::AttributeList</a>
+  
+    <li><a href="../../../../MaRuKu/Errors.html">MaRuKu::Errors</a>
+  
+    <li><a href="../../../../MaRuKu/Exception.html">MaRuKu::Exception</a>
+  
+    <li><a href="../../../../MaRuKu/HTMLElement.html">MaRuKu::HTMLElement</a>
+  
+    <li><a href="../../../../MaRuKu/HTMLFragment.html">MaRuKu::HTMLFragment</a>
+  
+    <li><a href="../../../../MaRuKu/Helpers.html">MaRuKu::Helpers</a>
+  
+    <li><a href="../../../../MaRuKu/In.html">MaRuKu::In</a>
+  
+    <li><a href="../../../../MaRuKu/In.html">MaRuKu::In</a>
+  
+    <li><a href="../../../../MaRuKu/In/Markdown.html">MaRuKu::In::Markdown</a>
+  
+    <li><a href="../../../../MaRuKu/In/Markdown.html">MaRuKu::In::Markdown</a>
+  
+    <li><a href="../../../../MaRuKu/In/Markdown/BlockLevelParser.html">MaRuKu::In::Markdown::BlockLevelParser</a>
+  
+    <li><a href="../../../../MaRuKu/In/Markdown/BlockLevelParser/BlockContext.html">MaRuKu::In::Markdown::BlockLevelParser::BlockContext</a>
+  
+    <li><a href="../../../../MaRuKu/In/Markdown/BlockLevelParser/LineSource.html">MaRuKu::In::Markdown::BlockLevelParser::LineSource</a>
+  
+    <li><a href="../../../../MaRuKu/In/Markdown/SpanExtension.html">MaRuKu::In::Markdown::SpanExtension</a>
+  
+    <li><a href="../../../../MaRuKu/In/Markdown/SpanLevelParser.html">MaRuKu::In::Markdown::SpanLevelParser</a>
+  
+    <li><a href="../../../../MaRuKu/In/Markdown/SpanLevelParser/CaptureRule.html">MaRuKu::In::Markdown::SpanLevelParser::CaptureRule</a>
+  
+    <li><a href="../../../../MaRuKu/In/Markdown/SpanLevelParser/CharSourceDebug.html">MaRuKu::In::Markdown::SpanLevelParser::CharSourceDebug</a>
+  
+    <li><a href="../../../../MaRuKu/In/Markdown/SpanLevelParser/CharSourceManual.html">MaRuKu::In::Markdown::SpanLevelParser::CharSourceManual</a>
+  
+    <li><a href="../../../../MaRuKu/In/Markdown/SpanLevelParser/CharSourceStrscan.html">MaRuKu::In::Markdown::SpanLevelParser::CharSourceStrscan</a>
+  
+    <li><a href="../../../../MaRuKu/In/Markdown/SpanLevelParser/HTMLHelper.html">MaRuKu::In::Markdown::SpanLevelParser::HTMLHelper</a>
+  
+    <li><a href="../../../../MaRuKu/In/Markdown/SpanLevelParser/ReplaceRule.html">MaRuKu::In::Markdown::SpanLevelParser::ReplaceRule</a>
+  
+    <li><a href="../../../../MaRuKu/In/Markdown/SpanLevelParser/Rule.html">MaRuKu::In::Markdown::SpanLevelParser::Rule</a>
+  
+    <li><a href="../../../../MaRuKu/In/Markdown/SpanLevelParser/SpanContext.html">MaRuKu::In::Markdown::SpanLevelParser::SpanContext</a>
+  
+    <li><a href="../../../../MaRuKu/MDDocument.html">MaRuKu::MDDocument</a>
+  
+    <li><a href="../../../../MaRuKu/MDElement.html">MaRuKu::MDElement</a>
+  
+    <li><a href="../../../../MaRuKu/MDHTMLElement.html">MaRuKu::MDHTMLElement</a>
+  
+    <li><a href="../../../../MaRuKu/MDLine.html">MaRuKu::MDLine</a>
+  
+    <li><a href="../../../../MaRuKu/NokogiriHTMLFragment.html">MaRuKu::NokogiriHTMLFragment</a>
+  
+    <li><a href="../../../../MaRuKu/Out.html">MaRuKu::Out</a>
+  
+    <li><a href="../../../../MaRuKu/Out/EntityTable.html">MaRuKu::Out::EntityTable</a>
+  
+    <li><a href="../../../../MaRuKu/Out/HTML.html">MaRuKu::Out::HTML</a>
+  
+    <li><a href="../../../../MaRuKu/Out/HTML/HTMLElement.html">MaRuKu::Out::HTML::HTMLElement</a>
+  
+    <li><a href="../../../../MaRuKu/Out/Latex.html">MaRuKu::Out::Latex</a>
+  
+    <li><a href="../../../../MaRuKu/Out/Latex/MDDocumentExtensions.html">MaRuKu::Out::Latex::MDDocumentExtensions</a>
+  
+    <li><a href="../../../../MaRuKu/Out/Markdown.html">MaRuKu::Out::Markdown</a>
+  
+    <li><a href="../../../../MaRuKu/REXMLHTMLFragment.html">MaRuKu::REXMLHTMLFragment</a>
+  
+    <li><a href="../../../../MaRuKu/Section.html">MaRuKu::Section</a>
+  
+    <li><a href="../../../../MaRuKu/Strings.html">MaRuKu::Strings</a>
+  
+    <li><a href="../../../../Maruku.html">Maruku</a>
+  
+    <li><a href="../../../../Maruku.html">Maruku</a>
+  
+    <li><a href="../../../../Maruku/In/Markdown/FencedCode.html">Maruku::In::Markdown::FencedCode</a>
+  
+    <li><a href="../../../../Object.html">Object</a>
+  
+    <li><a href="../../../../String.html">String</a>
+  
+    <li><a href="../../../../Textile2Signature.html">Textile2Signature</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class MaRuKu::In::Markdown::SpanLevelParser::CharSourceManual</h1>
+
+  <div id="description" class="description">
+    
+<p>CharSource = <a href="CharSourceStrscan.html">CharSourceStrscan</a>   #
+Faster on LONG documents. But StringScanner is buggy in Rubinius CharSource
+= <a href="CharSourceDebug.html">CharSourceDebug</a></p>
+
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">(s, parent=nil)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/maruku/input/charsource.rb, line 23</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">s</span>, <span class="ruby-identifier">parent</span>=<span class="ruby-keyword">nil</span>)
+  <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Passed #{s.class}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-keyword">not</span> <span class="ruby-identifier">s</span>.<span class="ruby-identifier">kind_of?</span> <span class="ruby-constant">String</span>
+  <span class="ruby-ivar">@buffer</span> = <span class="ruby-identifier">s</span>
+  <span class="ruby-ivar">@buffer_index</span> = <span class="ruby-value">0</span>
+  <span class="ruby-ivar">@parent</span> = <span class="ruby-identifier">parent</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- new-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- new-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-consume_whitespace" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">consume_whitespace</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="consume_whitespace-source">
+            <pre><span class="ruby-comment"># File lib/maruku/input/charsource.rb, line 84</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">consume_whitespace</span>
+  <span class="ruby-keyword">while</span> <span class="ruby-identifier">c</span> = <span class="ruby-identifier">cur_char</span>
+    <span class="ruby-keyword">break</span> <span class="ruby-keyword">unless</span> (<span class="ruby-identifier">c</span> <span class="ruby-operator">==</span> <span class="ruby-string">&#39; &#39;</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">c</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;\t&quot;</span>)
+    <span class="ruby-identifier">ignore_char</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- consume_whitespace-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- consume_whitespace-method -->
+
+    
+      <div id="method-i-cur_char" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">cur_char</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Return current char as a <a href="../../../../String.html">String</a> (or
+nil).</p>
+          
+          
+
+          
+          <div class="method-source-code" id="cur_char-source">
+            <pre><span class="ruby-comment"># File lib/maruku/input/charsource.rb, line 31</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">cur_char</span>
+  <span class="ruby-identifier">cur_chars</span>(<span class="ruby-value">1</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- cur_char-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- cur_char-method -->
+
+    
+      <div id="method-i-cur_chars" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">cur_chars</span><span
+            class="method-args">(n)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Return the next n chars as a <a href="../../../../String.html">String</a>.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="cur_chars-source">
+            <pre><span class="ruby-comment"># File lib/maruku/input/charsource.rb, line 36</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">cur_chars</span>(<span class="ruby-identifier">n</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@buffer_index</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-ivar">@buffer</span>.<span class="ruby-identifier">size</span>
+  <span class="ruby-ivar">@buffer</span>[<span class="ruby-ivar">@buffer_index</span>, <span class="ruby-identifier">n</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- cur_chars-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- cur_chars-method -->
+
+    
+      <div id="method-i-cur_chars_are" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">cur_chars_are</span><span
+            class="method-args">(string)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="cur_chars_are-source">
+            <pre><span class="ruby-comment"># File lib/maruku/input/charsource.rb, line 65</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">cur_chars_are</span>(<span class="ruby-identifier">string</span>)
+  <span class="ruby-identifier">cur_chars</span>(<span class="ruby-identifier">string</span>.<span class="ruby-identifier">size</span>) <span class="ruby-operator">==</span> <span class="ruby-identifier">string</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- cur_chars_are-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- cur_chars_are-method -->
+
+    
+      <div id="method-i-current_remaining_buffer" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">current_remaining_buffer</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="current_remaining_buffer-source">
+            <pre><span class="ruby-comment"># File lib/maruku/input/charsource.rb, line 61</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">current_remaining_buffer</span>
+  <span class="ruby-ivar">@buffer</span>[<span class="ruby-ivar">@buffer_index</span>, <span class="ruby-ivar">@buffer</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">-</span> <span class="ruby-ivar">@buffer_index</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- current_remaining_buffer-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- current_remaining_buffer-method -->
+
+    
+      <div id="method-i-describe" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">describe</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="describe-source">
+            <pre><span class="ruby-comment"># File lib/maruku/input/charsource.rb, line 91</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">describe</span>
+  <span class="ruby-identifier">s</span> = <span class="ruby-identifier">describe_pos</span>(<span class="ruby-ivar">@buffer</span>, <span class="ruby-ivar">@buffer_index</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@parent</span>
+    <span class="ruby-identifier">s</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&quot;\n\n&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@parent</span>.<span class="ruby-identifier">describe</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">s</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- describe-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- describe-method -->
+
+    
+      <div id="method-i-describe_pos" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">describe_pos</span><span
+            class="method-args">(buffer, buffer_index)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="describe_pos-source">
+            <pre><span class="ruby-comment"># File lib/maruku/input/charsource.rb, line 99</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">describe_pos</span>(<span class="ruby-identifier">buffer</span>, <span class="ruby-identifier">buffer_index</span>)
+  <span class="ruby-identifier">len</span> = <span class="ruby-value">75</span>
+  <span class="ruby-identifier">num_before</span> = [<span class="ruby-identifier">len</span><span class="ruby-operator">/</span><span class="ruby-value">2</span>, <span class="ruby-identifier">buffer_index</span>].<span class="ruby-identifier">min</span>
+  <span class="ruby-identifier">num_after</span> = [<span class="ruby-identifier">len</span><span class="ruby-operator">/</span><span class="ruby-value">2</span>, <span class="ruby-identifier">buffer</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">buffer_index</span>].<span class="ruby-identifier">min</span>
+  <span class="ruby-identifier">num_before_max</span> = <span class="ruby-identifier">buffer_index</span>
+  <span class="ruby-identifier">num_after_max</span> = <span class="ruby-identifier">buffer</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">buffer_index</span>
+
+  <span class="ruby-identifier">num_before</span> = [<span class="ruby-identifier">num_before_max</span>, <span class="ruby-identifier">len</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">num_after</span>].<span class="ruby-identifier">min</span>
+  <span class="ruby-identifier">num_after</span>  = [<span class="ruby-identifier">num_after_max</span>, <span class="ruby-identifier">len</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">num_before</span>].<span class="ruby-identifier">min</span>
+
+  <span class="ruby-identifier">index_start</span> = [<span class="ruby-identifier">buffer_index</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">num_before</span>, <span class="ruby-value">0</span>].<span class="ruby-identifier">max</span>
+  <span class="ruby-identifier">index_end</span>   = [<span class="ruby-identifier">buffer_index</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">num_after</span>, <span class="ruby-identifier">buffer</span>.<span class="ruby-identifier">size</span>].<span class="ruby-identifier">min</span>
+
+  <span class="ruby-identifier">size</span> = <span class="ruby-identifier">index_end</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">index_start</span>
+
+  <span class="ruby-identifier">str</span> = <span class="ruby-identifier">buffer</span>[<span class="ruby-identifier">index_start</span>, <span class="ruby-identifier">size</span>]
+  <span class="ruby-identifier">str</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-string">&quot;\n&quot;</span>, <span class="ruby-string">&#39;N&#39;</span>)
+  <span class="ruby-identifier">str</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-string">&quot;\t&quot;</span>, <span class="ruby-string">&#39;T&#39;</span>)
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">index_end</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">buffer</span>.<span class="ruby-identifier">size</span>
+    <span class="ruby-identifier">str</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&quot;EOF&quot;</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">pre_s</span> = <span class="ruby-identifier">buffer_index</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">index_start</span>
+  <span class="ruby-identifier">pre_s</span> = [<span class="ruby-identifier">pre_s</span>, <span class="ruby-value">0</span>].<span class="ruby-identifier">max</span>
+  <span class="ruby-identifier">pre_s2</span> = [<span class="ruby-identifier">len</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">pre_s</span>, <span class="ruby-value">0</span>].<span class="ruby-identifier">max</span>
+  <span class="ruby-identifier">pre</span> = <span class="ruby-string">&quot; &quot;</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">pre_s</span>
+
+  <span class="ruby-string">&quot;-&quot;</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">len</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;\n&quot;</span> <span class="ruby-operator">+</span>
+    <span class="ruby-identifier">str</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;\n&quot;</span> <span class="ruby-operator">+</span>
+    <span class="ruby-string">&quot;-&quot;</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">pre_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;|&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;-&quot;</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">pre_s2</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;\n&quot;</span> <span class="ruby-operator">+</span>
+    <span class="ruby-identifier">pre</span> <span class="ruby-operator">+</span> <span class="ruby-node">&quot;+--- Byte #{buffer_index}\n&quot;</span><span class="ruby-operator">+</span>
+
+    <span class="ruby-node">&quot;Shown bytes [#{index_start} to #{size}] of #{buffer.size}:\n&quot;</span><span class="ruby-operator">+</span>
+    <span class="ruby-identifier">buffer</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/^/</span>, <span class="ruby-string">&quot;&gt;&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- describe_pos-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- describe_pos-method -->
+
+    
+      <div id="method-i-ignore_char" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">ignore_char</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="ignore_char-source">
+            <pre><span class="ruby-comment"># File lib/maruku/input/charsource.rb, line 53</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">ignore_char</span>
+  <span class="ruby-ivar">@buffer_index</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- ignore_char-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- ignore_char-method -->
+
+    
+      <div id="method-i-ignore_chars" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">ignore_chars</span><span
+            class="method-args">(n)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="ignore_chars-source">
+            <pre><span class="ruby-comment"># File lib/maruku/input/charsource.rb, line 57</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">ignore_chars</span>(<span class="ruby-identifier">n</span>)
+  <span class="ruby-ivar">@buffer_index</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">n</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- ignore_chars-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- ignore_chars-method -->
+
+    
+      <div id="method-i-next_char" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">next_char</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Return the char after current char as a <a
+href="../../../../String.html">String</a> (or nil).</p>
+          
+          
+
+          
+          <div class="method-source-code" id="next_char-source">
+            <pre><span class="ruby-comment"># File lib/maruku/input/charsource.rb, line 42</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">next_char</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@buffer_index</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-ivar">@buffer</span>.<span class="ruby-identifier">size</span>
+  <span class="ruby-ivar">@buffer</span>[<span class="ruby-ivar">@buffer_index</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>, <span class="ruby-value">1</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- next_char-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- next_char-method -->
+
+    
+      <div id="method-i-next_matches" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">next_matches</span><span
+            class="method-args">(r)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="next_matches-source">
+            <pre><span class="ruby-comment"># File lib/maruku/input/charsource.rb, line 69</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">next_matches</span>(<span class="ruby-identifier">r</span>)
+  <span class="ruby-identifier">r2</span> = <span class="ruby-node">/^.{#{@buffer_index}}#{r}/</span>
+  <span class="ruby-identifier">r2</span>.<span class="ruby-identifier">match</span> <span class="ruby-ivar">@buffer</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- next_matches-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- next_matches-method -->
+
+    
+      <div id="method-i-read_regexp" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">read_regexp</span><span
+            class="method-args">(r)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="read_regexp-source">
+            <pre><span class="ruby-comment"># File lib/maruku/input/charsource.rb, line 74</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">read_regexp</span>(<span class="ruby-identifier">r</span>)
+  <span class="ruby-identifier">r2</span> = <span class="ruby-node">/^#{r}/</span>
+  <span class="ruby-identifier">rest</span> = <span class="ruby-identifier">current_remaining_buffer</span>
+  <span class="ruby-identifier">m</span> = <span class="ruby-identifier">r2</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">rest</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">m</span>
+    <span class="ruby-ivar">@buffer_index</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">m</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">size</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">m</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- read_regexp-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- read_regexp-method -->
+
+    
+      <div id="method-i-shift_char" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">shift_char</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="shift_char-source">
+            <pre><span class="ruby-comment"># File lib/maruku/input/charsource.rb, line 47</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">shift_char</span>
+  <span class="ruby-identifier">c</span> = <span class="ruby-identifier">cur_char</span>
+  <span class="ruby-ivar">@buffer_index</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+  <span class="ruby-identifier">c</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- shift_char-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- shift_char-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

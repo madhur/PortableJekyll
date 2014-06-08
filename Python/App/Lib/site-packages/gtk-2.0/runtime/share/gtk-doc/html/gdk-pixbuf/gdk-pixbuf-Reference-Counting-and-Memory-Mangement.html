@@ -1,0 +1,168 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Reference Counting and Memory Mangement</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="GDK-PixBuf Reference Manual">
+<link rel="up" href="rn01.html" title="API Reference">
+<link rel="prev" href="gdk-pixbuf-The-GdkPixbuf-Structure.html" title="The GdkPixbuf Structure">
+<link rel="next" href="gdk-pixbuf-File-Loading.html" title="File Loading">
+<meta name="generator" content="GTK-Doc V1.17.1 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="gdk-pixbuf-The-GdkPixbuf-Structure.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="rn01.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GDK-PixBuf Reference Manual</th>
+<td><a accesskey="n" href="gdk-pixbuf-File-Loading.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#gdk-pixbuf-Reference-Counting-and-Memory-Mangement.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#gdk-pixbuf-Reference-Counting-and-Memory-Mangement.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry">
+<a name="gdk-pixbuf-Reference-Counting-and-Memory-Mangement"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="gdk-pixbuf-Reference-Counting-and-Memory-Mangement.top_of_page"></a>Reference Counting and Memory Mangement</span></h2>
+<p>Reference Counting and Memory Mangement — Functions for reference counting and memory management on pixbufs.</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="gdk-pixbuf-Reference-Counting-and-Memory-Mangement.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+#include &lt;gdk-pixbuf/gdk-pixbuf.h&gt;
+
+<a class="link" href="gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="returnvalue">GdkPixbuf</span></a> *         <a class="link" href="gdk-pixbuf-Reference-Counting-and-Memory-Mangement.html#gdk-pixbuf-ref" title="gdk_pixbuf_ref ()">gdk_pixbuf_ref</a>                      (<em class="parameter"><code><a class="link" href="gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="type">GdkPixbuf</span></a> *pixbuf</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="gdk-pixbuf-Reference-Counting-and-Memory-Mangement.html#gdk-pixbuf-unref" title="gdk_pixbuf_unref ()">gdk_pixbuf_unref</a>                    (<em class="parameter"><code><a class="link" href="gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="type">GdkPixbuf</span></a> *pixbuf</code></em>);
+<span class="returnvalue">void</span>                (<a class="link" href="gdk-pixbuf-Reference-Counting-and-Memory-Mangement.html#GdkPixbufDestroyNotify" title="GdkPixbufDestroyNotify ()">*GdkPixbufDestroyNotify</a>)           (<em class="parameter"><code><span class="type">guchar</span> *pixels</code></em>,
+                                                         <em class="parameter"><code><span class="type">gpointer</span> data</code></em>);
+</pre>
+</div>
+<div class="refsect1">
+<a name="gdk-pixbuf-Reference-Counting-and-Memory-Mangement.description"></a><h2>Description</h2>
+<p>
+<a class="link" href="gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="type">GdkPixbuf</span></a> structures are reference counted.  This means that an
+application can share a single pixbuf among many parts of the
+code.  When a piece of the program needs to keep a pointer to a
+pixbuf, it should add a reference to it by calling <code class="function">g_object_ref()</code>.
+When it no longer needs the pixbuf, it should subtract a reference
+by calling <code class="function">g_object_unref()</code>.  The pixbuf will be destroyed when
+its reference count drops to zero.  Newly-created <a class="link" href="gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="type">GdkPixbuf</span></a>
+structures start with a reference count of one.
+</p>
+<p>
+</p>
+<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Note</h3>
+As <a class="link" href="gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="type">GdkPixbuf</span></a> is derived from <span class="type">GObject</span> now, <a class="link" href="gdk-pixbuf-Reference-Counting-and-Memory-Mangement.html#gdk-pixbuf-ref" title="gdk_pixbuf_ref ()"><code class="function">gdk_pixbuf_ref()</code></a> and
+<a class="link" href="gdk-pixbuf-Reference-Counting-and-Memory-Mangement.html#gdk-pixbuf-unref" title="gdk_pixbuf_unref ()"><code class="function">gdk_pixbuf_unref()</code></a> are deprecated in favour of <code class="function">g_object_ref()</code>
+and <code class="function">g_object_unref()</code> resp.
+</div>
+<p>
+</p>
+<p>
+<span class="emphasis"><em>Finalizing</em></span> a pixbuf means to free its pixel
+data and to free the <a class="link" href="gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="type">GdkPixbuf</span></a> structure itself.  Most of the
+library functions that create <a class="link" href="gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="type">GdkPixbuf</span></a> structures create the
+pixel data by themselves and define the way it should be freed;
+you do not need to worry about those.  The only function that lets
+you specify how to free the pixel data is
+<a class="link" href="gdk-pixbuf-Image-Data-in-Memory.html#gdk-pixbuf-new-from-data" title="gdk_pixbuf_new_from_data ()"><code class="function">gdk_pixbuf_new_from_data()</code></a>.  Since you pass it a pre-allocated
+pixel buffer, you must also specify a way to free that data.  This
+is done with a function of type <a class="link" href="gdk-pixbuf-Reference-Counting-and-Memory-Mangement.html#GdkPixbufDestroyNotify" title="GdkPixbufDestroyNotify ()"><span class="type">GdkPixbufDestroyNotify</span></a>.  When a
+pixbuf created with <a class="link" href="gdk-pixbuf-Image-Data-in-Memory.html#gdk-pixbuf-new-from-data" title="gdk_pixbuf_new_from_data ()"><code class="function">gdk_pixbuf_new_from_data()</code></a> is finalized, your
+destroy notification function will be called, and it is its
+responsibility to free the pixel array.
+</p>
+</div>
+<div class="refsect1">
+<a name="gdk-pixbuf-Reference-Counting-and-Memory-Mangement.details"></a><h2>Details</h2>
+<div class="refsect2">
+<a name="gdk-pixbuf-ref"></a><h3>gdk_pixbuf_ref ()</h3>
+<pre class="programlisting"><a class="link" href="gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="returnvalue">GdkPixbuf</span></a> *         gdk_pixbuf_ref                      (<em class="parameter"><code><a class="link" href="gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="type">GdkPixbuf</span></a> *pixbuf</code></em>);</pre>
+<div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Warning</h3>
+<p><code class="literal">gdk_pixbuf_ref</code> has been deprecated since version 2.0 and should not be used in newly-written code. Use <code class="function">g_object_ref()</code>.</p>
+</div>
+<p>
+Adds a reference to a pixbuf.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>pixbuf</code></em> :</span></p></td>
+<td>A pixbuf.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The same as the <em class="parameter"><code>pixbuf</code></em> argument.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-pixbuf-unref"></a><h3>gdk_pixbuf_unref ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gdk_pixbuf_unref                    (<em class="parameter"><code><a class="link" href="gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="type">GdkPixbuf</span></a> *pixbuf</code></em>);</pre>
+<div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Warning</h3>
+<p><code class="literal">gdk_pixbuf_unref</code> has been deprecated since version 2.0 and should not be used in newly-written code. Use <code class="function">g_object_unref()</code>.</p>
+</div>
+<p>
+Removes a reference from a pixbuf.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>pixbuf</code></em> :</span></p></td>
+<td>A pixbuf.</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GdkPixbufDestroyNotify"></a><h3>GdkPixbufDestroyNotify ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                (*GdkPixbufDestroyNotify)           (<em class="parameter"><code><span class="type">guchar</span> *pixels</code></em>,
+                                                         <em class="parameter"><code><span class="type">gpointer</span> data</code></em>);</pre>
+<p>
+A function of this type is responsible for freeing the pixel array
+of a pixbuf.  The <a class="link" href="gdk-pixbuf-Image-Data-in-Memory.html#gdk-pixbuf-new-from-data" title="gdk_pixbuf_new_from_data ()"><code class="function">gdk_pixbuf_new_from_data()</code></a> function lets you
+pass in a pre-allocated pixel array so that a pixbuf can be
+created from it; in this case you will need to pass in a function
+of <a class="link" href="gdk-pixbuf-Reference-Counting-and-Memory-Mangement.html#GdkPixbufDestroyNotify" title="GdkPixbufDestroyNotify ()"><span class="type">GdkPixbufDestroyNotify</span></a> so that the pixel data can be freed
+when the pixbuf is finalized.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>pixels</code></em> :</span></p></td>
+<td>The pixel array of the pixbuf that is being finalized.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td>User closure data.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect1">
+<a name="gdk-pixbuf-Reference-Counting-and-Memory-Mangement.see-also"></a><h2>See Also</h2>
+<a class="link" href="gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="type">GdkPixbuf</span></a>, <a class="link" href="gdk-pixbuf-Image-Data-in-Memory.html#gdk-pixbuf-new-from-data" title="gdk_pixbuf_new_from_data ()"><code class="function">gdk_pixbuf_new_from_data()</code></a>.
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.17.1</div>
+</body>
+</html>

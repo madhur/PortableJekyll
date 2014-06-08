@@ -1,0 +1,852 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Libglade Build</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.74.3">
+<link rel="home" href="index.html" title="Libglade - Graphical Interface Description Loader API">
+<link rel="up" href="libglade-lib.html" title="Part I. Libglade Library Reference">
+<link rel="prev" href="libglade-Libglade-SAX-Parser.html" title="Libglade SAX Parser">
+<meta name="generator" content="GTK-Doc V1.12 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="libglade-notes.html" title="Libglade Programming Notes">
+<link rel="chapter" href="libglade-dtd.html" title="Glade 2.0 File Format">
+<link rel="part" href="libglade-lib.html" title="Part I. Libglade Library Reference">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="libglade-Libglade-SAX-Parser.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="libglade-lib.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Libglade - Graphical Interface Description Loader API</th>
+<td> </td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#libglade-Libglade-Build.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#libglade-Libglade-Build.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" lang="en">
+<a name="libglade-Libglade-Build"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="libglade-Libglade-Build.top_of_page"></a>Libglade Build</span></h2>
+<p>Libglade Build — Routines used by widget building routines</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="libglade-Libglade-Build.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+
+#include &lt;glade/glade.h&gt;
+#include &lt;glade/glade-build.h&gt;
+
+GtkWidget *         (<a class="link" href="libglade-Libglade-Build.html#GladeNewFunc" title="GladeNewFunc ()">*GladeNewFunc</a>)                     (<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *xml,
+                                                         GType widget_type,
+                                                         <a class="link" href="libglade-Libglade-SAX-Parser.html#GladeWidgetInfo" title="GladeWidgetInfo">GladeWidgetInfo</a> *info);
+void                (<a class="link" href="libglade-Libglade-Build.html#GladeBuildChildrenFunc" title="GladeBuildChildrenFunc ()">*GladeBuildChildrenFunc</a>)           (<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *xml,
+                                                         GtkWidget *parent,
+                                                         <a class="link" href="libglade-Libglade-SAX-Parser.html#GladeWidgetInfo" title="GladeWidgetInfo">GladeWidgetInfo</a> *info);
+GtkWidget *         (<a class="link" href="libglade-Libglade-Build.html#GladeFindInternalChildFunc" title="GladeFindInternalChildFunc ()">*GladeFindInternalChildFunc</a>)       (<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *xml,
+                                                         GtkWidget *parent,
+                                                         const gchar *childname);
+GtkWidget *         <a class="link" href="libglade-Libglade-Build.html#glade-xml-build-widget" title="glade_xml_build_widget ()">glade_xml_build_widget</a>              (<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *self,
+                                                         <a class="link" href="libglade-Libglade-SAX-Parser.html#GladeWidgetInfo" title="GladeWidgetInfo">GladeWidgetInfo</a> *info);
+void                <a class="link" href="libglade-Libglade-Build.html#glade-xml-handle-internal-child" title="glade_xml_handle_internal_child ()">glade_xml_handle_internal_child</a>     (<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *self,
+                                                         GtkWidget *parent,
+                                                         <a class="link" href="libglade-Libglade-SAX-Parser.html#GladeChildInfo" title="GladeChildInfo">GladeChildInfo</a> *child_info);
+void                <a class="link" href="libglade-Libglade-Build.html#glade-xml-set-common-params" title="glade_xml_set_common_params ()">glade_xml_set_common_params</a>         (<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *self,
+                                                         GtkWidget *widget,
+                                                         <a class="link" href="libglade-Libglade-SAX-Parser.html#GladeWidgetInfo" title="GladeWidgetInfo">GladeWidgetInfo</a> *info);
+void                <a class="link" href="libglade-Libglade-Build.html#glade-register-widget" title="glade_register_widget ()">glade_register_widget</a>               (GType type,
+                                                         <a class="link" href="libglade-Libglade-Build.html#GladeNewFunc" title="GladeNewFunc ()">GladeNewFunc</a> new_func,
+                                                         <a class="link" href="libglade-Libglade-Build.html#GladeBuildChildrenFunc" title="GladeBuildChildrenFunc ()">GladeBuildChildrenFunc</a> build_children,
+                                                         <a class="link" href="libglade-Libglade-Build.html#GladeFindInternalChildFunc" title="GladeFindInternalChildFunc ()">GladeFindInternalChildFunc</a> find_internal_child);
+
+GtkWidget *         <a class="link" href="libglade-Libglade-Build.html#glade-standard-build-widget" title="glade_standard_build_widget ()">glade_standard_build_widget</a>         (<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *xml,
+                                                         GType widget_type,
+                                                         <a class="link" href="libglade-Libglade-SAX-Parser.html#GladeWidgetInfo" title="GladeWidgetInfo">GladeWidgetInfo</a> *info);
+void                <a class="link" href="libglade-Libglade-Build.html#glade-xml-handle-widget-prop" title="glade_xml_handle_widget_prop ()">glade_xml_handle_widget_prop</a>        (<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *self,
+                                                         GtkWidget *widget,
+                                                         const gchar *prop_name,
+                                                         const gchar *value_name);
+void                <a class="link" href="libglade-Libglade-Build.html#glade-standard-build-children" title="glade_standard_build_children ()">glade_standard_build_children</a>       (<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *self,
+                                                         GtkWidget *parent,
+                                                         <a class="link" href="libglade-Libglade-SAX-Parser.html#GladeWidgetInfo" title="GladeWidgetInfo">GladeWidgetInfo</a> *info);
+void                <a class="link" href="libglade-Libglade-Build.html#glade-xml-set-packing-property" title="glade_xml_set_packing_property ()">glade_xml_set_packing_property</a>      (<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *self,
+                                                         GtkWidget *parent,
+                                                         GtkWidget *child,
+                                                         const char *name,
+                                                         const char *value);
+void                (<a class="link" href="libglade-Libglade-Build.html#GladeApplyCustomPropFunc" title="GladeApplyCustomPropFunc ()">*GladeApplyCustomPropFunc</a>)         (<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *xml,
+                                                         GtkWidget *widget,
+                                                         const gchar *propname,
+                                                         const gchar *value);
+void                <a class="link" href="libglade-Libglade-Build.html#glade-register-custom-prop" title="glade_register_custom_prop ()">glade_register_custom_prop</a>          (GType type,
+                                                         const gchar *prop_name,
+                                                         <a class="link" href="libglade-Libglade-Build.html#GladeApplyCustomPropFunc" title="GladeApplyCustomPropFunc ()">GladeApplyCustomPropFunc</a> apply_prop);
+
+gchar *             <a class="link" href="libglade-Libglade-Build.html#glade-xml-relative-file" title="glade_xml_relative_file ()">glade_xml_relative_file</a>             (<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *self,
+                                                         const gchar *filename);
+gint                <a class="link" href="libglade-Libglade-Build.html#glade-enum-from-string" title="glade_enum_from_string ()">glade_enum_from_string</a>              (GType type,
+                                                         const char *string);
+guint               <a class="link" href="libglade-Libglade-Build.html#glade-flags-from-string" title="glade_flags_from_string ()">glade_flags_from_string</a>             (GType type,
+                                                         const char *string);
+gboolean            <a class="link" href="libglade-Libglade-Build.html#glade-xml-set-value-from-string" title="glade_xml_set_value_from_string ()">glade_xml_set_value_from_string</a>     (<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *xml,
+                                                         GParamSpec *pspec,
+                                                         const gchar *string,
+                                                         GValue *value);
+
+void                <a class="link" href="libglade-Libglade-Build.html#glade-xml-set-toplevel" title="glade_xml_set_toplevel ()">glade_xml_set_toplevel</a>              (<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *xml,
+                                                         GtkWindow *window);
+GtkAccelGroup *     <a class="link" href="libglade-Libglade-Build.html#glade-xml-ensure-accel" title="glade_xml_ensure_accel ()">glade_xml_ensure_accel</a>              (<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *xml);
+
+#define             <a class="link" href="libglade-Libglade-Build.html#GLADE-MODULE-CHECK-INIT:CAPS" title="GLADE_MODULE_CHECK_INIT">GLADE_MODULE_CHECK_INIT</a>
+</pre>
+</div>
+<div class="refsect1" lang="en">
+<a name="libglade-Libglade-Build.description"></a><h2>Description</h2>
+<p>
+These functions are used by the routines that are responsible for building
+the actual widgets from the XML node data structures.
+</p>
+</div>
+<div class="refsect1" lang="en">
+<a name="libglade-Libglade-Build.details"></a><h2>Details</h2>
+<div class="refsect2" lang="en">
+<a name="GladeNewFunc"></a><h3>GladeNewFunc ()</h3>
+<pre class="programlisting">GtkWidget *         (*GladeNewFunc)                     (<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *xml,
+                                                         GType widget_type,
+                                                         <a class="link" href="libglade-Libglade-SAX-Parser.html#GladeWidgetInfo" title="GladeWidgetInfo">GladeWidgetInfo</a> *info);</pre>
+<p>
+This function signature should be used by functions that build particular
+widget types.  The function should create the new widget and set any non
+standard widget parameters (ie. don't set visibility, size, etc), as
+this is handled by glade_xml_build_widget, which calls these functions.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>xml</code></em> :</span></p></td>
+<td> The GladeXML object.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>widget_type</code></em> :</span></p></td>
+<td> the GType code of the widget.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>info</code></em> :</span></p></td>
+<td> the GladeWidgetInfo structure for this widget.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the new widget.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GladeBuildChildrenFunc"></a><h3>GladeBuildChildrenFunc ()</h3>
+<pre class="programlisting">void                (*GladeBuildChildrenFunc)           (<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *xml,
+                                                         GtkWidget *parent,
+                                                         <a class="link" href="libglade-Libglade-SAX-Parser.html#GladeWidgetInfo" title="GladeWidgetInfo">GladeWidgetInfo</a> *info);</pre>
+<p>
+This function signature should be used by functions that are responsible
+for adding children to a container widget.  To create each child widget,
+glade_xml_build_widget should be called.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>xml</code></em> :</span></p></td>
+<td> the GladeXML object.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>parent</code></em> :</span></p></td>
+<td> the parent.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>info</code></em> :</span></p></td>
+<td> the GladeWidgetInfo structure for the parent.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GladeFindInternalChildFunc"></a><h3>GladeFindInternalChildFunc ()</h3>
+<pre class="programlisting">GtkWidget *         (*GladeFindInternalChildFunc)       (<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *xml,
+                                                         GtkWidget *parent,
+                                                         const gchar *childname);</pre>
+<p>
+When some composite widgets are created, a number of children are
+added at the same time (for example, the vbox in a GtkDialog).
+These widgets are identified in the XML interface file by the
+internal-child attribute on their &amp;lt;child&amp;gt; element.
+</p>
+<p>
+When libglade encounters an internal child, rather than creating a
+new widget instance, libglade walks up the tree until it finds the
+first non internal-child parent.  It then calls the
+find_internal_child callback for that parent's class.
+</p>
+<p>
+That callback should return the internal child corresponding to the
+name passed in as the third argument.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>xml</code></em> :</span></p></td>
+<td> the GladeXML object.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>parent</code></em> :</span></p></td>
+<td> the parent widget.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>childname</code></em> :</span></p></td>
+<td> the name of the internal child
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the named internal child.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="glade-xml-build-widget"></a><h3>glade_xml_build_widget ()</h3>
+<pre class="programlisting">GtkWidget *         glade_xml_build_widget              (<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *self,
+                                                         <a class="link" href="libglade-Libglade-SAX-Parser.html#GladeWidgetInfo" title="GladeWidgetInfo">GladeWidgetInfo</a> *info);</pre>
+<p>
+This function is not intended for people who just use libglade.  Instead
+it is for people extending it (it is designed to be called in the child
+build routine defined for the parent widget).  It first checks the type
+of the widget from the class tag, then calls the corresponding widget
+creation routine.  This routine sets up all the settings specific to that
+type of widget.  Then general widget settings are performed on the widget.
+Then it sets up accelerators for the widget, and extracts any signal
+information for the widget.  Then it checks to see if there are any
+child widget nodes for this widget, and if so calls the widget's
+build routine, which will create the children with this function and add
+them to the widget in the appropriate way.  Finally it returns the widget.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
+<td> the GladeXML object.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>info</code></em> :</span></p></td>
+<td> the GladeWidgetInfo structure for the widget.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the newly created widget.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="glade-xml-handle-internal-child"></a><h3>glade_xml_handle_internal_child ()</h3>
+<pre class="programlisting">void                glade_xml_handle_internal_child     (<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *self,
+                                                         GtkWidget *parent,
+                                                         <a class="link" href="libglade-Libglade-SAX-Parser.html#GladeChildInfo" title="GladeChildInfo">GladeChildInfo</a> *child_info);</pre>
+<p>
+This function is intended to be called by the build_children
+callback for container widgets.  If the build_children callback
+encounters a child with the internal-child attribute set, then it
+should call this function to handle it and then continue on to the
+next child.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
+<td> the GladeXML object.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>parent</code></em> :</span></p></td>
+<td> the parent widget.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>child_info</code></em> :</span></p></td>
+<td> the GladeChildInfo structure for the child.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="glade-xml-set-common-params"></a><h3>glade_xml_set_common_params ()</h3>
+<pre class="programlisting">void                glade_xml_set_common_params         (<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *self,
+                                                         GtkWidget *widget,
+                                                         <a class="link" href="libglade-Libglade-SAX-Parser.html#GladeWidgetInfo" title="GladeWidgetInfo">GladeWidgetInfo</a> *info);</pre>
+<p>
+This function sets the common parameters on a widget, and is responsible
+for inserting it into the GladeXML object's internal structures.  It will
+also add the children to this widget.  Usually this function is only called
+by glade_xml_build_widget, but is exposed for difficult cases, such as
+setting up toolbar buttons and the like.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
+<td> the GladeXML widget.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>widget</code></em> :</span></p></td>
+<td> the widget to set parameters on.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>info</code></em> :</span></p></td>
+<td> the GladeWidgetInfo structure for the widget.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="glade-register-widget"></a><h3>glade_register_widget ()</h3>
+<pre class="programlisting">void                glade_register_widget               (GType type,
+                                                         <a class="link" href="libglade-Libglade-Build.html#GladeNewFunc" title="GladeNewFunc ()">GladeNewFunc</a> new_func,
+                                                         <a class="link" href="libglade-Libglade-Build.html#GladeBuildChildrenFunc" title="GladeBuildChildrenFunc ()">GladeBuildChildrenFunc</a> build_children,
+                                                         <a class="link" href="libglade-Libglade-Build.html#GladeFindInternalChildFunc" title="GladeFindInternalChildFunc ()">GladeFindInternalChildFunc</a> find_internal_child);</pre>
+<p>
+This function is used to register new construction functions for a
+widget type.  The child building routine would call
+<a class="link" href="libglade-Libglade-Build.html#glade-xml-build-widget" title="glade_xml_build_widget ()"><code class="function">glade_xml_build_widget()</code></a> on each child node to create the child
+before packing it.
+</p>
+<p>
+This function is mainly useful for addon widget modules for libglade
+(it would get called from the <code class="function">glade_init_module()</code> function).</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>type</code></em> :</span></p></td>
+<td> the GType of the widget.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>new_func</code></em> :</span></p></td>
+<td> the function used to construct instances of the widget.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>build_children</code></em> :</span></p></td>
+<td> function used to construct children (or NULL).
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>find_internal_child</code></em> :</span></p></td>
+<td> function to find internal children (or NULL).
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="glade-standard-build-widget"></a><h3>glade_standard_build_widget ()</h3>
+<pre class="programlisting">GtkWidget *         glade_standard_build_widget         (<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *xml,
+                                                         GType widget_type,
+                                                         <a class="link" href="libglade-Libglade-SAX-Parser.html#GladeWidgetInfo" title="GladeWidgetInfo">GladeWidgetInfo</a> *info);</pre>
+<p>
+This is the standard widget building function.  It processes all
+the widget properties using the standard object properties
+interfaces.  This function will be sufficient for most widget
+types, thus reducing the ammount of work needed to wrap a library.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>xml</code></em> :</span></p></td>
+<td> the GladeXML object.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>widget_type</code></em> :</span></p></td>
+<td> the GType of the widget.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>info</code></em> :</span></p></td>
+<td> the GladeWidgetInfo structure.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the constructed widget.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="glade-xml-handle-widget-prop"></a><h3>glade_xml_handle_widget_prop ()</h3>
+<pre class="programlisting">void                glade_xml_handle_widget_prop        (<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *self,
+                                                         GtkWidget *widget,
+                                                         const gchar *prop_name,
+                                                         const gchar *value_name);</pre>
+<p>
+Some widgets have properties of type GtkWidget.  These are
+represented as the widget name in the glade file.  When
+constructing the interface, the widget specified as the value for a
+property may not exist yet.
+</p>
+<p>
+Rather than setting the property directly, this function should be
+used.  It will perform the name to GtkWidget conversion, and if the
+widget is yet to be constructed, defer setting the property until
+the widget is constructed.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
+<td> the GladeXML object
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>widget</code></em> :</span></p></td>
+<td> the property the widget to set the property on.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>prop_name</code></em> :</span></p></td>
+<td> the name of the property.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value_name</code></em> :</span></p></td>
+<td> the name of the widget used as the value for the property.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="glade-standard-build-children"></a><h3>glade_standard_build_children ()</h3>
+<pre class="programlisting">void                glade_standard_build_children       (<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *self,
+                                                         GtkWidget *parent,
+                                                         <a class="link" href="libglade-Libglade-SAX-Parser.html#GladeWidgetInfo" title="GladeWidgetInfo">GladeWidgetInfo</a> *info);</pre>
+<p>
+This is the standard child building function.  It simply calls
+gtk_container_add on each child to add them to the parent, and
+process any packing properties using the generic container packing
+properties interfaces.
+</p>
+<p>
+This function will be sufficient for most container widgets
+provided that they implement the GtkContainer child packing
+properties interfaces.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
+<td> the GladeXML object.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>parent</code></em> :</span></p></td>
+<td> the container widget.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>info</code></em> :</span></p></td>
+<td> the GladeWidgetInfo structure.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="glade-xml-set-packing-property"></a><h3>glade_xml_set_packing_property ()</h3>
+<pre class="programlisting">void                glade_xml_set_packing_property      (<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *self,
+                                                         GtkWidget *parent,
+                                                         GtkWidget *child,
+                                                         const char *name,
+                                                         const char *value);</pre>
+<p>
+This sets the packing property on container <em class="parameter"><code>parent</code></em> of widget
+<em class="parameter"><code>child</code></em> with <em class="parameter"><code>name</code></em> to <em class="parameter"><code>value</code></em></p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
+<td> the GladeXML object.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>parent</code></em> :</span></p></td>
+<td> the container widget.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>child</code></em> :</span></p></td>
+<td> the contained child
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>name</code></em> :</span></p></td>
+<td> the name of the property
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
+<td> it's stringified value
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GladeApplyCustomPropFunc"></a><h3>GladeApplyCustomPropFunc ()</h3>
+<pre class="programlisting">void                (*GladeApplyCustomPropFunc)         (<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *xml,
+                                                         GtkWidget *widget,
+                                                         const gchar *propname,
+                                                         const gchar *value);</pre>
+<p>
+This prototype is used for custom property handlers registered with
+<a class="link" href="libglade-Libglade-Build.html#glade-register-custom-prop" title="glade_register_custom_prop ()"><code class="function">glade_register_custom_prop()</code></a>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>xml</code></em> :</span></p></td>
+<td> the GladeXML object.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>widget</code></em> :</span></p></td>
+<td> the widget to apply the property to.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>propname</code></em> :</span></p></td>
+<td> the name of the property.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
+<td> the value of the property.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="glade-register-custom-prop"></a><h3>glade_register_custom_prop ()</h3>
+<pre class="programlisting">void                glade_register_custom_prop          (GType type,
+                                                         const gchar *prop_name,
+                                                         <a class="link" href="libglade-Libglade-Build.html#GladeApplyCustomPropFunc" title="GladeApplyCustomPropFunc ()">GladeApplyCustomPropFunc</a> apply_prop);</pre>
+<p>
+Some properties are not (yet) handled through the GObject property
+code, so can not be handled by the generic code.  This function
+provides a way to register handlers for these properties.  Such
+handlers will apply for the GType <em class="parameter"><code>type</code></em> and all its descendants.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>type</code></em> :</span></p></td>
+<td> the GType of the widget.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>prop_name</code></em> :</span></p></td>
+<td> the name for the custom widget.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>apply_prop</code></em> :</span></p></td>
+<td> the function to be called when the custom property is found.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="glade-xml-relative-file"></a><h3>glade_xml_relative_file ()</h3>
+<pre class="programlisting">gchar *             glade_xml_relative_file             (<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *self,
+                                                         const gchar *filename);</pre>
+<p>
+This function resolves a relative pathname, using the directory of the
+XML file as a base.  If the pathname is absolute, then the original
+filename is returned.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
+<td> the GladeXML object.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>filename</code></em> :</span></p></td>
+<td> the filename.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the filename.  The result must be g_free'd.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="glade-enum-from-string"></a><h3>glade_enum_from_string ()</h3>
+<pre class="programlisting">gint                glade_enum_from_string              (GType type,
+                                                         const char *string);</pre>
+<p>
+This helper routine is designed to be used by widget build routines to
+convert the string representations of enumeration values found in the
+XML descriptions to the integer values that can be used to configure
+the widget.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>type</code></em> :</span></p></td>
+<td> the GType for this enum type.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>string</code></em> :</span></p></td>
+<td> the string representation of the enum value.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the integer value for this enumeration, or 0 if it couldn't be
+found.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="glade-flags-from-string"></a><h3>glade_flags_from_string ()</h3>
+<pre class="programlisting">guint               glade_flags_from_string             (GType type,
+                                                         const char *string);</pre>
+<p>
+This helper routine is designed to be used by widget build routines
+to convert the string representations of flags values found in the
+XML descriptions to the integer values that can be used to
+configure the widget.  The string is composed of string names or
+nicknames for various flags separated by '|'.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>type</code></em> :</span></p></td>
+<td> the GType for this flags type.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>string</code></em> :</span></p></td>
+<td> the string representation of the flags value.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the integer value for this flags string
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="glade-xml-set-value-from-string"></a><h3>glade_xml_set_value_from_string ()</h3>
+<pre class="programlisting">gboolean            glade_xml_set_value_from_string     (<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *xml,
+                                                         GParamSpec *pspec,
+                                                         const gchar *string,
+                                                         GValue *value);</pre>
+<p>
+This function demarshals a value from a string.  This function
+calls <code class="function">g_value_init()</code> on the <em class="parameter"><code>value</code></em> argument, so it need not be
+initialised beforehand.
+</p>
+<p>
+This function can handle char, uchar, boolean, int, uint, long,
+ulong, enum, flags, float, double, string, GdkColor and
+GtkAdjustment type values.  Support for GtkWidget type values is
+still to come.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>xml</code></em> :</span></p></td>
+<td> the GladeXML object.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>pspec</code></em> :</span></p></td>
+<td> the GParamSpec for the property
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>string</code></em> :</span></p></td>
+<td> the string representation of the value.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
+<td> the GValue to store the result in.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> <code class="literal">TRUE</code> on success.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="glade-xml-set-toplevel"></a><h3>glade_xml_set_toplevel ()</h3>
+<pre class="programlisting">void                glade_xml_set_toplevel              (<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *xml,
+                                                         GtkWindow *window);</pre>
+<p>
+This is used while the tree is being built to set the toplevel window that
+is currently being built.  It is mainly used to enable GtkAccelGroup's to
+be bound to the correct window, but could have other uses.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>xml</code></em> :</span></p></td>
+<td> the GladeXML object.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>window</code></em> :</span></p></td>
+<td> the toplevel.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="glade-xml-ensure-accel"></a><h3>glade_xml_ensure_accel ()</h3>
+<pre class="programlisting">GtkAccelGroup *     glade_xml_ensure_accel              (<a class="link" href="GladeXML.html" title="GladeXML">GladeXML</a> *xml);</pre>
+<p>
+This function is used to get the current GtkAccelGroup.  If there isn't
+one, a new one is created and bound to the current toplevel window (if
+a toplevel has been set).</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>xml</code></em> :</span></p></td>
+<td> the GladeXML object.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the current GtkAccelGroup.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" lang="en">
+<a name="GLADE-MODULE-CHECK-INIT:CAPS"></a><h3>GLADE_MODULE_CHECK_INIT</h3>
+<pre class="programlisting">#define             GLADE_MODULE_CHECK_INIT</pre>
+<p>
+This macro will insert a suitable version check function into a
+libglade loadable module.</p>
+<p>
+</p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.12</div>
+</body>
+</html>

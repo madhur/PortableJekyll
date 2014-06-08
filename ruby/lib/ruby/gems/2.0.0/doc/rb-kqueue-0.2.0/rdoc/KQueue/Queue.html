@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>class KQueue::Queue - rb-kqueue-0.2.0 Documentation</title>
+
+<link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../index.html">Home</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/rb-kqueue/queue.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">Object
+  
+</nav>
+
+    
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li ><a href="#method-c-new">::new</a>
+    
+    <li ><a href="#method-i-poll">#poll</a>
+    
+    <li ><a href="#method-i-process">#process</a>
+    
+    <li ><a href="#method-i-read_events">#read_events</a>
+    
+    <li ><a href="#method-i-run">#run</a>
+    
+    <li ><a href="#method-i-stop">#stop</a>
+    
+    <li ><a href="#method-i-watch_file">#watch_file</a>
+    
+    <li ><a href="#method-i-watch_for_signal">#watch_for_signal</a>
+    
+    <li ><a href="#method-i-watch_process">#watch_process</a>
+    
+    <li ><a href="#method-i-watch_socket_for_read">#watch_socket_for_read</a>
+    
+    <li ><a href="#method-i-watch_socket_for_write">#watch_socket_for_write</a>
+    
+    <li ><a href="#method-i-watch_stream_for_read">#watch_stream_for_read</a>
+    
+    <li ><a href="#method-i-watch_stream_for_write">#watch_stream_for_write</a>
+    
+    <li ><a href="#method-i-watch_timer">#watch_timer</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="../README_md.html">README</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../KQueue.html">KQueue</a>
+  
+    <li><a href="../KQueue/Event.html">KQueue::Event</a>
+  
+    <li><a href="../KQueue/Native.html">KQueue::Native</a>
+  
+    <li><a href="../KQueue/Native/FFI.html">KQueue::Native::FFI</a>
+  
+    <li><a href="../KQueue/Native/FFI/Library.html">KQueue::Native::FFI::Library</a>
+  
+    <li><a href="../KQueue/Native/Flags.html">KQueue::Native::Flags</a>
+  
+    <li><a href="../KQueue/Native/KEvent.html">KQueue::Native::KEvent</a>
+  
+    <li><a href="../KQueue/Native/TimeSpec.html">KQueue::Native::TimeSpec</a>
+  
+    <li><a href="../KQueue/Queue.html">KQueue::Queue</a>
+  
+    <li><a href="../KQueue/Watcher.html">KQueue::Watcher</a>
+  
+    <li><a href="../KQueue/Watcher/File.html">KQueue::Watcher::File</a>
+  
+    <li><a href="../KQueue/Watcher/Process.html">KQueue::Watcher::Process</a>
+  
+    <li><a href="../KQueue/Watcher/ReadWrite.html">KQueue::Watcher::ReadWrite</a>
+  
+    <li><a href="../KQueue/Watcher/Signal.html">KQueue::Watcher::Signal</a>
+  
+    <li><a href="../KQueue/Watcher/SocketReadWrite.html">KQueue::Watcher::SocketReadWrite</a>
+  
+    <li><a href="../KQueue/Watcher/Timer.html">KQueue::Watcher::Timer</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class KQueue::Queue</h1>
+
+  <div id="description" class="description">
+    
+<p><a href="Queue.html">Queue</a> wraps a single instance of kqueue. It&#39;s
+possible to have more than one instance, but usually unnecessary.</p>
+
+<p>New event watchers are added to a queue via various `watch_*` methods. For
+example, {#watch_stream_for_read} watches for a stream to become readable,
+and {#watch_file} watches for a file to change.</p>
+
+<p>Once watchers are added, {#run} or {#process} can be used to fire events.
+Note that if any event-causing conditions happen between adding a watcher
+and running one of these methods, these events are also fired once the
+methods are called.</p>
+
+<p>@example</p>
+
+<pre class="ruby"><span class="ruby-comment"># Create the queue</span>
+<span class="ruby-identifier">queue</span> = <span class="ruby-constant">KQueue</span><span class="ruby-operator">::</span><span class="ruby-constant">Queue</span>.<span class="ruby-identifier">new</span>
+
+<span class="ruby-comment"># Run this callback whenever the file path/to/foo.txt is read</span>
+<span class="ruby-identifier">queue</span>.<span class="ruby-identifier">watch_file</span>(<span class="ruby-string">&quot;path/to/foo.txt&quot;</span>, :<span class="ruby-identifier">write</span>) <span class="ruby-keyword">do</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Foo.txt was modified!&quot;</span>
+<span class="ruby-keyword">end</span>
+
+<span class="ruby-comment"># Run this callback whenever this process forks or execs</span>
+<span class="ruby-identifier">queue</span>.<span class="ruby-identifier">watch_process</span>(<span class="ruby-constant">Process</span>.<span class="ruby-identifier">pid</span>, :<span class="ruby-identifier">fork</span>, :<span class="ruby-identifier">exec</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">event</span><span class="ruby-operator">|</span>
+  <span class="ruby-comment"># The #flags field of the event object contains the actions that happened</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;This process has #{event.flags.map {|f| f.to_s + &quot;ed&quot;}.join(&quot; and &quot;)}&quot;</span>
+<span class="ruby-keyword">end</span>
+
+<span class="ruby-comment"># Nothing happens until you run the queue!</span>
+<span class="ruby-identifier">queue</span>.<span class="ruby-identifier">run</span>
+</pre>
+
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+    <!-- Constants -->
+    <section id="constants-list" class="section">
+      <h3 class="section-header">Constants</h3>
+      <dl>
+      
+        <dt id="NULL_TIMEOUT">NULL_TIMEOUT
+        
+        <dd class="description">
+        
+      
+      </dl>
+    </section>
+    
+
+    
+    <!-- Attributes -->
+    <section id="attribute-method-details" class="method-section section">
+      <h3 class="section-header">Attributes</h3>
+
+      
+      <div id="attribute-i-fd" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">fd</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>The file descriptor of the kqueue.</p>
+
+<p>@private @return [Fixnum]</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-watchers" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">watchers</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>A hash from filter names and idents to {Watcher}s. The kqueue API
+guarantees that a (filter, ident) pair uniquely identifies a watcher.</p>
+
+<p>This hash allows events to retrieve their watchers.</p>
+
+<p>@private @return [{(Symbol, Fixnum) =&gt; Watcher}]</p>
+        
+        </div>
+      </div>
+      
+    </section><!-- attribute-method-details -->
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Creates a new, empty queue.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/rb-kqueue/queue.rb, line 51</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>
+  <span class="ruby-ivar">@fd</span> = <span class="ruby-constant">Native</span>.<span class="ruby-identifier">kqueue</span>
+  <span class="ruby-ivar">@watchers</span> = {}
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- new-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- new-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-poll" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">poll</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="poll-source">
+            <pre><span class="ruby-comment"># File lib/rb-kqueue/queue.rb, line 340</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">poll</span>
+  <span class="ruby-identifier">read_events</span>(<span class="ruby-keyword">false</span>).<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">event</span><span class="ruby-operator">|</span> <span class="ruby-identifier">event</span>.<span class="ruby-identifier">callback!</span>}
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- poll-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- poll-method -->
+
+    
+      <div id="method-i-process" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">process</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Blocks until there are one or more events that this queue has watchers
+registered for. Once there are events, the appropriate callbacks are called
+and this function returns.</p>
+
+<p>@see <a href="Queue.html#method-i-run">run</a> @return [void]</p>
+          
+          
+
+          
+          <div class="method-source-code" id="process-source">
+            <pre><span class="ruby-comment"># File lib/rb-kqueue/queue.rb, line 336</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">process</span>
+  <span class="ruby-identifier">read_events</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">event</span><span class="ruby-operator">|</span> <span class="ruby-identifier">event</span>.<span class="ruby-identifier">callback!</span>}
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- process-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- process-method -->
+
+    
+      <div id="method-i-read_events" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">read_events</span><span
+            class="method-args">(blocking = true)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Blocks until there are one or more filesystem events that this notifier has
+watchers registered for. Once there are events, returns their {Event}
+objects.</p>
+
+<p>@private</p>
+          
+          
+
+          
+          <div class="method-source-code" id="read_events-source">
+            <pre><span class="ruby-comment"># File lib/rb-kqueue/queue.rb, line 354</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">read_events</span>(<span class="ruby-identifier">blocking</span> = <span class="ruby-keyword">true</span>)
+  <span class="ruby-identifier">size</span> = <span class="ruby-value">1024</span>
+  <span class="ruby-identifier">eventlist</span> = <span class="ruby-constant">FFI</span><span class="ruby-operator">::</span><span class="ruby-constant">MemoryPointer</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">Native</span><span class="ruby-operator">::</span><span class="ruby-constant">KEvent</span>, <span class="ruby-identifier">size</span>)
+
+  <span class="ruby-identifier">timeout</span> = <span class="ruby-identifier">blocking</span> <span class="ruby-operator">?</span> <span class="ruby-keyword">nil</span> <span class="ruby-operator">:</span> <span class="ruby-constant">NULL_TIMEOUT</span>
+  <span class="ruby-identifier">res</span> = <span class="ruby-constant">Native</span>.<span class="ruby-identifier">kevent</span>(<span class="ruby-ivar">@fd</span>, <span class="ruby-keyword">nil</span>, <span class="ruby-value">0</span>, <span class="ruby-identifier">eventlist</span>, <span class="ruby-identifier">size</span>, <span class="ruby-identifier">timeout</span>)
+
+  <span class="ruby-constant">KQueue</span>.<span class="ruby-identifier">handle_error</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">res</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">0</span>
+  (<span class="ruby-value">0</span><span class="ruby-operator">...</span><span class="ruby-identifier">res</span>).<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span> <span class="ruby-constant">KQueue</span><span class="ruby-operator">::</span><span class="ruby-constant">Event</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">Native</span><span class="ruby-operator">::</span><span class="ruby-constant">KEvent</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">eventlist</span>[<span class="ruby-identifier">i</span>]), <span class="ruby-keyword">self</span>)}
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- read_events-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- read_events-method -->
+
+    
+      <div id="method-i-run" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">run</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Starts the queue watching for events. Blocks until {#stop} is called.</p>
+
+<p>@see <a href="Queue.html#method-i-process">process</a> @return [void]</p>
+          
+          
+
+          
+          <div class="method-source-code" id="run-source">
+            <pre><span class="ruby-comment"># File lib/rb-kqueue/queue.rb, line 314</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">run</span>
+  <span class="ruby-ivar">@stop</span> = <span class="ruby-keyword">false</span>
+  <span class="ruby-identifier">process</span> <span class="ruby-keyword">until</span> <span class="ruby-ivar">@stop</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- run-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- run-method -->
+
+    
+      <div id="method-i-stop" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">stop</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Stop watching for events. That is, if we&#39;re in a {#run} loop, exit out
+as soon as we finish handling the current batch of events.</p>
+
+<p>@return [void]</p>
+          
+          
+
+          
+          <div class="method-source-code" id="stop-source">
+            <pre><span class="ruby-comment"># File lib/rb-kqueue/queue.rb, line 325</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">stop</span>
+  <span class="ruby-ivar">@stop</span> = <span class="ruby-keyword">true</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- stop-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- stop-method -->
+
+    
+      <div id="method-i-watch_file" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">watch_file</span><span
+            class="method-args">(path, *flags, &callback)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Watches a file or directory for changes. The `flags` parameter specifies
+which changes will fire events.</p>
+
+<p>The {Event#flags} field contains the changes that caused the event to be
+fired. {Event#data} and {Event#eof?} are unused.</p>
+
+<p>Note that this only watches a single file. If the file is a direcotry, it
+will only report changes to the directory itself, not to any files within
+the directory.</p>
+
+<p>## Flags</p>
+
+<p>`:delete` : The file was deleted.</p>
+
+<p>`:write` : The file was modified.</p>
+
+<p>`:extend` : The size of the file increased.</p>
+
+<p>`:attrib` : Attributes of the file, such as timestamp or permissions,
+changed.</p>
+
+<p>`:link` : The link count of the file changed.</p>
+
+<p>`:rename` : The file was renamed.</p>
+
+<p>`:revoke` : Access to the file was revoked,</p>
+
+<pre>either via the `revoke(2)` system call
+or because the underlying filesystem was unmounted.</pre>
+
+<p>@param path [String] The path to the file or directory. @param flags
+[Array&lt;Symbol&gt;] Which events to watch for. @yield [event] A block
+that will be run when the file changes. @yieldparam event [Event] The <a
+href="Event.html">Event</a> object containing information</p>
+
+<pre>about the event that occurred.</pre>
+
+<p>@return [Watcher] The <a href="Watcher.html">Watcher</a> for this event.
+@raise [SystemCallError] If something goes wrong when registering the <a
+href="Watcher.html">Watcher</a>.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="watch_file-source">
+            <pre><span class="ruby-comment"># File lib/rb-kqueue/queue.rb, line 226</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">watch_file</span>(<span class="ruby-identifier">path</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">flags</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">callback</span>)
+  <span class="ruby-constant">Watcher</span><span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>, <span class="ruby-identifier">path</span>, <span class="ruby-identifier">flags</span>, <span class="ruby-identifier">callback</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- watch_file-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- watch_file-method -->
+
+    
+      <div id="method-i-watch_for_signal" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">watch_for_signal</span><span
+            class="method-args">(signal, &callback)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Watches for signals to this process. This coexists with other signal
+facilities, and has lower precedence. Only signals sent to the process, not
+to a particular thread, will fire events. <a href="Event.html">Event</a>
+notification happens before normal signal delivery processing.</p>
+
+<p>The {Event#data} field contains the number of times the signal has been
+generated since the last time the event was fired.</p>
+
+<p>@param signal [String, Fixnum] The name of number of the signal. @yield
+[event] A block that will be run when the signal is received. @yieldparam
+event [Event] The <a href="Event.html">Event</a> object containing
+information</p>
+
+<pre>about the event that occurred.</pre>
+
+<p>@return [Watcher] The <a href="Watcher.html">Watcher</a> for this event.
+@raise [SystemCallError] If something goes wrong when registering the <a
+href="Watcher.html">Watcher</a>.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="watch_for_signal-source">
+            <pre><span class="ruby-comment"># File lib/rb-kqueue/queue.rb, line 289</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">watch_for_signal</span>(<span class="ruby-identifier">signal</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">callback</span>)
+  <span class="ruby-constant">Watcher</span><span class="ruby-operator">::</span><span class="ruby-constant">Signal</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>, <span class="ruby-identifier">signal</span>, <span class="ruby-identifier">callback</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- watch_for_signal-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- watch_for_signal-method -->
+
+    
+      <div id="method-i-watch_process" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">watch_process</span><span
+            class="method-args">(pid, *flags, &callback)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Watches a process for changes. The `flags` parameter specifies which
+changes will fire events.</p>
+
+<p>The {Event#flags} field contains the changes that caused the event to be
+fired. {Event#data} and {Event#eof?} are unused.</p>
+
+<p>## Flags</p>
+
+<p>`:exit` : The process has exited.</p>
+
+<p>`:fork` : The process has created a child process via `fork(2)` or similar.</p>
+
+<p>`:exec` : The process has executed a new process via `exec(2)` or similar.</p>
+
+<p>`:signal` : The process was sent a signal.</p>
+
+<pre>This is only supported under Darwin/OS X.</pre>
+
+<p>`:reap` : The process was reaped by the parent via `wait(2)` or similar.</p>
+
+<pre>This is only supported under Darwin/OS X.</pre>
+
+<p>`:track` : Follow the process across `fork(2)` calls.</p>
+
+<pre>{Event#flags} for the parent process will contain `:fork`,
+while {Event#flags} for the child process will contain `:child`.
+If the system was unable to attach an event to the child process,
+{Event#flags} will contain `:trackerr`.
+This is not supported under Darwin/OS X.</pre>
+
+<p>@param pid [Fixnum] The id of the process. @param flags
+[Array&lt;Symbol&gt;] Which events to watch for. @yield [event] A block
+that will be run when the process changes. @yieldparam event [Event] The <a
+href="Event.html">Event</a> object containing information</p>
+
+<pre>about the event that occurred.</pre>
+
+<p>@return [Watcher] The <a href="Watcher.html">Watcher</a> for this event.
+@raise [SystemCallError] If something goes wrong when registering the <a
+href="Watcher.html">Watcher</a>.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="watch_process-source">
+            <pre><span class="ruby-comment"># File lib/rb-kqueue/queue.rb, line 271</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">watch_process</span>(<span class="ruby-identifier">pid</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">flags</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">callback</span>)
+  <span class="ruby-constant">Watcher</span><span class="ruby-operator">::</span><span class="ruby-constant">Process</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>, <span class="ruby-identifier">pid</span>, <span class="ruby-identifier">flags</span>, <span class="ruby-identifier">callback</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- watch_process-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- watch_process-method -->
+
+    
+      <div id="method-i-watch_socket_for_read" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">watch_socket_for_read</span><span
+            class="method-args">(fd, low_water = nil, &callback)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Watches a socket and produces an event when there&#39;s data available to
+read.</p>
+
+<p>Sockets which have previously had `Socket#listen` called fire events when
+there is an incoming connection pending. In this case, {Event#data}
+contains the size of the listen backlog.</p>
+
+<p>Other sockets return when there is data to be read, subject to the
+SO_RCVLOWAT value of the socket buffer. This may be overridden via the
+`low_water` parameter, which sets a new low-water mark. In this case,
+{Event#data} contains the number of bytes of protocol data available to
+read.</p>
+
+<p>If the read direction of the socket has shut down, then {Event#eof?} is
+set. It&#39;s possible for {Event#eof?} to be set while there&#39;s still
+data pending in the socket buffer.</p>
+
+<p>Note that this isn&#39;t compatible with JRuby unless a native-code file
+descriptor is passed in. This means the file descriptor must be returned by
+an FFI-wrapped C function.</p>
+
+<p>@param fd [Socket, Fixnum] A Ruby Socket, or the file descriptor</p>
+
+<pre>for a native Socket.</pre>
+
+<p>@param low_water [Fixnum] The low-water mark for new data. @yield [event] A
+block that will be run when the specified socket</p>
+
+<pre>has data to read.</pre>
+
+<p>@yieldparam event [Event] The <a href="Event.html">Event</a> object
+containing information</p>
+
+<pre>about the event that occurred.</pre>
+
+<p>@return [Watcher] The <a href="Watcher.html">Watcher</a> for this event.
+@raise [SystemCallError] If something goes wrong when registering the <a
+href="Watcher.html">Watcher</a>.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="watch_socket_for_read-source">
+            <pre><span class="ruby-comment"># File lib/rb-kqueue/queue.rb, line 123</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">watch_socket_for_read</span>(<span class="ruby-identifier">fd</span>, <span class="ruby-identifier">low_water</span> = <span class="ruby-keyword">nil</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">callback</span>)
+  <span class="ruby-constant">Watcher</span><span class="ruby-operator">::</span><span class="ruby-constant">SocketReadWrite</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>, <span class="ruby-identifier">fd</span>, <span class="ruby-value">:read</span>, <span class="ruby-identifier">low_water</span>, <span class="ruby-identifier">callback</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- watch_socket_for_read-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- watch_socket_for_read-method -->
+
+    
+      <div id="method-i-watch_socket_for_write" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">watch_socket_for_write</span><span
+            class="method-args">(fd, low_water = nil, &callback)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Watches a socket and produces an event when it&#39;s possible to write. The
+{Event#data} field is set to the amount of space remaining in the write
+buffer.</p>
+
+<p>When an event is fired is subject to the subject to the SO_RCVLOWAT value
+of the socket buffer. This may be overridden via the `low_water` parameter,
+which sets a new low-water mark.</p>
+
+<p>If the write direction of the socket has shut down, then {Event#eof?} is
+set. It&#39;s possible for {Event#eof?} to be set while there&#39;s still
+data pending in the socket buffer.</p>
+
+<p>Note that this isn&#39;t compatible with JRuby unless a native-code file
+descriptor is passed in. This means the file descriptor must be returned by
+an FFI-wrapped C function.</p>
+
+<p>@param fd [Socket, Fixnum] A Ruby Socket, or the file descriptor</p>
+
+<pre>for a native Socket.</pre>
+
+<p>@param low_water [Fixnum] The low-water mark for new data. @yield [event] A
+block that will be run when it&#39;s possible</p>
+
+<pre>to write to the specified socket.</pre>
+
+<p>@yieldparam event [Event] The <a href="Event.html">Event</a> object
+containing information</p>
+
+<pre>about the event that occurred.</pre>
+
+<p>@return [Watcher] The <a href="Watcher.html">Watcher</a> for this event.
+@raise [SystemCallError] If something goes wrong when registering the <a
+href="Watcher.html">Watcher</a>.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="watch_socket_for_write-source">
+            <pre><span class="ruby-comment"># File lib/rb-kqueue/queue.rb, line 178</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">watch_socket_for_write</span>(<span class="ruby-identifier">fd</span>, <span class="ruby-identifier">low_water</span> = <span class="ruby-keyword">nil</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">callback</span>)
+  <span class="ruby-constant">Watcher</span><span class="ruby-operator">::</span><span class="ruby-constant">SocketReadWrite</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>, <span class="ruby-identifier">fd</span>, <span class="ruby-value">:write</span>, <span class="ruby-identifier">low_water</span>, <span class="ruby-identifier">callback</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- watch_socket_for_write-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- watch_socket_for_write-method -->
+
+    
+      <div id="method-i-watch_stream_for_read" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">watch_stream_for_read</span><span
+            class="method-args">(fd, &callback)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Watches a stream and produces an event when there&#39;s data available to
+read.</p>
+
+<p>This can watch files, pipes, fifos, and BPF devices. For files, an event is
+fired whenever the file pointer is not at the end of the file, and the
+{Event#data} field is set to the offset from the current position to the
+end of the file. {Event#data} may be negative.</p>
+
+<p>For pipes and fifos, an event is fired whenever there&#39;s data to read.
+The {Event#data} field is set to the number of bytes available. When the
+last writer disconnects, {Event#eof?} will be set.</p>
+
+<p>For BPF devices (not supported under Darwin/OS X), an event is fired when
+the BPF buffer is full, the BPF timeout has expired, or when the BPF has
+“immediate mode” enabled and there is data to read. The {Event#data} field
+is set to the number of bytes available.</p>
+
+<p>Note that this isn&#39;t compatible with JRuby unless a native-code file
+descriptor is passed in. This means the file descriptor must be returned by
+an FFI-wrapped C function.</p>
+
+<p>@param fd [IO, Fixnum] A Ruby IO stream, or the file descriptor</p>
+
+<pre>for a native IO stream.</pre>
+
+<p>@yield [event] A block that will be run when the specified stream</p>
+
+<pre>has data to read.</pre>
+
+<p>@yieldparam event [Event] The <a href="Event.html">Event</a> object
+containing information</p>
+
+<pre>about the event that occurred.</pre>
+
+<p>@return [Watcher] The <a href="Watcher.html">Watcher</a> for this event.
+@raise [SystemCallError] If something goes wrong when registering the <a
+href="Watcher.html">Watcher</a>.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="watch_stream_for_read-source">
+            <pre><span class="ruby-comment"># File lib/rb-kqueue/queue.rb, line 88</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">watch_stream_for_read</span>(<span class="ruby-identifier">fd</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">callback</span>)
+  <span class="ruby-constant">Watcher</span><span class="ruby-operator">::</span><span class="ruby-constant">ReadWrite</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>, <span class="ruby-identifier">fd</span>, <span class="ruby-value">:read</span>, <span class="ruby-identifier">callback</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- watch_stream_for_read-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- watch_stream_for_read-method -->
+
+    
+      <div id="method-i-watch_stream_for_write" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">watch_stream_for_write</span><span
+            class="method-args">(fd, &callback)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Watches a stream and produces an event when it&#39;s possible to write to
+the stream.</p>
+
+<p>This can watch pipes and fifos. The {Event#data} field is set to the amount
+of space remaining in the write buffer. When the reader disconnects,
+{Event#eof?} will be set.</p>
+
+<p>Note that this isn&#39;t compatible with JRuby unless a native-code file
+descriptor is passed in. This means the file descriptor must be returned by
+an FFI-wrapped C function.</p>
+
+<p>@param fd [IO, Fixnum] A Ruby IO stream, or the file descriptor</p>
+
+<pre>for a native IO stream.</pre>
+
+<p>@yield [event] A block that will be run when the specified stream</p>
+
+<pre>has data to read.</pre>
+
+<p>@yieldparam event [Event] The <a href="Event.html">Event</a> object
+containing information</p>
+
+<pre>about the event that occurred.</pre>
+
+<p>@return [Watcher] The <a href="Watcher.html">Watcher</a> for this event.
+@raise [SystemCallError] If something goes wrong when registering the <a
+href="Watcher.html">Watcher</a>.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="watch_stream_for_write-source">
+            <pre><span class="ruby-comment"># File lib/rb-kqueue/queue.rb, line 147</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">watch_stream_for_write</span>(<span class="ruby-identifier">fd</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">callback</span>)
+  <span class="ruby-constant">Watcher</span><span class="ruby-operator">::</span><span class="ruby-constant">ReadWrite</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>, <span class="ruby-identifier">fd</span>, <span class="ruby-value">:write</span>, <span class="ruby-identifier">callback</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- watch_stream_for_write-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- watch_stream_for_write-method -->
+
+    
+      <div id="method-i-watch_timer" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">watch_timer</span><span
+            class="method-args">(time, &callback)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Sets up a watcher that fires an event once every specified interval.</p>
+
+<p>The {Event#data} field contains the number of times the interval has passed
+since the last time the event was fired.</p>
+
+<p>@param time [Number] The interval, in seconds. @yield [event] A block that
+will be run when the interval passes. @yieldparam event [Event] The <a
+href="Event.html">Event</a> object containing information</p>
+
+<pre>about the event that occurred.</pre>
+
+<p>@return [Watcher] The <a href="Watcher.html">Watcher</a> for this event.
+@raise [SystemCallError] If something goes wrong when registering the <a
+href="Watcher.html">Watcher</a>.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="watch_timer-source">
+            <pre><span class="ruby-comment"># File lib/rb-kqueue/queue.rb, line 305</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">watch_timer</span>(<span class="ruby-identifier">time</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">callback</span>)
+  <span class="ruby-constant">Watcher</span><span class="ruby-operator">::</span><span class="ruby-constant">Timer</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>, <span class="ruby-identifier">time</span>, <span class="ruby-identifier">callback</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- watch_timer-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- watch_timer-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

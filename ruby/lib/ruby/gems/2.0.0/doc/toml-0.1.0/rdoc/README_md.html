@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>README - toml-0.1.0 Documentation</title>
+
+<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="./js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
+
+
+<body class="file">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="./index.html">Home</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+<div id="table-of-contents">
+  <nav class="section">
+    <h3 class="section-header">Table of Contents</h3>
+    <ul>
+      <li><a href="#label-TOML">TOML</a>
+      <li><a href="#label-Usage">Usage</a>
+      <li><a href="#label-Contributors">Contributors</a>
+    </ul>
+  </nav>
+</div>
+
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="./LICENSE.html">LICENSE</a>
+  
+    <li class="file"><a href="./README_md.html">README</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="./Array.html">Array</a>
+  
+    <li><a href="./DateTime.html">DateTime</a>
+  
+    <li><a href="./FalseClass.html">FalseClass</a>
+  
+    <li><a href="./Numeric.html">Numeric</a>
+  
+    <li><a href="./String.html">String</a>
+  
+    <li><a href="./TOML.html">TOML</a>
+  
+    <li><a href="./TOML/Generator.html">TOML::Generator</a>
+  
+    <li><a href="./TOML/Key.html">TOML::Key</a>
+  
+    <li><a href="./TOML/Parser.html">TOML::Parser</a>
+  
+    <li><a href="./TOML/Parslet.html">TOML::Parslet</a>
+  
+    <li><a href="./TOML/Table.html">TOML::Table</a>
+  
+    <li><a href="./TOML/TableArray.html">TOML::TableArray</a>
+  
+    <li><a href="./TOML/Transformer.html">TOML::Transformer</a>
+  
+    <li><a href="./TrueClass.html">TrueClass</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation" class="description">
+  
+<h1 id="label-TOML"><a href="TOML.html">TOML</a><span><a href="#label-TOML">&para;</a> <a href="#documentation">&uarr;</a></span></h1>
+
+<p>A sane configuration format from @mojombo. More information here: <a
+href="https://github.com/mojombo/toml">github.com/mojombo/toml</a></p>
+
+<p>This is far superior to YAML and JSON because it doesn&#39;t suck. Really
+it doesn&#39;t.</p>
+
+<p><strong>There is a bug in Rails 2.3&#39;s vendored version of BlankSlate (a
+dependency of Parslet which is used for parsing <a
+href="TOML.html">TOML</a>) that breaks Parslet; please see this <a
+href="https://gist.github.com/dirk/5264004">Gist</a> for a
+workaround.</strong></p>
+
+<h2 id="label-Usage">Usage<span><a href="#label-Usage">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+
+<p>Add to your Gemfile:</p>
+
+<pre class="ruby"><span class="ruby-identifier">gem</span> <span class="ruby-string">&quot;toml&quot;</span>, <span class="ruby-string">&quot;~&gt; 0.0.3&quot;</span>
+</pre>
+
+<p>It&#39;s simple, really.</p>
+
+<pre class="ruby"><span class="ruby-identifier">content</span> = <span class="ruby-value">&lt;&lt;-TOML
+
+# Hello, this is an example.
+[things]
+other = &quot;things&quot;
+what = 900000
+
+TOML</span>
+
+<span class="ruby-identifier">parser</span> = <span class="ruby-constant">TOML</span><span class="ruby-operator">::</span><span class="ruby-constant">Parser</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">content</span>).<span class="ruby-identifier">parsed</span>
+<span class="ruby-comment"># =&gt; { &quot;things&quot; =&gt; { &quot;other&quot; =&gt; &quot;things&quot;, &quot;what&quot; =&gt; 900000 } }</span>
+</pre>
+
+<p>You can also use the same API as <code>YAML</code> if you&#39;d like:</p>
+
+<pre class="ruby"><span class="ruby-constant">TOML</span>.<span class="ruby-identifier">load</span>(<span class="ruby-string">&quot;thing = 9&quot;</span>)
+<span class="ruby-comment"># =&gt; {&quot;thing&quot; =&gt; 9}</span>
+
+<span class="ruby-constant">TOML</span>.<span class="ruby-identifier">load_file</span>(<span class="ruby-string">&quot;my_file.toml&quot;</span>)
+<span class="ruby-comment"># =&gt; {&quot;whatever&quot; =&gt; &quot;keys&quot;}</span>
+</pre>
+
+<p>There&#39;s also a beta feature for generating a <a
+href="TOML.html">TOML</a> file from a Ruby hash. Please note this will
+likely not give beautiful output right now.</p>
+
+<pre class="ruby"><span class="ruby-identifier">hash</span> = {
+  <span class="ruby-string">&quot;integer&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>,
+  <span class="ruby-string">&quot;float&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">3.14159</span>,
+  <span class="ruby-string">&quot;true&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>,
+  <span class="ruby-string">&quot;false&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">false</span>,
+  <span class="ruby-string">&quot;string&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;hi&quot;</span>,
+  <span class="ruby-string">&quot;array&quot;</span> =<span class="ruby-operator">&gt;</span> [[<span class="ruby-value">1</span>], [<span class="ruby-value">2</span>], [<span class="ruby-value">3</span>]],
+  <span class="ruby-string">&quot;key&quot;</span> =<span class="ruby-operator">&gt;</span> {
+    <span class="ruby-string">&quot;group&quot;</span> =<span class="ruby-operator">&gt;</span> {
+      <span class="ruby-string">&quot;value&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;lol&quot;</span>
+    }
+  }
+}
+<span class="ruby-identifier">doc</span> = <span class="ruby-constant">TOML</span><span class="ruby-operator">::</span><span class="ruby-constant">Generator</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">hash</span>).<span class="ruby-identifier">body</span>
+<span class="ruby-comment"># doc will be a string containing a proper TOML document.</span>
+</pre>
+
+<h2 id="label-Contributors">Contributors<span><a href="#label-Contributors">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+
+<p>Written by Jeremy McAnally (@jm) and Dirk Gadsden (@dirk) based on <a
+href="TOML.html">TOML</a> from Tom Preston-Werner (@mojombo).</p>
+
+</div>
+
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

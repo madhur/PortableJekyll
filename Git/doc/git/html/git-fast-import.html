@@ -1,0 +1,2455 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.6.6" />
+<title>git-fast-import(1)</title>
+<style type="text/css">
+/* Shared CSS for AsciiDoc xhtml11 and html5 backends */
+
+/* Default font. */
+body {
+  font-family: Georgia,serif;
+}
+
+/* Title font. */
+h1, h2, h3, h4, h5, h6,
+div.title, caption.title,
+thead, p.table.header,
+#toctitle,
+#author, #revnumber, #revdate, #revremark,
+#footer {
+  font-family: Arial,Helvetica,sans-serif;
+}
+
+body {
+  margin: 1em 5% 1em 5%;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+}
+a:visited {
+  color: fuchsia;
+}
+
+em {
+  font-style: italic;
+  color: navy;
+}
+
+strong {
+  font-weight: bold;
+  color: #083194;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #527bbd;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+h1, h2, h3 {
+  border-bottom: 2px solid silver;
+}
+h2 {
+  padding-top: 0.5em;
+}
+h3 {
+  float: left;
+}
+h3 + * {
+  clear: left;
+}
+h5 {
+  font-size: 1.0em;
+}
+
+div.sectionbody {
+  margin-left: 0;
+}
+
+hr {
+  border: 1px solid silver;
+}
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+ul, ol, li > p {
+  margin-top: 0;
+}
+ul > li     { color: #aaa; }
+ul > li > * { color: black; }
+
+pre {
+  padding: 0;
+  margin: 0;
+}
+
+#author {
+  color: #527bbd;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+#email {
+}
+#revnumber, #revdate, #revremark {
+}
+
+#footer {
+  font-size: small;
+  border-top: 2px solid silver;
+  padding-top: 0.5em;
+  margin-top: 4.0em;
+}
+#footer-text {
+  float: left;
+  padding-bottom: 0.5em;
+}
+#footer-badges {
+  float: right;
+  padding-bottom: 0.5em;
+}
+
+#preamble {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.imageblock, div.exampleblock, div.verseblock,
+div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
+div.admonitionblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.admonitionblock {
+  margin-top: 2.0em;
+  margin-bottom: 2.0em;
+  margin-right: 10%;
+  color: #606060;
+}
+
+div.content { /* Block element content. */
+  padding: 0;
+}
+
+/* Block element titles. */
+div.title, caption.title {
+  color: #527bbd;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 1.0em;
+  margin-bottom: 0.5em;
+}
+div.title + * {
+  margin-top: 0;
+}
+
+td div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content + div.title {
+  margin-top: 0.0em;
+}
+
+div.sidebarblock > div.content {
+  background: #ffffee;
+  border: 1px solid #dddddd;
+  border-left: 4px solid #f0f0f0;
+  padding: 0.5em;
+}
+
+div.listingblock > div.content {
+  border: 1px solid #dddddd;
+  border-left: 5px solid #f0f0f0;
+  background: #f8f8f8;
+  padding: 0.5em;
+}
+
+div.quoteblock, div.verseblock {
+  padding-left: 1.0em;
+  margin-left: 1.0em;
+  margin-right: 10%;
+  border-left: 5px solid #f0f0f0;
+  color: #888;
+}
+
+div.quoteblock > div.attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock > pre.content {
+  font-family: inherit;
+  font-size: inherit;
+}
+div.verseblock > div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
+div.verseblock + div.attribution {
+  text-align: left;
+}
+
+div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 3px solid #dddddd;
+}
+
+div.exampleblock > div.content {
+  border-left: 3px solid #dddddd;
+  padding-left: 0.5em;
+}
+
+div.imageblock div.content { padding-left: 0; }
+span.image img { border-style: none; }
+a.image:visited { color: white; }
+
+dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: normal;
+  color: navy;
+}
+dd > *:first-child {
+  margin-top: 0.1em;
+}
+
+ul, ol {
+    list-style-position: outside;
+}
+ol.arabic {
+  list-style-type: decimal;
+}
+ol.loweralpha {
+  list-style-type: lower-alpha;
+}
+ol.upperalpha {
+  list-style-type: upper-alpha;
+}
+ol.lowerroman {
+  list-style-type: lower-roman;
+}
+ol.upperroman {
+  list-style-type: upper-roman;
+}
+
+div.compact ul, div.compact ol,
+div.compact p, div.compact p,
+div.compact div, div.compact div {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}
+
+tfoot {
+  font-weight: bold;
+}
+td > div.verse {
+  white-space: pre;
+}
+
+div.hdlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+div.hdlist tr {
+  padding-bottom: 15px;
+}
+dt.hdlist1.strong, td.hdlist1.strong {
+  font-weight: bold;
+}
+td.hdlist1 {
+  vertical-align: top;
+  font-style: normal;
+  padding-right: 0.8em;
+  color: navy;
+}
+td.hdlist2 {
+  vertical-align: top;
+}
+div.hdlist.compact tr {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.comment {
+  background: yellow;
+}
+
+.footnote, .footnoteref {
+  font-size: 0.8em;
+}
+
+span.footnote, span.footnoteref {
+  vertical-align: super;
+}
+
+#footnotes {
+  margin: 20px 0 20px 0;
+  padding: 7px 0 0 0;
+}
+
+#footnotes div.footnote {
+  margin: 0 0 5px 0;
+}
+
+#footnotes hr {
+  border: none;
+  border-top: 1px solid silver;
+  height: 1px;
+  text-align: left;
+  margin-left: 0;
+  width: 20%;
+  min-width: 100px;
+}
+
+div.colist td {
+  padding-right: 0.5em;
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+div.colist td img {
+  margin-top: 0.3em;
+}
+
+@media print {
+  #footer-badges { display: none; }
+}
+
+#toc {
+  margin-bottom: 2.5em;
+}
+
+#toctitle {
+  color: #527bbd;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}
+
+div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+  font-size: 0.9em;
+}
+div.toclevel3 {
+  margin-left: 4em;
+  font-size: 0.9em;
+}
+div.toclevel4 {
+  margin-left: 6em;
+  font-size: 0.9em;
+}
+
+span.aqua { color: aqua; }
+span.black { color: black; }
+span.blue { color: blue; }
+span.fuchsia { color: fuchsia; }
+span.gray { color: gray; }
+span.green { color: green; }
+span.lime { color: lime; }
+span.maroon { color: maroon; }
+span.navy { color: navy; }
+span.olive { color: olive; }
+span.purple { color: purple; }
+span.red { color: red; }
+span.silver { color: silver; }
+span.teal { color: teal; }
+span.white { color: white; }
+span.yellow { color: yellow; }
+
+span.aqua-background { background: aqua; }
+span.black-background { background: black; }
+span.blue-background { background: blue; }
+span.fuchsia-background { background: fuchsia; }
+span.gray-background { background: gray; }
+span.green-background { background: green; }
+span.lime-background { background: lime; }
+span.maroon-background { background: maroon; }
+span.navy-background { background: navy; }
+span.olive-background { background: olive; }
+span.purple-background { background: purple; }
+span.red-background { background: red; }
+span.silver-background { background: silver; }
+span.teal-background { background: teal; }
+span.white-background { background: white; }
+span.yellow-background { background: yellow; }
+
+span.big { font-size: 2em; }
+span.small { font-size: 0.6em; }
+
+span.underline { text-decoration: underline; }
+span.overline { text-decoration: overline; }
+span.line-through { text-decoration: line-through; }
+
+
+/*
+ * xhtml11 specific
+ *
+ * */
+
+tt {
+  font-family: monospace;
+  font-size: inherit;
+  color: navy;
+}
+
+div.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.tableblock > table {
+  border: 3px solid #527bbd;
+}
+thead, p.table.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.table {
+  margin-top: 0;
+}
+/* Because the table frame attribute is overriden by CSS in most browsers. */
+div.tableblock > table[frame="void"] {
+  border-style: none;
+}
+div.tableblock > table[frame="hsides"] {
+  border-left-style: none;
+  border-right-style: none;
+}
+div.tableblock > table[frame="vsides"] {
+  border-top-style: none;
+  border-bottom-style: none;
+}
+
+
+/*
+ * html5 specific
+ *
+ * */
+
+.monospaced {
+  font-family: monospace;
+  font-size: inherit;
+  color: navy;
+}
+
+table.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+thead, p.tableblock.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.tableblock {
+  margin-top: 0;
+}
+table.tableblock {
+  border-width: 3px;
+  border-spacing: 0px;
+  border-style: solid;
+  border-color: #527bbd;
+  border-collapse: collapse;
+}
+th.tableblock, td.tableblock {
+  border-width: 1px;
+  padding: 4px;
+  border-style: solid;
+  border-color: #527bbd;
+}
+
+table.tableblock.frame-topbot {
+  border-left-style: hidden;
+  border-right-style: hidden;
+}
+table.tableblock.frame-sides {
+  border-top-style: hidden;
+  border-bottom-style: hidden;
+}
+table.tableblock.frame-none {
+  border-style: hidden;
+}
+
+th.tableblock.halign-left, td.tableblock.halign-left {
+  text-align: left;
+}
+th.tableblock.halign-center, td.tableblock.halign-center {
+  text-align: center;
+}
+th.tableblock.halign-right, td.tableblock.halign-right {
+  text-align: right;
+}
+
+th.tableblock.valign-top, td.tableblock.valign-top {
+  vertical-align: top;
+}
+th.tableblock.valign-middle, td.tableblock.valign-middle {
+  vertical-align: middle;
+}
+th.tableblock.valign-bottom, td.tableblock.valign-bottom {
+  vertical-align: bottom;
+}
+
+
+/*
+ * manpage specific
+ *
+ * */
+
+body.manpage h1 {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  border-top: 2px solid silver;
+  border-bottom: 2px solid silver;
+}
+body.manpage h2 {
+  border-style: none;
+}
+body.manpage div.sectionbody {
+  margin-left: 3em;
+}
+
+@media print {
+  body.manpage div#toc { display: none; }
+}
+</style>
+<script type="text/javascript">
+/*<![CDATA[*/
+var asciidoc = {  // Namespace.
+
+/////////////////////////////////////////////////////////////////////
+// Table Of Contents generator
+/////////////////////////////////////////////////////////////////////
+
+/* Author: Mihai Bazon, September 2002
+ * http://students.infoiasi.ro/~mishoo
+ *
+ * Table Of Content generator
+ * Version: 0.4
+ *
+ * Feel free to use this script under the terms of the GNU General Public
+ * License, as long as you do not remove or alter this notice.
+ */
+
+ /* modified by Troy D. Hanson, September 2006. License: GPL */
+ /* modified by Stuart Rackham, 2006, 2009. License: GPL */
+
+// toclevels = 1..4.
+toc: function (toclevels) {
+
+  function getText(el) {
+    var text = "";
+    for (var i = el.firstChild; i != null; i = i.nextSibling) {
+      if (i.nodeType == 3 /* Node.TEXT_NODE */) // IE doesn't speak constants.
+        text += i.data;
+      else if (i.firstChild != null)
+        text += getText(i);
+    }
+    return text;
+  }
+
+  function TocEntry(el, text, toclevel) {
+    this.element = el;
+    this.text = text;
+    this.toclevel = toclevel;
+  }
+
+  function tocEntries(el, toclevels) {
+    var result = new Array;
+    var re = new RegExp('[hH]([2-'+(toclevels+1)+'])');
+    // Function that scans the DOM tree for header elements (the DOM2
+    // nodeIterator API would be a better technique but not supported by all
+    // browsers).
+    var iterate = function (el) {
+      for (var i = el.firstChild; i != null; i = i.nextSibling) {
+        if (i.nodeType == 1 /* Node.ELEMENT_NODE */) {
+          var mo = re.exec(i.tagName);
+          if (mo && (i.getAttribute("class") || i.getAttribute("className")) != "float") {
+            result[result.length] = new TocEntry(i, getText(i), mo[1]-1);
+          }
+          iterate(i);
+        }
+      }
+    }
+    iterate(el);
+    return result;
+  }
+
+  var toc = document.getElementById("toc");
+  if (!toc) {
+    return;
+  }
+
+  // Delete existing TOC entries in case we're reloading the TOC.
+  var tocEntriesToRemove = [];
+  var i;
+  for (i = 0; i < toc.childNodes.length; i++) {
+    var entry = toc.childNodes[i];
+    if (entry.nodeName == 'div'
+     && entry.getAttribute("class")
+     && entry.getAttribute("class").match(/^toclevel/))
+      tocEntriesToRemove.push(entry);
+  }
+  for (i = 0; i < tocEntriesToRemove.length; i++) {
+    toc.removeChild(tocEntriesToRemove[i]);
+  }
+
+  // Rebuild TOC entries.
+  var entries = tocEntries(document.getElementById("content"), toclevels);
+  for (var i = 0; i < entries.length; ++i) {
+    var entry = entries[i];
+    if (entry.element.id == "")
+      entry.element.id = "_toc_" + i;
+    var a = document.createElement("a");
+    a.href = "#" + entry.element.id;
+    a.appendChild(document.createTextNode(entry.text));
+    var div = document.createElement("div");
+    div.appendChild(a);
+    div.className = "toclevel" + entry.toclevel;
+    toc.appendChild(div);
+  }
+  if (entries.length == 0)
+    toc.parentNode.removeChild(toc);
+},
+
+
+/////////////////////////////////////////////////////////////////////
+// Footnotes generator
+/////////////////////////////////////////////////////////////////////
+
+/* Based on footnote generation code from:
+ * http://www.brandspankingnew.net/archive/2005/07/format_footnote.html
+ */
+
+footnotes: function () {
+  // Delete existing footnote entries in case we're reloading the footnodes.
+  var i;
+  var noteholder = document.getElementById("footnotes");
+  if (!noteholder) {
+    return;
+  }
+  var entriesToRemove = [];
+  for (i = 0; i < noteholder.childNodes.length; i++) {
+    var entry = noteholder.childNodes[i];
+    if (entry.nodeName == 'div' && entry.getAttribute("class") == "footnote")
+      entriesToRemove.push(entry);
+  }
+  for (i = 0; i < entriesToRemove.length; i++) {
+    noteholder.removeChild(entriesToRemove[i]);
+  }
+
+  // Rebuild footnote entries.
+  var cont = document.getElementById("content");
+  var spans = cont.getElementsByTagName("span");
+  var refs = {};
+  var n = 0;
+  for (i=0; i<spans.length; i++) {
+    if (spans[i].className == "footnote") {
+      n++;
+      var note = spans[i].getAttribute("data-note");
+      if (!note) {
+        // Use [\s\S] in place of . so multi-line matches work.
+        // Because JavaScript has no s (dotall) regex flag.
+        note = spans[i].innerHTML.match(/\s*\[([\s\S]*)]\s*/)[1];
+        spans[i].innerHTML =
+          "[<a id='_footnoteref_" + n + "' href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+        spans[i].setAttribute("data-note", note);
+      }
+      noteholder.innerHTML +=
+        "<div class='footnote' id='_footnote_" + n + "'>" +
+        "<a href='#_footnoteref_" + n + "' title='Return to text'>" +
+        n + "</a>. " + note + "</div>";
+      var id =spans[i].getAttribute("id");
+      if (id != null) refs["#"+id] = n;
+    }
+  }
+  if (n == 0)
+    noteholder.parentNode.removeChild(noteholder);
+  else {
+    // Process footnoterefs.
+    for (i=0; i<spans.length; i++) {
+      if (spans[i].className == "footnoteref") {
+        var href = spans[i].getElementsByTagName("a")[0].getAttribute("href");
+        href = href.match(/#.*/)[0];  // Because IE return full URL.
+        n = refs[href];
+        spans[i].innerHTML =
+          "[<a href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+      }
+    }
+  }
+},
+
+install: function(toclevels) {
+  var timerId;
+
+  function reinstall() {
+    asciidoc.footnotes();
+    if (toclevels) {
+      asciidoc.toc(toclevels);
+    }
+  }
+
+  function reinstallAndRemoveTimer() {
+    clearInterval(timerId);
+    reinstall();
+  }
+
+  timerId = setInterval(reinstall, 500);
+  if (document.addEventListener)
+    document.addEventListener("DOMContentLoaded", reinstallAndRemoveTimer, false);
+  else
+    window.onload = reinstallAndRemoveTimer;
+}
+
+}
+asciidoc.install();
+/*]]>*/
+</script>
+</head>
+<body class="manpage">
+<div id="header">
+<h1>
+git-fast-import(1) Manual Page
+</h1>
+<h2>NAME</h2>
+<div class="sectionbody">
+<p>git-fast-import -
+   Backend for fast Git data importers
+</p>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_synopsis">SYNOPSIS</h2>
+<div class="sectionbody">
+<div class="verseblock">
+<pre class="content">frontend | <em>git fast-import</em> [options]</pre>
+<div class="attribution">
+</div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_description">DESCRIPTION</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>This program is usually not what the end user wants to run directly.
+Most end users want to use one of the existing frontend programs,
+which parses a specific type of foreign source and feeds the contents
+stored there to <em>git fast-import</em>.</p></div>
+<div class="paragraph"><p>fast-import reads a mixed command/data stream from standard input and
+writes one or more packfiles directly into the current repository.
+When EOF is received on standard input, fast import writes out
+updated branch and tag refs, fully updating the current repository
+with the newly imported data.</p></div>
+<div class="paragraph"><p>The fast-import backend itself can import into an empty repository (one that
+has already been initialized by <em>git init</em>) or incrementally
+update an existing populated repository.  Whether or not incremental
+imports are supported from a particular foreign source depends on
+the frontend program in use.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_options">OPTIONS</h2>
+<div class="sectionbody">
+<div class="dlist"><dl>
+<dt class="hdlist1">
+--force
+</dt>
+<dd>
+<p>
+        Force updating modified existing branches, even if doing
+        so would cause commits to be lost (as the new commit does
+        not contain the old commit).
+</p>
+</dd>
+<dt class="hdlist1">
+--quiet
+</dt>
+<dd>
+<p>
+        Disable all non-fatal output, making fast-import silent when it
+        is successful.  This option disables the output shown by
+        --stats.
+</p>
+</dd>
+<dt class="hdlist1">
+--stats
+</dt>
+<dd>
+<p>
+        Display some basic statistics about the objects fast-import has
+        created, the packfiles they were stored into, and the
+        memory used by fast-import during this run.  Showing this output
+        is currently the default, but can be disabled with --quiet.
+</p>
+</dd>
+</dl></div>
+<div class="sect2">
+<h3 id="_options_for_frontends">Options for Frontends</h3>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+--cat-blob-fd=&lt;fd&gt;
+</dt>
+<dd>
+<p>
+        Write responses to <tt>cat-blob</tt> and <tt>ls</tt> queries to the
+        file descriptor &lt;fd&gt; instead of <tt>stdout</tt>.  Allows <tt>progress</tt>
+        output intended for the end-user to be separated from other
+        output.
+</p>
+</dd>
+<dt class="hdlist1">
+--date-format=&lt;fmt&gt;
+</dt>
+<dd>
+<p>
+        Specify the type of dates the frontend will supply to
+        fast-import within <tt>author</tt>, <tt>committer</tt> and <tt>tagger</tt> commands.
+        See &#8220;Date Formats&#8221; below for details about which formats
+        are supported, and their syntax.
+</p>
+</dd>
+<dt class="hdlist1">
+--done
+</dt>
+<dd>
+<p>
+        Terminate with error if there is no <tt>done</tt> command at the end of
+        the stream.  This option might be useful for detecting errors
+        that cause the frontend to terminate before it has started to
+        write a stream.
+</p>
+</dd>
+</dl></div>
+</div>
+<div class="sect2">
+<h3 id="_locations_of_marks_files">Locations of Marks Files</h3>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+--export-marks=&lt;file&gt;
+</dt>
+<dd>
+<p>
+        Dumps the internal marks table to &lt;file&gt; when complete.
+        Marks are written one per line as <tt>:markid SHA-1</tt>.
+        Frontends can use this file to validate imports after they
+        have been completed, or to save the marks table across
+        incremental runs.  As &lt;file&gt; is only opened and truncated
+        at checkpoint (or completion) the same path can also be
+        safely given to --import-marks.
+</p>
+</dd>
+<dt class="hdlist1">
+--import-marks=&lt;file&gt;
+</dt>
+<dd>
+<p>
+        Before processing any input, load the marks specified in
+        &lt;file&gt;.  The input file must exist, must be readable, and
+        must use the same format as produced by --export-marks.
+        Multiple options may be supplied to import more than one
+        set of marks.  If a mark is defined to different values,
+        the last file wins.
+</p>
+</dd>
+<dt class="hdlist1">
+--import-marks-if-exists=&lt;file&gt;
+</dt>
+<dd>
+<p>
+        Like --import-marks but instead of erroring out, silently
+        skips the file if it does not exist.
+</p>
+</dd>
+<dt class="hdlist1">
+--[no-]relative-marks
+</dt>
+<dd>
+<p>
+        After specifying --relative-marks the paths specified
+        with --import-marks= and --export-marks= are relative
+        to an internal directory in the current repository.
+        In git-fast-import this means that the paths are relative
+        to the .git/info/fast-import directory. However, other
+        importers may use a different location.
+</p>
+<div class="paragraph"><p>Relative and non-relative marks may be combined by interweaving
+--(no-)-relative-marks with the --(import|export)-marks= options.</p></div>
+</dd>
+</dl></div>
+</div>
+<div class="sect2">
+<h3 id="_performance_and_compression_tuning">Performance and Compression Tuning</h3>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+--active-branches=&lt;n&gt;
+</dt>
+<dd>
+<p>
+        Maximum number of branches to maintain active at once.
+        See &#8220;Memory Utilization&#8221; below for details.  Default is 5.
+</p>
+</dd>
+<dt class="hdlist1">
+--big-file-threshold=&lt;n&gt;
+</dt>
+<dd>
+<p>
+        Maximum size of a blob that fast-import will attempt to
+        create a delta for, expressed in bytes.  The default is 512m
+        (512 MiB).  Some importers may wish to lower this on systems
+        with constrained memory.
+</p>
+</dd>
+<dt class="hdlist1">
+--depth=&lt;n&gt;
+</dt>
+<dd>
+<p>
+        Maximum delta depth, for blob and tree deltification.
+        Default is 10.
+</p>
+</dd>
+<dt class="hdlist1">
+--export-pack-edges=&lt;file&gt;
+</dt>
+<dd>
+<p>
+        After creating a packfile, print a line of data to
+        &lt;file&gt; listing the filename of the packfile and the last
+        commit on each branch that was written to that packfile.
+        This information may be useful after importing projects
+        whose total object set exceeds the 4 GiB packfile limit,
+        as these commits can be used as edge points during calls
+        to <em>git pack-objects</em>.
+</p>
+</dd>
+<dt class="hdlist1">
+--max-pack-size=&lt;n&gt;
+</dt>
+<dd>
+<p>
+        Maximum size of each output packfile.
+        The default is unlimited.
+</p>
+</dd>
+</dl></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_performance">Performance</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>The design of fast-import allows it to import large projects in a minimum
+amount of memory usage and processing time.  Assuming the frontend
+is able to keep up with fast-import and feed it a constant stream of data,
+import times for projects holding 10+ years of history and containing
+100,000+ individual commits are generally completed in just 1-2
+hours on quite modest (~$2,000 USD) hardware.</p></div>
+<div class="paragraph"><p>Most bottlenecks appear to be in foreign source data access (the
+source just cannot extract revisions fast enough) or disk IO (fast-import
+writes as fast as the disk will take the data).  Imports will run
+faster if the source data is stored on a different drive than the
+destination Git repository (due to less IO contention).</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_development_cost">Development Cost</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>A typical frontend for fast-import tends to weigh in at approximately 200
+lines of Perl/Python/Ruby code.  Most developers have been able to
+create working importers in just a couple of hours, even though it
+is their first exposure to fast-import, and sometimes even to Git.  This is
+an ideal situation, given that most conversion tools are throw-away
+(use once, and never look back).</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_parallel_operation">Parallel Operation</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Like <em>git push</em> or <em>git fetch</em>, imports handled by fast-import are safe to
+run alongside parallel <tt>git repack -a -d</tt> or <tt>git gc</tt> invocations,
+or any other Git operation (including <em>git prune</em>, as loose objects
+are never used by fast-import).</p></div>
+<div class="paragraph"><p>fast-import does not lock the branch or tag refs it is actively importing.
+After the import, during its ref update phase, fast-import tests each
+existing branch ref to verify the update will be a fast-forward
+update (the commit stored in the ref is contained in the new
+history of the commit to be written).  If the update is not a
+fast-forward update, fast-import will skip updating that ref and instead
+prints a warning message.  fast-import will always attempt to update all
+branch refs, and does not stop on the first failure.</p></div>
+<div class="paragraph"><p>Branch updates can be forced with --force, but it&#8217;s recommended that
+this only be used on an otherwise quiet repository.  Using --force
+is not necessary for an initial import into an empty repository.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_technical_discussion">Technical Discussion</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>fast-import tracks a set of branches in memory.  Any branch can be created
+or modified at any point during the import process by sending a
+<tt>commit</tt> command on the input stream.  This design allows a frontend
+program to process an unlimited number of branches simultaneously,
+generating commits in the order they are available from the source
+data.  It also simplifies the frontend programs considerably.</p></div>
+<div class="paragraph"><p>fast-import does not use or alter the current working directory, or any
+file within it.  (It does however update the current Git repository,
+as referenced by <tt>GIT_DIR</tt>.)  Therefore an import frontend may use
+the working directory for its own purposes, such as extracting file
+revisions from the foreign source.  This ignorance of the working
+directory also allows fast-import to run very quickly, as it does not
+need to perform any costly file update operations when switching
+between branches.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_input_format">Input Format</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>With the exception of raw file data (which Git does not interpret)
+the fast-import input format is text (ASCII) based.  This text based
+format simplifies development and debugging of frontend programs,
+especially when a higher level language such as Perl, Python or
+Ruby is being used.</p></div>
+<div class="paragraph"><p>fast-import is very strict about its input.  Where we say SP below we mean
+<strong>exactly</strong> one space.  Likewise LF means one (and only one) linefeed
+and HT one (and only one) horizontal tab.
+Supplying additional whitespace characters will cause unexpected
+results, such as branch names or file names with leading or trailing
+spaces in their name, or early termination of fast-import when it encounters
+unexpected input.</p></div>
+<div class="sect2">
+<h3 id="_stream_comments">Stream Comments</h3>
+<div class="paragraph"><p>To aid in debugging frontends fast-import ignores any line that
+begins with <tt>#</tt> (ASCII pound/hash) up to and including the line
+ending <tt>LF</tt>.  A comment line may contain any sequence of bytes
+that does not contain an LF and therefore may be used to include
+any detailed debugging information that might be specific to the
+frontend and useful when inspecting a fast-import data stream.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_date_formats">Date Formats</h3>
+<div class="paragraph"><p>The following date formats are supported.  A frontend should select
+the format it will use for this import by passing the format name
+in the --date-format=&lt;fmt&gt; command line option.</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+<tt>raw</tt>
+</dt>
+<dd>
+<p>
+        This is the Git native format and is <tt>&lt;time&gt; SP &lt;offutc&gt;</tt>.
+        It is also fast-import&#8217;s default format, if --date-format was
+        not specified.
+</p>
+<div class="paragraph"><p>The time of the event is specified by <tt>&lt;time&gt;</tt> as the number of
+seconds since the UNIX epoch (midnight, Jan 1, 1970, UTC) and is
+written as an ASCII decimal integer.</p></div>
+<div class="paragraph"><p>The local offset is specified by <tt>&lt;offutc&gt;</tt> as a positive or negative
+offset from UTC.  For example EST (which is 5 hours behind UTC)
+would be expressed in <tt>&lt;tz&gt;</tt> by &#8220;-0500&#8221; while UTC is &#8220;+0000&#8221;.
+The local offset does not affect <tt>&lt;time&gt;</tt>; it is used only as an
+advisement to help formatting routines display the timestamp.</p></div>
+<div class="paragraph"><p>If the local offset is not available in the source material, use
+&#8220;+0000&#8221;, or the most common local offset.  For example many
+organizations have a CVS repository which has only ever been accessed
+by users who are located in the same location and time zone.  In this
+case a reasonable offset from UTC could be assumed.</p></div>
+<div class="paragraph"><p>Unlike the <tt>rfc2822</tt> format, this format is very strict.  Any
+variation in formatting will cause fast-import to reject the value.</p></div>
+</dd>
+<dt class="hdlist1">
+<tt>rfc2822</tt>
+</dt>
+<dd>
+<p>
+        This is the standard email format as described by RFC 2822.
+</p>
+<div class="paragraph"><p>An example value is &#8220;Tue Feb 6 11:22:18 2007 -0500&#8221;.  The Git
+parser is accurate, but a little on the lenient side.  It is the
+same parser used by <em>git am</em> when applying patches
+received from email.</p></div>
+<div class="paragraph"><p>Some malformed strings may be accepted as valid dates.  In some of
+these cases Git will still be able to obtain the correct date from
+the malformed string.  There are also some types of malformed
+strings which Git will parse wrong, and yet consider valid.
+Seriously malformed strings will be rejected.</p></div>
+<div class="paragraph"><p>Unlike the <tt>raw</tt> format above, the time zone/UTC offset information
+contained in an RFC 2822 date string is used to adjust the date
+value to UTC prior to storage.  Therefore it is important that
+this information be as accurate as possible.</p></div>
+<div class="paragraph"><p>If the source material uses RFC 2822 style dates,
+the frontend should let fast-import handle the parsing and conversion
+(rather than attempting to do it itself) as the Git parser has
+been well tested in the wild.</p></div>
+<div class="paragraph"><p>Frontends should prefer the <tt>raw</tt> format if the source material
+already uses UNIX-epoch format, can be coaxed to give dates in that
+format, or its format is easily convertible to it, as there is no
+ambiguity in parsing.</p></div>
+</dd>
+<dt class="hdlist1">
+<tt>now</tt>
+</dt>
+<dd>
+<p>
+        Always use the current time and time zone.  The literal
+        <tt>now</tt> must always be supplied for <tt>&lt;when&gt;</tt>.
+</p>
+<div class="paragraph"><p>This is a toy format.  The current time and time zone of this system
+is always copied into the identity string at the time it is being
+created by fast-import.  There is no way to specify a different time or
+time zone.</p></div>
+<div class="paragraph"><p>This particular format is supplied as it&#8217;s short to implement and
+may be useful to a process that wants to create a new commit
+right now, without needing to use a working directory or
+<em>git update-index</em>.</p></div>
+<div class="paragraph"><p>If separate <tt>author</tt> and <tt>committer</tt> commands are used in a <tt>commit</tt>
+the timestamps may not match, as the system clock will be polled
+twice (once for each command).  The only way to ensure that both
+author and committer identity information has the same timestamp
+is to omit <tt>author</tt> (thus copying from <tt>committer</tt>) or to use a
+date format other than <tt>now</tt>.</p></div>
+</dd>
+</dl></div>
+</div>
+<div class="sect2">
+<h3 id="_commands">Commands</h3>
+<div class="paragraph"><p>fast-import accepts several commands to update the current repository
+and control the current import process.  More detailed discussion
+(with examples) of each command follows later.</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+<tt>commit</tt>
+</dt>
+<dd>
+<p>
+        Creates a new branch or updates an existing branch by
+        creating a new commit and updating the branch to point at
+        the newly created commit.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>tag</tt>
+</dt>
+<dd>
+<p>
+        Creates an annotated tag object from an existing commit or
+        branch.  Lightweight tags are not supported by this command,
+        as they are not recommended for recording meaningful points
+        in time.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>reset</tt>
+</dt>
+<dd>
+<p>
+        Reset an existing branch (or a new branch) to a specific
+        revision.  This command must be used to change a branch to
+        a specific revision without making a commit on it.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>blob</tt>
+</dt>
+<dd>
+<p>
+        Convert raw file data into a blob, for future use in a
+        <tt>commit</tt> command.  This command is optional and is not
+        needed to perform an import.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>checkpoint</tt>
+</dt>
+<dd>
+<p>
+        Forces fast-import to close the current packfile, generate its
+        unique SHA-1 checksum and index, and start a new packfile.
+        This command is optional and is not needed to perform
+        an import.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>progress</tt>
+</dt>
+<dd>
+<p>
+        Causes fast-import to echo the entire line to its own
+        standard output.  This command is optional and is not needed
+        to perform an import.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>done</tt>
+</dt>
+<dd>
+<p>
+        Marks the end of the stream. This command is optional
+        unless the <tt>done</tt> feature was requested using the
+        <tt>--done</tt> command line option or <tt>feature done</tt> command.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>cat-blob</tt>
+</dt>
+<dd>
+<p>
+        Causes fast-import to print a blob in <em>cat-file --batch</em>
+        format to the file descriptor set with <tt>--cat-blob-fd</tt> or
+        <tt>stdout</tt> if unspecified.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>ls</tt>
+</dt>
+<dd>
+<p>
+        Causes fast-import to print a line describing a directory
+        entry in <em>ls-tree</em> format to the file descriptor set with
+        <tt>--cat-blob-fd</tt> or <tt>stdout</tt> if unspecified.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>feature</tt>
+</dt>
+<dd>
+<p>
+        Enable the specified feature. This requires that fast-import
+        supports the specified feature, and aborts if it does not.
+</p>
+</dd>
+<dt class="hdlist1">
+<tt>option</tt>
+</dt>
+<dd>
+<p>
+        Specify any of the options listed under OPTIONS that do not
+        change stream semantic to suit the frontend&#8217;s needs. This
+        command is optional and is not needed to perform an import.
+</p>
+</dd>
+</dl></div>
+</div>
+<div class="sect2">
+<h3 id="_tt_commit_tt"><tt>commit</tt></h3>
+<div class="paragraph"><p>Create or update a branch with a new commit, recording one logical
+change to the project.</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><tt>        'commit' SP &lt;ref&gt; LF
+        mark?
+        ('author' (SP &lt;name&gt;)? SP LT &lt;email&gt; GT SP &lt;when&gt; LF)?
+        'committer' (SP &lt;name&gt;)? SP LT &lt;email&gt; GT SP &lt;when&gt; LF
+        data
+        ('from' SP &lt;commit-ish&gt; LF)?
+        ('merge' SP &lt;commit-ish&gt; LF)?
+        (filemodify | filedelete | filecopy | filerename | filedeleteall | notemodify)*
+        LF?</tt></pre>
+</div></div>
+<div class="paragraph"><p>where <tt>&lt;ref&gt;</tt> is the name of the branch to make the commit on.
+Typically branch names are prefixed with <tt>refs/heads/</tt> in
+Git, so importing the CVS branch symbol <tt>RELENG-1_0</tt> would use
+<tt>refs/heads/RELENG-1_0</tt> for the value of <tt>&lt;ref&gt;</tt>.  The value of
+<tt>&lt;ref&gt;</tt> must be a valid refname in Git.  As <tt>LF</tt> is not valid in
+a Git refname, no quoting or escaping syntax is supported here.</p></div>
+<div class="paragraph"><p>A <tt>mark</tt> command may optionally appear, requesting fast-import to save a
+reference to the newly created commit for future use by the frontend
+(see below for format).  It is very common for frontends to mark
+every commit they create, thereby allowing future branch creation
+from any imported commit.</p></div>
+<div class="paragraph"><p>The <tt>data</tt> command following <tt>committer</tt> must supply the commit
+message (see below for <tt>data</tt> command syntax).  To import an empty
+commit message use a 0 length data.  Commit messages are free-form
+and are not interpreted by Git.  Currently they must be encoded in
+UTF-8, as fast-import does not permit other encodings to be specified.</p></div>
+<div class="paragraph"><p>Zero or more <tt>filemodify</tt>, <tt>filedelete</tt>, <tt>filecopy</tt>, <tt>filerename</tt>,
+<tt>filedeleteall</tt> and <tt>notemodify</tt> commands
+may be included to update the contents of the branch prior to
+creating the commit.  These commands may be supplied in any order.
+However it is recommended that a <tt>filedeleteall</tt> command precede
+all <tt>filemodify</tt>, <tt>filecopy</tt>, <tt>filerename</tt> and <tt>notemodify</tt> commands in
+the same commit, as <tt>filedeleteall</tt> wipes the branch clean (see below).</p></div>
+<div class="paragraph"><p>The <tt>LF</tt> after the command is optional (it used to be required).</p></div>
+<div class="sect3">
+<h4 id="_tt_author_tt"><tt>author</tt></h4>
+<div class="paragraph"><p>An <tt>author</tt> command may optionally appear, if the author information
+might differ from the committer information.  If <tt>author</tt> is omitted
+then fast-import will automatically use the committer&#8217;s information for
+the author portion of the commit.  See below for a description of
+the fields in <tt>author</tt>, as they are identical to <tt>committer</tt>.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_tt_committer_tt"><tt>committer</tt></h4>
+<div class="paragraph"><p>The <tt>committer</tt> command indicates who made this commit, and when
+they made it.</p></div>
+<div class="paragraph"><p>Here <tt>&lt;name&gt;</tt> is the person&#8217;s display name (for example
+&#8220;Com M Itter&#8221;) and <tt>&lt;email&gt;</tt> is the person&#8217;s email address
+(&#8220;cm@example.com&#8221;).  <tt>LT</tt> and <tt>GT</tt> are the literal less-than (\x3c)
+and greater-than (\x3e) symbols.  These are required to delimit
+the email address from the other fields in the line.  Note that
+<tt>&lt;name&gt;</tt> and <tt>&lt;email&gt;</tt> are free-form and may contain any sequence
+of bytes, except <tt>LT</tt>, <tt>GT</tt> and <tt>LF</tt>.  <tt>&lt;name&gt;</tt> is typically UTF-8 encoded.</p></div>
+<div class="paragraph"><p>The time of the change is specified by <tt>&lt;when&gt;</tt> using the date format
+that was selected by the --date-format=&lt;fmt&gt; command line option.
+See &#8220;Date Formats&#8221; above for the set of supported formats, and
+their syntax.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_tt_from_tt"><tt>from</tt></h4>
+<div class="paragraph"><p>The <tt>from</tt> command is used to specify the commit to initialize
+this branch from.  This revision will be the first ancestor of the
+new commit.  The state of the tree built at this commit will begin
+with the state at the <tt>from</tt> commit, and be altered by the content
+modifications in this commit.</p></div>
+<div class="paragraph"><p>Omitting the <tt>from</tt> command in the first commit of a new branch
+will cause fast-import to create that commit with no ancestor. This
+tends to be desired only for the initial commit of a project.
+If the frontend creates all files from scratch when making a new
+branch, a <tt>merge</tt> command may be used instead of <tt>from</tt> to start
+the commit with an empty tree.
+Omitting the <tt>from</tt> command on existing branches is usually desired,
+as the current commit on that branch is automatically assumed to
+be the first ancestor of the new commit.</p></div>
+<div class="paragraph"><p>As <tt>LF</tt> is not valid in a Git refname or SHA-1 expression, no
+quoting or escaping syntax is supported within <tt>&lt;commit-ish&gt;</tt>.</p></div>
+<div class="paragraph"><p>Here <tt>&lt;commit-ish&gt;</tt> is any of the following:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+The name of an existing branch already in fast-import&#8217;s internal branch
+  table.  If fast-import doesn&#8217;t know the name, it&#8217;s treated as a SHA-1
+  expression.
+</p>
+</li>
+<li>
+<p>
+A mark reference, <tt>:&lt;idnum&gt;</tt>, where <tt>&lt;idnum&gt;</tt> is the mark number.
+</p>
+<div class="paragraph"><p>The reason fast-import uses <tt>:</tt> to denote a mark reference is this character
+is not legal in a Git branch name.  The leading <tt>:</tt> makes it easy
+to distinguish between the mark 42 (<tt>:42</tt>) and the branch 42 (<tt>42</tt>
+or <tt>refs/heads/42</tt>), or an abbreviated SHA-1 which happened to
+consist only of base-10 digits.</p></div>
+<div class="paragraph"><p>Marks must be declared (via <tt>mark</tt>) before they can be used.</p></div>
+</li>
+<li>
+<p>
+A complete 40 byte or abbreviated commit SHA-1 in hex.
+</p>
+</li>
+<li>
+<p>
+Any valid Git SHA-1 expression that resolves to a commit.  See
+  &#8220;SPECIFYING REVISIONS&#8221; in <a href="gitrevisions.html">gitrevisions(7)</a> for details.
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>The special case of restarting an incremental import from the
+current branch value should be written as:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>        from refs/heads/branch^0</tt></pre>
+</div></div>
+<div class="paragraph"><p>The <tt>^0</tt> suffix is necessary as fast-import does not permit a branch to
+start from itself, and the branch is created in memory before the
+<tt>from</tt> command is even read from the input.  Adding <tt>^0</tt> will force
+fast-import to resolve the commit through Git&#8217;s revision parsing library,
+rather than its internal branch table, thereby loading in the
+existing value of the branch.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_tt_merge_tt"><tt>merge</tt></h4>
+<div class="paragraph"><p>Includes one additional ancestor commit.  The additional ancestry
+link does not change the way the tree state is built at this commit.
+If the <tt>from</tt> command is
+omitted when creating a new branch, the first <tt>merge</tt> commit will be
+the first ancestor of the current commit, and the branch will start
+out with no files.  An unlimited number of <tt>merge</tt> commands per
+commit are permitted by fast-import, thereby establishing an n-way merge.
+However Git&#8217;s other tools never create commits with more than 15
+additional ancestors (forming a 16-way merge).  For this reason
+it is suggested that frontends do not use more than 15 <tt>merge</tt>
+commands per commit; 16, if starting a new, empty branch.</p></div>
+<div class="paragraph"><p>Here <tt>&lt;commit-ish&gt;</tt> is any of the commit specification expressions
+also accepted by <tt>from</tt> (see above).</p></div>
+</div>
+<div class="sect3">
+<h4 id="_tt_filemodify_tt"><tt>filemodify</tt></h4>
+<div class="paragraph"><p>Included in a <tt>commit</tt> command to add a new file or change the
+content of an existing file.  This command has two different means
+of specifying the content of the file.</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+External data format
+</dt>
+<dd>
+<p>
+        The data content for the file was already supplied by a prior
+        <tt>blob</tt> command.  The frontend just needs to connect it.
+</p>
+<div class="literalblock">
+<div class="content">
+<pre><tt>        'M' SP &lt;mode&gt; SP &lt;dataref&gt; SP &lt;path&gt; LF</tt></pre>
+</div></div>
+<div class="paragraph"><p>Here usually <tt>&lt;dataref&gt;</tt> must be either a mark reference (<tt>:&lt;idnum&gt;</tt>)
+set by a prior <tt>blob</tt> command, or a full 40-byte SHA-1 of an
+existing Git blob object.  If <tt>&lt;mode&gt;</tt> is <tt>040000`</tt> then
+<tt>&lt;dataref&gt;</tt> must be the full 40-byte SHA-1 of an existing
+Git tree object or a mark reference set with <tt>--import-marks</tt>.</p></div>
+</dd>
+<dt class="hdlist1">
+Inline data format
+</dt>
+<dd>
+<p>
+        The data content for the file has not been supplied yet.
+        The frontend wants to supply it as part of this modify
+        command.
+</p>
+<div class="literalblock">
+<div class="content">
+<pre><tt>        'M' SP &lt;mode&gt; SP 'inline' SP &lt;path&gt; LF
+        data</tt></pre>
+</div></div>
+<div class="paragraph"><p>See below for a detailed description of the <tt>data</tt> command.</p></div>
+</dd>
+</dl></div>
+<div class="paragraph"><p>In both formats <tt>&lt;mode&gt;</tt> is the type of file entry, specified
+in octal.  Git only supports the following modes:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<tt>100644</tt> or <tt>644</tt>: A normal (not-executable) file.  The majority
+  of files in most projects use this mode.  If in doubt, this is
+  what you want.
+</p>
+</li>
+<li>
+<p>
+<tt>100755</tt> or <tt>755</tt>: A normal, but executable, file.
+</p>
+</li>
+<li>
+<p>
+<tt>120000</tt>: A symlink, the content of the file will be the link target.
+</p>
+</li>
+<li>
+<p>
+<tt>160000</tt>: A gitlink, SHA-1 of the object refers to a commit in
+  another repository. Git links can only be specified by SHA or through
+  a commit mark. They are used to implement submodules.
+</p>
+</li>
+<li>
+<p>
+<tt>040000</tt>: A subdirectory.  Subdirectories can only be specified by
+  SHA or through a tree mark set with <tt>--import-marks</tt>.
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>In both formats <tt>&lt;path&gt;</tt> is the complete path of the file to be added
+(if not already existing) or modified (if already existing).</p></div>
+<div class="paragraph"><p>A <tt>&lt;path&gt;</tt> string must use UNIX-style directory separators (forward
+slash <tt>/</tt>), may contain any byte other than <tt>LF</tt>, and must not
+start with double quote (<tt>"</tt>).</p></div>
+<div class="paragraph"><p>A path can use C-style string quoting; this is accepted in all cases
+and mandatory if the filename starts with double quote or contains
+<tt>LF</tt>. In C-style quoting, the complete name should be surrounded with
+double quotes, and any <tt>LF</tt>, backslash, or double quote characters
+must be escaped by preceding them with a backslash (e.g.,
+<tt>"path/with\n, \\ and \" in it"</tt>).</p></div>
+<div class="paragraph"><p>The value of <tt>&lt;path&gt;</tt> must be in canonical form. That is it must not:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+contain an empty directory component (e.g. <tt>foo//bar</tt> is invalid),
+</p>
+</li>
+<li>
+<p>
+end with a directory separator (e.g. <tt>foo/</tt> is invalid),
+</p>
+</li>
+<li>
+<p>
+start with a directory separator (e.g. <tt>/foo</tt> is invalid),
+</p>
+</li>
+<li>
+<p>
+contain the special component <tt>.</tt> or <tt>..</tt> (e.g. <tt>foo/./bar</tt> and
+  <tt>foo/../bar</tt> are invalid).
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>The root of the tree can be represented by an empty string as <tt>&lt;path&gt;</tt>.</p></div>
+<div class="paragraph"><p>It is recommended that <tt>&lt;path&gt;</tt> always be encoded using UTF-8.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_tt_filedelete_tt"><tt>filedelete</tt></h4>
+<div class="paragraph"><p>Included in a <tt>commit</tt> command to remove a file or recursively
+delete an entire directory from the branch.  If the file or directory
+removal makes its parent directory empty, the parent directory will
+be automatically removed too.  This cascades up the tree until the
+first non-empty directory or the root is reached.</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><tt>        'D' SP &lt;path&gt; LF</tt></pre>
+</div></div>
+<div class="paragraph"><p>here <tt>&lt;path&gt;</tt> is the complete path of the file or subdirectory to
+be removed from the branch.
+See <tt>filemodify</tt> above for a detailed description of <tt>&lt;path&gt;</tt>.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_tt_filecopy_tt"><tt>filecopy</tt></h4>
+<div class="paragraph"><p>Recursively copies an existing file or subdirectory to a different
+location within the branch.  The existing file or directory must
+exist.  If the destination exists it will be completely replaced
+by the content copied from the source.</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><tt>        'C' SP &lt;path&gt; SP &lt;path&gt; LF</tt></pre>
+</div></div>
+<div class="paragraph"><p>here the first <tt>&lt;path&gt;</tt> is the source location and the second
+<tt>&lt;path&gt;</tt> is the destination.  See <tt>filemodify</tt> above for a detailed
+description of what <tt>&lt;path&gt;</tt> may look like.  To use a source path
+that contains SP the path must be quoted.</p></div>
+<div class="paragraph"><p>A <tt>filecopy</tt> command takes effect immediately.  Once the source
+location has been copied to the destination any future commands
+applied to the source location will not impact the destination of
+the copy.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_tt_filerename_tt"><tt>filerename</tt></h4>
+<div class="paragraph"><p>Renames an existing file or subdirectory to a different location
+within the branch.  The existing file or directory must exist. If
+the destination exists it will be replaced by the source directory.</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><tt>        'R' SP &lt;path&gt; SP &lt;path&gt; LF</tt></pre>
+</div></div>
+<div class="paragraph"><p>here the first <tt>&lt;path&gt;</tt> is the source location and the second
+<tt>&lt;path&gt;</tt> is the destination.  See <tt>filemodify</tt> above for a detailed
+description of what <tt>&lt;path&gt;</tt> may look like.  To use a source path
+that contains SP the path must be quoted.</p></div>
+<div class="paragraph"><p>A <tt>filerename</tt> command takes effect immediately.  Once the source
+location has been renamed to the destination any future commands
+applied to the source location will create new files there and not
+impact the destination of the rename.</p></div>
+<div class="paragraph"><p>Note that a <tt>filerename</tt> is the same as a <tt>filecopy</tt> followed by a
+<tt>filedelete</tt> of the source location.  There is a slight performance
+advantage to using <tt>filerename</tt>, but the advantage is so small
+that it is never worth trying to convert a delete/add pair in
+source material into a rename for fast-import.  This <tt>filerename</tt>
+command is provided just to simplify frontends that already have
+rename information and don&#8217;t want bother with decomposing it into a
+<tt>filecopy</tt> followed by a <tt>filedelete</tt>.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_tt_filedeleteall_tt"><tt>filedeleteall</tt></h4>
+<div class="paragraph"><p>Included in a <tt>commit</tt> command to remove all files (and also all
+directories) from the branch.  This command resets the internal
+branch structure to have no files in it, allowing the frontend
+to subsequently add all interesting files from scratch.</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><tt>        'deleteall' LF</tt></pre>
+</div></div>
+<div class="paragraph"><p>This command is extremely useful if the frontend does not know
+(or does not care to know) what files are currently on the branch,
+and therefore cannot generate the proper <tt>filedelete</tt> commands to
+update the content.</p></div>
+<div class="paragraph"><p>Issuing a <tt>filedeleteall</tt> followed by the needed <tt>filemodify</tt>
+commands to set the correct content will produce the same results
+as sending only the needed <tt>filemodify</tt> and <tt>filedelete</tt> commands.
+The <tt>filedeleteall</tt> approach may however require fast-import to use slightly
+more memory per active branch (less than 1 MiB for even most large
+projects); so frontends that can easily obtain only the affected
+paths for a commit are encouraged to do so.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_tt_notemodify_tt"><tt>notemodify</tt></h4>
+<div class="paragraph"><p>Included in a <tt>commit</tt> <tt>&lt;notes_ref&gt;</tt> command to add a new note
+annotating a <tt>&lt;commit-ish&gt;</tt> or change this annotation contents.
+Internally it is similar to filemodify 100644 on <tt>&lt;commit-ish&gt;</tt>
+path (maybe split into subdirectories). It&#8217;s not advised to
+use any other commands to write to the <tt>&lt;notes_ref&gt;</tt> tree except
+<tt>filedeleteall</tt> to delete all existing notes in this tree.
+This command has two different means of specifying the content
+of the note.</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+External data format
+</dt>
+<dd>
+<p>
+        The data content for the note was already supplied by a prior
+        <tt>blob</tt> command.  The frontend just needs to connect it to the
+        commit that is to be annotated.
+</p>
+<div class="literalblock">
+<div class="content">
+<pre><tt>        'N' SP &lt;dataref&gt; SP &lt;commit-ish&gt; LF</tt></pre>
+</div></div>
+<div class="paragraph"><p>Here <tt>&lt;dataref&gt;</tt> can be either a mark reference (<tt>:&lt;idnum&gt;</tt>)
+set by a prior <tt>blob</tt> command, or a full 40-byte SHA-1 of an
+existing Git blob object.</p></div>
+</dd>
+<dt class="hdlist1">
+Inline data format
+</dt>
+<dd>
+<p>
+        The data content for the note has not been supplied yet.
+        The frontend wants to supply it as part of this modify
+        command.
+</p>
+<div class="literalblock">
+<div class="content">
+<pre><tt>        'N' SP 'inline' SP &lt;commit-ish&gt; LF
+        data</tt></pre>
+</div></div>
+<div class="paragraph"><p>See below for a detailed description of the <tt>data</tt> command.</p></div>
+</dd>
+</dl></div>
+<div class="paragraph"><p>In both formats <tt>&lt;commit-ish&gt;</tt> is any of the commit specification
+expressions also accepted by <tt>from</tt> (see above).</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_tt_mark_tt"><tt>mark</tt></h3>
+<div class="paragraph"><p>Arranges for fast-import to save a reference to the current object, allowing
+the frontend to recall this object at a future point in time, without
+knowing its SHA-1.  Here the current object is the object creation
+command the <tt>mark</tt> command appears within.  This can be <tt>commit</tt>,
+<tt>tag</tt>, and <tt>blob</tt>, but <tt>commit</tt> is the most common usage.</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><tt>        'mark' SP ':' &lt;idnum&gt; LF</tt></pre>
+</div></div>
+<div class="paragraph"><p>where <tt>&lt;idnum&gt;</tt> is the number assigned by the frontend to this mark.
+The value of <tt>&lt;idnum&gt;</tt> is expressed as an ASCII decimal integer.
+The value 0 is reserved and cannot be used as
+a mark.  Only values greater than or equal to 1 may be used as marks.</p></div>
+<div class="paragraph"><p>New marks are created automatically.  Existing marks can be moved
+to another object simply by reusing the same <tt>&lt;idnum&gt;</tt> in another
+<tt>mark</tt> command.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_tt_tag_tt"><tt>tag</tt></h3>
+<div class="paragraph"><p>Creates an annotated tag referring to a specific commit.  To create
+lightweight (non-annotated) tags see the <tt>reset</tt> command below.</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><tt>        'tag' SP &lt;name&gt; LF
+        'from' SP &lt;commit-ish&gt; LF
+        'tagger' (SP &lt;name&gt;)? SP LT &lt;email&gt; GT SP &lt;when&gt; LF
+        data</tt></pre>
+</div></div>
+<div class="paragraph"><p>where <tt>&lt;name&gt;</tt> is the name of the tag to create.</p></div>
+<div class="paragraph"><p>Tag names are automatically prefixed with <tt>refs/tags/</tt> when stored
+in Git, so importing the CVS branch symbol <tt>RELENG-1_0-FINAL</tt> would
+use just <tt>RELENG-1_0-FINAL</tt> for <tt>&lt;name&gt;</tt>, and fast-import will write the
+corresponding ref as <tt>refs/tags/RELENG-1_0-FINAL</tt>.</p></div>
+<div class="paragraph"><p>The value of <tt>&lt;name&gt;</tt> must be a valid refname in Git and therefore
+may contain forward slashes.  As <tt>LF</tt> is not valid in a Git refname,
+no quoting or escaping syntax is supported here.</p></div>
+<div class="paragraph"><p>The <tt>from</tt> command is the same as in the <tt>commit</tt> command; see
+above for details.</p></div>
+<div class="paragraph"><p>The <tt>tagger</tt> command uses the same format as <tt>committer</tt> within
+<tt>commit</tt>; again see above for details.</p></div>
+<div class="paragraph"><p>The <tt>data</tt> command following <tt>tagger</tt> must supply the annotated tag
+message (see below for <tt>data</tt> command syntax).  To import an empty
+tag message use a 0 length data.  Tag messages are free-form and are
+not interpreted by Git.  Currently they must be encoded in UTF-8,
+as fast-import does not permit other encodings to be specified.</p></div>
+<div class="paragraph"><p>Signing annotated tags during import from within fast-import is not
+supported.  Trying to include your own PGP/GPG signature is not
+recommended, as the frontend does not (easily) have access to the
+complete set of bytes which normally goes into such a signature.
+If signing is required, create lightweight tags from within fast-import with
+<tt>reset</tt>, then create the annotated versions of those tags offline
+with the standard <em>git tag</em> process.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_tt_reset_tt"><tt>reset</tt></h3>
+<div class="paragraph"><p>Creates (or recreates) the named branch, optionally starting from
+a specific revision.  The reset command allows a frontend to issue
+a new <tt>from</tt> command for an existing branch, or to create a new
+branch from an existing commit without creating a new commit.</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><tt>        'reset' SP &lt;ref&gt; LF
+        ('from' SP &lt;commit-ish&gt; LF)?
+        LF?</tt></pre>
+</div></div>
+<div class="paragraph"><p>For a detailed description of <tt>&lt;ref&gt;</tt> and <tt>&lt;commit-ish&gt;</tt> see above
+under <tt>commit</tt> and <tt>from</tt>.</p></div>
+<div class="paragraph"><p>The <tt>LF</tt> after the command is optional (it used to be required).</p></div>
+<div class="paragraph"><p>The <tt>reset</tt> command can also be used to create lightweight
+(non-annotated) tags.  For example:</p></div>
+<div class="exampleblock">
+<div class="content">
+<div class="literalblock">
+<div class="content">
+<pre><tt>reset refs/tags/938
+from :938</tt></pre>
+</div></div>
+</div></div>
+<div class="paragraph"><p>would create the lightweight tag <tt>refs/tags/938</tt> referring to
+whatever commit mark <tt>:938</tt> references.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_tt_blob_tt"><tt>blob</tt></h3>
+<div class="paragraph"><p>Requests writing one file revision to the packfile.  The revision
+is not connected to any commit; this connection must be formed in
+a subsequent <tt>commit</tt> command by referencing the blob through an
+assigned mark.</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><tt>        'blob' LF
+        mark?
+        data</tt></pre>
+</div></div>
+<div class="paragraph"><p>The mark command is optional here as some frontends have chosen
+to generate the Git SHA-1 for the blob on their own, and feed that
+directly to <tt>commit</tt>.  This is typically more work than it&#8217;s worth
+however, as marks are inexpensive to store and easy to use.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_tt_data_tt"><tt>data</tt></h3>
+<div class="paragraph"><p>Supplies raw data (for use as blob/file content, commit messages, or
+annotated tag messages) to fast-import.  Data can be supplied using an exact
+byte count or delimited with a terminating line.  Real frontends
+intended for production-quality conversions should always use the
+exact byte count format, as it is more robust and performs better.
+The delimited format is intended primarily for testing fast-import.</p></div>
+<div class="paragraph"><p>Comment lines appearing within the <tt>&lt;raw&gt;</tt> part of <tt>data</tt> commands
+are always taken to be part of the body of the data and are therefore
+never ignored by fast-import.  This makes it safe to import any
+file/message content whose lines might start with <tt>#</tt>.</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+Exact byte count format
+</dt>
+<dd>
+<p>
+        The frontend must specify the number of bytes of data.
+</p>
+<div class="literalblock">
+<div class="content">
+<pre><tt>        'data' SP &lt;count&gt; LF
+        &lt;raw&gt; LF?</tt></pre>
+</div></div>
+<div class="paragraph"><p>where <tt>&lt;count&gt;</tt> is the exact number of bytes appearing within
+<tt>&lt;raw&gt;</tt>.  The value of <tt>&lt;count&gt;</tt> is expressed as an ASCII decimal
+integer.  The <tt>LF</tt> on either side of <tt>&lt;raw&gt;</tt> is not
+included in <tt>&lt;count&gt;</tt> and will not be included in the imported data.</p></div>
+<div class="paragraph"><p>The <tt>LF</tt> after <tt>&lt;raw&gt;</tt> is optional (it used to be required) but
+recommended.  Always including it makes debugging a fast-import
+stream easier as the next command always starts in column 0
+of the next line, even if <tt>&lt;raw&gt;</tt> did not end with an <tt>LF</tt>.</p></div>
+</dd>
+<dt class="hdlist1">
+Delimited format
+</dt>
+<dd>
+<p>
+        A delimiter string is used to mark the end of the data.
+        fast-import will compute the length by searching for the delimiter.
+        This format is primarily useful for testing and is not
+        recommended for real data.
+</p>
+<div class="literalblock">
+<div class="content">
+<pre><tt>        'data' SP '&lt;&lt;' &lt;delim&gt; LF
+        &lt;raw&gt; LF
+        &lt;delim&gt; LF
+        LF?</tt></pre>
+</div></div>
+<div class="paragraph"><p>where <tt>&lt;delim&gt;</tt> is the chosen delimiter string.  The string <tt>&lt;delim&gt;</tt>
+must not appear on a line by itself within <tt>&lt;raw&gt;</tt>, as otherwise
+fast-import will think the data ends earlier than it really does.  The <tt>LF</tt>
+immediately trailing <tt>&lt;raw&gt;</tt> is part of <tt>&lt;raw&gt;</tt>.  This is one of
+the limitations of the delimited format, it is impossible to supply
+a data chunk which does not have an LF as its last byte.</p></div>
+<div class="paragraph"><p>The <tt>LF</tt> after <tt>&lt;delim&gt; LF</tt> is optional (it used to be required).</p></div>
+</dd>
+</dl></div>
+</div>
+<div class="sect2">
+<h3 id="_tt_checkpoint_tt"><tt>checkpoint</tt></h3>
+<div class="paragraph"><p>Forces fast-import to close the current packfile, start a new one, and to
+save out all current branch refs, tags and marks.</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><tt>        'checkpoint' LF
+        LF?</tt></pre>
+</div></div>
+<div class="paragraph"><p>Note that fast-import automatically switches packfiles when the current
+packfile reaches --max-pack-size, or 4 GiB, whichever limit is
+smaller.  During an automatic packfile switch fast-import does not update
+the branch refs, tags or marks.</p></div>
+<div class="paragraph"><p>As a <tt>checkpoint</tt> can require a significant amount of CPU time and
+disk IO (to compute the overall pack SHA-1 checksum, generate the
+corresponding index file, and update the refs) it can easily take
+several minutes for a single <tt>checkpoint</tt> command to complete.</p></div>
+<div class="paragraph"><p>Frontends may choose to issue checkpoints during extremely large
+and long running imports, or when they need to allow another Git
+process access to a branch.  However given that a 30 GiB Subversion
+repository can be loaded into Git through fast-import in about 3 hours,
+explicit checkpointing may not be necessary.</p></div>
+<div class="paragraph"><p>The <tt>LF</tt> after the command is optional (it used to be required).</p></div>
+</div>
+<div class="sect2">
+<h3 id="_tt_progress_tt"><tt>progress</tt></h3>
+<div class="paragraph"><p>Causes fast-import to print the entire <tt>progress</tt> line unmodified to
+its standard output channel (file descriptor 1) when the command is
+processed from the input stream.  The command otherwise has no impact
+on the current import, or on any of fast-import&#8217;s internal state.</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><tt>        'progress' SP &lt;any&gt; LF
+        LF?</tt></pre>
+</div></div>
+<div class="paragraph"><p>The <tt>&lt;any&gt;</tt> part of the command may contain any sequence of bytes
+that does not contain <tt>LF</tt>.  The <tt>LF</tt> after the command is optional.
+Callers may wish to process the output through a tool such as sed to
+remove the leading part of the line, for example:</p></div>
+<div class="exampleblock">
+<div class="content">
+<div class="literalblock">
+<div class="content">
+<pre><tt>frontend | git fast-import | sed 's/^progress //'</tt></pre>
+</div></div>
+</div></div>
+<div class="paragraph"><p>Placing a <tt>progress</tt> command immediately after a <tt>checkpoint</tt> will
+inform the reader when the <tt>checkpoint</tt> has been completed and it
+can safely access the refs that fast-import updated.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_tt_cat_blob_tt"><tt>cat-blob</tt></h3>
+<div class="paragraph"><p>Causes fast-import to print a blob to a file descriptor previously
+arranged with the <tt>--cat-blob-fd</tt> argument.  The command otherwise
+has no impact on the current import; its main purpose is to
+retrieve blobs that may be in fast-import&#8217;s memory but not
+accessible from the target repository.</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><tt>        'cat-blob' SP &lt;dataref&gt; LF</tt></pre>
+</div></div>
+<div class="paragraph"><p>The <tt>&lt;dataref&gt;</tt> can be either a mark reference (<tt>:&lt;idnum&gt;</tt>)
+set previously or a full 40-byte SHA-1 of a Git blob, preexisting or
+ready to be written.</p></div>
+<div class="paragraph"><p>Output uses the same format as <tt>git cat-file --batch</tt>:</p></div>
+<div class="exampleblock">
+<div class="content">
+<div class="literalblock">
+<div class="content">
+<pre><tt>&lt;sha1&gt; SP 'blob' SP &lt;size&gt; LF
+&lt;contents&gt; LF</tt></pre>
+</div></div>
+</div></div>
+<div class="paragraph"><p>This command can be used anywhere in the stream that comments are
+accepted.  In particular, the <tt>cat-blob</tt> command can be used in the
+middle of a commit but not in the middle of a <tt>data</tt> command.</p></div>
+<div class="paragraph"><p>See &#8220;Responses To Commands&#8221; below for details about how to read
+this output safely.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_tt_ls_tt"><tt>ls</tt></h3>
+<div class="paragraph"><p>Prints information about the object at a path to a file descriptor
+previously arranged with the <tt>--cat-blob-fd</tt> argument.  This allows
+printing a blob from the active commit (with <tt>cat-blob</tt>) or copying a
+blob or tree from a previous commit for use in the current one (with
+<tt>filemodify</tt>).</p></div>
+<div class="paragraph"><p>The <tt>ls</tt> command can be used anywhere in the stream that comments are
+accepted, including the middle of a commit.</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+Reading from the active commit
+</dt>
+<dd>
+<p>
+        This form can only be used in the middle of a <tt>commit</tt>.
+        The path names a directory entry within fast-import&#8217;s
+        active commit.  The path must be quoted in this case.
+</p>
+<div class="literalblock">
+<div class="content">
+<pre><tt>        'ls' SP &lt;path&gt; LF</tt></pre>
+</div></div>
+</dd>
+<dt class="hdlist1">
+Reading from a named tree
+</dt>
+<dd>
+<p>
+        The <tt>&lt;dataref&gt;</tt> can be a mark reference (<tt>:&lt;idnum&gt;</tt>) or the
+        full 40-byte SHA-1 of a Git tag, commit, or tree object,
+        preexisting or waiting to be written.
+        The path is relative to the top level of the tree
+        named by <tt>&lt;dataref&gt;</tt>.
+</p>
+<div class="literalblock">
+<div class="content">
+<pre><tt>        'ls' SP &lt;dataref&gt; SP &lt;path&gt; LF</tt></pre>
+</div></div>
+</dd>
+</dl></div>
+<div class="paragraph"><p>See <tt>filemodify</tt> above for a detailed description of <tt>&lt;path&gt;</tt>.</p></div>
+<div class="paragraph"><p>Output uses the same format as <tt>git ls-tree &lt;tree&gt; -- &lt;path&gt;</tt>:</p></div>
+<div class="exampleblock">
+<div class="content">
+<div class="literalblock">
+<div class="content">
+<pre><tt>&lt;mode&gt; SP ('blob' | 'tree' | 'commit') SP &lt;dataref&gt; HT &lt;path&gt; LF</tt></pre>
+</div></div>
+</div></div>
+<div class="paragraph"><p>The &lt;dataref&gt; represents the blob, tree, or commit object at &lt;path&gt;
+and can be used in later <em>cat-blob</em>, <em>filemodify</em>, or <em>ls</em> commands.</p></div>
+<div class="paragraph"><p>If there is no file or subtree at that path, <em>git fast-import</em> will
+instead report</p></div>
+<div class="exampleblock">
+<div class="content">
+<div class="literalblock">
+<div class="content">
+<pre><tt>missing SP &lt;path&gt; LF</tt></pre>
+</div></div>
+</div></div>
+<div class="paragraph"><p>See &#8220;Responses To Commands&#8221; below for details about how to read
+this output safely.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_tt_feature_tt"><tt>feature</tt></h3>
+<div class="paragraph"><p>Require that fast-import supports the specified feature, or abort if
+it does not.</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><tt>        'feature' SP &lt;feature&gt; ('=' &lt;argument&gt;)? LF</tt></pre>
+</div></div>
+<div class="paragraph"><p>The &lt;feature&gt; part of the command may be any one of the following:</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+date-format
+</dt>
+<dt class="hdlist1">
+export-marks
+</dt>
+<dt class="hdlist1">
+relative-marks
+</dt>
+<dt class="hdlist1">
+no-relative-marks
+</dt>
+<dt class="hdlist1">
+force
+</dt>
+<dd>
+<p>
+        Act as though the corresponding command-line option with
+        a leading <em>--</em> was passed on the command line
+        (see OPTIONS, above).
+</p>
+</dd>
+<dt class="hdlist1">
+import-marks
+</dt>
+<dt class="hdlist1">
+import-marks-if-exists
+</dt>
+<dd>
+<p>
+        Like --import-marks except in two respects: first, only one
+        "feature import-marks" or "feature import-marks-if-exists"
+        command is allowed per stream; second, an --import-marks=
+        or --import-marks-if-exists command-line option overrides
+        any of these "feature" commands in the stream; third,
+        "feature import-marks-if-exists" like a corresponding
+        command-line option silently skips a nonexistent file.
+</p>
+</dd>
+<dt class="hdlist1">
+cat-blob
+</dt>
+<dt class="hdlist1">
+ls
+</dt>
+<dd>
+<p>
+        Require that the backend support the <em>cat-blob</em> or <em>ls</em> command.
+        Versions of fast-import not supporting the specified command
+        will exit with a message indicating so.
+        This lets the import error out early with a clear message,
+        rather than wasting time on the early part of an import
+        before the unsupported command is detected.
+</p>
+</dd>
+<dt class="hdlist1">
+notes
+</dt>
+<dd>
+<p>
+        Require that the backend support the <em>notemodify</em> (N)
+        subcommand to the <em>commit</em> command.
+        Versions of fast-import not supporting notes will exit
+        with a message indicating so.
+</p>
+</dd>
+<dt class="hdlist1">
+done
+</dt>
+<dd>
+<p>
+        Error out if the stream ends without a <em>done</em> command.
+        Without this feature, errors causing the frontend to end
+        abruptly at a convenient point in the stream can go
+        undetected.  This may occur, for example, if an import
+        front end dies in mid-operation without emitting SIGTERM
+        or SIGKILL at its subordinate git fast-import instance.
+</p>
+</dd>
+</dl></div>
+</div>
+<div class="sect2">
+<h3 id="_tt_option_tt"><tt>option</tt></h3>
+<div class="paragraph"><p>Processes the specified option so that git fast-import behaves in a
+way that suits the frontend&#8217;s needs.
+Note that options specified by the frontend are overridden by any
+options the user may specify to git fast-import itself.</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><tt>    'option' SP &lt;option&gt; LF</tt></pre>
+</div></div>
+<div class="paragraph"><p>The <tt>&lt;option&gt;</tt> part of the command may contain any of the options
+listed in the OPTIONS section that do not change import semantics,
+without the leading <em>--</em> and is treated in the same way.</p></div>
+<div class="paragraph"><p>Option commands must be the first commands on the input (not counting
+feature commands), to give an option command after any non-option
+command is an error.</p></div>
+<div class="paragraph"><p>The following commandline options change import semantics and may therefore
+not be passed as option:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+date-format
+</p>
+</li>
+<li>
+<p>
+import-marks
+</p>
+</li>
+<li>
+<p>
+export-marks
+</p>
+</li>
+<li>
+<p>
+cat-blob-fd
+</p>
+</li>
+<li>
+<p>
+force
+</p>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_tt_done_tt"><tt>done</tt></h3>
+<div class="paragraph"><p>If the <tt>done</tt> feature is not in use, treated as if EOF was read.
+This can be used to tell fast-import to finish early.</p></div>
+<div class="paragraph"><p>If the <tt>--done</tt> command line option or <tt>feature done</tt> command is
+in use, the <tt>done</tt> command is mandatory and marks the end of the
+stream.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_responses_to_commands">Responses To Commands</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>New objects written by fast-import are not available immediately.
+Most fast-import commands have no visible effect until the next
+checkpoint (or completion).  The frontend can send commands to
+fill fast-import&#8217;s input pipe without worrying about how quickly
+they will take effect, which improves performance by simplifying
+scheduling.</p></div>
+<div class="paragraph"><p>For some frontends, though, it is useful to be able to read back
+data from the current repository as it is being updated (for
+example when the source material describes objects in terms of
+patches to be applied to previously imported objects).  This can
+be accomplished by connecting the frontend and fast-import via
+bidirectional pipes:</p></div>
+<div class="exampleblock">
+<div class="content">
+<div class="literalblock">
+<div class="content">
+<pre><tt>mkfifo fast-import-output
+frontend &lt;fast-import-output |
+git fast-import &gt;fast-import-output</tt></pre>
+</div></div>
+</div></div>
+<div class="paragraph"><p>A frontend set up this way can use <tt>progress</tt>, <tt>ls</tt>, and <tt>cat-blob</tt>
+commands to read information from the import in progress.</p></div>
+<div class="paragraph"><p>To avoid deadlock, such frontends must completely consume any
+pending output from <tt>progress</tt>, <tt>ls</tt>, and <tt>cat-blob</tt> before
+performing writes to fast-import that might block.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_crash_reports">Crash Reports</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>If fast-import is supplied invalid input it will terminate with a
+non-zero exit status and create a crash report in the top level of
+the Git repository it was importing into.  Crash reports contain
+a snapshot of the internal fast-import state as well as the most
+recent commands that lead up to the crash.</p></div>
+<div class="paragraph"><p>All recent commands (including stream comments, file changes and
+progress commands) are shown in the command history within the crash
+report, but raw file data and commit messages are excluded from the
+crash report.  This exclusion saves space within the report file
+and reduces the amount of buffering that fast-import must perform
+during execution.</p></div>
+<div class="paragraph"><p>After writing a crash report fast-import will close the current
+packfile and export the marks table.  This allows the frontend
+developer to inspect the repository state and resume the import from
+the point where it crashed.  The modified branches and tags are not
+updated during a crash, as the import did not complete successfully.
+Branch and tag information can be found in the crash report and
+must be applied manually if the update is needed.</p></div>
+<div class="paragraph"><p>An example crash:</p></div>
+<div class="exampleblock">
+<div class="content">
+<div class="literalblock">
+<div class="content">
+<pre><tt>$ cat &gt;in &lt;&lt;END_OF_INPUT
+# my very first test commit
+commit refs/heads/master
+committer Shawn O. Pearce &lt;spearce&gt; 19283 -0400
+# who is that guy anyway?
+data &lt;&lt;EOF
+this is my commit
+EOF
+M 644 inline .gitignore
+data &lt;&lt;EOF
+.gitignore
+EOF
+M 777 inline bob
+END_OF_INPUT</tt></pre>
+</div></div>
+<div class="literalblock">
+<div class="content">
+<pre><tt>$ git fast-import &lt;in
+fatal: Corrupt mode: M 777 inline bob
+fast-import: dumping crash report to .git/fast_import_crash_8434</tt></pre>
+</div></div>
+<div class="literalblock">
+<div class="content">
+<pre><tt>$ cat .git/fast_import_crash_8434
+fast-import crash report:
+    fast-import process: 8434
+    parent process     : 1391
+    at Sat Sep 1 00:58:12 2007</tt></pre>
+</div></div>
+<div class="literalblock">
+<div class="content">
+<pre><tt>fatal: Corrupt mode: M 777 inline bob</tt></pre>
+</div></div>
+<div class="literalblock">
+<div class="content">
+<pre><tt>Most Recent Commands Before Crash
+---------------------------------
+  # my very first test commit
+  commit refs/heads/master
+  committer Shawn O. Pearce &lt;spearce&gt; 19283 -0400
+  # who is that guy anyway?
+  data &lt;&lt;EOF
+  M 644 inline .gitignore
+  data &lt;&lt;EOF
+* M 777 inline bob</tt></pre>
+</div></div>
+<div class="literalblock">
+<div class="content">
+<pre><tt>Active Branch LRU
+-----------------
+    active_branches = 1 cur, 5 max</tt></pre>
+</div></div>
+<div class="literalblock">
+<div class="content">
+<pre><tt>pos  clock name
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 1)      0 refs/heads/master</tt></pre>
+</div></div>
+<div class="literalblock">
+<div class="content">
+<pre><tt>Inactive Branches
+-----------------
+refs/heads/master:
+  status      : active loaded dirty
+  tip commit  : 0000000000000000000000000000000000000000
+  old tree    : 0000000000000000000000000000000000000000
+  cur tree    : 0000000000000000000000000000000000000000
+  commit clock: 0
+  last pack   :</tt></pre>
+</div></div>
+<div class="literalblock">
+<div class="content">
+<pre><tt>-------------------
+END OF CRASH REPORT</tt></pre>
+</div></div>
+</div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_tips_and_tricks">Tips and Tricks</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>The following tips and tricks have been collected from various
+users of fast-import, and are offered here as suggestions.</p></div>
+<div class="sect2">
+<h3 id="_use_one_mark_per_commit">Use One Mark Per Commit</h3>
+<div class="paragraph"><p>When doing a repository conversion, use a unique mark per commit
+(<tt>mark :&lt;n&gt;</tt>) and supply the --export-marks option on the command
+line.  fast-import will dump a file which lists every mark and the Git
+object SHA-1 that corresponds to it.  If the frontend can tie
+the marks back to the source repository, it is easy to verify the
+accuracy and completeness of the import by comparing each Git
+commit to the corresponding source revision.</p></div>
+<div class="paragraph"><p>Coming from a system such as Perforce or Subversion this should be
+quite simple, as the fast-import mark can also be the Perforce changeset
+number or the Subversion revision number.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_freely_skip_around_branches">Freely Skip Around Branches</h3>
+<div class="paragraph"><p>Don&#8217;t bother trying to optimize the frontend to stick to one branch
+at a time during an import.  Although doing so might be slightly
+faster for fast-import, it tends to increase the complexity of the frontend
+code considerably.</p></div>
+<div class="paragraph"><p>The branch LRU builtin to fast-import tends to behave very well, and the
+cost of activating an inactive branch is so low that bouncing around
+between branches has virtually no impact on import performance.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_handling_renames">Handling Renames</h3>
+<div class="paragraph"><p>When importing a renamed file or directory, simply delete the old
+name(s) and modify the new name(s) during the corresponding commit.
+Git performs rename detection after-the-fact, rather than explicitly
+during a commit.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_use_tag_fixup_branches">Use Tag Fixup Branches</h3>
+<div class="paragraph"><p>Some other SCM systems let the user create a tag from multiple
+files which are not from the same commit/changeset.  Or to create
+tags which are a subset of the files available in the repository.</p></div>
+<div class="paragraph"><p>Importing these tags as-is in Git is impossible without making at
+least one commit which &#8220;fixes up&#8221; the files to match the content
+of the tag.  Use fast-import&#8217;s <tt>reset</tt> command to reset a dummy branch
+outside of your normal branch space to the base commit for the tag,
+then commit one or more file fixup commits, and finally tag the
+dummy branch.</p></div>
+<div class="paragraph"><p>For example since all normal branches are stored under <tt>refs/heads/</tt>
+name the tag fixup branch <tt>TAG_FIXUP</tt>.  This way it is impossible for
+the fixup branch used by the importer to have namespace conflicts
+with real branches imported from the source (the name <tt>TAG_FIXUP</tt>
+is not <tt>refs/heads/TAG_FIXUP</tt>).</p></div>
+<div class="paragraph"><p>When committing fixups, consider using <tt>merge</tt> to connect the
+commit(s) which are supplying file revisions to the fixup branch.
+Doing so will allow tools such as <em>git blame</em> to track
+through the real commit history and properly annotate the source
+files.</p></div>
+<div class="paragraph"><p>After fast-import terminates the frontend will need to do <tt>rm .git/TAG_FIXUP</tt>
+to remove the dummy branch.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_import_now_repack_later">Import Now, Repack Later</h3>
+<div class="paragraph"><p>As soon as fast-import completes the Git repository is completely valid
+and ready for use.  Typically this takes only a very short time,
+even for considerably large projects (100,000+ commits).</p></div>
+<div class="paragraph"><p>However repacking the repository is necessary to improve data
+locality and access performance.  It can also take hours on extremely
+large projects (especially if -f and a large --window parameter is
+used).  Since repacking is safe to run alongside readers and writers,
+run the repack in the background and let it finish when it finishes.
+There is no reason to wait to explore your new Git project!</p></div>
+<div class="paragraph"><p>If you choose to wait for the repack, don&#8217;t try to run benchmarks
+or performance tests until repacking is completed.  fast-import outputs
+suboptimal packfiles that are simply never seen in real use
+situations.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_repacking_historical_data">Repacking Historical Data</h3>
+<div class="paragraph"><p>If you are repacking very old imported data (e.g. older than the
+last year), consider expending some extra CPU time and supplying
+--window=50 (or higher) when you run <em>git repack</em>.
+This will take longer, but will also produce a smaller packfile.
+You only need to expend the effort once, and everyone using your
+project will benefit from the smaller repository.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_include_some_progress_messages">Include Some Progress Messages</h3>
+<div class="paragraph"><p>Every once in a while have your frontend emit a <tt>progress</tt> message
+to fast-import.  The contents of the messages are entirely free-form,
+so one suggestion would be to output the current month and year
+each time the current commit date moves into the next month.
+Your users will feel better knowing how much of the data stream
+has been processed.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_packfile_optimization">Packfile Optimization</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>When packing a blob fast-import always attempts to deltify against the last
+blob written.  Unless specifically arranged for by the frontend,
+this will probably not be a prior version of the same file, so the
+generated delta will not be the smallest possible.  The resulting
+packfile will be compressed, but will not be optimal.</p></div>
+<div class="paragraph"><p>Frontends which have efficient access to all revisions of a
+single file (for example reading an RCS/CVS ,v file) can choose
+to supply all revisions of that file as a sequence of consecutive
+<tt>blob</tt> commands.  This allows fast-import to deltify the different file
+revisions against each other, saving space in the final packfile.
+Marks can be used to later identify individual file revisions during
+a sequence of <tt>commit</tt> commands.</p></div>
+<div class="paragraph"><p>The packfile(s) created by fast-import do not encourage good disk access
+patterns.  This is caused by fast-import writing the data in the order
+it is received on standard input, while Git typically organizes
+data within packfiles to make the most recent (current tip) data
+appear before historical data.  Git also clusters commits together,
+speeding up revision traversal through better cache locality.</p></div>
+<div class="paragraph"><p>For this reason it is strongly recommended that users repack the
+repository with <tt>git repack -a -d</tt> after fast-import completes, allowing
+Git to reorganize the packfiles for faster data access.  If blob
+deltas are suboptimal (see above) then also adding the <tt>-f</tt> option
+to force recomputation of all deltas can significantly reduce the
+final packfile size (30-50% smaller can be quite typical).</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_memory_utilization">Memory Utilization</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>There are a number of factors which affect how much memory fast-import
+requires to perform an import.  Like critical sections of core
+Git, fast-import uses its own memory allocators to amortize any overheads
+associated with malloc.  In practice fast-import tends to amortize any
+malloc overheads to 0, due to its use of large block allocations.</p></div>
+<div class="sect2">
+<h3 id="_per_object">per object</h3>
+<div class="paragraph"><p>fast-import maintains an in-memory structure for every object written in
+this execution.  On a 32 bit system the structure is 32 bytes,
+on a 64 bit system the structure is 40 bytes (due to the larger
+pointer sizes).  Objects in the table are not deallocated until
+fast-import terminates.  Importing 2 million objects on a 32 bit system
+will require approximately 64 MiB of memory.</p></div>
+<div class="paragraph"><p>The object table is actually a hashtable keyed on the object name
+(the unique SHA-1).  This storage configuration allows fast-import to reuse
+an existing or already written object and avoid writing duplicates
+to the output packfile.  Duplicate blobs are surprisingly common
+in an import, typically due to branch merges in the source.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_per_mark">per mark</h3>
+<div class="paragraph"><p>Marks are stored in a sparse array, using 1 pointer (4 bytes or 8
+bytes, depending on pointer size) per mark.  Although the array
+is sparse, frontends are still strongly encouraged to use marks
+between 1 and n, where n is the total number of marks required for
+this import.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_per_branch">per branch</h3>
+<div class="paragraph"><p>Branches are classified as active and inactive.  The memory usage
+of the two classes is significantly different.</p></div>
+<div class="paragraph"><p>Inactive branches are stored in a structure which uses 96 or 120
+bytes (32 bit or 64 bit systems, respectively), plus the length of
+the branch name (typically under 200 bytes), per branch.  fast-import will
+easily handle as many as 10,000 inactive branches in under 2 MiB
+of memory.</p></div>
+<div class="paragraph"><p>Active branches have the same overhead as inactive branches, but
+also contain copies of every tree that has been recently modified on
+that branch.  If subtree <tt>include</tt> has not been modified since the
+branch became active, its contents will not be loaded into memory,
+but if subtree <tt>src</tt> has been modified by a commit since the branch
+became active, then its contents will be loaded in memory.</p></div>
+<div class="paragraph"><p>As active branches store metadata about the files contained on that
+branch, their in-memory storage size can grow to a considerable size
+(see below).</p></div>
+<div class="paragraph"><p>fast-import automatically moves active branches to inactive status based on
+a simple least-recently-used algorithm.  The LRU chain is updated on
+each <tt>commit</tt> command.  The maximum number of active branches can be
+increased or decreased on the command line with --active-branches=.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_per_active_tree">per active tree</h3>
+<div class="paragraph"><p>Trees (aka directories) use just 12 bytes of memory on top of the
+memory required for their entries (see &#8220;per active file&#8221; below).
+The cost of a tree is virtually 0, as its overhead amortizes out
+over the individual file entries.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_per_active_file_entry">per active file entry</h3>
+<div class="paragraph"><p>Files (and pointers to subtrees) within active trees require 52 or 64
+bytes (32/64 bit platforms) per entry.  To conserve space, file and
+tree names are pooled in a common string table, allowing the filename
+&#8220;Makefile&#8221; to use just 16 bytes (after including the string header
+overhead) no matter how many times it occurs within the project.</p></div>
+<div class="paragraph"><p>The active branch LRU, when coupled with the filename string pool
+and lazy loading of subtrees, allows fast-import to efficiently import
+projects with 2,000+ branches and 45,114+ files in a very limited
+memory footprint (less than 2.7 MiB per active branch).</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_signals">Signals</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Sending <strong>SIGUSR1</strong> to the <em>git fast-import</em> process ends the current
+packfile early, simulating a <tt>checkpoint</tt> command.  The impatient
+operator can use this facility to peek at the objects and refs from an
+import in progress, at the cost of some added running time and worse
+compression.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_git">GIT</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Part of the <a href="git.html">git(1)</a> suite</p></div>
+</div>
+</div>
+</div>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2013-11-12 15:22:25 PST
+</div>
+</div>
+</body>
+</html>

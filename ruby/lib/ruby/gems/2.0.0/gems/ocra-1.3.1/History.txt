@@ -1,0 +1,158 @@
+=== 1.3.1
+
+* Now includes $LOADED_FEATURES even when script is not run to check
+  dependencies. This fixes compatability with Ruby 1.9.3 where
+  rubygems is always loaded.
+
+* Fixed compatability with Ruby 2.0.0: Temp-path alias in binary
+  changed to be valid UTF-8 character.
+
+* README.txt updated related to --no-dep-run (karhatsu).
+
+* Fixes for Bundler handling (DavidMikeSimon).
+
+=== 1.3.0
+
+* Fixed some additional corner cases with absolute and relative
+  require & load paths. Extended test suite to cover a lot more
+  cases.
+
+* Now provides a meaningful exit status code (1 on error, 0 on
+  success). (DavidMikeSimon)
+
+* New option to _not_ run the script to detect dependencies
+  (--no-dep-run). (DavidMikeSimon)
+
+* Bundler support using the --gemfile option. (DavidMikeSimon)
+
+* Debug mode support in the stub (--debug). Also --debug-extract to
+  keep extracted files from executable. (DavidMikeSimon)
+
+* New gem behaviour yet again due to changes in Rubygems. See README
+  file.
+  
+=== 1.2.0
+
+* Ignore console events (Ctrl-C, Ctrl-Break). Ruby process handles
+  them anyway and exist, allowing the stub to clean up temporary
+  files.
+
+* Temporary memory used for decompression is now freed before the ruby
+  interpreter is launched by the stub.
+
+* Progress dialog is no longer displayed when removing temporary
+  files.
+
+* Now includes most files from any require'd Rubygem (Now works with
+  mime-types, oledb and other gems that load additional data files
+  from the Gem installation). Some files are still ignored
+  (e.g. Readme's). Use "--no-gem-filter" to make Ocra unconditionally
+  include all files listed in the Gem specification (Thanks to Jorge
+  L. Cangas for patch & ideas).
+
+* NameErrors are now rescued when attempting to load autoloadable
+  constants. Hopefully resolves issues with ActiveRecord [#28488].
+
+* Now works if the script changes environment or working directory
+  while running.
+
+* Fixed a regression in 1.1.4 when resource files are specified;
+  directory layout would not be maintained, e.g. when running "ocra
+  bin/script share/data.dat".
+
+* Added support for passing arguments to script. Specify argument to
+  your script after a "--" marker. Arguments will be passed both at
+  compile time and run time. (#27815)
+
+* Now works if the source files are located beneath Ruby's
+  exec_prefix. (#28505)
+
+=== 1.1.4
+
+* The tempdir marker is now pretty-printed as "<tempdir>" in the
+  output.
+
+* Fixed various issues with path and filenames being handled case
+  sensitive.
+
+* Now uses config settings for Ruby executable names (should now also
+  work with ruby installations built with --program-suffix).
+
+* Supported invoking ocra with an absolute path to the script. Will
+  assume that the script is in the root of the source hierachy.
+
+=== 1.1.3
+
+* Use Win32API (provided with Ruby) instead of win32-api (gem).
+
+* No longer sets GEM_HOME (which would override the default gem
+  path). Instead sets GEM_PATH. Resolves issues with gems not loading
+  on Ruby 1.9.
+
+=== 1.1.2
+
+* Warnings can be disabled using --no-warnings.
+
+* Fixed not .exe being generated when script calls 'exit'.
+
+* Path to the generated executable is now avilable to the running
+  script in the OCRA_EXECUTABLE environment variable.
+
+* Directories on the command line will now be created.
+
+* Supports path globs, fx. "ocra script.rb assets/**/*.png". (See
+  documentation for Ruby's Dir class).
+
+* Fixed issue with spaces in temporary path (TMP environment).
+
+* Improved path comparison to ignore case (this is Windows after all)
+  and be a bit more robust.
+
+* Added support for RubyGems installed in GEM_HOME (or other part
+  handled by RubyGems). If not installed in the Ruby hierarchy, they
+  will now be installed in a directory named 'gemhome' under the
+  temporary directory.
+
+=== 1.1.1
+
+* Fixed duplicate entries in the RUBYLIB environment variable.
+
+* Another slight fix for relative load paths.
+
+* RUBYOPT is now set to the value it had when OCRA was invoked.
+
+=== 1.1.0
+
+* Added an icon to the executable. Can be replaced from a .ico file
+  using the --icon <ico> option.
+
+* Improved handling of load paths added either from the command line
+  (ruby -I), RUBYLIB environment variable or during the script (by
+  modifying $: or $LOAD_PATH).
+
+* Now automatically detects loaded DLLs through Win32::API. Disable
+  with --no-autodll.
+
+=== 1.0.3 / 2009-05-25
+
+* Fixed invokation of executables with spaces in path names (#25966).
+
+* Fixed inverted handling of --windows & --console (#25974)
+
+* Fixed installation issue with RubyGems (missing "lib")
+
+=== 1.0.2 / 2009-05-10
+
+* Added stubw.exe to gem (was missing 1.0.1)
+
+=== 1.0.1 / 2009-05-05
+
+* Added stub with windows runtime for windowed applications
+  (e.g. wxRuby) and fixed issue where OCRA would use ruby.exe instead
+  of rubyw.exe for such programs. [#25774]
+
+=== 1.0.0 / 2009-04-05
+
+* 1 major enhancement
+
+  * Birthday!

@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>class INotify::Event - rb-inotify-0.9.2 Documentation</title>
+
+<link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../index.html">Home</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/rb-inotify/event.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">Object
+  
+</nav>
+
+    
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li ><a href="#method-c-consume">::consume</a>
+    
+    <li ><a href="#method-c-new">::new</a>
+    
+    <li ><a href="#method-i-absolute_name">#absolute_name</a>
+    
+    <li ><a href="#method-i-callback-21">#callback!</a>
+    
+    <li ><a href="#method-i-fix_encoding">#fix_encoding</a>
+    
+    <li ><a href="#method-i-flags">#flags</a>
+    
+    <li ><a href="#method-i-size">#size</a>
+    
+    <li ><a href="#method-i-watcher">#watcher</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="../README_md.html">README</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../INotify.html">INotify</a>
+  
+    <li><a href="../INotify/Event.html">INotify::Event</a>
+  
+    <li><a href="../INotify/Native.html">INotify::Native</a>
+  
+    <li><a href="../INotify/Native/Event.html">INotify::Native::Event</a>
+  
+    <li><a href="../INotify/Native/FFI.html">INotify::Native::FFI</a>
+  
+    <li><a href="../INotify/Native/FFI/Library.html">INotify::Native::FFI::Library</a>
+  
+    <li><a href="../INotify/Native/Flags.html">INotify::Native::Flags</a>
+  
+    <li><a href="../INotify/Notifier.html">INotify::Notifier</a>
+  
+    <li><a href="../INotify/Watcher.html">INotify::Watcher</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class INotify::Event</h1>
+
+  <div id="description" class="description">
+    
+<p>An event caused by a change on the filesystem. Each {Watcher} can fire many
+events, which are passed to that watcher&#39;s callback.</p>
+
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+    <!-- Attributes -->
+    <section id="attribute-method-details" class="method-section section">
+      <h3 class="section-header">Attributes</h3>
+
+      
+      <div id="attribute-i-cookie" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">cookie</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>An integer specifying that this event is related to some other event, which
+will have the same cookie.</p>
+
+<p>Currently, this is only used for files that are moved within the same
+directory. Both the `:moved_from` and the `:moved_to` events will have the
+same cookie.</p>
+
+<p>@private @return [Fixnum]</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-name" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">name</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>The name of the file that the event occurred on. This is only set for
+events that occur on files in directories; otherwise, it&#39;s `“”`.
+Similarly, if the event is being fired for the directory itself the name
+will be `“”`</p>
+
+<p>This pathname is relative to the enclosing directory. For the absolute
+pathname, use {#absolute_name}. Note that when the `:recursive` flag is
+passed to {Notifier#watch}, events in nested subdirectories will still have
+a `#name` field relative to their immediately enclosing directory. For
+example, an event on the file `“foo/bar/baz”` will have name `“baz”`.</p>
+
+<p>@return [String]</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-notifier" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">notifier</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>The {Notifier} that fired this event.</p>
+
+<p>@return [Notifier]</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-related" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">related</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>A list of other events that are related to this one. Currently, this is
+only used for files that are moved within the same directory: the
+`:moved_from` and the `:moved_to` events will be related.</p>
+
+<p>@return [Array&lt;Event&gt;]</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-watcher_id" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">watcher_id</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>The {Watcher#id id} of the {Watcher} that fired this event.</p>
+
+<p>@private @return [Fixnum]</p>
+        
+        </div>
+      </div>
+      
+    </section><!-- attribute-method-details -->
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-consume" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">consume</span><span
+            class="method-args">(data, notifier)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Constructs an {Event} object from a string of binary data, and
+destructively modifies the string to get rid of the initial segment used to
+construct the <a href="Event.html">Event</a>.</p>
+
+<p>@private @param data [String] The string to be modified @param notifier
+[Notifier] The {Notifier} that fired the event @return [Event, nil] The
+event, or `nil` if the string is empty</p>
+          
+          
+
+          
+          <div class="method-source-code" id="consume-source">
+            <pre><span class="ruby-comment"># File lib/rb-inotify/event.rb, line 98</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">consume</span>(<span class="ruby-identifier">data</span>, <span class="ruby-identifier">notifier</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">data</span>.<span class="ruby-identifier">empty?</span>
+  <span class="ruby-identifier">ev</span> = <span class="ruby-identifier">new</span>(<span class="ruby-identifier">data</span>, <span class="ruby-identifier">notifier</span>)
+  <span class="ruby-identifier">data</span>.<span class="ruby-identifier">replace</span> <span class="ruby-identifier">data</span>[<span class="ruby-identifier">ev</span>.<span class="ruby-identifier">size</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+  <span class="ruby-identifier">ev</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- consume-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- consume-method -->
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">(data, notifier)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Creates an event from a string of binary data. Differs from {Event.consume}
+in that it doesn&#39;t modify the string.</p>
+
+<p>@private @param data [String] The data string @param notifier [Notifier]
+The {Notifier} that fired the event</p>
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/rb-inotify/event.rb, line 111</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">data</span>, <span class="ruby-identifier">notifier</span>)
+  <span class="ruby-identifier">ptr</span> = <span class="ruby-constant">FFI</span><span class="ruby-operator">::</span><span class="ruby-constant">MemoryPointer</span>.<span class="ruby-identifier">from_string</span>(<span class="ruby-identifier">data</span>)
+  <span class="ruby-ivar">@native</span> = <span class="ruby-constant">Native</span><span class="ruby-operator">::</span><span class="ruby-constant">Event</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">ptr</span>)
+  <span class="ruby-ivar">@related</span> = []
+  <span class="ruby-ivar">@cookie</span> = <span class="ruby-ivar">@native</span>[<span class="ruby-value">:cookie</span>]
+  <span class="ruby-ivar">@name</span> = <span class="ruby-identifier">fix_encoding</span>(<span class="ruby-identifier">data</span>[<span class="ruby-ivar">@native</span>.<span class="ruby-identifier">size</span>, <span class="ruby-ivar">@native</span>[<span class="ruby-value">:len</span>]].<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/\0+$/</span>, <span class="ruby-string">&#39;&#39;</span>))
+  <span class="ruby-ivar">@notifier</span> = <span class="ruby-identifier">notifier</span>
+  <span class="ruby-ivar">@watcher_id</span> = <span class="ruby-ivar">@native</span>[<span class="ruby-value">:wd</span>]
+
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">Exception</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;inotify event queue has overflowed.&quot;</span>) <span class="ruby-keyword">if</span> <span class="ruby-ivar">@native</span>[<span class="ruby-value">:mask</span>] <span class="ruby-operator">&amp;</span> <span class="ruby-constant">Native</span><span class="ruby-operator">::</span><span class="ruby-constant">Flags</span><span class="ruby-operator">::</span><span class="ruby-constant">IN_Q_OVERFLOW</span> <span class="ruby-operator">!=</span> <span class="ruby-value">0</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- new-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- new-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-absolute_name" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">absolute_name</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>The absolute path of the file that the event occurred on.</p>
+
+<p>This is actually only as absolute as the path passed to the {Watcher} that
+created this event. However, it is relative to the working directory,
+assuming that hasn&#39;t changed since the watcher started.</p>
+
+<p>@return [String]</p>
+          
+          
+
+          
+          <div class="method-source-code" id="absolute_name-source">
+            <pre><span class="ruby-comment"># File lib/rb-inotify/event.rb, line 66</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">absolute_name</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">watcher</span>.<span class="ruby-identifier">path</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">name</span>.<span class="ruby-identifier">empty?</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">watcher</span>.<span class="ruby-identifier">path</span>, <span class="ruby-identifier">name</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- absolute_name-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- absolute_name-method -->
+
+    
+      <div id="method-i-callback-21" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">callback!</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Calls the callback of the watcher that fired this event, passing in the
+event itself.</p>
+
+<p>@private</p>
+          
+          
+
+          
+          <div class="method-source-code" id="callback-21-source">
+            <pre><span class="ruby-comment"># File lib/rb-inotify/event.rb, line 127</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">callback!</span>
+  <span class="ruby-identifier">watcher</span>.<span class="ruby-identifier">callback!</span>(<span class="ruby-keyword">self</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- callback-21-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- callback-21-method -->
+
+    
+      <div id="method-i-flags" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">flags</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Returns the flags that describe this event. This is generally similar to
+the input to {Notifier#watch}, except that it won&#39;t contain options
+flags nor `:all_events`, and it may contain one or more of the following
+flags:</p>
+
+<p>`:unmount` : The filesystem containing the watched file or directory was
+unmounted.</p>
+
+<p>`:ignored` : The {#watcher watcher} was closed, or the watched file or
+directory was deleted.</p>
+
+<p>`:isdir` : The subject of this event is a directory.</p>
+
+<p>@return [Array&lt;Symbol&gt;]</p>
+          
+          
+
+          
+          <div class="method-source-code" id="flags-source">
+            <pre><span class="ruby-comment"># File lib/rb-inotify/event.rb, line 86</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">flags</span>
+  <span class="ruby-ivar">@flags</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Native</span><span class="ruby-operator">::</span><span class="ruby-constant">Flags</span>.<span class="ruby-identifier">from_mask</span>(<span class="ruby-ivar">@native</span>[<span class="ruby-value">:mask</span>])
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- flags-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- flags-method -->
+
+    
+      <div id="method-i-size" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">size</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Returns the size of this event object in bytes, including the {#name}
+string.</p>
+
+<p>@return [Fixnum]</p>
+          
+          
+
+          
+          <div class="method-source-code" id="size-source">
+            <pre><span class="ruby-comment"># File lib/rb-inotify/event.rb, line 135</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">size</span>
+  <span class="ruby-ivar">@native</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@native</span>[<span class="ruby-value">:len</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- size-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- size-method -->
+
+    
+      <div id="method-i-watcher" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">watcher</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Returns the {Watcher} that fired this event.</p>
+
+<p>@return [Watcher]</p>
+          
+          
+
+          
+          <div class="method-source-code" id="watcher-source">
+            <pre><span class="ruby-comment"># File lib/rb-inotify/event.rb, line 54</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">watcher</span>
+  <span class="ruby-ivar">@watcher</span> <span class="ruby-operator">||=</span> <span class="ruby-ivar">@notifier</span>.<span class="ruby-identifier">watchers</span>[<span class="ruby-ivar">@watcher_id</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- watcher-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- watcher-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+     <section id="private-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Private Instance Methods</h3>
+
+    
+      <div id="method-i-fix_encoding" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">fix_encoding</span><span
+            class="method-args">(name)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="fix_encoding-source">
+            <pre><span class="ruby-comment"># File lib/rb-inotify/event.rb, line 141</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">fix_encoding</span>(<span class="ruby-identifier">name</span>)
+  <span class="ruby-identifier">name</span>.<span class="ruby-identifier">force_encoding</span>(<span class="ruby-string">&#39;filesystem&#39;</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">name</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:force_encoding</span>)
+  <span class="ruby-identifier">name</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- fix_encoding-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- fix_encoding-method -->
+
+    
+    </section><!-- private-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

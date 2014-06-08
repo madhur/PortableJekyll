@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>class Parslet::Source::LineCache - parslet-1.5.0 Documentation</title>
+
+<link type="text/css" media="screen" href="../../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../../index.html">Home</a>
+    <a href="../../table_of_contents.html#classes">Classes</a>
+    <a href="../../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/parslet/source/line_cache.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">Object
+  
+</nav>
+
+    
+    <!-- Extension Modules -->
+<nav id="extends-section" class="section">
+  <h3 class="section-header">Extended With Modules</h3>
+
+  <ul class="link-list">
+    
+  
+    <li><a class="extend" href="RangeSearch.html">Parslet::Source::RangeSearch</a>
+  
+  
+  </ul>
+</nav>
+
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li ><a href="#method-c-new">::new</a>
+    
+    <li ><a href="#method-i-line_and_column">#line_and_column</a>
+    
+    <li ><a href="#method-i-scan_for_line_endings">#scan_for_line_endings</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="../../README.html">README</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../../Parslet.html">Parslet</a>
+  
+    <li><a href="../../Parslet/Atoms.html">Parslet::Atoms</a>
+  
+    <li><a href="../../Parslet/Atoms/Alternative.html">Parslet::Atoms::Alternative</a>
+  
+    <li><a href="../../Parslet/Atoms/Base.html">Parslet::Atoms::Base</a>
+  
+    <li><a href="../../Parslet/Atoms/CanFlatten.html">Parslet::Atoms::CanFlatten</a>
+  
+    <li><a href="../../Parslet/Atoms/Capture.html">Parslet::Atoms::Capture</a>
+  
+    <li><a href="../../Parslet/Atoms/Context.html">Parslet::Atoms::Context</a>
+  
+    <li><a href="../../Parslet/Atoms/DSL.html">Parslet::Atoms::DSL</a>
+  
+    <li><a href="../../Parslet/Atoms/Dynamic.html">Parslet::Atoms::Dynamic</a>
+  
+    <li><a href="../../Parslet/Atoms/Entity.html">Parslet::Atoms::Entity</a>
+  
+    <li><a href="../../Parslet/Atoms/Lookahead.html">Parslet::Atoms::Lookahead</a>
+  
+    <li><a href="../../Parslet/Atoms/Named.html">Parslet::Atoms::Named</a>
+  
+    <li><a href="../../Parslet/Atoms/Precedence.html">Parslet::Atoms::Precedence</a>
+  
+    <li><a href="../../Parslet/Atoms/Re.html">Parslet::Atoms::Re</a>
+  
+    <li><a href="../../Parslet/Atoms/Repetition.html">Parslet::Atoms::Repetition</a>
+  
+    <li><a href="../../Parslet/Atoms/Scope.html">Parslet::Atoms::Scope</a>
+  
+    <li><a href="../../Parslet/Atoms/Sequence.html">Parslet::Atoms::Sequence</a>
+  
+    <li><a href="../../Parslet/Atoms/Str.html">Parslet::Atoms::Str</a>
+  
+    <li><a href="../../Parslet/Cause.html">Parslet::Cause</a>
+  
+    <li><a href="../../Parslet/ClassMethods.html">Parslet::ClassMethods</a>
+  
+    <li><a href="../../Parslet/DelayedMatchConstructor.html">Parslet::DelayedMatchConstructor</a>
+  
+    <li><a href="../../Parslet/ErrorReporter.html">Parslet::ErrorReporter</a>
+  
+    <li><a href="../../Parslet/ErrorReporter/Deepest.html">Parslet::ErrorReporter::Deepest</a>
+  
+    <li><a href="../../Parslet/ErrorReporter/Tree.html">Parslet::ErrorReporter::Tree</a>
+  
+    <li><a href="../../Parslet/Expression.html">Parslet::Expression</a>
+  
+    <li><a href="../../Parslet/Expression/Treetop.html">Parslet::Expression::Treetop</a>
+  
+    <li><a href="../../Parslet/Expression/Treetop/Parser.html">Parslet::Expression::Treetop::Parser</a>
+  
+    <li><a href="../../Parslet/Expression/Treetop/Transform.html">Parslet::Expression::Treetop::Transform</a>
+  
+    <li><a href="../../Parslet/ParseFailed.html">Parslet::ParseFailed</a>
+  
+    <li><a href="../../Parslet/Parser.html">Parslet::Parser</a>
+  
+    <li><a href="../../Parslet/Parser/PrettyPrinter.html">Parslet::Parser::PrettyPrinter</a>
+  
+    <li><a href="../../Parslet/Parser/Visitors.html">Parslet::Parser::Visitors</a>
+  
+    <li><a href="../../Parslet/Parser/Visitors/Citrus.html">Parslet::Parser::Visitors::Citrus</a>
+  
+    <li><a href="../../Parslet/Parser/Visitors/Treetop.html">Parslet::Parser::Visitors::Treetop</a>
+  
+    <li><a href="../../Parslet/Pattern.html">Parslet::Pattern</a>
+  
+    <li><a href="../../Parslet/Pattern/SequenceBind.html">Parslet::Pattern::SequenceBind</a>
+  
+    <li><a href="../../Parslet/Pattern/SimpleBind.html">Parslet::Pattern::SimpleBind</a>
+  
+    <li><a href="../../Parslet/Pattern/SubtreeBind.html">Parslet::Pattern::SubtreeBind</a>
+  
+    <li><a href="../../Parslet/Scope.html">Parslet::Scope</a>
+  
+    <li><a href="../../Parslet/Scope/Binding.html">Parslet::Scope::Binding</a>
+  
+    <li><a href="../../Parslet/Scope/NotFound.html">Parslet::Scope::NotFound</a>
+  
+    <li><a href="../../Parslet/Slice.html">Parslet::Slice</a>
+  
+    <li><a href="../../Parslet/Source.html">Parslet::Source</a>
+  
+    <li><a href="../../Parslet/Source/LineCache.html">Parslet::Source::LineCache</a>
+  
+    <li><a href="../../Parslet/Source/RangeSearch.html">Parslet::Source::RangeSearch</a>
+  
+    <li><a href="../../Parslet/Transform.html">Parslet::Transform</a>
+  
+    <li><a href="../../Parslet/Transform/Context.html">Parslet::Transform::Context</a>
+  
+    <li><a href="../../RSpec.html">RSpec</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class Parslet::Source::LineCache</h1>
+
+  <div id="description" class="description">
+    
+<p>A cache for line start positions.</p>
+
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/parslet/source/line_cache.rb, line 7</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>
+  <span class="ruby-comment"># Stores line endings as a simple position number. The first line always</span>
+  <span class="ruby-comment"># starts at 0; numbers beyond the biggest entry are on any line &gt; size, </span>
+  <span class="ruby-comment"># but probably make a scan to that position neccessary.</span>
+  <span class="ruby-ivar">@line_ends</span> = []
+  <span class="ruby-ivar">@line_ends</span>.<span class="ruby-identifier">extend</span> <span class="ruby-constant">RangeSearch</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- new-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- new-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-line_and_column" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">line_and_column</span><span
+            class="method-args">(pos)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Returns a &lt;line, column&gt; tuple for the given input position.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="line_and_column-source">
+            <pre><span class="ruby-comment"># File lib/parslet/source/line_cache.rb, line 17</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">line_and_column</span>(<span class="ruby-identifier">pos</span>)
+  <span class="ruby-identifier">eol_idx</span> = <span class="ruby-ivar">@line_ends</span>.<span class="ruby-identifier">lbound</span>(<span class="ruby-identifier">pos</span>)
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">eol_idx</span>
+    <span class="ruby-comment"># eol_idx points to the offset that ends the current line.</span>
+    <span class="ruby-comment"># Let&#39;s try to find the offset that starts it: </span>
+    <span class="ruby-identifier">offset</span> = <span class="ruby-identifier">eol_idx</span><span class="ruby-operator">&gt;</span><span class="ruby-value">0</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@line_ends</span>[<span class="ruby-identifier">eol_idx</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>] <span class="ruby-operator">||</span> <span class="ruby-value">0</span>
+    <span class="ruby-keyword">return</span> [<span class="ruby-identifier">eol_idx</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>, <span class="ruby-identifier">pos</span><span class="ruby-operator">-</span><span class="ruby-identifier">offset</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>]
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-comment"># eol_idx is nil, that means that we&#39;re beyond the last line end that</span>
+    <span class="ruby-comment"># we know about. Pretend for now that we&#39;re just on the last line.</span>
+    <span class="ruby-identifier">offset</span> = <span class="ruby-ivar">@line_ends</span>.<span class="ruby-identifier">last</span> <span class="ruby-operator">||</span> <span class="ruby-value">0</span>
+    <span class="ruby-keyword">return</span> [<span class="ruby-ivar">@line_ends</span>.<span class="ruby-identifier">size</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>, <span class="ruby-identifier">pos</span><span class="ruby-operator">-</span><span class="ruby-identifier">offset</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>]
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- line_and_column-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- line_and_column-method -->
+
+    
+      <div id="method-i-scan_for_line_endings" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">scan_for_line_endings</span><span
+            class="method-args">(start_pos, buf)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="scan_for_line_endings-source">
+            <pre><span class="ruby-comment"># File lib/parslet/source/line_cache.rb, line 33</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">scan_for_line_endings</span>(<span class="ruby-identifier">start_pos</span>, <span class="ruby-identifier">buf</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">buf</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">buf</span>.<span class="ruby-identifier">index</span>(<span class="ruby-string">&quot;\n&quot;</span>)
+  <span class="ruby-identifier">cur</span> = <span class="ruby-value">-1</span>
+
+  <span class="ruby-comment"># If we have already read part or all of buf, we already know about</span>
+  <span class="ruby-comment"># line ends in that portion. remove it and correct cur (search index)</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@last_line_end</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">start_pos</span> <span class="ruby-operator">&lt;</span> <span class="ruby-ivar">@last_line_end</span>
+    <span class="ruby-comment"># Let&#39;s not search the range from start_pos to last_line_end again.</span>
+    <span class="ruby-identifier">cur</span> = <span class="ruby-ivar">@last_line_end</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">start_pos</span> <span class="ruby-value">-1</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-comment"># Scan the string for line endings; store the positions of all endings</span>
+  <span class="ruby-comment"># in @line_ends. </span>
+  <span class="ruby-keyword">while</span> <span class="ruby-identifier">buf</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">cur</span> = <span class="ruby-identifier">buf</span>.<span class="ruby-identifier">index</span>(<span class="ruby-string">&quot;\n&quot;</span>, <span class="ruby-identifier">cur</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>)
+    <span class="ruby-ivar">@last_line_end</span> = (<span class="ruby-identifier">start_pos</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">cur</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>)
+    <span class="ruby-ivar">@line_ends</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-ivar">@last_line_end</span>
+  <span class="ruby-keyword">end</span> 
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- scan_for_line_endings-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- scan_for_line_endings-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

@@ -1,0 +1,372 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>PangoFcFont</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="Pango Reference Manual">
+<link rel="up" href="lowlevel.html" title="Low Level Functionality">
+<link rel="prev" href="PangoFcFontMap.html" title="PangoFcFontMap">
+<link rel="next" href="PangoFcDecoder.html" title="PangoFcDecoder">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="PangoFcFontMap.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="lowlevel.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Pango Reference Manual</th>
+<td><a accesskey="n" href="PangoFcDecoder.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#PangoFcFont.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#PangoFcFont.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#PangoFcFont.object-hierarchy" class="shortcut">Object Hierarchy</a>
+                   | 
+                  <a href="#PangoFcFont.properties" class="shortcut">Properties</a>
+</td></tr>
+</table>
+<div class="refentry">
+<a name="PangoFcFont"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="PangoFcFont.top_of_page"></a>PangoFcFont</span></h2>
+<p>PangoFcFont — Base font class for Fontconfig-based backends</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="PangoFcFont.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">struct              <a class="link" href="PangoFcFont.html#PangoFcFont-struct" title="struct PangoFcFont">PangoFcFont</a>;
+struct              <a class="link" href="PangoFcFont.html#PangoFcFontClass" title="struct PangoFcFontClass">PangoFcFontClass</a>;
+#define             <a class="link" href="PangoFcFont.html#PANGO-RENDER-TYPE-FC:CAPS" title="PANGO_RENDER_TYPE_FC">PANGO_RENDER_TYPE_FC</a>
+<span class="returnvalue">FT_Face</span>             <a class="link" href="PangoFcFont.html#pango-fc-font-lock-face" title="pango_fc_font_lock_face ()">pango_fc_font_lock_face</a>             (<em class="parameter"><code><a class="link" href="PangoFcFont.html" title="PangoFcFont"><span class="type">PangoFcFont</span></a> *font</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="PangoFcFont.html#pango-fc-font-unlock-face" title="pango_fc_font_unlock_face ()">pango_fc_font_unlock_face</a>           (<em class="parameter"><code><a class="link" href="PangoFcFont.html" title="PangoFcFont"><span class="type">PangoFcFont</span></a> *font</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="PangoFcFont.html#pango-fc-font-has-char" title="pango_fc_font_has_char ()">pango_fc_font_has_char</a>              (<em class="parameter"><code><a class="link" href="PangoFcFont.html" title="PangoFcFont"><span class="type">PangoFcFont</span></a> *font</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Unicode-Manipulation.html#gunichar"><span class="type">gunichar</span></a> wc</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>               <a class="link" href="PangoFcFont.html#pango-fc-font-get-glyph" title="pango_fc_font_get_glyph ()">pango_fc_font_get_glyph</a>             (<em class="parameter"><code><a class="link" href="PangoFcFont.html" title="PangoFcFont"><span class="type">PangoFcFont</span></a> *font</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Unicode-Manipulation.html#gunichar"><span class="type">gunichar</span></a> wc</code></em>);
+<a class="link" href="pango-Glyph-Storage.html#PangoGlyph" title="PangoGlyph"><span class="returnvalue">PangoGlyph</span></a>          <a class="link" href="PangoFcFont.html#pango-fc-font-get-unknown-glyph" title="pango_fc_font_get_unknown_glyph ()">pango_fc_font_get_unknown_glyph</a>     (<em class="parameter"><code><a class="link" href="PangoFcFont.html" title="PangoFcFont"><span class="type">PangoFcFont</span></a> *font</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Unicode-Manipulation.html#gunichar"><span class="type">gunichar</span></a> wc</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="PangoFcFont.html#pango-fc-font-kern-glyphs" title="pango_fc_font_kern_glyphs ()">pango_fc_font_kern_glyphs</a>           (<em class="parameter"><code><a class="link" href="PangoFcFont.html" title="PangoFcFont"><span class="type">PangoFcFont</span></a> *font</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Glyph-Storage.html#PangoGlyphString"><span class="type">PangoGlyphString</span></a> *glyphs</code></em>);
+</pre>
+</div>
+<div class="refsect1">
+<a name="PangoFcFont.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
+   +----<a class="link" href="pango-Fonts.html#PangoFont">PangoFont</a>
+         +----PangoFcFont
+               +----<a class="link" href="pango-Xft-Fonts-and-Rendering.html#PangoXftFont">PangoXftFont</a>
+</pre>
+</div>
+<div class="refsect1">
+<a name="PangoFcFont.properties"></a><h2>Properties</h2>
+<pre class="synopsis">
+  "<a class="link" href="PangoFcFont.html#PangoFcFont--fontmap" title='The "fontmap" property'>fontmap</a>"                  <a class="link" href="PangoFcFontMap.html" title="PangoFcFontMap"><span class="type">PangoFcFontMap</span></a>*       : Read / Write
+  "<a class="link" href="PangoFcFont.html#PangoFcFont--pattern" title='The "pattern" property'>pattern</a>"                  <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>              : Read / Write / Construct Only
+</pre>
+</div>
+<div class="refsect1">
+<a name="PangoFcFont.description"></a><h2>Description</h2>
+<p>
+<a class="link" href="PangoFcFont.html" title="PangoFcFont"><span class="type">PangoFcFont</span></a> is a base class for font implementation using the
+Fontconfig and FreeType libraries. It is used in the
+<a class="link" href="pango-Xft-Fonts-and-Rendering.html" title="Xft Fonts and Rendering">Xft</a> and
+<a class="link" href="pango-FreeType-Fonts-and-Rendering.html" title="FreeType Fonts and Rendering">FreeType</a>
+backends shipped with Pango, but can also be used when creating
+new backends. Any backend deriving from this base class will
+take advantage of the wide range of shapers implemented using
+FreeType that come with Pango.
+</p>
+</div>
+<div class="refsect1">
+<a name="PangoFcFont.details"></a><h2>Details</h2>
+<div class="refsect2">
+<a name="PangoFcFont-struct"></a><h3>struct PangoFcFont</h3>
+<pre class="programlisting">struct PangoFcFont;</pre>
+<p>
+<a class="link" href="PangoFcFont.html" title="PangoFcFont"><span class="type">PangoFcFont</span></a> is a base class for font implementations
+using the Fontconfig and FreeType libraries and is used in
+conjunction with <a class="link" href="PangoFcFontMap.html" title="PangoFcFontMap"><span class="type">PangoFcFontMap</span></a>. When deriving from this
+class, you need to implement all of its virtual functions
+other than <code class="function">shutdown()</code> along with the <code class="function">get_glyph_extents()</code>
+virtual function from <a class="link" href="pango-Fonts.html#PangoFont"><span class="type">PangoFont</span></a>.
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="PangoFcFontClass"></a><h3>struct PangoFcFontClass</h3>
+<pre class="programlisting">struct PangoFcFontClass {
+  FT_Face    (*lock_face)         (PangoFcFont      *font);
+  void       (*unlock_face)       (PangoFcFont      *font);
+  gboolean   (*has_char)          (PangoFcFont      *font,
+				   gunichar          wc);
+  guint      (*get_glyph)         (PangoFcFont      *font,
+				   gunichar          wc);
+  PangoGlyph (*get_unknown_glyph) (PangoFcFont      *font,
+				   gunichar          wc);
+  void       (*shutdown)          (PangoFcFont      *font);
+};
+</pre>
+<p>
+Class structure for <a class="link" href="PangoFcFont.html" title="PangoFcFont"><span class="type">PangoFcFont</span></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="PangoFcFontClass.lock-face"></a>lock_face</code></em> ()</span></p></td>
+<td>Returns the FT_Face of the font and increases
+the reference count for the face by one.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="PangoFcFontClass.unlock-face"></a>unlock_face</code></em> ()</span></p></td>
+<td>Decreases the reference count for the
+FT_Face of the font by one. When the count is zero,
+the <a class="link" href="PangoFcFont.html" title="PangoFcFont"><span class="type">PangoFcFont</span></a> subclass is allowed to free the
+FT_Face.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="PangoFcFontClass.has-char"></a>has_char</code></em> ()</span></p></td>
+<td>Return <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the the font contains a glyph
+corresponding to the specified character.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="PangoFcFontClass.get-glyph"></a>get_glyph</code></em> ()</span></p></td>
+<td>Gets the glyph that corresponds to the given
+Unicode character.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="PangoFcFontClass.get-unknown-glyph"></a>get_unknown_glyph</code></em> ()</span></p></td>
+<td>Gets the glyph that should be used to
+display an unknown-glyph indication for the specified
+Unicode character.
+May be <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="PangoFcFontClass.shutdown"></a>shutdown</code></em> ()</span></p></td>
+<td>Performs any font-specific shutdown code that
+needs to be done when pango_fc_font_map_shutdown is called.
+May be <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="PANGO-RENDER-TYPE-FC:CAPS"></a><h3>PANGO_RENDER_TYPE_FC</h3>
+<pre class="programlisting">#define PANGO_RENDER_TYPE_FC "PangoRenderFc"
+</pre>
+<p>
+A string constant used to identify shape engines that work
+with the fontconfig based backends. See the <em class="parameter"><code>engine_type</code></em> field
+of <a class="link" href="pango-Engines.html#PangoEngineInfo" title="struct PangoEngineInfo"><span class="type">PangoEngineInfo</span></a>.
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-fc-font-lock-face"></a><h3>pango_fc_font_lock_face ()</h3>
+<pre class="programlisting"><span class="returnvalue">FT_Face</span>             pango_fc_font_lock_face             (<em class="parameter"><code><a class="link" href="PangoFcFont.html" title="PangoFcFont"><span class="type">PangoFcFont</span></a> *font</code></em>);</pre>
+<p>
+Gets the FreeType <span class="type">FT_Face</span> associated with a font,
+This face will be kept around until you call
+<a class="link" href="PangoFcFont.html#pango-fc-font-unlock-face" title="pango_fc_font_unlock_face ()"><code class="function">pango_fc_font_unlock_face()</code></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>font</code></em> :</span></p></td>
+<td>a <a class="link" href="PangoFcFont.html" title="PangoFcFont"><span class="type">PangoFcFont</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the FreeType <span class="type">FT_Face</span> associated with <em class="parameter"><code>font</code></em>.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.4</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-fc-font-unlock-face"></a><h3>pango_fc_font_unlock_face ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                pango_fc_font_unlock_face           (<em class="parameter"><code><a class="link" href="PangoFcFont.html" title="PangoFcFont"><span class="type">PangoFcFont</span></a> *font</code></em>);</pre>
+<p>
+Releases a font previously obtained with
+<a class="link" href="PangoFcFont.html#pango-fc-font-lock-face" title="pango_fc_font_lock_face ()"><code class="function">pango_fc_font_lock_face()</code></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>font</code></em> :</span></p></td>
+<td>a <a class="link" href="PangoFcFont.html" title="PangoFcFont"><span class="type">PangoFcFont</span></a>.</td>
+</tr></tbody>
+</table></div>
+<p class="since">Since 1.4</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-fc-font-has-char"></a><h3>pango_fc_font_has_char ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            pango_fc_font_has_char              (<em class="parameter"><code><a class="link" href="PangoFcFont.html" title="PangoFcFont"><span class="type">PangoFcFont</span></a> *font</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Unicode-Manipulation.html#gunichar"><span class="type">gunichar</span></a> wc</code></em>);</pre>
+<p>
+Determines whether <em class="parameter"><code>font</code></em> has a glyph for the codepoint <em class="parameter"><code>wc</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>font</code></em> :</span></p></td>
+<td>a <a class="link" href="PangoFcFont.html" title="PangoFcFont"><span class="type">PangoFcFont</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>wc</code></em> :</span></p></td>
+<td>Unicode codepoint to look up</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if <em class="parameter"><code>font</code></em> has the requested codepoint.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.4</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-fc-font-get-glyph"></a><h3>pango_fc_font_get_glyph ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>               pango_fc_font_get_glyph             (<em class="parameter"><code><a class="link" href="PangoFcFont.html" title="PangoFcFont"><span class="type">PangoFcFont</span></a> *font</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Unicode-Manipulation.html#gunichar"><span class="type">gunichar</span></a> wc</code></em>);</pre>
+<p>
+Gets the glyph index for a given Unicode character
+for <em class="parameter"><code>font</code></em>. If you only want to determine
+whether the font has the glyph, use <a class="link" href="PangoFcFont.html#pango-fc-font-has-char" title="pango_fc_font_has_char ()"><code class="function">pango_fc_font_has_char()</code></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>font</code></em> :</span></p></td>
+<td>a <a class="link" href="PangoFcFont.html" title="PangoFcFont"><span class="type">PangoFcFont</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>wc</code></em> :</span></p></td>
+<td>Unicode character to look up</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the glyph index, or 0, if the Unicode
+character doesn't exist in the font.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.4</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-fc-font-get-unknown-glyph"></a><h3>pango_fc_font_get_unknown_glyph ()</h3>
+<pre class="programlisting"><a class="link" href="pango-Glyph-Storage.html#PangoGlyph" title="PangoGlyph"><span class="returnvalue">PangoGlyph</span></a>          pango_fc_font_get_unknown_glyph     (<em class="parameter"><code><a class="link" href="PangoFcFont.html" title="PangoFcFont"><span class="type">PangoFcFont</span></a> *font</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Unicode-Manipulation.html#gunichar"><span class="type">gunichar</span></a> wc</code></em>);</pre>
+<div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Warning</h3>
+<p><code class="literal">pango_fc_font_get_unknown_glyph</code> is deprecated and should not be used in newly-written code.</p>
+</div>
+<p>
+Returns the index of a glyph suitable for drawing <em class="parameter"><code>wc</code></em> as an
+unknown character.
+</p>
+<p>
+Use <a class="link" href="pango-Glyph-Storage.html#PANGO-GET-UNKNOWN-GLYPH:CAPS" title="PANGO_GET_UNKNOWN_GLYPH()"><code class="function">PANGO_GET_UNKNOWN_GLYPH()</code></a> instead.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>font</code></em> :</span></p></td>
+<td>a <a class="link" href="PangoFcFont.html" title="PangoFcFont"><span class="type">PangoFcFont</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>wc</code></em> :</span></p></td>
+<td>the Unicode character for which a glyph is needed.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a glyph index into <em class="parameter"><code>font</code></em>.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.4</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-fc-font-kern-glyphs"></a><h3>pango_fc_font_kern_glyphs ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                pango_fc_font_kern_glyphs           (<em class="parameter"><code><a class="link" href="PangoFcFont.html" title="PangoFcFont"><span class="type">PangoFcFont</span></a> *font</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Glyph-Storage.html#PangoGlyphString"><span class="type">PangoGlyphString</span></a> *glyphs</code></em>);</pre>
+<p>
+Adjust each adjacent pair of glyphs in <em class="parameter"><code>glyphs</code></em> according to
+kerning information in <em class="parameter"><code>font</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>font</code></em> :</span></p></td>
+<td>a <a class="link" href="PangoFcFont.html" title="PangoFcFont"><span class="type">PangoFcFont</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>glyphs</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-Glyph-Storage.html#PangoGlyphString"><span class="type">PangoGlyphString</span></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.4</p>
+</div>
+</div>
+<div class="refsect1">
+<a name="PangoFcFont.property-details"></a><h2>Property Details</h2>
+<div class="refsect2">
+<a name="PangoFcFont--fontmap"></a><h3>The <code class="literal">"fontmap"</code> property</h3>
+<pre class="programlisting">  "fontmap"                  <a class="link" href="PangoFcFontMap.html" title="PangoFcFontMap"><span class="type">PangoFcFontMap</span></a>*       : Read / Write</pre>
+<p>The PangoFc font map this font is associated with (Since: 1.26).</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="PangoFcFont--pattern"></a><h3>The <code class="literal">"pattern"</code> property</h3>
+<pre class="programlisting">  "pattern"                  <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>              : Read / Write / Construct Only</pre>
+<p>The fontconfig pattern for this font.</p>
+</div>
+</div>
+<div class="refsect1">
+<a name="PangoFcFont.see-also"></a><h2>See Also</h2>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><a class="link" href="PangoFcFontMap.html" title="PangoFcFontMap"><span class="type">PangoFcFontMap</span></a></span></p></td>
+<td><p>The base class for font maps; creating a new
+Fontconfig-based backend involves deriving from both
+<a class="link" href="PangoFcFontMap.html" title="PangoFcFontMap"><span class="type">PangoFcFontMap</span></a> and <a class="link" href="PangoFcFont.html" title="PangoFcFont"><span class="type">PangoFcFont</span></a>.
+.</p></td>
+</tr></tbody>
+</table></div>
+<p>
+</p>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

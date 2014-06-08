@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>class MaRuKu::MDDocument - maruku-0.7.0 Documentation</title>
+
+<link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../index.html">Home</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/maruku.rb
+    <li>lib/maruku/document.rb
+    <li>lib/maruku/ext/math/parsing.rb
+    <li>lib/maruku/input_textile2/t2_parser.rb
+    <li>lib/maruku/output/s5/to_s5.rb
+    <li>lib/maruku/output/to_latex.rb
+    <li>lib/maruku/output/to_markdown.rb
+    <li>lib/maruku/toc.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link"><a href="MDElement.html">MaRuKu::MDElement</a>
+  
+</nav>
+
+    <!-- Included Modules -->
+<nav id="includes-section" class="section">
+  <h3 class="section-header">Included Modules</h3>
+
+  <ul class="link-list">
+  
+  
+    <li><a class="include" href="In/Markdown.html">MaRuKu::In::Markdown</a>
+  
+  
+  
+    <li><a class="include" href="In/Markdown/SpanLevelParser.html">MaRuKu::In::Markdown::SpanLevelParser</a>
+  
+  
+  
+    <li><a class="include" href="In/Markdown/BlockLevelParser.html">MaRuKu::In::Markdown::BlockLevelParser</a>
+  
+  
+  
+    <li><a class="include" href="Out/Latex/MDDocumentExtensions.html">MaRuKu::Out::Latex::MDDocumentExtensions</a>
+  
+  
+  </ul>
+</nav>
+
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li class="calls-super" ><a href="#method-c-new">::new</a>
+    
+    <li ><a href="#method-i-create_toc">#create_toc</a>
+    
+    <li ><a href="#method-i-is_math_enabled-3F">#is_math_enabled?</a>
+    
+    <li ><a href="#method-i-old_md">#old_md</a>
+    
+    <li ><a href="#method-i-s5_theme">#s5_theme</a>
+    
+    <li ><a href="#method-i-t2_block_paragraph">#t2_block_paragraph</a>
+    
+    <li ><a href="#method-i-t2_parse">#t2_parse</a>
+    
+    <li ><a href="#method-i-t2_parse_blocks">#t2_parse_blocks</a>
+    
+    <li ><a href="#method-i-t2_parse_span">#t2_parse_span</a>
+    
+    <li ><a href="#method-i-to_md">#to_md</a>
+    
+    <li ><a href="#method-i-to_s5">#to_s5</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../MaRuKu.html">MaRuKu</a>
+  
+    <li><a href="../MaRuKu/AttributeList.html">MaRuKu::AttributeList</a>
+  
+    <li><a href="../MaRuKu/Errors.html">MaRuKu::Errors</a>
+  
+    <li><a href="../MaRuKu/Exception.html">MaRuKu::Exception</a>
+  
+    <li><a href="../MaRuKu/HTMLElement.html">MaRuKu::HTMLElement</a>
+  
+    <li><a href="../MaRuKu/HTMLFragment.html">MaRuKu::HTMLFragment</a>
+  
+    <li><a href="../MaRuKu/Helpers.html">MaRuKu::Helpers</a>
+  
+    <li><a href="../MaRuKu/In.html">MaRuKu::In</a>
+  
+    <li><a href="../MaRuKu/In.html">MaRuKu::In</a>
+  
+    <li><a href="../MaRuKu/In/Markdown.html">MaRuKu::In::Markdown</a>
+  
+    <li><a href="../MaRuKu/In/Markdown.html">MaRuKu::In::Markdown</a>
+  
+    <li><a href="../MaRuKu/In/Markdown/BlockLevelParser.html">MaRuKu::In::Markdown::BlockLevelParser</a>
+  
+    <li><a href="../MaRuKu/In/Markdown/BlockLevelParser/BlockContext.html">MaRuKu::In::Markdown::BlockLevelParser::BlockContext</a>
+  
+    <li><a href="../MaRuKu/In/Markdown/BlockLevelParser/LineSource.html">MaRuKu::In::Markdown::BlockLevelParser::LineSource</a>
+  
+    <li><a href="../MaRuKu/In/Markdown/SpanExtension.html">MaRuKu::In::Markdown::SpanExtension</a>
+  
+    <li><a href="../MaRuKu/In/Markdown/SpanLevelParser.html">MaRuKu::In::Markdown::SpanLevelParser</a>
+  
+    <li><a href="../MaRuKu/In/Markdown/SpanLevelParser/CaptureRule.html">MaRuKu::In::Markdown::SpanLevelParser::CaptureRule</a>
+  
+    <li><a href="../MaRuKu/In/Markdown/SpanLevelParser/CharSourceDebug.html">MaRuKu::In::Markdown::SpanLevelParser::CharSourceDebug</a>
+  
+    <li><a href="../MaRuKu/In/Markdown/SpanLevelParser/CharSourceManual.html">MaRuKu::In::Markdown::SpanLevelParser::CharSourceManual</a>
+  
+    <li><a href="../MaRuKu/In/Markdown/SpanLevelParser/CharSourceStrscan.html">MaRuKu::In::Markdown::SpanLevelParser::CharSourceStrscan</a>
+  
+    <li><a href="../MaRuKu/In/Markdown/SpanLevelParser/HTMLHelper.html">MaRuKu::In::Markdown::SpanLevelParser::HTMLHelper</a>
+  
+    <li><a href="../MaRuKu/In/Markdown/SpanLevelParser/ReplaceRule.html">MaRuKu::In::Markdown::SpanLevelParser::ReplaceRule</a>
+  
+    <li><a href="../MaRuKu/In/Markdown/SpanLevelParser/Rule.html">MaRuKu::In::Markdown::SpanLevelParser::Rule</a>
+  
+    <li><a href="../MaRuKu/In/Markdown/SpanLevelParser/SpanContext.html">MaRuKu::In::Markdown::SpanLevelParser::SpanContext</a>
+  
+    <li><a href="../MaRuKu/MDDocument.html">MaRuKu::MDDocument</a>
+  
+    <li><a href="../MaRuKu/MDElement.html">MaRuKu::MDElement</a>
+  
+    <li><a href="../MaRuKu/MDHTMLElement.html">MaRuKu::MDHTMLElement</a>
+  
+    <li><a href="../MaRuKu/MDLine.html">MaRuKu::MDLine</a>
+  
+    <li><a href="../MaRuKu/NokogiriHTMLFragment.html">MaRuKu::NokogiriHTMLFragment</a>
+  
+    <li><a href="../MaRuKu/Out.html">MaRuKu::Out</a>
+  
+    <li><a href="../MaRuKu/Out/EntityTable.html">MaRuKu::Out::EntityTable</a>
+  
+    <li><a href="../MaRuKu/Out/HTML.html">MaRuKu::Out::HTML</a>
+  
+    <li><a href="../MaRuKu/Out/HTML/HTMLElement.html">MaRuKu::Out::HTML::HTMLElement</a>
+  
+    <li><a href="../MaRuKu/Out/Latex.html">MaRuKu::Out::Latex</a>
+  
+    <li><a href="../MaRuKu/Out/Latex/MDDocumentExtensions.html">MaRuKu::Out::Latex::MDDocumentExtensions</a>
+  
+    <li><a href="../MaRuKu/Out/Markdown.html">MaRuKu::Out::Markdown</a>
+  
+    <li><a href="../MaRuKu/REXMLHTMLFragment.html">MaRuKu::REXMLHTMLFragment</a>
+  
+    <li><a href="../MaRuKu/Section.html">MaRuKu::Section</a>
+  
+    <li><a href="../MaRuKu/Strings.html">MaRuKu::Strings</a>
+  
+    <li><a href="../Maruku.html">Maruku</a>
+  
+    <li><a href="../Maruku.html">Maruku</a>
+  
+    <li><a href="../Maruku/In/Markdown/FencedCode.html">Maruku::In::Markdown::FencedCode</a>
+  
+    <li><a href="../Object.html">Object</a>
+  
+    <li><a href="../String.html">String</a>
+  
+    <li><a href="../Textile2Signature.html">Textile2Signature</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class MaRuKu::MDDocument</h1>
+
+  <div id="description" class="description">
+    
+<p>This represents the whole document and holds global data.</p>
+
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+    <!-- Constants -->
+    <section id="constants-list" class="section">
+      <h3 class="section-header">Constants</h3>
+      <dl>
+      
+        <dt id="Handling">Handling
+        
+        <dd class="description">
+        
+      
+        <dt id="T2_Handling">T2_Handling
+        
+        <dd class="description">
+        
+      
+      </dl>
+    </section>
+    
+
+    
+    <!-- Attributes -->
+    <section id="attribute-method-details" class="method-section section">
+      <h3 class="section-header">Attributes</h3>
+
+      
+      <div id="attribute-i-abbreviations" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">abbreviations</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>@return [{String =&gt; String}]</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-ald" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">ald</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>Attribute definition lists.</p>
+
+<p>@return [{String =&gt; AttributeList}]</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-eqid2eq" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">eqid2eq</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>A hash of equation ids to equation elements</p>
+
+<p>@return [String =&gt; MDElement]</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-footnotes" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">footnotes</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>@return [{String =&gt; MDElement}]</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-footnotes_order" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">footnotes_order</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>The order in which footnotes are used. Contains the id.</p>
+
+<p>@return [Array&lt;String&gt;]</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-header_ids" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">header_ids</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>A map of header IDs to a count of how many times they&#39;ve occurred in
+the document.</p>
+
+<p>@return [Hash&lt;String, Number&gt;]</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-id_counter" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">id_counter</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>A counter for generating unique IDs [Integer]</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-refid2ref" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">refid2ref</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>@return [{String =&gt; {String =&gt; MDElement}}]</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-refs" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">refs</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>@return [{String =&gt; {:url =&gt; <a href="../String.html">String</a>,
+:title =&gt; String}}]</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-toc" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">toc</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>The table of contents for the document.</p>
+
+<p>@return [Section]</p>
+        
+        </div>
+      </div>
+      
+    </section><!-- attribute-method-details -->
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">(s=nil)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+            <div class="method-calls-super">
+              Calls superclass method
+              <a href="Out/Latex/MDDocumentExtensions.html#method-c-new">MaRuKu::Out::Latex::MDDocumentExtensions.new</a>
+            </div>
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/maruku/document.rb, line 29</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">s</span>=<span class="ruby-keyword">nil</span>)
+  <span class="ruby-keyword">super</span>(<span class="ruby-value">:document</span>)
+
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">doc</span> = <span class="ruby-keyword">self</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">refs</span> = {}
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">footnotes</span> = {}
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">footnotes_order</span> = []
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">abbreviations</span> = {}
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">ald</span> = {}
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">id_counter</span> = <span class="ruby-value">0</span>
+
+  <span class="ruby-identifier">parse_doc</span>(<span class="ruby-identifier">s</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">s</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- new-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- new-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-create_toc" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">create_toc</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="create_toc-source">
+            <pre><span class="ruby-comment"># File lib/maruku/toc.rb, line 133</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">create_toc</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">header_ids</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">0</span>)
+
+  <span class="ruby-identifier">each_element</span>(<span class="ruby-value">:header</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">h</span><span class="ruby-operator">|</span> <span class="ruby-identifier">h</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value">:id</span>] <span class="ruby-operator">||=</span> <span class="ruby-identifier">h</span>.<span class="ruby-identifier">generate_id</span> }
+
+
+  <span class="ruby-comment"># The root section</span>
+  <span class="ruby-identifier">s</span> = <span class="ruby-constant">Section</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-identifier">s</span>.<span class="ruby-identifier">section_level</span> = <span class="ruby-value">0</span>
+
+  <span class="ruby-identifier">stack</span> = [<span class="ruby-identifier">s</span>]
+
+  <span class="ruby-identifier">i</span> = <span class="ruby-value">0</span>
+  <span class="ruby-keyword">while</span> <span class="ruby-identifier">i</span> <span class="ruby-operator">&lt;</span> <span class="ruby-ivar">@children</span>.<span class="ruby-identifier">size</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">children</span>[<span class="ruby-identifier">i</span>].<span class="ruby-identifier">node_type</span> <span class="ruby-operator">==</span> <span class="ruby-value">:header</span>
+      <span class="ruby-identifier">header</span> = <span class="ruby-ivar">@children</span>[<span class="ruby-identifier">i</span>]
+      <span class="ruby-identifier">level</span> = <span class="ruby-identifier">header</span>.<span class="ruby-identifier">level</span>
+      <span class="ruby-identifier">s2</span> = <span class="ruby-constant">Section</span>.<span class="ruby-identifier">new</span>
+      <span class="ruby-identifier">s2</span>.<span class="ruby-identifier">section_level</span> = <span class="ruby-identifier">level</span>
+      <span class="ruby-identifier">s2</span>.<span class="ruby-identifier">header_element</span> = <span class="ruby-identifier">header</span>
+      <span class="ruby-identifier">header</span>.<span class="ruby-identifier">instance_variable_set</span> <span class="ruby-value">:@section</span>, <span class="ruby-identifier">s2</span>
+      <span class="ruby-keyword">while</span> <span class="ruby-identifier">level</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-identifier">stack</span>.<span class="ruby-identifier">last</span>.<span class="ruby-identifier">section_level</span>
+        <span class="ruby-identifier">stack</span>.<span class="ruby-identifier">pop</span>
+      <span class="ruby-keyword">end</span>
+      <span class="ruby-identifier">stack</span>.<span class="ruby-identifier">last</span>.<span class="ruby-identifier">section_children</span>.<span class="ruby-identifier">push</span> <span class="ruby-identifier">s2</span>
+      <span class="ruby-identifier">stack</span>.<span class="ruby-identifier">push</span> <span class="ruby-identifier">s2</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">stack</span>.<span class="ruby-identifier">last</span>.<span class="ruby-identifier">immediate_children</span>.<span class="ruby-identifier">push</span> <span class="ruby-ivar">@children</span>[<span class="ruby-identifier">i</span>]
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">i</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-comment"># If there is only one big header, then assume</span>
+  <span class="ruby-comment"># it is the master</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">s</span>.<span class="ruby-identifier">section_children</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>
+    <span class="ruby-identifier">s</span> = <span class="ruby-identifier">s</span>.<span class="ruby-identifier">section_children</span>.<span class="ruby-identifier">first</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-comment"># Assign section numbers</span>
+  <span class="ruby-identifier">s</span>.<span class="ruby-identifier">numerate</span>
+
+  <span class="ruby-identifier">s</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- create_toc-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- create_toc-method -->
+
+    
+      <div id="method-i-is_math_enabled-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">is_math_enabled?</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="is_math_enabled-3F-source">
+            <pre><span class="ruby-comment"># File lib/maruku/ext/math/parsing.rb, line 8</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">is_math_enabled?</span>
+  <span class="ruby-identifier">get_setting</span> <span class="ruby-value">:math_enabled</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- is_math_enabled-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- is_math_enabled-3F-method -->
+
+    
+      <div id="method-i-old_md" class="method-detail method-alias">
+        
+        <div class="method-heading">
+          <span class="method-name">old_md</span><span
+            class="method-args">(context={})</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+        </div>
+
+        
+
+        
+        <div class="aliases">
+          Alias for: <a href="MDDocument.html#method-i-to_md">to_md</a>
+        </div>
+        
+      </div><!-- old_md-method -->
+
+    
+      <div id="method-i-s5_theme" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">s5_theme</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="s5_theme-source">
+            <pre><span class="ruby-comment"># File lib/maruku/output/s5/to_s5.rb, line 5</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">s5_theme</span>
+  <span class="ruby-identifier">xtext</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value">:slide_theme</span>] <span class="ruby-operator">||</span> <span class="ruby-string">&quot;default&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- s5_theme-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- s5_theme-method -->
+
+    
+      <div id="method-i-t2_block_paragraph" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">t2_block_paragraph</span><span
+            class="method-args">(src, output, signature, lines)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="t2_block_paragraph-source">
+            <pre><span class="ruby-comment"># File lib/maruku/input_textile2/t2_parser.rb, line 151</span>
+                <span class="ruby-keyword">def</span> <span class="ruby-identifier">t2_block_paragraph</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">output</span>, <span class="ruby-identifier">signature</span>, <span class="ruby-identifier">lines</span>)
+                        <span class="ruby-identifier">paragraph</span> = <span class="ruby-identifier">lines</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">&quot;\n&quot;</span>)
+                        <span class="ruby-identifier">src2</span> = <span class="ruby-constant">CharSource</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">paragraph</span>, <span class="ruby-identifier">src</span>)
+<span class="ruby-comment">#                       output = </span>
+                <span class="ruby-keyword">end</span></pre>
+          </div><!-- t2_block_paragraph-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- t2_block_paragraph-method -->
+
+    
+      <div id="method-i-t2_parse" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">t2_parse</span><span
+            class="method-args">(source, params)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="t2_parse-source">
+            <pre><span class="ruby-comment"># File lib/maruku/input_textile2/t2_parser.rb, line 95</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">t2_parse</span>(<span class="ruby-identifier">source</span>, <span class="ruby-identifier">params</span>)
+        <span class="ruby-identifier">src</span> = <span class="ruby-constant">LineSource</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">source</span>)
+        <span class="ruby-identifier">output</span> = <span class="ruby-constant">BlockContext</span>.<span class="ruby-identifier">new</span>
+        <span class="ruby-identifier">t2_parse_blocks</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">output</span>)
+        <span class="ruby-keyword">self</span>.<span class="ruby-identifier">children</span> = <span class="ruby-identifier">output</span>.<span class="ruby-identifier">elements</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- t2_parse-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- t2_parse-method -->
+
+    
+      <div id="method-i-t2_parse_blocks" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">t2_parse_blocks</span><span
+            class="method-args">(src, output)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Input is a LineSource</p>
+          
+          
+
+          
+          <div class="method-source-code" id="t2_parse_blocks-source">
+            <pre><span class="ruby-comment"># File lib/maruku/input_textile2/t2_parser.rb, line 109</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">t2_parse_blocks</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">output</span>)
+        <span class="ruby-keyword">while</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">cur_line</span>
+                <span class="ruby-identifier">l</span> = <span class="ruby-identifier">src</span>.<span class="ruby-identifier">shift_line</span>
+                
+                <span class="ruby-comment"># ignore empty line</span>
+                <span class="ruby-keyword">if</span> <span class="ruby-identifier">l</span>.<span class="ruby-identifier">t2_empty?</span> <span class="ruby-keyword">then</span> 
+                        <span class="ruby-identifier">src</span>.<span class="ruby-identifier">shift_line</span>
+                        <span class="ruby-keyword">next</span> 
+                <span class="ruby-keyword">end</span>
+                
+                <span class="ruby-comment"># TODO: lists</span>
+                <span class="ruby-comment"># TODO: xml</span>
+                <span class="ruby-comment"># TODO: `==`</span>
+
+                <span class="ruby-identifier">signature</span>, <span class="ruby-identifier">l</span> =
+                        <span class="ruby-keyword">if</span> <span class="ruby-identifier">l</span>.<span class="ruby-identifier">t2_contains_signature?</span>
+                                <span class="ruby-identifier">l</span>.<span class="ruby-identifier">t2_get_signature</span>
+                        <span class="ruby-keyword">else</span>
+                                [<span class="ruby-constant">Textile2Signature</span>.<span class="ruby-identifier">new</span>, <span class="ruby-identifier">l</span>]
+                        <span class="ruby-keyword">end</span>
+
+                <span class="ruby-keyword">if</span> <span class="ruby-identifier">handling</span> = <span class="ruby-constant">T2_Handling</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">signature</span>.<span class="ruby-identifier">block_name</span>)
+                        <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">responds_to?</span> <span class="ruby-identifier">handling</span>.<span class="ruby-identifier">method</span>
+                                <span class="ruby-comment"># read as many non-empty lines that you can</span>
+                                <span class="ruby-identifier">lines</span> = [<span class="ruby-identifier">l</span>]
+                                <span class="ruby-keyword">if</span> <span class="ruby-identifier">handling</span>.<span class="ruby-identifier">parse_lines</span>
+                                        <span class="ruby-keyword">while</span> <span class="ruby-keyword">not</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">cur_line</span>.<span class="ruby-identifier">t2_empty?</span>
+                                                <span class="ruby-identifier">lines</span>.<span class="ruby-identifier">push</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">shift_line</span>
+                                        <span class="ruby-keyword">end</span>
+                                <span class="ruby-keyword">end</span>
+                        
+                                <span class="ruby-keyword">self</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">handling</span>.<span class="ruby-identifier">method</span>, <span class="ruby-identifier">src</span>, <span class="ruby-identifier">output</span>, <span class="ruby-identifier">signature</span>, <span class="ruby-identifier">lines</span>)
+                        <span class="ruby-keyword">else</span>
+                                <span class="ruby-identifier">maruku_error</span>(<span class="ruby-node">&quot;We don&#39;t know about method #{handling.method.inspect}&quot;</span>)
+                                <span class="ruby-keyword">next</span>
+                        <span class="ruby-keyword">end</span>
+                <span class="ruby-keyword">end</span>
+                
+                
+        <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- t2_parse_blocks-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- t2_parse_blocks-method -->
+
+    
+      <div id="method-i-t2_parse_span" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">t2_parse_span</span><span
+            class="method-args">(src, output)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="t2_parse_span-source">
+            <pre><span class="ruby-comment"># File lib/maruku/input_textile2/t2_parser.rb, line 157</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">t2_parse_span</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">output</span>)
+        
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- t2_parse_span-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- t2_parse_span-method -->
+
+    
+      <div id="method-i-to_md" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">to_md</span><span
+            class="method-args">(context={})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="to_md-source">
+            <pre><span class="ruby-comment"># File lib/maruku/output/to_markdown.rb, line 204</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">to_md</span>(<span class="ruby-identifier">context</span>={})
+  <span class="ruby-identifier">warn</span> <span class="ruby-node">&quot;Maruku#to_md is deprecated and will be removed in a near-future version of Maruku.&quot;</span>
+  <span class="ruby-identifier">old_md</span>(<span class="ruby-identifier">context</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- to_md-source -->
+          
+        </div>
+
+        
+        <div class="aliases">
+          Also aliased as: <a href="MDDocument.html#method-i-old_md">old_md</a>
+        </div>
+        
+
+        
+      </div><!-- to_md-method -->
+
+    
+      <div id="method-i-to_s5" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">to_s5</span><span
+            class="method-args">(context={})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Render as an HTML fragment (no head, just the content of BODY). (returns a
+string)</p>
+          
+          
+
+          
+          <div class="method-source-code" id="to_s5-source">
+            <pre><span class="ruby-comment"># File lib/maruku/output/s5/to_s5.rb, line 10</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">to_s5</span>(<span class="ruby-identifier">context</span>={})
+  <span class="ruby-identifier">content_only</span> = <span class="ruby-identifier">context</span>[<span class="ruby-value">:content_only</span>] <span class="ruby-operator">!=</span> <span class="ruby-keyword">false</span>
+  <span class="ruby-identifier">print_slides</span> = <span class="ruby-identifier">context</span>[<span class="ruby-value">:print_slides</span>]
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">content_only</span>
+    <span class="ruby-identifier">body</span> = <span class="ruby-identifier">xelem</span>(<span class="ruby-string">&#39;div&#39;</span>, <span class="ruby-identifier">doc</span>)
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">html</span> = <span class="ruby-identifier">xelem</span>(<span class="ruby-string">&#39;html&#39;</span>)
+    <span class="ruby-identifier">html</span>[<span class="ruby-string">&#39;xmlns&#39;</span>] = <span class="ruby-string">&#39;http://www.w3.org/1999/xhtml&#39;</span>
+    <span class="ruby-identifier">html</span>[<span class="ruby-string">&#39;xmlns:svg&#39;</span>] = <span class="ruby-string">&quot;http://www.w3.org/2000/svg&quot;</span>
+    <span class="ruby-identifier">html</span>[<span class="ruby-string">&#39;xml:lang&#39;</span>] = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value">:lang</span>] <span class="ruby-operator">||</span> <span class="ruby-string">&#39;en&#39;</span>
+
+    <span class="ruby-identifier">head</span> = <span class="ruby-identifier">xelem</span>(<span class="ruby-string">&#39;head&#39;</span>)
+    <span class="ruby-identifier">html</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">head</span>
+
+    <span class="ruby-identifier">me</span> = <span class="ruby-identifier">xelem</span>(<span class="ruby-string">&#39;meta&#39;</span>)
+    <span class="ruby-identifier">me</span>[<span class="ruby-string">&#39;http-equiv&#39;</span>] = <span class="ruby-string">&#39;Content-type&#39;</span>
+    <span class="ruby-identifier">me</span>[<span class="ruby-string">&#39;content&#39;</span>] = <span class="ruby-string">&#39;text/html;charset=utf-8&#39;</span>
+    <span class="ruby-identifier">head</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">me</span>
+
+    <span class="ruby-comment"># Create title element</span>
+    <span class="ruby-identifier">doc_title</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value">:title</span>] <span class="ruby-operator">||</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value">:subject</span>] <span class="ruby-operator">||</span> <span class="ruby-string">&quot;&quot;</span>
+    <span class="ruby-keyword">begin</span>
+      <span class="ruby-identifier">title_content</span> = <span class="ruby-constant">MaRuKu</span><span class="ruby-operator">::</span><span class="ruby-constant">HTMLFragment</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">doc_title</span>).<span class="ruby-identifier">to_html</span>
+    <span class="ruby-keyword">rescue</span>
+      <span class="ruby-identifier">title_content</span> = <span class="ruby-identifier">xtext</span>(<span class="ruby-identifier">doc_title</span>)
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">title</span> = <span class="ruby-identifier">xelem</span>(<span class="ruby-string">&#39;title&#39;</span>) <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">title_content</span>
+    <span class="ruby-identifier">head</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">title</span>
+
+    <span class="ruby-identifier">body</span> = <span class="ruby-identifier">xelem</span>(<span class="ruby-string">&#39;body&#39;</span>)
+    <span class="ruby-identifier">html</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">body</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">slide_header</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value">:slide_header</span>]
+  <span class="ruby-identifier">slide_footer</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value">:slide_footer</span>]
+  <span class="ruby-identifier">slide_subfooter</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value">:slide_subfooter</span>]
+  <span class="ruby-identifier">slide_topleft</span>  = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value">:slide_topleft</span>]
+  <span class="ruby-identifier">slide_topright</span>  = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value">:slide_topright</span>]
+  <span class="ruby-identifier">slide_bottomleft</span>  = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value">:slide_bottomleft</span>]
+  <span class="ruby-identifier">slide_bottomright</span>  = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value">:slide_bottomright</span>]
+
+  <span class="ruby-identifier">dummy_layout_slide</span> = <span class="ruby-node">&quot;
+&lt;div class=&#39;layout&#39;&gt;
+&lt;div id=&#39;controls&#39;&gt; &lt;/div&gt;
+&lt;div id=&#39;currentSlide&#39;&gt; &lt;/div&gt;
+&lt;div id=&#39;header&#39;&gt; #{slide_header}&lt;/div&gt;
+&lt;div id=&#39;footer&#39;&gt;
+&lt;h1&gt;#{slide_footer}&lt;/h1&gt;
+&lt;h2&gt;#{slide_subfooter}&lt;/h2&gt;
+&lt;/div&gt;
+&lt;div class=&#39;topleft&#39;&gt; #{slide_topleft}&lt;/div&gt;
+&lt;div class=&#39;topright&#39;&gt; #{slide_topright}&lt;/div&gt;
+&lt;div class=&#39;bottomleft&#39;&gt; #{slide_bottomleft}&lt;/div&gt;
+&lt;div class=&#39;bottomright&#39;&gt; #{slide_bottomright}&lt;/div&gt;
+&lt;/div&gt;
+            &quot;</span>
+  <span class="ruby-identifier">body</span> <span class="ruby-operator">&lt;&lt;</span>  <span class="ruby-identifier">dummy_layout_slide</span>
+
+  <span class="ruby-identifier">presentation</span> = <span class="ruby-identifier">xelem</span>(<span class="ruby-string">&#39;div&#39;</span>)
+  <span class="ruby-identifier">presentation</span>[<span class="ruby-string">&#39;class&#39;</span>] = <span class="ruby-string">&#39;presentation&#39;</span>
+  <span class="ruby-identifier">body</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">presentation</span>
+
+  <span class="ruby-identifier">first_slide</span> = <span class="ruby-node">&quot;
+&lt;div class=&#39;slide&#39;&gt;
+&lt;h1&gt; #{self.attributes[:title] ||context[:title]}&lt;/h1&gt;
+&lt;h2&gt; #{self.attributes[:subtitle] ||context[:subtitle]}&lt;/h2&gt;
+&lt;h3&gt; #{self.attributes[:author] ||context[:author]}&lt;/h3&gt;
+&lt;h4&gt; #{self.attributes[:company] ||context[:company]}&lt;/h4&gt;
+&lt;/div&gt;
+&quot;</span>
+  <span class="ruby-identifier">presentation</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">first_slide</span>
+
+  <span class="ruby-identifier">slide_num</span> = <span class="ruby-value">0</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">toc</span>.<span class="ruby-identifier">section_children</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">slide</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">slide_num</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+    <span class="ruby-ivar">@doc</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value">:doc_prefix</span>] = <span class="ruby-node">&quot;s#{slide_num}&quot;</span>
+
+    <span class="ruby-identifier">div</span> = <span class="ruby-identifier">xelem</span>(<span class="ruby-string">&#39;div&#39;</span>)
+    <span class="ruby-identifier">presentation</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">div</span>
+    <span class="ruby-identifier">div</span>[<span class="ruby-string">&#39;class&#39;</span>] = <span class="ruby-string">&#39;slide&#39;</span>
+
+    <span class="ruby-identifier">h1</span> = <span class="ruby-identifier">xelem</span>(<span class="ruby-string">&#39;h1&#39;</span>)
+    <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Slide #{slide_num}: #{slide.header_element.children_to_html.join}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">print_slides</span>
+    <span class="ruby-identifier">slide</span>.<span class="ruby-identifier">header_element</span>.<span class="ruby-identifier">children_to_html</span>.<span class="ruby-identifier">inject</span>(<span class="ruby-identifier">h1</span>, <span class="ruby-operator">&amp;</span><span class="ruby-value">:&lt;&lt;</span>)
+    <span class="ruby-identifier">div</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">h1</span>
+
+    <span class="ruby-identifier">array_to_html</span>(<span class="ruby-identifier">slide</span>.<span class="ruby-identifier">immediate_children</span>).<span class="ruby-identifier">inject</span>(<span class="ruby-identifier">div</span>, <span class="ruby-operator">&amp;</span><span class="ruby-value">:&lt;&lt;</span>)
+
+    <span class="ruby-comment"># render footnotes</span>
+    <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@doc</span>.<span class="ruby-identifier">footnotes_order</span>.<span class="ruby-identifier">empty?</span>
+      <span class="ruby-identifier">div</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">render_footnotes</span>
+      <span class="ruby-ivar">@doc</span>.<span class="ruby-identifier">footnotes_order</span> = []
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">content_only</span>
+    <span class="ruby-identifier">xml</span> = <span class="ruby-identifier">body</span>.<span class="ruby-identifier">to_html</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">head</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">S5_external</span>
+
+    <span class="ruby-identifier">add_css_to</span>(<span class="ruby-identifier">head</span>)
+
+    <span class="ruby-identifier">xml</span> = <span class="ruby-identifier">html</span>.<span class="ruby-identifier">to_html</span>
+    <span class="ruby-constant">Xhtml11_mathml2_svg11</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">xml</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- to_s5-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- to_s5-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

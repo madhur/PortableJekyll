@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>class INotify::Notifier - rb-inotify-0.9.2 Documentation</title>
+
+<link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../index.html">Home</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/rb-inotify/notifier.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">Object
+  
+</nav>
+
+    
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li ><a href="#method-c-new">::new</a>
+    
+    <li ><a href="#method-c-supports_ruby_io-3F">::supports_ruby_io?</a>
+    
+    <li ><a href="#method-i-close">#close</a>
+    
+    <li ><a href="#method-i-process">#process</a>
+    
+    <li ><a href="#method-i-read_events">#read_events</a>
+    
+    <li ><a href="#method-i-readpartial">#readpartial</a>
+    
+    <li ><a href="#method-i-run">#run</a>
+    
+    <li ><a href="#method-i-stop">#stop</a>
+    
+    <li ><a href="#method-i-to_io">#to_io</a>
+    
+    <li ><a href="#method-i-watch">#watch</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="../README_md.html">README</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../INotify.html">INotify</a>
+  
+    <li><a href="../INotify/Event.html">INotify::Event</a>
+  
+    <li><a href="../INotify/Native.html">INotify::Native</a>
+  
+    <li><a href="../INotify/Native/Event.html">INotify::Native::Event</a>
+  
+    <li><a href="../INotify/Native/FFI.html">INotify::Native::FFI</a>
+  
+    <li><a href="../INotify/Native/FFI/Library.html">INotify::Native::FFI::Library</a>
+  
+    <li><a href="../INotify/Native/Flags.html">INotify::Native::Flags</a>
+  
+    <li><a href="../INotify/Notifier.html">INotify::Notifier</a>
+  
+    <li><a href="../INotify/Watcher.html">INotify::Watcher</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class INotify::Notifier</h1>
+
+  <div id="description" class="description">
+    
+<p><a href="Notifier.html">Notifier</a> wraps a single instance of inotify.
+It&#39;s possible to have more than one instance, but usually unnecessary.</p>
+
+<p>@example</p>
+
+<pre class="ruby"><span class="ruby-comment"># Create the notifier</span>
+<span class="ruby-identifier">notifier</span> = <span class="ruby-constant">INotify</span><span class="ruby-operator">::</span><span class="ruby-constant">Notifier</span>.<span class="ruby-identifier">new</span>
+
+<span class="ruby-comment"># Run this callback whenever the file path/to/foo.txt is read</span>
+<span class="ruby-identifier">notifier</span>.<span class="ruby-identifier">watch</span>(<span class="ruby-string">&quot;path/to/foo.txt&quot;</span>, :<span class="ruby-identifier">access</span>) <span class="ruby-keyword">do</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Foo.txt was accessed!&quot;</span>
+<span class="ruby-keyword">end</span>
+
+<span class="ruby-comment"># Watch for any file in the directory being deleted</span>
+<span class="ruby-comment"># or moved out of the directory.</span>
+<span class="ruby-identifier">notifier</span>.<span class="ruby-identifier">watch</span>(<span class="ruby-string">&quot;path/to/directory&quot;</span>, :<span class="ruby-identifier">delete</span>, :<span class="ruby-identifier">moved_from</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">event</span><span class="ruby-operator">|</span>
+  <span class="ruby-comment"># The #name field of the event object contains the name of the affected file</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{event.name} is no longer in the directory!&quot;</span>
+<span class="ruby-keyword">end</span>
+
+<span class="ruby-comment"># Nothing happens until you run the notifier!</span>
+<span class="ruby-identifier">notifier</span>.<span class="ruby-identifier">run</span>
+</pre>
+
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+    <!-- Constants -->
+    <section id="constants-list" class="section">
+      <h3 class="section-header">Constants</h3>
+      <dl>
+      
+        <dt id="RECURSIVE_BLACKLIST">RECURSIVE_BLACKLIST
+        
+        <dd class="description"><p>A list of directories that should never be recursively watched.</p>
+<ul><li>
+<p>Files in `/dev/fd` sometimes register as directories, but are not
+enumerable.</p>
+</li></ul>
+        
+      
+      </dl>
+    </section>
+    
+
+    
+    <!-- Attributes -->
+    <section id="attribute-method-details" class="method-section section">
+      <h3 class="section-header">Attributes</h3>
+
+      
+      <div id="attribute-i-fd" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">fd</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>The underlying file descriptor for this notifier. This is a valid OS file
+descriptor, and can be used as such (except under JRuby – see {#to_io}).</p>
+
+<p>@return [Fixnum]</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-watchers" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">watchers</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>A hash from {Watcher} ids to the instances themselves.</p>
+
+<p>@private @return [{Fixnum =&gt; Watcher}]</p>
+        
+        </div>
+      </div>
+      
+    </section><!-- attribute-method-details -->
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Creates a new {Notifier}.</p>
+
+<p>@return [Notifier] @raise [SystemCallError] if inotify failed to initialize
+for some reason</p>
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/rb-inotify/notifier.rb, line 53</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>
+  <span class="ruby-ivar">@fd</span> = <span class="ruby-constant">Native</span>.<span class="ruby-identifier">inotify_init</span>
+  <span class="ruby-ivar">@watchers</span> = {}
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@fd</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">0</span>
+
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">SystemCallError</span>.<span class="ruby-identifier">new</span>(
+    <span class="ruby-string">&quot;Failed to initialize inotify&quot;</span> <span class="ruby-operator">+</span>
+    <span class="ruby-keyword">case</span> <span class="ruby-constant">FFI</span>.<span class="ruby-identifier">errno</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">EMFILE</span><span class="ruby-operator">::</span><span class="ruby-constant">Errno</span>; <span class="ruby-string">&quot;: the user limit on the total number of inotify instances has been reached.&quot;</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">ENFILE</span><span class="ruby-operator">::</span><span class="ruby-constant">Errno</span>; <span class="ruby-string">&quot;: the system limit on the total number of file descriptors has been reached.&quot;</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">ENOMEM</span><span class="ruby-operator">::</span><span class="ruby-constant">Errno</span>; <span class="ruby-string">&quot;: insufficient kernel memory is available.&quot;</span>
+    <span class="ruby-keyword">else</span>; <span class="ruby-string">&quot;&quot;</span>
+    <span class="ruby-keyword">end</span>,
+    <span class="ruby-constant">FFI</span>.<span class="ruby-identifier">errno</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- new-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- new-method -->
+
+    
+      <div id="method-c-supports_ruby_io-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">supports_ruby_io?</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>@return [Boolean] Whether or not this Ruby implementation supports</p>
+
+<pre>wrapping the native file descriptor in a Ruby IO wrapper.</pre>
+          
+          
+
+          
+          <div class="method-source-code" id="supports_ruby_io-3F-source">
+            <pre><span class="ruby-comment"># File lib/rb-inotify/notifier.rb, line 45</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">supports_ruby_io?</span>
+  <span class="ruby-constant">RUBY_PLATFORM</span> <span class="ruby-operator">!~</span> <span class="ruby-regexp">/java/</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- supports_ruby_io-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- supports_ruby_io-3F-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-close" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">close</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Close the notifier.</p>
+
+<p>@raise [SystemCallError] if closing the underlying file descriptor fails.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="close-source">
+            <pre><span class="ruby-comment"># File lib/rb-inotify/notifier.rb, line 244</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">close</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">if</span> <span class="ruby-constant">Native</span>.<span class="ruby-identifier">close</span>(<span class="ruby-ivar">@fd</span>) <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">SystemCallError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;Failed to properly close inotify socket&quot;</span> <span class="ruby-operator">+</span>
+   <span class="ruby-keyword">case</span> <span class="ruby-constant">FFI</span>.<span class="ruby-identifier">errno</span>
+   <span class="ruby-keyword">when</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">EBADF</span><span class="ruby-operator">::</span><span class="ruby-constant">Errno</span>; <span class="ruby-string">&quot;: invalid or closed file descriptior&quot;</span>
+   <span class="ruby-keyword">when</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">EIO</span><span class="ruby-operator">::</span><span class="ruby-constant">Errno</span>; <span class="ruby-string">&quot;: an I/O error occured&quot;</span>
+   <span class="ruby-keyword">end</span>,
+   <span class="ruby-constant">FFI</span>.<span class="ruby-identifier">errno</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- close-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- close-method -->
+
+    
+      <div id="method-i-process" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">process</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Blocks until there are one or more filesystem events that this notifier has
+watchers registered for. Once there are events, the appropriate callbacks
+are called and this function returns.</p>
+
+<p>@see <a href="Notifier.html#method-i-run">run</a></p>
+          
+          
+
+          
+          <div class="method-source-code" id="process-source">
+            <pre><span class="ruby-comment"># File lib/rb-inotify/notifier.rb, line 237</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">process</span>
+  <span class="ruby-identifier">read_events</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">event</span><span class="ruby-operator">|</span> <span class="ruby-identifier">event</span>.<span class="ruby-identifier">callback!</span>}
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- process-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- process-method -->
+
+    
+      <div id="method-i-read_events" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">read_events</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Blocks until there are one or more filesystem events that this notifier has
+watchers registered for. Once there are events, returns their {Event}
+objects.</p>
+
+<p>{#run} or {#process} are ususally preferable to calling this directly.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="read_events-source">
+            <pre><span class="ruby-comment"># File lib/rb-inotify/notifier.rb, line 260</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">read_events</span>
+  <span class="ruby-identifier">size</span> = <span class="ruby-value">64</span> <span class="ruby-operator">*</span> <span class="ruby-constant">Native</span><span class="ruby-operator">::</span><span class="ruby-constant">Event</span>.<span class="ruby-identifier">size</span>
+  <span class="ruby-identifier">tries</span> = <span class="ruby-value">1</span>
+
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-identifier">data</span> = <span class="ruby-identifier">readpartial</span>(<span class="ruby-identifier">size</span>)
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">SystemCallError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">er</span>
+    <span class="ruby-comment"># EINVAL means that there&#39;s more data to be read</span>
+    <span class="ruby-comment"># than will fit in the buffer size</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-identifier">er</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">er</span>.<span class="ruby-identifier">errno</span> <span class="ruby-operator">==</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">EINVAL</span><span class="ruby-operator">::</span><span class="ruby-constant">Errno</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">tries</span> <span class="ruby-operator">==</span> <span class="ruby-value">5</span>
+    <span class="ruby-identifier">size</span> <span class="ruby-operator">*=</span> <span class="ruby-value">2</span>
+    <span class="ruby-identifier">tries</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+    <span class="ruby-keyword">retry</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">events</span> = []
+  <span class="ruby-identifier">cookies</span> = {}
+  <span class="ruby-keyword">while</span> <span class="ruby-identifier">event</span> = <span class="ruby-constant">Event</span>.<span class="ruby-identifier">consume</span>(<span class="ruby-identifier">data</span>, <span class="ruby-keyword">self</span>)
+    <span class="ruby-identifier">events</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">event</span>
+    <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">event</span>.<span class="ruby-identifier">cookie</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+    <span class="ruby-identifier">cookies</span>[<span class="ruby-identifier">event</span>.<span class="ruby-identifier">cookie</span>] <span class="ruby-operator">||=</span> []
+    <span class="ruby-identifier">cookies</span>[<span class="ruby-identifier">event</span>.<span class="ruby-identifier">cookie</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">event</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">cookies</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">c</span>, <span class="ruby-identifier">evs</span><span class="ruby-operator">|</span> <span class="ruby-identifier">evs</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">ev</span><span class="ruby-operator">|</span> <span class="ruby-identifier">ev</span>.<span class="ruby-identifier">related</span>.<span class="ruby-identifier">replace</span>(<span class="ruby-identifier">evs</span> <span class="ruby-operator">-</span> [<span class="ruby-identifier">ev</span>]).<span class="ruby-identifier">freeze</span>}}
+  <span class="ruby-identifier">events</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- read_events-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- read_events-method -->
+
+    
+      <div id="method-i-run" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">run</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Starts the notifier watching for filesystem events. Blocks until {#stop} is
+called.</p>
+
+<p>@see <a href="Notifier.html#method-i-process">process</a></p>
+          
+          
+
+          
+          <div class="method-source-code" id="run-source">
+            <pre><span class="ruby-comment"># File lib/rb-inotify/notifier.rb, line 219</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">run</span>
+  <span class="ruby-ivar">@stop</span> = <span class="ruby-keyword">false</span>
+  <span class="ruby-identifier">process</span> <span class="ruby-keyword">until</span> <span class="ruby-ivar">@stop</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- run-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- run-method -->
+
+    
+      <div id="method-i-stop" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">stop</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Stop watching for filesystem events. That is, if we&#39;re in a {#run}
+loop, exit out as soon as we finish handling the events.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="stop-source">
+            <pre><span class="ruby-comment"># File lib/rb-inotify/notifier.rb, line 227</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">stop</span>
+  <span class="ruby-ivar">@stop</span> = <span class="ruby-keyword">true</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- stop-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- stop-method -->
+
+    
+      <div id="method-i-to_io" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">to_io</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Returns a Ruby IO object wrapping the underlying file descriptor. Since
+this file descriptor is fully functional (except under JRuby), this IO
+object can be used in any way a Ruby-created IO object can. This includes
+passing it to functions like `#select`.</p>
+
+<p>Note that this always returns the same IO object. Creating lots of IO
+objects for the same file descriptor can cause some odd problems.</p>
+
+<p>**This is not supported under JRuby**. JRuby currently doesn&#39;t use
+native file descriptors for the IO object, so we can&#39;t use this file
+descriptor as a stand-in.</p>
+
+<p>@return [IO] An IO object wrapping the file descriptor @raise
+[NotImplementedError] if this is being called in JRuby</p>
+          
+          
+
+          
+          <div class="method-source-code" id="to_io-source">
+            <pre><span class="ruby-comment"># File lib/rb-inotify/notifier.rb, line 84</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">to_io</span>
+  <span class="ruby-keyword">unless</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">supports_ruby_io?</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;INotify::Notifier#to_io is not supported under JRuby&quot;</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-ivar">@io</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">IO</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@fd</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- to_io-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- to_io-method -->
+
+    
+      <div id="method-i-watch" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">watch</span><span
+            class="method-args">(path, *flags, &callback)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Watches a file or directory for changes, calling the callback when there
+are. This is only activated once {#process} or {#run} is called.</p>
+
+<p>**Note that by default, this does not recursively watch subdirectories of
+the watched directory**. To do so, use the `:recursive` flag.</p>
+
+<p>## Flags</p>
+
+<p>`:access` : A file is accessed (that is, read).</p>
+
+<p>`:attrib` : A file&#39;s metadata is changed (e.g. permissions, timestamps,
+etc).</p>
+
+<p>`:close_write` : A file that was opened for writing is closed.</p>
+
+<p>`:close_nowrite` : A file that was not opened for writing is closed.</p>
+
+<p>`:modify` : A file is modified.</p>
+
+<p>`:open` : A file is opened.</p>
+
+<p>### Directory-Specific Flags</p>
+
+<p>These flags only apply when a directory is being watched.</p>
+
+<p>`:moved_from` : A file is moved out of the watched directory.</p>
+
+<p>`:moved_to` : A file is moved into the watched directory.</p>
+
+<p>`:create` : A file is created in the watched directory.</p>
+
+<p>`:delete` : A file is deleted in the watched directory.</p>
+
+<p>`:delete_self` : The watched file or directory itself is deleted.</p>
+
+<p>`:move_self` : The watched file or directory itself is moved.</p>
+
+<p>### Helper Flags</p>
+
+<p>These flags are just combinations of the flags above.</p>
+
+<p>`:close` : Either `:close_write` or `:close_nowrite` is activated.</p>
+
+<p>`:move` : Either `:moved_from` or `:moved_to` is activated.</p>
+
+<p>`:all_events` : Any event above is activated.</p>
+
+<p>### Options Flags</p>
+
+<p>These flags don&#39;t actually specify events. Instead, they specify
+options for the watcher.</p>
+
+<p>`:onlydir` : Only watch the path if it&#39;s a directory.</p>
+
+<p>`:dont_follow` : Don&#39;t follow symlinks.</p>
+
+<p>`:mask_add` : Add these flags to the pre-existing flags for this path.</p>
+
+<p>`:oneshot` : Only send the event once, then shut down the watcher.</p>
+
+<p>`:recursive` : Recursively watch any subdirectories that are created.</p>
+
+<pre>Note that this is a feature of rb-inotify,
+rather than of inotify itself, which can only watch one level of a directory.
+This means that the {Event#name} field
+will contain only the basename of the modified file.
+When using `:recursive`, {Event#absolute_name} should always be used.</pre>
+
+<p>@param path [String] The path to the file or directory @param flags
+[Array&lt;Symbol&gt;] Which events to watch for @yield [event] A block that
+will be called</p>
+
+<pre>whenever one of the specified events occur</pre>
+
+<p>@yieldparam event [Event] The <a href="Event.html">Event</a> object
+containing information</p>
+
+<pre>about the event that occured</pre>
+
+<p>@return [Watcher] A <a href="Watcher.html">Watcher</a> set up to watch this
+path for these events @raise [SystemCallError] if the file or directory
+can&#39;t be watched,</p>
+
+<pre>e.g. if the file isn&#39;t found, read access is denied,
+or the flags don&#39;t contain any events</pre>
+          
+          
+
+          
+          <div class="method-source-code" id="watch-source">
+            <pre><span class="ruby-comment"># File lib/rb-inotify/notifier.rb, line 189</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">watch</span>(<span class="ruby-identifier">path</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">flags</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">callback</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-constant">Watcher</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>, <span class="ruby-identifier">path</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">flags</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">callback</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">flags</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-value">:recursive</span>)
+
+  <span class="ruby-identifier">dir</span> = <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">path</span>)
+
+  <span class="ruby-identifier">dir</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">base</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">d</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">base</span>)
+    <span class="ruby-identifier">binary_d</span> = <span class="ruby-identifier">d</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:force_encoding</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">d</span>.<span class="ruby-identifier">dup</span>.<span class="ruby-identifier">force_encoding</span>(<span class="ruby-string">&#39;BINARY&#39;</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">d</span>
+    <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">binary_d</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp">/\/\.\.?$/</span> <span class="ruby-comment"># Current or parent directory</span>
+    <span class="ruby-identifier">watch</span>(<span class="ruby-identifier">d</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">flags</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">callback</span>) <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-constant">RECURSIVE_BLACKLIST</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">d</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">d</span>)
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">dir</span>.<span class="ruby-identifier">close</span>
+
+  <span class="ruby-identifier">rec_flags</span> = [<span class="ruby-value">:create</span>, <span class="ruby-value">:moved_to</span>]
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">watch</span>(<span class="ruby-identifier">path</span>, <span class="ruby-operator">*</span>((<span class="ruby-identifier">flags</span> <span class="ruby-operator">-</span> [<span class="ruby-value">:recursive</span>]) <span class="ruby-operator">|</span> <span class="ruby-identifier">rec_flags</span>)) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">event</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">callback</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">event</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">flags</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-value">:all_events</span>) <span class="ruby-operator">||</span> <span class="ruby-operator">!</span>(<span class="ruby-identifier">flags</span> <span class="ruby-operator">&amp;</span> <span class="ruby-identifier">event</span>.<span class="ruby-identifier">flags</span>).<span class="ruby-identifier">empty?</span>
+    <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> (<span class="ruby-identifier">rec_flags</span> <span class="ruby-operator">&amp;</span> <span class="ruby-identifier">event</span>.<span class="ruby-identifier">flags</span>).<span class="ruby-identifier">empty?</span> <span class="ruby-operator">||</span> <span class="ruby-operator">!</span><span class="ruby-identifier">event</span>.<span class="ruby-identifier">flags</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-value">:isdir</span>)
+    <span class="ruby-keyword">begin</span>
+      <span class="ruby-identifier">watch</span>(<span class="ruby-identifier">event</span>.<span class="ruby-identifier">absolute_name</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">flags</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">callback</span>)
+    <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">ENOENT</span>
+      <span class="ruby-comment"># If the file has been deleted since the glob was run, we don&#39;t want to error out.</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- watch-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- watch-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+     <section id="private-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Private Instance Methods</h3>
+
+    
+      <div id="method-i-readpartial" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">readpartial</span><span
+            class="method-args">(size)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Same as IO#readpartial, or as close as we need.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="readpartial-source">
+            <pre><span class="ruby-comment"># File lib/rb-inotify/notifier.rb, line 290</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">readpartial</span>(<span class="ruby-identifier">size</span>)
+  <span class="ruby-comment"># Use Ruby&#39;s readpartial if possible, to avoid blocking other threads.</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">to_io</span>.<span class="ruby-identifier">readpartial</span>(<span class="ruby-identifier">size</span>) <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">supports_ruby_io?</span>
+
+  <span class="ruby-identifier">tries</span> = <span class="ruby-value">0</span>
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-identifier">tries</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+    <span class="ruby-identifier">buffer</span> = <span class="ruby-constant">FFI</span><span class="ruby-operator">::</span><span class="ruby-constant">MemoryPointer</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:char</span>, <span class="ruby-identifier">size</span>)
+    <span class="ruby-identifier">size_read</span> = <span class="ruby-constant">Native</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">fd</span>, <span class="ruby-identifier">buffer</span>, <span class="ruby-identifier">size</span>)
+    <span class="ruby-keyword">return</span> <span class="ruby-identifier">buffer</span>.<span class="ruby-identifier">read_string</span>(<span class="ruby-identifier">size_read</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">size_read</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-value">0</span>
+  <span class="ruby-keyword">end</span> <span class="ruby-keyword">while</span> <span class="ruby-constant">FFI</span>.<span class="ruby-identifier">errno</span> <span class="ruby-operator">==</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">EINTR</span><span class="ruby-operator">::</span><span class="ruby-constant">Errno</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">tries</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-value">5</span>
+
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">SystemCallError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;Error reading inotify events&quot;</span> <span class="ruby-operator">+</span>
+    <span class="ruby-keyword">case</span> <span class="ruby-constant">FFI</span>.<span class="ruby-identifier">errno</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">EAGAIN</span><span class="ruby-operator">::</span><span class="ruby-constant">Errno</span>; <span class="ruby-string">&quot;: no data available for non-blocking I/O&quot;</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">EBADF</span><span class="ruby-operator">::</span><span class="ruby-constant">Errno</span>; <span class="ruby-string">&quot;: invalid or closed file descriptor&quot;</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">EFAULT</span><span class="ruby-operator">::</span><span class="ruby-constant">Errno</span>; <span class="ruby-string">&quot;: invalid buffer&quot;</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">EINVAL</span><span class="ruby-operator">::</span><span class="ruby-constant">Errno</span>; <span class="ruby-string">&quot;: invalid file descriptor&quot;</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">EIO</span><span class="ruby-operator">::</span><span class="ruby-constant">Errno</span>; <span class="ruby-string">&quot;: I/O error&quot;</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">EISDIR</span><span class="ruby-operator">::</span><span class="ruby-constant">Errno</span>; <span class="ruby-string">&quot;: file descriptor is a directory&quot;</span>
+    <span class="ruby-keyword">else</span>; <span class="ruby-string">&quot;&quot;</span>
+    <span class="ruby-keyword">end</span>,
+    <span class="ruby-constant">FFI</span>.<span class="ruby-identifier">errno</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- readpartial-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- readpartial-method -->
+
+    
+    </section><!-- private-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

@@ -1,0 +1,156 @@
+.TH INTLTOOL-UPDATE 8 "2003-08-02" "intltool"
+
+.SH NAME
+intltool-update \- updates PO template file and merge translations with it
+
+.SH SYNOPSIS
+.BI intltool-update " [option]..."
+.br
+.BI intltool-update " LANGCODE"
+
+.SH DESCRIPTION
+.B intltool-update
+generates new po file templates from source code, and merges existing
+translations with these new po templates.
+.PP
+You must change working directory to the subdirectory containing translations
+(usually "\fIpo/\fR") before running \fBintltool-update\fR.
+
+.SH OPTIONS
+When executing
+.B intltool-update
+, only one mode of operation is allowed each time.
+.\" -------------------------------------------------------
+.SS "Mode of operation"
+.\" -------------------------------------------------------
+.IP "\fB\-p\fR" 4
+.PD 0
+.IP "\fB\-\-pot\fR" 4
+.PD
+Generate po template (.pot) only.
+.IP "\fB\-s\fR" 4
+.PD 0
+.IP "\fB\-\-headers\fR" 4
+.PD
+Executes \fBintltool-extract\fR(8) to extract strings inside XML/INI
+style files listed in \fBPOTFILES.in\fR, and writes the extracted
+strings into header files, so that the strings can be recognised
+by \fBxgettext\fR(1).
+.IP "\fB\-m\fR" 4
+.PD 0
+.IP "\fB\-\-maintain\fR" 4
+.PD
+Search for left out files, which should have been listed in
+.B POTFILES.in
+or
+.BR POTFILES.skip "."
+A list of all these files are written into another file called
+"\fBmissing\fR".
+.IP "\fB\-r\fR" 4
+.PD 0
+.IP "\fB\-\-report\fR" 4
+.PD
+Display a status report for all translations in the software.
+.IP "\fB\-d \fILANGCODE\fR" 4
+.PD 0
+.IP "\fB\-\-dist \fILANGCODE \fR" 4
+.PD
+Merge
+.BR LANGCODE .po
+with existing PO template.
+.\" -------------------------------------------------------
+.SS "Other options"
+.\" -------------------------------------------------------
+.
+.IP "\fB\-g \fINAME\fR" 4
+.PD 0
+.IP "\fB\-\-gettext-package\fR=\fINAME\fR" 4
+.PD
+Manually specify PO template file name, instead of determining the
+name automatically from source. Useful with
+.BR \-p / \-\-pot
+option. This option has an additional effect: the name of current working
+directory is no more limited to "po" or "po-*".
+.IP "\fB\-o \fIFILENAME\fR" 4
+.PD 0
+.IP "\fB\-\-output-file\fR=\fIFILENAME\fR" 4
+.PD
+Manually specify output \fIFILENAME\fR after merging old translation with
+PO template. Useful either with
+.BR \-d / \-\-dist
+option or without any option.
+.IP "\fB\-x\fR" 4
+.PD 0
+.IP "\fB\-\-verbose\fR" 4
+.PD
+Display lots of feedback.
+.IP "\fB\-\-version\fR" 4
+Show version information.
+.IP "\fB\-\-help\fR" 4
+Show usage and basic help information.
+
+.SH EXAMPLES
+Creates a new PO template from source code, and name it foo.pot:
+.PP
+.RS 2
+.nf
+.ft CW
+.ne 1
+intltool-update \-\-pot \-\-gettext\-package=foo
+.ft R
+.fi
+.RE
+.PP
+Updates translation file xy.po using existing po template called
+"bar.pot", and writes output into "xy1.po":
+.PP
+.RS 2
+.nf
+.ft CW
+.ne 1
+intltool-update --dist --gettext-package=bar --output-file=xy1.po xy
+.ft R
+.fi
+.RE
+.PP
+Creates new PO template and updates translation file xy.po
+(xy.po is overwritten with new content):
+.PP
+.RS 2
+.nf
+.ft CW
+.ne 1
+intltool-update xy
+.ft R
+.fi
+(same as \fBintltool-update --pot && intltool-update --dist xy\fR)
+.RE
+
+.SH FILES
+.IP "\fBpo/POTFILES.in\fR"
+Contains list of source files which contain translatable strings,
+one file per line.
+.IP "\fBpo/POTFILES.skip\fR"
+.PD 0
+.IP "\fBpo/POTFILES.ignore\fR (obsolete)"
+.PD
+Contains list of source files which should be ignored when searching
+for translatable strings.
+
+.SH REPORTING BUGS
+Report bugs to http://bugzilla.gnome.org (product name "\fBintltool\fR")
+or send email to <xml-i18n-tools@gnome.org>.
+
+.SH AUTHOR
+Darin Adler <darin@bentspoon.com>
+.br
+Kenneth Christiansen <kenneth@gnu.org>
+.br
+Maciej Stachowiak <mjs@eazel.com>
+
+.SH SEE ALSO
+.BR intltoolize (8),
+.BR intltool-prepare (8),
+.BR intltool-extract (8),
+.BR intltool-merge (8),
+.BR xgettext (1)

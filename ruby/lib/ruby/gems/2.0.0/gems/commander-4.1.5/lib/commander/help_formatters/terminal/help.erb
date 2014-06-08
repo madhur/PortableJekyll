@@ -1,0 +1,36 @@
+  <%= $terminal.color "NAME", :bold %>:
+
+    <%= program :name %>
+
+  <%= $terminal.color "DESCRIPTION", :bold %>:
+
+    <%= Commander::HelpFormatter.indent 4, program(:description) %>
+
+  <%= $terminal.color "COMMANDS", :bold %>:
+<% for name, command in @commands.sort -%>
+	<% unless alias? name %>
+    <%= "%-20s %s" % [command.name, command.summary || command.description] -%>
+	<% end -%>
+<% end %>
+<% unless @aliases.empty? %>
+  <%= $terminal.color "ALIASES", :bold %>:
+  <% for alias_name, args in @aliases.sort %>
+    <%= "%-20s %s %s" % [alias_name, command(alias_name).name, args.join(' ')] -%>
+  <% end %>
+<% end %>
+<% unless @options.empty? -%>
+  <%= $terminal.color "GLOBAL OPTIONS", :bold %>:
+	<% for option in @options -%>
+
+    <%= option[:switches].join ', ' %> 
+        <%= option[:description] %>
+	<% end -%>
+<% end -%>
+<% if program :help -%>
+  <% for title, body in program(:help) %>
+  <%= $terminal.color title.to_s.upcase, :bold %>:
+
+    <%= body %>
+  <% end -%>
+<% end -%>
+

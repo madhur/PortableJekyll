@@ -1,0 +1,344 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Running GTK+ Applications</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="GTK+ 2 Reference Manual">
+<link rel="up" href="gtk.html" title="Part I. GTK+ Overview">
+<link rel="prev" href="gtk-compiling.html" title="Compiling GTK+ Applications">
+<link rel="next" href="gtk-x11.html" title="Using GTK+ on the X Window System">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle">
+<td><a accesskey="p" href="gtk-compiling.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="gtk.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GTK+ 2 Reference Manual</th>
+<td><a accesskey="n" href="gtk-x11.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="refentry">
+<a name="gtk-running"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle">Running GTK+ Applications</span></h2>
+<p>Running GTK+ Applications — 
+How to run and debug your GTK+ application
+</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1">
+<a name="id462707"></a><h2>Running and debugging GTK+ Applications</h2>
+<div class="refsect2">
+<a name="id469472"></a><h3>Common commandline options</h3>
+<p>
+All GTK+ applications support a number of standard commandline
+options. These are removed from <code class="literal">argv</code> by gtk_init(). 
+Modules may parse and remove further options. The 
+<a class="link" href="gtk-x11.html#x11-cmdline" title="X11-specific commandline options">X11</a> and
+<a class="link" href="gtk-windows.html#win32-cmdline" title="Windows-specific commandline options">Windows</a> GDK backends parse
+some additional commandline options.
+</p>
+<p><b><code class="systemitem">--gtk-module <em class="replaceable"><code>module</code></em></code>. </b>
+A list of modules to load in addition to those specified in the 
+<code class="envar">GTK_MODULES</code> environment variable and the 
+<code class="literal">gtk-modules</code> setting.
+</p>
+<p><b><code class="systemitem">--g-fatal-warnings</code>. </b>
+Make GTK+ abort on all warnings. This is useful to stop on the first
+warning in a debugger, if your application is printing multiple
+warnings.  It's almost always best to start debugging with the first
+warning that occurs.
+</p>
+<p><b><code class="systemitem">--gtk-debug <em class="replaceable"><code>options</code></em></code>. </b>
+A list of <a class="link" href="gtk-running.html#GTK-Debug-Options" title="GTK_DEBUG">debug options</a> 
+to turn on in addition to those specified in the <code class="envar">GTK_DEBUG</code> 
+environment variable. 
+This option is only available if GTK+ has been configured with
+<code class="option">--enable-debug=yes</code>.
+</p>
+<p><b><code class="systemitem">--gtk-no-debug <em class="replaceable"><code>options</code></em></code>. </b>
+A list of <a class="link" href="gtk-running.html#GTK-Debug-Options" title="GTK_DEBUG">debug options</a> 
+to turn off.
+This option is only available if GTK+ has been configured with
+<code class="option">--enable-debug=yes</code>.
+</p>
+<p>
+The following options are really used by GDK, not by GTK+, but we
+list them here for completeness nevertheless.
+</p>
+<p><b><code class="systemitem">--class <em class="replaceable"><code>class</code></em></code>. </b>
+Sets the program class; see gdk_set_program_class(). 
+</p>
+<p><b><code class="systemitem">--name <em class="replaceable"><code>name</code></em></code>. </b>
+Sets the program name.
+</p>
+<p><b><code class="systemitem">--gdk-debug <em class="replaceable"><code>options</code></em></code>. </b>
+A list of <a class="link" href="gtk-running.html#GDK-Debug-Options" title="GDK_DEBUG">debug options</a> 
+to turn on in addition to those specified in the <code class="envar">GDK_DEBUG</code> 
+environment variable. This option is only available if GTK+ has been 
+configured with <code class="option">--enable-debug=yes</code>.
+</p>
+<p><b><code class="systemitem">--gdk-no-debug <em class="replaceable"><code>options</code></em></code>. </b>
+A list of <a class="link" href="gtk-running.html#GDK-Debug-Options" title="GDK_DEBUG">debug options</a> 
+to turn off. This option is only available if GTK+ has been configured with
+<code class="option">--enable-debug=yes</code>.
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="id465743"></a><h3>Environment variables</h3>
+<p> 
+GTK+ inspects a number of environment variables in addition to standard
+variables like <code class="envar">LANG</code>, <code class="envar">PATH</code>, <code class="envar">HOME</code> 
+or <code class="envar">DISPLAY</code>; mostly to determine paths to look for certain 
+files. The X11, 
+<a class="link" href="gtk-windows.html#win32-envar" title="Windows-specific environment variables">Windows</a> and 
+Framebuffer GDK backends use some
+additional environment variables.
+</p>
+<p><a name="GTK-Debug-Options"></a><b><code class="envar">GTK_DEBUG</code>. </b>
+  If GTK+ has been configured with <code class="option">--enable-debug=yes</code>,
+  this variable can be set to a list of debug options, which cause GTK+
+  to print out different types of debugging information.
+  </p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term">misc</span></p></td>
+<td><p>Miscellaneous information</p></td>
+</tr>
+<tr>
+<td><p><span class="term">plugsocket</span></p></td>
+<td><p>Cross-process embedding</p></td>
+</tr>
+<tr>
+<td><p><span class="term">text</span></p></td>
+<td><p>Text widget internals</p></td>
+</tr>
+<tr>
+<td><p><span class="term">tree</span></p></td>
+<td><p>Tree widget internals</p></td>
+</tr>
+<tr>
+<td><p><span class="term">updates</span></p></td>
+<td><p>Visual feedback about window updates</p></td>
+</tr>
+<tr>
+<td><p><span class="term">keybindings</span></p></td>
+<td><p>Keybindings</p></td>
+</tr>
+<tr>
+<td><p><span class="term">multihead</span></p></td>
+<td><p>Working on multiple displays</p></td>
+</tr>
+<tr>
+<td><p><span class="term">modules</span></p></td>
+<td><p>Loading of modules</p></td>
+</tr>
+<tr>
+<td><p><span class="term">geometry</span></p></td>
+<td><p>Size allocation</p></td>
+</tr>
+<tr>
+<td><p><span class="term">icontheme</span></p></td>
+<td><p>Icon themes</p></td>
+</tr>
+<tr>
+<td><p><span class="term">printing</span></p></td>
+<td><p>Printing support</p></td>
+</tr>
+<tr>
+<td><p><span class="term">builder</span></p></td>
+<td><p>GtkBuilder support</p></td>
+</tr>
+</tbody>
+</table></div>
+<p>
+  The special value <code class="literal">all</code> can be used to turn on all 
+  debug options.
+  </p>
+<p><b><code class="envar">GTK_MODULES</code>. </b>
+    A list of modules to load. Note that GTK+ also allows to specify modules to load via a commandline option (<code class="option">--gtk-module</code>) and with the <code class="literal">gtk-modules</code> setting.
+  </p>
+<div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Warning</h3>
+    Note that this environment variable is read by GTK+ 3 too,
+    which may not have the same set of modules available for loading.
+  </div>
+<p><b><code class="envar">GTK_PATH</code>. </b>
+    Specifies a list of directories to search when GTK+ is looking for
+    dynamically loaded objects such as the modules specified by
+    <code class="envar">GTK_MODULES</code>, theme engines, input method
+    modules, file system backends and print backends. If the path to 
+    the dynamically loaded object is given as an absolute path name, 
+    then GTK+ loads it directly. 
+    Otherwise, GTK+ goes in turn through the directories in GTK_PATH, 
+    followed by the directory <code class="filename">.gtk-2.0</code> in the user's 
+    home directory, followed by the system default directory, 
+    which is <code class="filename"><em class="replaceable"><code>libdir</code></em>/gtk-2.0/modules</code>.
+    (If <code class="envar">GTK_EXE_PREFIX</code> is defined, <em class="replaceable"><code>libdir</code></em> is 
+    <code class="filename">$GTK_EXE_PREFIX/lib</code>. Otherwise it is the libdir
+    specified when GTK+ was configured, usually
+    <code class="filename">/usr/lib</code>, or
+    <code class="filename">/usr/local/lib</code>.)
+    For each directory in this list, GTK+ actually looks in a
+    subdirectory
+    <code class="filename"><em class="replaceable"><code>directory</code></em>/<em class="replaceable"><code>version</code></em>/<em class="replaceable"><code>host</code></em>/<em class="replaceable"><code>type</code></em></code>
+    Where <em class="replaceable"><code>version</code></em> is derived from the
+    version of GTK+ (use <code class="literal">pkg-config
+    --variable=gtk_binary_version gtk+-2.0</code> to determine this from a
+    script), <em class="replaceable"><code>host</code></em> is the architecture on
+    which GTK+ was built. (use <code class="literal">pkg-config
+    --variable=gtk_host gtk+-2.0</code> to determine this from a
+    script), and <em class="replaceable"><code>type</code></em> is a directory
+    specific to the type of modules; currently it can be
+    <code class="literal">modules</code>, <code class="literal">engines</code>, 
+    <code class="literal">immodules</code>, <code class="literal">filesystems</code> or 
+    <code class="literal">printbackends</code>, corresponding to the types of
+    modules mentioned above. Either <em class="replaceable"><code>version</code></em>,
+    <em class="replaceable"><code>host</code></em>, or both may be omitted. GTK+ looks
+    first in the most specific directory, then in directories with
+    fewer components.
+    The components of GTK_PATH are separated by the ':' character on
+    Linux and Unix, and the ';' character on Windows.
+  </p>
+<div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Warning</h3>
+    Note that this environment variable is read by GTK+ 3 too, which
+    makes it unsuitable for setting it system-wide (or session-wide),
+    since doing so will cause either GTK+ 2.x applications or GTK+ 3
+    applications to see incompatible modules.
+  </div>
+<p><b><code class="envar">GTK_IM_MODULE</code>. </b>
+    Specifies an IM module to use in preference to the one determined
+    from the locale.  If this isn't set and you are running on the system
+    that enables <code class="literal">XSETTINGS</code> and has a value in
+    <code class="literal">Gtk/IMModule</code>, that will be used for the default
+    IM module.
+  </p>
+<p><a name="im-module-file"></a><b><code class="envar">GTK_IM_MODULE_FILE</code>. </b>
+    Specifies the file listing the IM modules to load. This environment
+    variable overrides the <code class="literal">im_module_file</code> specified in 
+    the RC files, which in turn overrides the default value 
+    <code class="filename"><em class="replaceable"><code>sysconfdir</code></em>/gtk-2.0/gtk.immodules</code>
+    (<em class="replaceable"><code>sysconfdir</code></em> is the sysconfdir specified when GTK+ was configured, 
+     usually <code class="filename">/usr/local/etc</code>.)
+  </p>
+<p><b><code class="envar">GTK2_RC_FILES</code>. </b>
+    Specifies a list of RC files to parse instead of the default ones;
+    see <a class="link" href="gtk-Resource-Files.html" title="Resource Files">Resource Files</a>.
+  </p>
+<div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Warning</h3>
+    Note that this environment variable is read by GTK+ 3 too, which
+    makes it unsuitable for setting it system-wide (or session-wide),
+    since doing so will cause either GTK+ 2.x applications or GTK+ 3
+    applications to see the wrong list of IM modules.
+  </div>
+<p><b><code class="envar">GTK_EXE_PREFIX</code>. </b>
+    If set, GTK+ uses <code class="filename">$GTK_EXE_PREFIX/lib</code> instead of 
+    the libdir configured when GTK+ was compiled.
+  </p>
+<p><b><code class="envar">GTK_DATA_PREFIX</code>. </b>
+    If set, makes GTK+ use <code class="filename">$GTK_DATA_PREFIX</code>
+    instead of the prefix configured when GTK+ was compiled.
+  </p>
+<p>
+The following environment variables are used by GdkPixbuf, GDK or
+Pango, not by GTK+ itself, but we list them here for completeness
+nevertheless.
+</p>
+<p><b><code class="envar">GDK_PIXBUF_MODULE_FILE</code>. </b>
+    Specifies the file listing the GdkPixbuf loader modules to load. 
+    This environment variable overrides the default value 
+    <code class="filename"><em class="replaceable"><code>sysconfdir</code></em>/gtk-2.0/gdk-pixbuf.loaders</code>
+    (<em class="replaceable"><code>sysconfdir</code></em> is the sysconfdir specified when
+	  GTK+ was configured, usually <code class="filename">/usr/local/etc</code>.)
+  </p>
+<p><a name="GDK-Debug-Options"></a><b><code class="envar">GDK_DEBUG</code>. </b>
+  If GTK+ has been configured with <code class="option">--enable-debug=yes</code>,
+  this variable can be set to a list of debug options, which cause GDK
+  to print out different types of debugging information.
+  </p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term">misc</span></p></td>
+<td><p>Miscellaneous information</p></td>
+</tr>
+<tr>
+<td><p><span class="term">events</span></p></td>
+<td><p>Show all events received by GDK</p></td>
+</tr>
+<tr>
+<td><p><span class="term">dnd</span></p></td>
+<td><p>Information about drag-and-drop</p></td>
+</tr>
+<tr>
+<td><p><span class="term">xim</span></p></td>
+<td><p>Information about XIM support</p></td>
+</tr>
+<tr>
+<td><p><span class="term">nograbs</span></p></td>
+<td><p>Turn off all pointer and keyboard grabs</p></td>
+</tr>
+<tr>
+<td><p><span class="term">multihead</span></p></td>
+<td><p>Information related to multiple screens</p></td>
+</tr>
+<tr>
+<td><p><span class="term">xinerama</span></p></td>
+<td><p>Simulate a multi-monitor setup</p></td>
+</tr>
+<tr>
+<td><p><span class="term">cursor</span></p></td>
+<td><p>Information about cursor objects (only win32)</p></td>
+</tr>
+<tr>
+<td><p><span class="term">draw</span></p></td>
+<td><p>Information about drawing operations (only win32)</p></td>
+</tr>
+<tr>
+<td><p><span class="term">eventloop</span></p></td>
+<td><p>Information about event loop operation (mostly Quartz)</p></td>
+</tr>
+</tbody>
+</table></div>
+<p>
+  The special value <code class="literal">all</code> can be used to turn on all
+  debug options.
+  </p>
+<p><b><code class="envar">GDK_NATIVE_WINDOWS</code>. </b>
+    If set, GDK creates all windows as native windows. This can help
+    applications that make assumptions about 1-1 correspondence between
+    GDK windows and X11 windows.
+  </p>
+<p><b><code class="envar">XDG_DATA_HOME</code>, <code class="envar">XDG_DATA_DIRS</code>. </b>
+    GTK+ uses these environment variables to locate icon themes
+    and MIME information. For more information, see 
+    <a class="ulink" href="http://freedesktop.org/Standards/icon-theme-spec" target="_top">Icon Theme Specification</a>,
+    the <a class="ulink" href="http://freedesktop.org/Standards/shared-mime-info-spec" target="_top">Shared MIME-info Database</a> 
+    and the <a class="ulink" href="http://freedesktop.org/Standards/basedir-spec" target="_top">Base Directory Specification</a>.
+  </p>
+<p><b><code class="envar">DESKTOP_STARTUP_ID</code>. </b>
+    GTK+ uses this environment variable to provide startup notification
+    according to the <a class="ulink" href="http://standards.freedesktop.org/startup-notification-spec/startup-notification-latest.txt" target="_top">Startup Notification Spec</a>.
+    Following the specification, GTK+ unsets this variable after reading
+    it (to keep it from leaking to child processes). So, if you need its
+    value for your own purposes, you have to read it before calling
+    gtk_init().
+  </p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

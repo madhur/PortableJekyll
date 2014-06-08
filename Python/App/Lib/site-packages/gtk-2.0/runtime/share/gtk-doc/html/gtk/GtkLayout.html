@@ -1,0 +1,577 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>GtkLayout</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="GTK+ 2 Reference Manual">
+<link rel="up" href="LayoutContainers.html" title="Layout Containers">
+<link rel="prev" href="GtkVPaned.html" title="GtkVPaned">
+<link rel="next" href="GtkNotebook.html" title="GtkNotebook">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="GtkVPaned.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="LayoutContainers.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GTK+ 2 Reference Manual</th>
+<td><a accesskey="n" href="GtkNotebook.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#GtkLayout.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#GtkLayout.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#GtkLayout.object-hierarchy" class="shortcut">Object Hierarchy</a>
+                   | 
+                  <a href="#GtkLayout.implemented-interfaces" class="shortcut">Implemented Interfaces</a>
+                   | 
+                  <a href="#GtkLayout.properties" class="shortcut">Properties</a>
+                   | 
+                  <a href="#GtkLayout.child-properties" class="shortcut">Child Properties</a>
+                   | 
+                  <a href="#GtkLayout.signals" class="shortcut">Signals</a>
+</td></tr>
+</table>
+<div class="refentry">
+<a name="GtkLayout"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="GtkLayout.top_of_page"></a>GtkLayout</span></h2>
+<p>GtkLayout — Infinite scrollable area containing child widgets and/or custom drawing</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="GtkLayout.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+#include &lt;gtk/gtk.h&gt;
+
+struct              <a class="link" href="GtkLayout.html#GtkLayout-struct" title="struct GtkLayout">GtkLayout</a>;
+<a class="link" href="GtkWidget.html" title="GtkWidget"><span class="returnvalue">GtkWidget</span></a> *         <a class="link" href="GtkLayout.html#gtk-layout-new" title="gtk_layout_new ()">gtk_layout_new</a>                      (<em class="parameter"><code><a class="link" href="GtkAdjustment.html" title="GtkAdjustment"><span class="type">GtkAdjustment</span></a> *hadjustment</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkAdjustment.html" title="GtkAdjustment"><span class="type">GtkAdjustment</span></a> *vadjustment</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkLayout.html#gtk-layout-put" title="gtk_layout_put ()">gtk_layout_put</a>                      (<em class="parameter"><code><a class="link" href="GtkLayout.html" title="GtkLayout"><span class="type">GtkLayout</span></a> *layout</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkWidget.html" title="GtkWidget"><span class="type">GtkWidget</span></a> *child_widget</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> x</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> y</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkLayout.html#gtk-layout-move" title="gtk_layout_move ()">gtk_layout_move</a>                     (<em class="parameter"><code><a class="link" href="GtkLayout.html" title="GtkLayout"><span class="type">GtkLayout</span></a> *layout</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkWidget.html" title="GtkWidget"><span class="type">GtkWidget</span></a> *child_widget</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> x</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> y</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkLayout.html#gtk-layout-set-size" title="gtk_layout_set_size ()">gtk_layout_set_size</a>                 (<em class="parameter"><code><a class="link" href="GtkLayout.html" title="GtkLayout"><span class="type">GtkLayout</span></a> *layout</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> width</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> height</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkLayout.html#gtk-layout-get-size" title="gtk_layout_get_size ()">gtk_layout_get_size</a>                 (<em class="parameter"><code><a class="link" href="GtkLayout.html" title="GtkLayout"><span class="type">GtkLayout</span></a> *layout</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> *width</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> *height</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkLayout.html#gtk-layout-freeze" title="gtk_layout_freeze ()">gtk_layout_freeze</a>                   (<em class="parameter"><code><a class="link" href="GtkLayout.html" title="GtkLayout"><span class="type">GtkLayout</span></a> *layout</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkLayout.html#gtk-layout-thaw" title="gtk_layout_thaw ()">gtk_layout_thaw</a>                     (<em class="parameter"><code><a class="link" href="GtkLayout.html" title="GtkLayout"><span class="type">GtkLayout</span></a> *layout</code></em>);
+<a class="link" href="GtkAdjustment.html" title="GtkAdjustment"><span class="returnvalue">GtkAdjustment</span></a> *     <a class="link" href="GtkLayout.html#gtk-layout-get-hadjustment" title="gtk_layout_get_hadjustment ()">gtk_layout_get_hadjustment</a>          (<em class="parameter"><code><a class="link" href="GtkLayout.html" title="GtkLayout"><span class="type">GtkLayout</span></a> *layout</code></em>);
+<a class="link" href="GtkAdjustment.html" title="GtkAdjustment"><span class="returnvalue">GtkAdjustment</span></a> *     <a class="link" href="GtkLayout.html#gtk-layout-get-vadjustment" title="gtk_layout_get_vadjustment ()">gtk_layout_get_vadjustment</a>          (<em class="parameter"><code><a class="link" href="GtkLayout.html" title="GtkLayout"><span class="type">GtkLayout</span></a> *layout</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkLayout.html#gtk-layout-set-hadjustment" title="gtk_layout_set_hadjustment ()">gtk_layout_set_hadjustment</a>          (<em class="parameter"><code><a class="link" href="GtkLayout.html" title="GtkLayout"><span class="type">GtkLayout</span></a> *layout</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkAdjustment.html" title="GtkAdjustment"><span class="type">GtkAdjustment</span></a> *adjustment</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkLayout.html#gtk-layout-set-vadjustment" title="gtk_layout_set_vadjustment ()">gtk_layout_set_vadjustment</a>          (<em class="parameter"><code><a class="link" href="GtkLayout.html" title="GtkLayout"><span class="type">GtkLayout</span></a> *layout</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkAdjustment.html" title="GtkAdjustment"><span class="type">GtkAdjustment</span></a> *adjustment</code></em>);
+<a href="../gdk/gdk-Windows.html#GdkWindow"><span class="returnvalue">GdkWindow</span></a> *         <a class="link" href="GtkLayout.html#gtk-layout-get-bin-window" title="gtk_layout_get_bin_window ()">gtk_layout_get_bin_window</a>           (<em class="parameter"><code><a class="link" href="GtkLayout.html" title="GtkLayout"><span class="type">GtkLayout</span></a> *layout</code></em>);
+</pre>
+</div>
+<div class="refsect1">
+<a name="GtkLayout.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
+   +----<a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GInitiallyUnowned">GInitiallyUnowned</a>
+         +----<a class="link" href="GtkObject.html" title="GtkObject">GtkObject</a>
+               +----<a class="link" href="GtkWidget.html" title="GtkWidget">GtkWidget</a>
+                     +----<a class="link" href="GtkContainer.html" title="GtkContainer">GtkContainer</a>
+                           +----GtkLayout
+</pre>
+</div>
+<div class="refsect1">
+<a name="GtkLayout.implemented-interfaces"></a><h2>Implemented Interfaces</h2>
+<p>
+GtkLayout implements
+ AtkImplementorIface and  <a class="link" href="GtkBuildable.html" title="GtkBuildable">GtkBuildable</a>.</p>
+</div>
+<div class="refsect1">
+<a name="GtkLayout.properties"></a><h2>Properties</h2>
+<pre class="synopsis">
+  "<a class="link" href="GtkLayout.html#GtkLayout--hadjustment" title='The "hadjustment" property'>hadjustment</a>"              <a class="link" href="GtkAdjustment.html" title="GtkAdjustment"><span class="type">GtkAdjustment</span></a>*        : Read / Write
+  "<a class="link" href="GtkLayout.html#GtkLayout--height" title='The "height" property'>height</a>"                   <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a>                 : Read / Write
+  "<a class="link" href="GtkLayout.html#GtkLayout--vadjustment" title='The "vadjustment" property'>vadjustment</a>"              <a class="link" href="GtkAdjustment.html" title="GtkAdjustment"><span class="type">GtkAdjustment</span></a>*        : Read / Write
+  "<a class="link" href="GtkLayout.html#GtkLayout--width" title='The "width" property'>width</a>"                    <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a>                 : Read / Write
+</pre>
+</div>
+<div class="refsect1">
+<a name="GtkLayout.child-properties"></a><h2>Child Properties</h2>
+<pre class="synopsis">
+  "<a class="link" href="GtkLayout.html#GtkLayout--c-x" title='The "x" child property'>x</a>"                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write
+  "<a class="link" href="GtkLayout.html#GtkLayout--c-y" title='The "y" child property'>y</a>"                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write
+</pre>
+</div>
+<div class="refsect1">
+<a name="GtkLayout.signals"></a><h2>Signals</h2>
+<pre class="synopsis">
+  "<a class="link" href="GtkLayout.html#GtkLayout-set-scroll-adjustments" title='The "set-scroll-adjustments" signal'>set-scroll-adjustments</a>"                         : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-ACTION:CAPS"><code class="literal">Action</code></a>
+</pre>
+</div>
+<div class="refsect1">
+<a name="GtkLayout.description"></a><h2>Description</h2>
+<p>
+<a class="link" href="GtkLayout.html" title="GtkLayout"><span class="type">GtkLayout</span></a> is similar to <a class="link" href="GtkDrawingArea.html" title="GtkDrawingArea"><span class="type">GtkDrawingArea</span></a> in that it's a "blank slate"
+and doesn't do anything but paint a blank background by default. It's
+different in that it supports scrolling natively (you can add it to a
+<a class="link" href="GtkScrolledWindow.html" title="GtkScrolledWindow"><span class="type">GtkScrolledWindow</span></a>), and it can contain child widgets, since it's a
+<a class="link" href="GtkContainer.html" title="GtkContainer"><span class="type">GtkContainer</span></a>. However if you're just going to draw, a <a class="link" href="GtkDrawingArea.html" title="GtkDrawingArea"><span class="type">GtkDrawingArea</span></a>
+is a better choice since it has lower overhead.
+</p>
+<p>
+When handling expose events on a <a class="link" href="GtkLayout.html" title="GtkLayout"><span class="type">GtkLayout</span></a>, you must draw to
+GTK_LAYOUT (layout)-&gt;bin_window, rather than to
+GTK_WIDGET (layout)-&gt;window, as you would for a drawing
+area.
+</p>
+</div>
+<div class="refsect1">
+<a name="GtkLayout.details"></a><h2>Details</h2>
+<div class="refsect2">
+<a name="GtkLayout-struct"></a><h3>struct GtkLayout</h3>
+<pre class="programlisting">struct GtkLayout {
+  GdkWindow *GSEAL (bin_window);
+};
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-layout-new"></a><h3>gtk_layout_new ()</h3>
+<pre class="programlisting"><a class="link" href="GtkWidget.html" title="GtkWidget"><span class="returnvalue">GtkWidget</span></a> *         gtk_layout_new                      (<em class="parameter"><code><a class="link" href="GtkAdjustment.html" title="GtkAdjustment"><span class="type">GtkAdjustment</span></a> *hadjustment</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkAdjustment.html" title="GtkAdjustment"><span class="type">GtkAdjustment</span></a> *vadjustment</code></em>);</pre>
+<p>
+Creates a new <a class="link" href="GtkLayout.html" title="GtkLayout"><span class="type">GtkLayout</span></a>. Unless you have a specific adjustment
+you'd like the layout to use for scrolling, pass <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> for
+<em class="parameter"><code>hadjustment</code></em> and <em class="parameter"><code>vadjustment</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>hadjustment</code></em> :</span></p></td>
+<td>horizontal scroll adjustment, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>vadjustment</code></em> :</span></p></td>
+<td>vertical scroll adjustment, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a new <a class="link" href="GtkLayout.html" title="GtkLayout"><span class="type">GtkLayout</span></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-layout-put"></a><h3>gtk_layout_put ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_layout_put                      (<em class="parameter"><code><a class="link" href="GtkLayout.html" title="GtkLayout"><span class="type">GtkLayout</span></a> *layout</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkWidget.html" title="GtkWidget"><span class="type">GtkWidget</span></a> *child_widget</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> x</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> y</code></em>);</pre>
+<p>
+Adds <em class="parameter"><code>child_widget</code></em> to <em class="parameter"><code>layout</code></em>, at position (<em class="parameter"><code>x</code></em>,<em class="parameter"><code>y</code></em>).
+<em class="parameter"><code>layout</code></em> becomes the new parent container of <em class="parameter"><code>child_widget</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>layout</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkLayout.html" title="GtkLayout"><span class="type">GtkLayout</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>child_widget</code></em> :</span></p></td>
+<td>child widget</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>x</code></em> :</span></p></td>
+<td>X position of child widget</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>y</code></em> :</span></p></td>
+<td>Y position of child widget</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-layout-move"></a><h3>gtk_layout_move ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_layout_move                     (<em class="parameter"><code><a class="link" href="GtkLayout.html" title="GtkLayout"><span class="type">GtkLayout</span></a> *layout</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkWidget.html" title="GtkWidget"><span class="type">GtkWidget</span></a> *child_widget</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> x</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> y</code></em>);</pre>
+<p>
+Moves a current child of <em class="parameter"><code>layout</code></em> to a new position.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>layout</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkLayout.html" title="GtkLayout"><span class="type">GtkLayout</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>child_widget</code></em> :</span></p></td>
+<td>a current child of <em class="parameter"><code>layout</code></em>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>x</code></em> :</span></p></td>
+<td>X position to move to</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>y</code></em> :</span></p></td>
+<td>Y position to move to</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-layout-set-size"></a><h3>gtk_layout_set_size ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_layout_set_size                 (<em class="parameter"><code><a class="link" href="GtkLayout.html" title="GtkLayout"><span class="type">GtkLayout</span></a> *layout</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> width</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> height</code></em>);</pre>
+<p>
+Sets the size of the scrollable area of the layout.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>layout</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkLayout.html" title="GtkLayout"><span class="type">GtkLayout</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>width</code></em> :</span></p></td>
+<td>width of entire scrollable area</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>height</code></em> :</span></p></td>
+<td>height of entire scrollable area</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-layout-get-size"></a><h3>gtk_layout_get_size ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_layout_get_size                 (<em class="parameter"><code><a class="link" href="GtkLayout.html" title="GtkLayout"><span class="type">GtkLayout</span></a> *layout</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> *width</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> *height</code></em>);</pre>
+<p>
+Gets the size that has been set on the layout, and that determines
+the total extents of the layout's scrollbar area. See
+<a class="link" href="GtkLayout.html#gtk-layout-set-size" title="gtk_layout_set_size ()"><code class="function">gtk_layout_set_size()</code></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>layout</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkLayout.html" title="GtkLayout"><span class="type">GtkLayout</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>width</code></em> :</span></p></td>
+<td>location to store the width set on
+<em class="parameter"><code>layout</code></em>, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>][<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>height</code></em> :</span></p></td>
+<td>location to store the height set on
+<em class="parameter"><code>layout</code></em>, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>][<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-layout-freeze"></a><h3>gtk_layout_freeze ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_layout_freeze                   (<em class="parameter"><code><a class="link" href="GtkLayout.html" title="GtkLayout"><span class="type">GtkLayout</span></a> *layout</code></em>);</pre>
+<div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Warning</h3>
+<p><code class="literal">gtk_layout_freeze</code> is deprecated and should not be used in newly-written code.</p>
+</div>
+<p>
+This is a deprecated function, it doesn't do anything useful.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>layout</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkLayout.html" title="GtkLayout"><span class="type">GtkLayout</span></a>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-layout-thaw"></a><h3>gtk_layout_thaw ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_layout_thaw                     (<em class="parameter"><code><a class="link" href="GtkLayout.html" title="GtkLayout"><span class="type">GtkLayout</span></a> *layout</code></em>);</pre>
+<div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Warning</h3>
+<p><code class="literal">gtk_layout_thaw</code> is deprecated and should not be used in newly-written code.</p>
+</div>
+<p>
+This is a deprecated function, it doesn't do anything useful.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>layout</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkLayout.html" title="GtkLayout"><span class="type">GtkLayout</span></a>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-layout-get-hadjustment"></a><h3>gtk_layout_get_hadjustment ()</h3>
+<pre class="programlisting"><a class="link" href="GtkAdjustment.html" title="GtkAdjustment"><span class="returnvalue">GtkAdjustment</span></a> *     gtk_layout_get_hadjustment          (<em class="parameter"><code><a class="link" href="GtkLayout.html" title="GtkLayout"><span class="type">GtkLayout</span></a> *layout</code></em>);</pre>
+<p>
+This function should only be called after the layout has been
+placed in a <a class="link" href="GtkScrolledWindow.html" title="GtkScrolledWindow"><span class="type">GtkScrolledWindow</span></a> or otherwise configured for
+scrolling. It returns the <a class="link" href="GtkAdjustment.html" title="GtkAdjustment"><span class="type">GtkAdjustment</span></a> used for communication
+between the horizontal scrollbar and <em class="parameter"><code>layout</code></em>.
+</p>
+<p>
+See <a class="link" href="GtkScrolledWindow.html" title="GtkScrolledWindow"><span class="type">GtkScrolledWindow</span></a>, <a class="link" href="GtkScrollbar.html" title="GtkScrollbar"><span class="type">GtkScrollbar</span></a>, <a class="link" href="GtkAdjustment.html" title="GtkAdjustment"><span class="type">GtkAdjustment</span></a> for details.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>layout</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkLayout.html" title="GtkLayout"><span class="type">GtkLayout</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>horizontal scroll adjustment. <span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-layout-get-vadjustment"></a><h3>gtk_layout_get_vadjustment ()</h3>
+<pre class="programlisting"><a class="link" href="GtkAdjustment.html" title="GtkAdjustment"><span class="returnvalue">GtkAdjustment</span></a> *     gtk_layout_get_vadjustment          (<em class="parameter"><code><a class="link" href="GtkLayout.html" title="GtkLayout"><span class="type">GtkLayout</span></a> *layout</code></em>);</pre>
+<p>
+This function should only be called after the layout has been
+placed in a <a class="link" href="GtkScrolledWindow.html" title="GtkScrolledWindow"><span class="type">GtkScrolledWindow</span></a> or otherwise configured for
+scrolling. It returns the <a class="link" href="GtkAdjustment.html" title="GtkAdjustment"><span class="type">GtkAdjustment</span></a> used for communication
+between the vertical scrollbar and <em class="parameter"><code>layout</code></em>.
+</p>
+<p>
+See <a class="link" href="GtkScrolledWindow.html" title="GtkScrolledWindow"><span class="type">GtkScrolledWindow</span></a>, <a class="link" href="GtkScrollbar.html" title="GtkScrollbar"><span class="type">GtkScrollbar</span></a>, <a class="link" href="GtkAdjustment.html" title="GtkAdjustment"><span class="type">GtkAdjustment</span></a> for details.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>layout</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkLayout.html" title="GtkLayout"><span class="type">GtkLayout</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>vertical scroll adjustment. <span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-layout-set-hadjustment"></a><h3>gtk_layout_set_hadjustment ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_layout_set_hadjustment          (<em class="parameter"><code><a class="link" href="GtkLayout.html" title="GtkLayout"><span class="type">GtkLayout</span></a> *layout</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkAdjustment.html" title="GtkAdjustment"><span class="type">GtkAdjustment</span></a> *adjustment</code></em>);</pre>
+<p>
+Sets the horizontal scroll adjustment for the layout.
+</p>
+<p>
+See <a class="link" href="GtkScrolledWindow.html" title="GtkScrolledWindow"><span class="type">GtkScrolledWindow</span></a>, <a class="link" href="GtkScrollbar.html" title="GtkScrollbar"><span class="type">GtkScrollbar</span></a>, <a class="link" href="GtkAdjustment.html" title="GtkAdjustment"><span class="type">GtkAdjustment</span></a> for details.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>layout</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkLayout.html" title="GtkLayout"><span class="type">GtkLayout</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>adjustment</code></em> :</span></p></td>
+<td>new scroll adjustment. <span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-layout-set-vadjustment"></a><h3>gtk_layout_set_vadjustment ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_layout_set_vadjustment          (<em class="parameter"><code><a class="link" href="GtkLayout.html" title="GtkLayout"><span class="type">GtkLayout</span></a> *layout</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkAdjustment.html" title="GtkAdjustment"><span class="type">GtkAdjustment</span></a> *adjustment</code></em>);</pre>
+<p>
+Sets the vertical scroll adjustment for the layout.
+</p>
+<p>
+See <a class="link" href="GtkScrolledWindow.html" title="GtkScrolledWindow"><span class="type">GtkScrolledWindow</span></a>, <a class="link" href="GtkScrollbar.html" title="GtkScrollbar"><span class="type">GtkScrollbar</span></a>, <a class="link" href="GtkAdjustment.html" title="GtkAdjustment"><span class="type">GtkAdjustment</span></a> for details.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>layout</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkLayout.html" title="GtkLayout"><span class="type">GtkLayout</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>adjustment</code></em> :</span></p></td>
+<td>new scroll adjustment. <span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-layout-get-bin-window"></a><h3>gtk_layout_get_bin_window ()</h3>
+<pre class="programlisting"><a href="../gdk/gdk-Windows.html#GdkWindow"><span class="returnvalue">GdkWindow</span></a> *         gtk_layout_get_bin_window           (<em class="parameter"><code><a class="link" href="GtkLayout.html" title="GtkLayout"><span class="type">GtkLayout</span></a> *layout</code></em>);</pre>
+<p>
+Retrieve the bin window of the layout used for drawing operations.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>layout</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkLayout.html" title="GtkLayout"><span class="type">GtkLayout</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a <a href="../gdk/gdk-Windows.html#GdkWindow"><span class="type">GdkWindow</span></a>. <span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.14</p>
+</div>
+</div>
+<div class="refsect1">
+<a name="GtkLayout.property-details"></a><h2>Property Details</h2>
+<div class="refsect2">
+<a name="GtkLayout--hadjustment"></a><h3>The <code class="literal">"hadjustment"</code> property</h3>
+<pre class="programlisting">  "hadjustment"              <a class="link" href="GtkAdjustment.html" title="GtkAdjustment"><span class="type">GtkAdjustment</span></a>*        : Read / Write</pre>
+<p>The GtkAdjustment for the horizontal position.</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkLayout--height"></a><h3>The <code class="literal">"height"</code> property</h3>
+<pre class="programlisting">  "height"                   <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a>                 : Read / Write</pre>
+<p>The height of the layout.</p>
+<p>Allowed values: &lt;= G_MAXINT</p>
+<p>Default value: 100</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkLayout--vadjustment"></a><h3>The <code class="literal">"vadjustment"</code> property</h3>
+<pre class="programlisting">  "vadjustment"              <a class="link" href="GtkAdjustment.html" title="GtkAdjustment"><span class="type">GtkAdjustment</span></a>*        : Read / Write</pre>
+<p>The GtkAdjustment for the vertical position.</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkLayout--width"></a><h3>The <code class="literal">"width"</code> property</h3>
+<pre class="programlisting">  "width"                    <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a>                 : Read / Write</pre>
+<p>The width of the layout.</p>
+<p>Allowed values: &lt;= G_MAXINT</p>
+<p>Default value: 100</p>
+</div>
+</div>
+<div class="refsect1">
+<a name="GtkLayout.child-property-details"></a><h2>Child Property Details</h2>
+<div class="refsect2">
+<a name="GtkLayout--c-x"></a><h3>The <code class="literal">"x"</code> child property</h3>
+<pre class="programlisting">  "x"                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write</pre>
+<p>X position of child widget.</p>
+<p>Default value: 0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkLayout--c-y"></a><h3>The <code class="literal">"y"</code> child property</h3>
+<pre class="programlisting">  "y"                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write</pre>
+<p>Y position of child widget.</p>
+<p>Default value: 0</p>
+</div>
+</div>
+<div class="refsect1">
+<a name="GtkLayout.signal-details"></a><h2>Signal Details</h2>
+<div class="refsect2">
+<a name="GtkLayout-set-scroll-adjustments"></a><h3>The <code class="literal">"set-scroll-adjustments"</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="GtkLayout.html" title="GtkLayout"><span class="type">GtkLayout</span></a>     *horizontal,
+                                                        <a class="link" href="GtkAdjustment.html" title="GtkAdjustment"><span class="type">GtkAdjustment</span></a> *vertical,
+                                                        <a class="link" href="GtkAdjustment.html" title="GtkAdjustment"><span class="type">GtkAdjustment</span></a> *arg2,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>       user_data)       : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-ACTION:CAPS"><code class="literal">Action</code></a></pre>
+<p>
+Set the scroll adjustments for the layout. Usually scrolled containers
+like <a class="link" href="GtkScrolledWindow.html" title="GtkScrolledWindow"><span class="type">GtkScrolledWindow</span></a> will emit this signal to connect two instances
+of <a class="link" href="GtkScrollbar.html" title="GtkScrollbar"><span class="type">GtkScrollbar</span></a> to the scroll directions of the <a class="link" href="GtkLayout.html" title="GtkLayout"><span class="type">GtkLayout</span></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>horizontal</code></em> :</span></p></td>
+<td>the horizontal <a class="link" href="GtkAdjustment.html" title="GtkAdjustment"><span class="type">GtkAdjustment</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>vertical</code></em> :</span></p></td>
+<td>the vertical <a class="link" href="GtkAdjustment.html" title="GtkAdjustment"><span class="type">GtkAdjustment</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect1">
+<a name="GtkLayout.see-also"></a><h2>See Also</h2>
+<p>
+<a class="link" href="GtkDrawingArea.html" title="GtkDrawingArea"><span class="type">GtkDrawingArea</span></a>, <a class="link" href="GtkScrolledWindow.html" title="GtkScrolledWindow"><span class="type">GtkScrolledWindow</span></a>
+</p>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

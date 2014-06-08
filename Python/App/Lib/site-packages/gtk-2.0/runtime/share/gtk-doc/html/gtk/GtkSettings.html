@@ -1,0 +1,1215 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Settings</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="GTK+ 2 Reference Manual">
+<link rel="up" href="gtkbase.html" title="Part II. GTK+ Core Reference">
+<link rel="prev" href="gtk-Resource-Files.html" title="Resource Files">
+<link rel="next" href="gtk-Bindings.html" title="Bindings">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="gtk-Resource-Files.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="gtkbase.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GTK+ 2 Reference Manual</th>
+<td><a accesskey="n" href="gtk-Bindings.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#GtkSettings.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#GtkSettings.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#GtkSettings.object-hierarchy" class="shortcut">Object Hierarchy</a>
+                   | 
+                  <a href="#GtkSettings.properties" class="shortcut">Properties</a>
+</td></tr>
+</table>
+<div class="refentry">
+<a name="GtkSettings"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="GtkSettings.top_of_page"></a>Settings</span></h2>
+<p>Settings — Sharing settings between applications</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="GtkSettings.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+#include &lt;gtk/gtk.h&gt;
+
+                    <a class="link" href="GtkSettings.html#GtkSettings-struct" title="GtkSettings">GtkSettings</a>;
+struct              <a class="link" href="GtkSettings.html#GtkSettingsValue" title="struct GtkSettingsValue">GtkSettingsValue</a>;
+<a class="link" href="GtkSettings.html" title="Settings"><span class="returnvalue">GtkSettings</span></a> *       <a class="link" href="GtkSettings.html#gtk-settings-get-default" title="gtk_settings_get_default ()">gtk_settings_get_default</a>            (<em class="parameter"><code><span class="type">void</span></code></em>);
+<a class="link" href="GtkSettings.html" title="Settings"><span class="returnvalue">GtkSettings</span></a> *       <a class="link" href="GtkSettings.html#gtk-settings-get-for-screen" title="gtk_settings_get_for_screen ()">gtk_settings_get_for_screen</a>         (<em class="parameter"><code><a href="../gdk/GdkScreen.html"><span class="type">GdkScreen</span></a> *screen</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkSettings.html#gtk-settings-install-property" title="gtk_settings_install_property ()">gtk_settings_install_property</a>       (<em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-GParamSpec.html#GParamSpec"><span class="type">GParamSpec</span></a> *pspec</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkSettings.html#gtk-settings-install-property-parser" title="gtk_settings_install_property_parser ()">gtk_settings_install_property_parser</a>
+                                                        (<em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-GParamSpec.html#GParamSpec"><span class="type">GParamSpec</span></a> *pspec</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkStyle.html#GtkRcPropertyParser" title="GtkRcPropertyParser ()"><span class="type">GtkRcPropertyParser</span></a> parser</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="GtkSettings.html#gtk-rc-property-parse-color" title="gtk_rc_property_parse_color ()">gtk_rc_property_parse_color</a>         (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/gobject/unstable/gobject-GParamSpec.html#GParamSpec"><span class="type">GParamSpec</span></a> *pspec</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Strings.html#GString"><span class="type">GString</span></a> *gstring</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Generic-values.html#GValue"><span class="type">GValue</span></a> *property_value</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="GtkSettings.html#gtk-rc-property-parse-enum" title="gtk_rc_property_parse_enum ()">gtk_rc_property_parse_enum</a>          (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/gobject/unstable/gobject-GParamSpec.html#GParamSpec"><span class="type">GParamSpec</span></a> *pspec</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Strings.html#GString"><span class="type">GString</span></a> *gstring</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Generic-values.html#GValue"><span class="type">GValue</span></a> *property_value</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="GtkSettings.html#gtk-rc-property-parse-flags" title="gtk_rc_property_parse_flags ()">gtk_rc_property_parse_flags</a>         (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/gobject/unstable/gobject-GParamSpec.html#GParamSpec"><span class="type">GParamSpec</span></a> *pspec</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Strings.html#GString"><span class="type">GString</span></a> *gstring</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Generic-values.html#GValue"><span class="type">GValue</span></a> *property_value</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="GtkSettings.html#gtk-rc-property-parse-requisition" title="gtk_rc_property_parse_requisition ()">gtk_rc_property_parse_requisition</a>   (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/gobject/unstable/gobject-GParamSpec.html#GParamSpec"><span class="type">GParamSpec</span></a> *pspec</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Strings.html#GString"><span class="type">GString</span></a> *gstring</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Generic-values.html#GValue"><span class="type">GValue</span></a> *property_value</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="GtkSettings.html#gtk-rc-property-parse-border" title="gtk_rc_property_parse_border ()">gtk_rc_property_parse_border</a>        (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/gobject/unstable/gobject-GParamSpec.html#GParamSpec"><span class="type">GParamSpec</span></a> *pspec</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Strings.html#GString"><span class="type">GString</span></a> *gstring</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Generic-values.html#GValue"><span class="type">GValue</span></a> *property_value</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkSettings.html#gtk-settings-set-property-value" title="gtk_settings_set_property_value ()">gtk_settings_set_property_value</a>     (<em class="parameter"><code><a class="link" href="GtkSettings.html" title="Settings"><span class="type">GtkSettings</span></a> *settings</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *name</code></em>,
+                                                         <em class="parameter"><code>const <a class="link" href="GtkSettings.html#GtkSettingsValue" title="struct GtkSettingsValue"><span class="type">GtkSettingsValue</span></a> *svalue</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkSettings.html#gtk-settings-set-string-property" title="gtk_settings_set_string_property ()">gtk_settings_set_string_property</a>    (<em class="parameter"><code><a class="link" href="GtkSettings.html" title="Settings"><span class="type">GtkSettings</span></a> *settings</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *name</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *v_string</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *origin</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkSettings.html#gtk-settings-set-long-property" title="gtk_settings_set_long_property ()">gtk_settings_set_long_property</a>      (<em class="parameter"><code><a class="link" href="GtkSettings.html" title="Settings"><span class="type">GtkSettings</span></a> *settings</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *name</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#glong"><span class="type">glong</span></a> v_long</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *origin</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkSettings.html#gtk-settings-set-double-property" title="gtk_settings_set_double_property ()">gtk_settings_set_double_property</a>    (<em class="parameter"><code><a class="link" href="GtkSettings.html" title="Settings"><span class="type">GtkSettings</span></a> *settings</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *name</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> v_double</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *origin</code></em>);
+</pre>
+</div>
+<div class="refsect1">
+<a name="GtkSettings.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
+   +----GtkSettings
+</pre>
+</div>
+<div class="refsect1">
+<a name="GtkSettings.properties"></a><h2>Properties</h2>
+<pre class="synopsis">
+  "<a class="link" href="GtkSettings.html#GtkSettings--color-hash" title='The "color-hash" property'>color-hash</a>"               <a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a>*           : Read
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-alternative-button-order" title='The "gtk-alternative-button-order" property'>gtk-alternative-button-order</a>" <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-alternative-sort-arrows" title='The "gtk-alternative-sort-arrows" property'>gtk-alternative-sort-arrows</a>" <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-auto-mnemonics" title='The "gtk-auto-mnemonics" property'>gtk-auto-mnemonics</a>"       <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-button-images" title='The "gtk-button-images" property'>gtk-button-images</a>"        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-can-change-accels" title='The "gtk-can-change-accels" property'>gtk-can-change-accels</a>"    <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-color-palette" title='The "gtk-color-palette" property'>gtk-color-palette</a>"        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-color-scheme" title='The "gtk-color-scheme" property'>gtk-color-scheme</a>"         <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-cursor-blink" title='The "gtk-cursor-blink" property'>gtk-cursor-blink</a>"         <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-cursor-blink-time" title='The "gtk-cursor-blink-time" property'>gtk-cursor-blink-time</a>"    <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-cursor-blink-timeout" title='The "gtk-cursor-blink-timeout" property'>gtk-cursor-blink-timeout</a>" <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-cursor-theme-name" title='The "gtk-cursor-theme-name" property'>gtk-cursor-theme-name</a>"    <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-cursor-theme-size" title='The "gtk-cursor-theme-size" property'>gtk-cursor-theme-size</a>"    <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-dnd-drag-threshold" title='The "gtk-dnd-drag-threshold" property'>gtk-dnd-drag-threshold</a>"   <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-double-click-distance" title='The "gtk-double-click-distance" property'>gtk-double-click-distance</a>" <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-double-click-time" title='The "gtk-double-click-time" property'>gtk-double-click-time</a>"    <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-enable-accels" title='The "gtk-enable-accels" property'>gtk-enable-accels</a>"        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-enable-animations" title='The "gtk-enable-animations" property'>gtk-enable-animations</a>"    <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-enable-event-sounds" title='The "gtk-enable-event-sounds" property'>gtk-enable-event-sounds</a>"  <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-enable-input-feedback-sounds" title='The "gtk-enable-input-feedback-sounds" property'>gtk-enable-input-feedback-sounds</a>" <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-enable-mnemonics" title='The "gtk-enable-mnemonics" property'>gtk-enable-mnemonics</a>"     <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-enable-tooltips" title='The "gtk-enable-tooltips" property'>gtk-enable-tooltips</a>"      <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-entry-password-hint-timeout" title='The "gtk-entry-password-hint-timeout" property'>gtk-entry-password-hint-timeout</a>" <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a>                 : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-entry-select-on-focus" title='The "gtk-entry-select-on-focus" property'>gtk-entry-select-on-focus</a>" <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-error-bell" title='The "gtk-error-bell" property'>gtk-error-bell</a>"           <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-fallback-icon-theme" title='The "gtk-fallback-icon-theme" property'>gtk-fallback-icon-theme</a>"  <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-file-chooser-backend" title='The "gtk-file-chooser-backend" property'>gtk-file-chooser-backend</a>" <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-font-name" title='The "gtk-font-name" property'>gtk-font-name</a>"            <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-fontconfig-timestamp" title='The "gtk-fontconfig-timestamp" property'>gtk-fontconfig-timestamp</a>" <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a>                 : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-icon-sizes" title='The "gtk-icon-sizes" property'>gtk-icon-sizes</a>"           <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-icon-theme-name" title='The "gtk-icon-theme-name" property'>gtk-icon-theme-name</a>"      <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-im-module" title='The "gtk-im-module" property'>gtk-im-module</a>"            <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-key-theme-name" title='The "gtk-key-theme-name" property'>gtk-key-theme-name</a>"       <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-keynav-cursor-only" title='The "gtk-keynav-cursor-only" property'>gtk-keynav-cursor-only</a>"   <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-keynav-wrap-around" title='The "gtk-keynav-wrap-around" property'>gtk-keynav-wrap-around</a>"   <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-label-select-on-focus" title='The "gtk-label-select-on-focus" property'>gtk-label-select-on-focus</a>" <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-menu-bar-accel" title='The "gtk-menu-bar-accel" property'>gtk-menu-bar-accel</a>"       <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-menu-bar-popup-delay" title='The "gtk-menu-bar-popup-delay" property'>gtk-menu-bar-popup-delay</a>" <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-menu-images" title='The "gtk-menu-images" property'>gtk-menu-images</a>"          <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-menu-popdown-delay" title='The "gtk-menu-popdown-delay" property'>gtk-menu-popdown-delay</a>"   <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-menu-popup-delay" title='The "gtk-menu-popup-delay" property'>gtk-menu-popup-delay</a>"     <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-modules" title='The "gtk-modules" property'>gtk-modules</a>"              <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-print-backends" title='The "gtk-print-backends" property'>gtk-print-backends</a>"       <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-print-preview-command" title='The "gtk-print-preview-command" property'>gtk-print-preview-command</a>" <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-recent-files-limit" title='The "gtk-recent-files-limit" property'>gtk-recent-files-limit</a>"   <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-recent-files-max-age" title='The "gtk-recent-files-max-age" property'>gtk-recent-files-max-age</a>" <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-scrolled-window-placement" title='The "gtk-scrolled-window-placement" property'>gtk-scrolled-window-placement</a>" <a class="link" href="gtk-Standard-Enumerations.html#GtkCornerType" title="enum GtkCornerType"><span class="type">GtkCornerType</span></a>         : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-show-input-method-menu" title='The "gtk-show-input-method-menu" property'>gtk-show-input-method-menu</a>" <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-show-unicode-menu" title='The "gtk-show-unicode-menu" property'>gtk-show-unicode-menu</a>"    <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-sound-theme-name" title='The "gtk-sound-theme-name" property'>gtk-sound-theme-name</a>"     <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-split-cursor" title='The "gtk-split-cursor" property'>gtk-split-cursor</a>"         <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-theme-name" title='The "gtk-theme-name" property'>gtk-theme-name</a>"           <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-timeout-expand" title='The "gtk-timeout-expand" property'>gtk-timeout-expand</a>"       <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-timeout-initial" title='The "gtk-timeout-initial" property'>gtk-timeout-initial</a>"      <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-timeout-repeat" title='The "gtk-timeout-repeat" property'>gtk-timeout-repeat</a>"       <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-toolbar-icon-size" title='The "gtk-toolbar-icon-size" property'>gtk-toolbar-icon-size</a>"    <a class="link" href="gtk-Themeable-Stock-Images.html#GtkIconSize" title="enum GtkIconSize"><span class="type">GtkIconSize</span></a>           : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-toolbar-style" title='The "gtk-toolbar-style" property'>gtk-toolbar-style</a>"        <a class="link" href="gtk-Standard-Enumerations.html#GtkToolbarStyle" title="enum GtkToolbarStyle"><span class="type">GtkToolbarStyle</span></a>       : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-tooltip-browse-mode-timeout" title='The "gtk-tooltip-browse-mode-timeout" property'>gtk-tooltip-browse-mode-timeout</a>" <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-tooltip-browse-timeout" title='The "gtk-tooltip-browse-timeout" property'>gtk-tooltip-browse-timeout</a>" <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-tooltip-timeout" title='The "gtk-tooltip-timeout" property'>gtk-tooltip-timeout</a>"      <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-touchscreen-mode" title='The "gtk-touchscreen-mode" property'>gtk-touchscreen-mode</a>"     <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-xft-antialias" title='The "gtk-xft-antialias" property'>gtk-xft-antialias</a>"        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-xft-dpi" title='The "gtk-xft-dpi" property'>gtk-xft-dpi</a>"              <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-xft-hinting" title='The "gtk-xft-hinting" property'>gtk-xft-hinting</a>"          <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-xft-hintstyle" title='The "gtk-xft-hintstyle" property'>gtk-xft-hintstyle</a>"        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write
+  "<a class="link" href="GtkSettings.html#GtkSettings--gtk-xft-rgba" title='The "gtk-xft-rgba" property'>gtk-xft-rgba</a>"             <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write
+</pre>
+</div>
+<div class="refsect1">
+<a name="GtkSettings.description"></a><h2>Description</h2>
+<p>
+GtkSettings provide a mechanism to share global settings between applications.
+On the X window system, this sharing is realized by an <a class="ulink" href="" target="_top">XSettings</a>
+manager that is usually part of the desktop environment, along with utilities
+that let the user change these settings. In the absence of an Xsettings manager,
+settings can also be specified in RC files.
+</p>
+<p>
+Applications can override system-wide settings with <a class="link" href="GtkSettings.html#gtk-settings-set-string-property" title="gtk_settings_set_string_property ()"><code class="function">gtk_settings_set_string_property()</code></a>,
+<a class="link" href="GtkSettings.html#gtk-settings-set-long-property" title="gtk_settings_set_long_property ()"><code class="function">gtk_settings_set_long_property()</code></a>, etc. This should be restricted to special
+cases though; GtkSettings are not meant as an application configuration
+facility. When doing so, you need to be aware that settings that are specific
+to individual widgets may not be available before the widget type has been
+realized at least once. The following example demonstrates a way to do this:
+</p>
+<div class="informalexample">
+  <table class="listing_frame" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+      <tr>
+        <td class="listing_lines" align="right"><pre>1
+2
+3
+4</pre></td>
+        <td class="listing_code"><pre class="programlisting"><span class="function"><a href="gtk-General.html#gtk-init">gtk_init</a></span><span class="normal"> </span><span class="symbol">(&amp;</span><span class="normal">argc</span><span class="symbol">,</span><span class="normal"> </span><span class="symbol">&amp;</span><span class="normal">argv</span><span class="symbol">);</span>
+<span class="comment">/* make sure the type is realized */</span>
+<span class="function"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#g-type-class-unref">g_type_class_unref</a></span><span class="normal"> </span><span class="symbol">(</span><span class="function"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#g-type-class-ref">g_type_class_ref</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">GTK_TYPE_IMAGE_MENU_ITEM</span><span class="symbol">));</span>
+<span class="function"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-set">g_object_set</a></span><span class="normal"> </span><span class="symbol">(</span><span class="function"><a href="GtkSettings.html#gtk-settings-get-default">gtk_settings_get_default</a></span><span class="normal"> </span><span class="symbol">(),</span><span class="normal"> </span><span class="string">"gtk-menu-images"</span><span class="symbol">,</span><span class="normal"> <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS">FALSE</a></span><span class="symbol">,</span><span class="normal"> <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS">NULL</a></span><span class="symbol">);</span></pre></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+</p>
+<p>
+There is one GtkSettings instance per screen. It can be obtained with
+<a class="link" href="GtkSettings.html#gtk-settings-get-for-screen" title="gtk_settings_get_for_screen ()"><code class="function">gtk_settings_get_for_screen()</code></a>, but in many cases, it is more convenient
+to use <a class="link" href="GtkWidget.html#gtk-widget-get-settings" title="gtk_widget_get_settings ()"><code class="function">gtk_widget_get_settings()</code></a>. <a class="link" href="GtkSettings.html#gtk-settings-get-default" title="gtk_settings_get_default ()"><code class="function">gtk_settings_get_default()</code></a> returns the
+GtkSettings instance for the default screen.
+</p>
+</div>
+<div class="refsect1">
+<a name="GtkSettings.details"></a><h2>Details</h2>
+<div class="refsect2">
+<a name="GtkSettings-struct"></a><h3>GtkSettings</h3>
+<pre class="programlisting">typedef struct _GtkSettings GtkSettings;</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettingsValue"></a><h3>struct GtkSettingsValue</h3>
+<pre class="programlisting">struct GtkSettingsValue {
+  /* origin should be something like "filename:linenumber" for rc files,
+   * or e.g. "XProperty" for other sources
+   */
+  gchar *origin;
+
+  /* valid types are LONG, DOUBLE and STRING corresponding to the token parsed,
+   * or a GSTRING holding an unparsed statement
+   */
+  GValue value;
+};
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-settings-get-default"></a><h3>gtk_settings_get_default ()</h3>
+<pre class="programlisting"><a class="link" href="GtkSettings.html" title="Settings"><span class="returnvalue">GtkSettings</span></a> *       gtk_settings_get_default            (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+Gets the <a class="link" href="GtkSettings.html" title="Settings"><span class="type">GtkSettings</span></a> object for the default GDK screen, creating
+it if necessary. See <a class="link" href="GtkSettings.html#gtk-settings-get-for-screen" title="gtk_settings_get_for_screen ()"><code class="function">gtk_settings_get_for_screen()</code></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a <a class="link" href="GtkSettings.html" title="Settings"><span class="type">GtkSettings</span></a> object. If there is no default
+screen, then returns <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-settings-get-for-screen"></a><h3>gtk_settings_get_for_screen ()</h3>
+<pre class="programlisting"><a class="link" href="GtkSettings.html" title="Settings"><span class="returnvalue">GtkSettings</span></a> *       gtk_settings_get_for_screen         (<em class="parameter"><code><a href="../gdk/GdkScreen.html"><span class="type">GdkScreen</span></a> *screen</code></em>);</pre>
+<p>
+Gets the <a class="link" href="GtkSettings.html" title="Settings"><span class="type">GtkSettings</span></a> object for <em class="parameter"><code>screen</code></em>, creating it if necessary.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>screen</code></em> :</span></p></td>
+<td>a <a href="../gdk/GdkScreen.html"><span class="type">GdkScreen</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a <a class="link" href="GtkSettings.html" title="Settings"><span class="type">GtkSettings</span></a> object. <span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-settings-install-property"></a><h3>gtk_settings_install_property ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_settings_install_property       (<em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-GParamSpec.html#GParamSpec"><span class="type">GParamSpec</span></a> *pspec</code></em>);</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-settings-install-property-parser"></a><h3>gtk_settings_install_property_parser ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_settings_install_property_parser
+                                                        (<em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-GParamSpec.html#GParamSpec"><span class="type">GParamSpec</span></a> *pspec</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GtkStyle.html#GtkRcPropertyParser" title="GtkRcPropertyParser ()"><span class="type">GtkRcPropertyParser</span></a> parser</code></em>);</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-rc-property-parse-color"></a><h3>gtk_rc_property_parse_color ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gtk_rc_property_parse_color         (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/gobject/unstable/gobject-GParamSpec.html#GParamSpec"><span class="type">GParamSpec</span></a> *pspec</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Strings.html#GString"><span class="type">GString</span></a> *gstring</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Generic-values.html#GValue"><span class="type">GValue</span></a> *property_value</code></em>);</pre>
+<p>
+A <a class="link" href="GtkStyle.html#GtkRcPropertyParser" title="GtkRcPropertyParser ()"><span class="type">GtkRcPropertyParser</span></a> for use with <a class="link" href="GtkSettings.html#gtk-settings-install-property-parser" title="gtk_settings_install_property_parser ()"><code class="function">gtk_settings_install_property_parser()</code></a>
+or <a class="link" href="GtkWidget.html#gtk-widget-class-install-style-property-parser" title="gtk_widget_class_install_style_property_parser ()"><code class="function">gtk_widget_class_install_style_property_parser()</code></a> which parses a
+color given either by its name or in the form 
+<code class="literal">{ red, green, blue }</code> where <code class="literal">red</code>, <code class="literal">green</code> and
+<code class="literal">blue</code> are integers between 0 and 65535 or floating-point numbers
+between 0 and 1.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>pspec</code></em> :</span></p></td>
+<td>a <a href="http://library.gnome.org/devel/gobject/unstable/gobject-GParamSpec.html#GParamSpec"><span class="type">GParamSpec</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>gstring</code></em> :</span></p></td>
+<td>the <a href="http://library.gnome.org/devel/glib/unstable/glib-Strings.html#GString"><span class="type">GString</span></a> to be parsed</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>property_value</code></em> :</span></p></td>
+<td>a <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Generic-values.html#GValue"><span class="type">GValue</span></a> which must hold <a href="../gdk/gdk-Colormaps-and-Colors.html#GdkColor"><span class="type">GdkColor</span></a> values.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if <em class="parameter"><code>gstring</code></em> could be parsed and <em class="parameter"><code>property_value</code></em>
+has been set to the resulting <a href="../gdk/gdk-Colormaps-and-Colors.html#GdkColor"><span class="type">GdkColor</span></a>.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-rc-property-parse-enum"></a><h3>gtk_rc_property_parse_enum ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gtk_rc_property_parse_enum          (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/gobject/unstable/gobject-GParamSpec.html#GParamSpec"><span class="type">GParamSpec</span></a> *pspec</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Strings.html#GString"><span class="type">GString</span></a> *gstring</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Generic-values.html#GValue"><span class="type">GValue</span></a> *property_value</code></em>);</pre>
+<p>
+A <a class="link" href="GtkStyle.html#GtkRcPropertyParser" title="GtkRcPropertyParser ()"><span class="type">GtkRcPropertyParser</span></a> for use with <a class="link" href="GtkSettings.html#gtk-settings-install-property-parser" title="gtk_settings_install_property_parser ()"><code class="function">gtk_settings_install_property_parser()</code></a>
+or <a class="link" href="GtkWidget.html#gtk-widget-class-install-style-property-parser" title="gtk_widget_class_install_style_property_parser ()"><code class="function">gtk_widget_class_install_style_property_parser()</code></a> which parses a single
+enumeration value.
+</p>
+<p>
+The enumeration value can be specified by its name, its nickname or
+its numeric value. For consistency with flags parsing, the value
+may be surrounded by parentheses.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>pspec</code></em> :</span></p></td>
+<td>a <a href="http://library.gnome.org/devel/gobject/unstable/gobject-GParamSpec.html#GParamSpec"><span class="type">GParamSpec</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>gstring</code></em> :</span></p></td>
+<td>the <a href="http://library.gnome.org/devel/glib/unstable/glib-Strings.html#GString"><span class="type">GString</span></a> to be parsed</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>property_value</code></em> :</span></p></td>
+<td>a <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Generic-values.html#GValue"><span class="type">GValue</span></a> which must hold enum values.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if <em class="parameter"><code>gstring</code></em> could be parsed and <em class="parameter"><code>property_value</code></em>
+has been set to the resulting <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Enumeration-and-Flag-Types.html#GEnumValue"><span class="type">GEnumValue</span></a>.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-rc-property-parse-flags"></a><h3>gtk_rc_property_parse_flags ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gtk_rc_property_parse_flags         (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/gobject/unstable/gobject-GParamSpec.html#GParamSpec"><span class="type">GParamSpec</span></a> *pspec</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Strings.html#GString"><span class="type">GString</span></a> *gstring</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Generic-values.html#GValue"><span class="type">GValue</span></a> *property_value</code></em>);</pre>
+<p>
+A <a class="link" href="GtkStyle.html#GtkRcPropertyParser" title="GtkRcPropertyParser ()"><span class="type">GtkRcPropertyParser</span></a> for use with <a class="link" href="GtkSettings.html#gtk-settings-install-property-parser" title="gtk_settings_install_property_parser ()"><code class="function">gtk_settings_install_property_parser()</code></a>
+or <a class="link" href="GtkWidget.html#gtk-widget-class-install-style-property-parser" title="gtk_widget_class_install_style_property_parser ()"><code class="function">gtk_widget_class_install_style_property_parser()</code></a> which parses flags. 
+</p>
+<p>
+Flags can be specified by their name, their nickname or
+numerically. Multiple flags can be specified in the form 
+<code class="literal">"( flag1 | flag2 | ... )"</code>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>pspec</code></em> :</span></p></td>
+<td>a <a href="http://library.gnome.org/devel/gobject/unstable/gobject-GParamSpec.html#GParamSpec"><span class="type">GParamSpec</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>gstring</code></em> :</span></p></td>
+<td>the <a href="http://library.gnome.org/devel/glib/unstable/glib-Strings.html#GString"><span class="type">GString</span></a> to be parsed</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>property_value</code></em> :</span></p></td>
+<td>a <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Generic-values.html#GValue"><span class="type">GValue</span></a> which must hold flags values.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if <em class="parameter"><code>gstring</code></em> could be parsed and <em class="parameter"><code>property_value</code></em>
+has been set to the resulting flags value.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-rc-property-parse-requisition"></a><h3>gtk_rc_property_parse_requisition ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gtk_rc_property_parse_requisition   (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/gobject/unstable/gobject-GParamSpec.html#GParamSpec"><span class="type">GParamSpec</span></a> *pspec</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Strings.html#GString"><span class="type">GString</span></a> *gstring</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Generic-values.html#GValue"><span class="type">GValue</span></a> *property_value</code></em>);</pre>
+<p>
+A <a class="link" href="GtkStyle.html#GtkRcPropertyParser" title="GtkRcPropertyParser ()"><span class="type">GtkRcPropertyParser</span></a> for use with <a class="link" href="GtkSettings.html#gtk-settings-install-property-parser" title="gtk_settings_install_property_parser ()"><code class="function">gtk_settings_install_property_parser()</code></a>
+or <a class="link" href="GtkWidget.html#gtk-widget-class-install-style-property-parser" title="gtk_widget_class_install_style_property_parser ()"><code class="function">gtk_widget_class_install_style_property_parser()</code></a> which parses a
+requisition in the form 
+<code class="literal">"{ width, height }"</code> for integers <code class="literal">width</code> and <code class="literal">height</code>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>pspec</code></em> :</span></p></td>
+<td>a <a href="http://library.gnome.org/devel/gobject/unstable/gobject-GParamSpec.html#GParamSpec"><span class="type">GParamSpec</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>gstring</code></em> :</span></p></td>
+<td>the <a href="http://library.gnome.org/devel/glib/unstable/glib-Strings.html#GString"><span class="type">GString</span></a> to be parsed</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>property_value</code></em> :</span></p></td>
+<td>a <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Generic-values.html#GValue"><span class="type">GValue</span></a> which must hold boxed values.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if <em class="parameter"><code>gstring</code></em> could be parsed and <em class="parameter"><code>property_value</code></em>
+has been set to the resulting <a class="link" href="GtkWidget.html#GtkRequisition"><span class="type">GtkRequisition</span></a>.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-rc-property-parse-border"></a><h3>gtk_rc_property_parse_border ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gtk_rc_property_parse_border        (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/gobject/unstable/gobject-GParamSpec.html#GParamSpec"><span class="type">GParamSpec</span></a> *pspec</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Strings.html#GString"><span class="type">GString</span></a> *gstring</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Generic-values.html#GValue"><span class="type">GValue</span></a> *property_value</code></em>);</pre>
+<p>
+A <a class="link" href="GtkStyle.html#GtkRcPropertyParser" title="GtkRcPropertyParser ()"><span class="type">GtkRcPropertyParser</span></a> for use with <a class="link" href="GtkSettings.html#gtk-settings-install-property-parser" title="gtk_settings_install_property_parser ()"><code class="function">gtk_settings_install_property_parser()</code></a>
+or <a class="link" href="GtkWidget.html#gtk-widget-class-install-style-property-parser" title="gtk_widget_class_install_style_property_parser ()"><code class="function">gtk_widget_class_install_style_property_parser()</code></a> which parses
+borders in the form 
+<code class="literal">"{ left, right, top, bottom }"</code> for integers 
+<code class="literal">left</code>, <code class="literal">right</code>, <code class="literal">top</code> and <code class="literal">bottom</code>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>pspec</code></em> :</span></p></td>
+<td>a <a href="http://library.gnome.org/devel/gobject/unstable/gobject-GParamSpec.html#GParamSpec"><span class="type">GParamSpec</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>gstring</code></em> :</span></p></td>
+<td>the <a href="http://library.gnome.org/devel/glib/unstable/glib-Strings.html#GString"><span class="type">GString</span></a> to be parsed</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>property_value</code></em> :</span></p></td>
+<td>a <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Generic-values.html#GValue"><span class="type">GValue</span></a> which must hold boxed values.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if <em class="parameter"><code>gstring</code></em> could be parsed and <em class="parameter"><code>property_value</code></em>
+has been set to the resulting <a class="link" href="GtkStyle.html#GtkBorder"><span class="type">GtkBorder</span></a>.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-settings-set-property-value"></a><h3>gtk_settings_set_property_value ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_settings_set_property_value     (<em class="parameter"><code><a class="link" href="GtkSettings.html" title="Settings"><span class="type">GtkSettings</span></a> *settings</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *name</code></em>,
+                                                         <em class="parameter"><code>const <a class="link" href="GtkSettings.html#GtkSettingsValue" title="struct GtkSettingsValue"><span class="type">GtkSettingsValue</span></a> *svalue</code></em>);</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-settings-set-string-property"></a><h3>gtk_settings_set_string_property ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_settings_set_string_property    (<em class="parameter"><code><a class="link" href="GtkSettings.html" title="Settings"><span class="type">GtkSettings</span></a> *settings</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *name</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *v_string</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *origin</code></em>);</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-settings-set-long-property"></a><h3>gtk_settings_set_long_property ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_settings_set_long_property      (<em class="parameter"><code><a class="link" href="GtkSettings.html" title="Settings"><span class="type">GtkSettings</span></a> *settings</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *name</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#glong"><span class="type">glong</span></a> v_long</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *origin</code></em>);</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-settings-set-double-property"></a><h3>gtk_settings_set_double_property ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_settings_set_double_property    (<em class="parameter"><code><a class="link" href="GtkSettings.html" title="Settings"><span class="type">GtkSettings</span></a> *settings</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *name</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> v_double</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *origin</code></em>);</pre>
+<p>
+</p>
+</div>
+</div>
+<div class="refsect1">
+<a name="GtkSettings.property-details"></a><h2>Property Details</h2>
+<div class="refsect2">
+<a name="GtkSettings--color-hash"></a><h3>The <code class="literal">"color-hash"</code> property</h3>
+<pre class="programlisting">  "color-hash"               <a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a>*           : Read</pre>
+<p>
+Holds a hash table representation of the <a class="link" href="GtkSettings.html#GtkSettings--gtk-color-scheme" title='The "gtk-color-scheme" property'><span class="type">"gtk-color-scheme"</span></a>
+setting, mapping color names to <a href="../gdk/gdk-Colormaps-and-Colors.html#GdkColor"><span class="type">GdkColor</span></a>s.
+</p>
+<p class="since">Since 2.10</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-alternative-button-order"></a><h3>The <code class="literal">"gtk-alternative-button-order"</code> property</h3>
+<pre class="programlisting">  "gtk-alternative-button-order" <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write</pre>
+<p>Whether buttons in dialogs should use the alternative button order.</p>
+<p>Default value: FALSE</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-alternative-sort-arrows"></a><h3>The <code class="literal">"gtk-alternative-sort-arrows"</code> property</h3>
+<pre class="programlisting">  "gtk-alternative-sort-arrows" <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write</pre>
+<p>
+Controls the direction of the sort indicators in sorted list and tree
+views. By default an arrow pointing down means the column is sorted
+in ascending order. When set to <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a>, this order will be inverted.
+</p>
+<p>Default value: FALSE</p>
+<p class="since">Since 2.12</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-auto-mnemonics"></a><h3>The <code class="literal">"gtk-auto-mnemonics"</code> property</h3>
+<pre class="programlisting">  "gtk-auto-mnemonics"       <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write</pre>
+<p>
+Whether mnemonics should be automatically shown and hidden when the user
+presses the mnemonic activator.
+</p>
+<p>Default value: FALSE</p>
+<p class="since">Since 2.20</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-button-images"></a><h3>The <code class="literal">"gtk-button-images"</code> property</h3>
+<pre class="programlisting">  "gtk-button-images"        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write</pre>
+<p>Whether images should be shown on buttons.</p>
+<p>Default value: TRUE</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-can-change-accels"></a><h3>The <code class="literal">"gtk-can-change-accels"</code> property</h3>
+<pre class="programlisting">  "gtk-can-change-accels"    <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write</pre>
+<p>Whether menu accelerators can be changed by pressing a key over the menu item.</p>
+<p>Default value: FALSE</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-color-palette"></a><h3>The <code class="literal">"gtk-color-palette"</code> property</h3>
+<pre class="programlisting">  "gtk-color-palette"        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write</pre>
+<p>Palette to use in the color selector.</p>
+<p>Default value: "black:white:gray50:red:purple:blue:light blue:green:yellow:orange:lavender:brown:goldenrod4:dodger blue:pink:light green:gray10:gray30:gray75:gray90"</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-color-scheme"></a><h3>The <code class="literal">"gtk-color-scheme"</code> property</h3>
+<pre class="programlisting">  "gtk-color-scheme"         <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write</pre>
+<p>
+A palette of named colors for use in themes. The format of the string is
+</p>
+<pre class="programlisting">
+name1: color1
+name2: color2
+...
+</pre>
+<p>
+Color names must be acceptable as identifiers in the 
+<a class="link" href="gtk-Resource-Files.html" title="Resource Files">gtkrc</a> syntax, and
+color specifications must be in the format accepted by
+<a href="../gdk/gdk-Colormaps-and-Colors.html#gdk-color-parse"><code class="function">gdk_color_parse()</code></a>.
+</p>
+<p>
+Note that due to the way the color tables from different sources are
+merged, color specifications will be converted to hexadecimal form
+when getting this property.
+</p>
+<p>
+Starting with GTK+ 2.12, the entries can alternatively be separated
+by ';' instead of newlines:
+</p>
+<pre class="programlisting">
+name1: color1; name2: color2; ...
+</pre>
+<p>
+</p>
+<p>Default value: ""</p>
+<p class="since">Since 2.10</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-cursor-blink"></a><h3>The <code class="literal">"gtk-cursor-blink"</code> property</h3>
+<pre class="programlisting">  "gtk-cursor-blink"         <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write</pre>
+<p>
+Whether the cursor should blink. 
+</p>
+<p>
+Also see the <a class="link" href="GtkSettings.html#GtkSettings--gtk-cursor-blink-timeout" title='The "gtk-cursor-blink-timeout" property'><span class="type">"gtk-cursor-blink-timeout"</span></a> setting, 
+which allows more flexible control over cursor blinking.
+</p>
+<p>Default value: TRUE</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-cursor-blink-time"></a><h3>The <code class="literal">"gtk-cursor-blink-time"</code> property</h3>
+<pre class="programlisting">  "gtk-cursor-blink-time"    <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write</pre>
+<p>Length of the cursor blink cycle, in milliseconds.</p>
+<p>Allowed values: &gt;= 100</p>
+<p>Default value: 1200</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-cursor-blink-timeout"></a><h3>The <code class="literal">"gtk-cursor-blink-timeout"</code> property</h3>
+<pre class="programlisting">  "gtk-cursor-blink-timeout" <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write</pre>
+<p>
+Time after which the cursor stops blinking, in seconds.
+The timer is reset after each user interaction.
+</p>
+<p>
+Setting this to zero has the same effect as setting
+<a class="link" href="GtkSettings.html#GtkSettings--gtk-cursor-blink" title='The "gtk-cursor-blink" property'><span class="type">"gtk-cursor-blink"</span></a> to <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a>.
+</p>
+<p>Allowed values: &gt;= 1</p>
+<p>Default value: 2147483647</p>
+<p class="since">Since 2.12</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-cursor-theme-name"></a><h3>The <code class="literal">"gtk-cursor-theme-name"</code> property</h3>
+<pre class="programlisting">  "gtk-cursor-theme-name"    <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write</pre>
+<p>Name of the cursor theme to use, or NULL to use the default theme.</p>
+<p>Default value: NULL</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-cursor-theme-size"></a><h3>The <code class="literal">"gtk-cursor-theme-size"</code> property</h3>
+<pre class="programlisting">  "gtk-cursor-theme-size"    <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write</pre>
+<p>Size to use for cursors, or 0 to use the default size.</p>
+<p>Allowed values: [0,128]</p>
+<p>Default value: 0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-dnd-drag-threshold"></a><h3>The <code class="literal">"gtk-dnd-drag-threshold"</code> property</h3>
+<pre class="programlisting">  "gtk-dnd-drag-threshold"   <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write</pre>
+<p>Number of pixels the cursor can move before dragging.</p>
+<p>Allowed values: &gt;= 1</p>
+<p>Default value: 8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-double-click-distance"></a><h3>The <code class="literal">"gtk-double-click-distance"</code> property</h3>
+<pre class="programlisting">  "gtk-double-click-distance" <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write</pre>
+<p>Maximum distance allowed between two clicks for them to be considered a double click (in pixels).</p>
+<p>Allowed values: &gt;= 0</p>
+<p>Default value: 5</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-double-click-time"></a><h3>The <code class="literal">"gtk-double-click-time"</code> property</h3>
+<pre class="programlisting">  "gtk-double-click-time"    <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write</pre>
+<p>Maximum time allowed between two clicks for them to be considered a double click (in milliseconds).</p>
+<p>Allowed values: &gt;= 0</p>
+<p>Default value: 250</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-enable-accels"></a><h3>The <code class="literal">"gtk-enable-accels"</code> property</h3>
+<pre class="programlisting">  "gtk-enable-accels"        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write</pre>
+<p>
+Whether menu items should have visible accelerators which can be
+activated.
+</p>
+<p>Default value: TRUE</p>
+<p class="since">Since 2.12</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-enable-animations"></a><h3>The <code class="literal">"gtk-enable-animations"</code> property</h3>
+<pre class="programlisting">  "gtk-enable-animations"    <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write</pre>
+<p>Whether to enable toolkit-wide animations.</p>
+<p>Default value: TRUE</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-enable-event-sounds"></a><h3>The <code class="literal">"gtk-enable-event-sounds"</code> property</h3>
+<pre class="programlisting">  "gtk-enable-event-sounds"  <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write</pre>
+<p>
+Whether to play any event sounds at all.
+</p>
+<p>
+See the <a class="ulink" href="http://www.freedesktop.org/wiki/Specifications/sound-theme-spec" target="_top">Sound Theme spec</a> 
+for more information on event sounds and sound themes.
+</p>
+<p>
+GTK+ itself does not support event sounds, you have to use a loadable 
+module like the one that comes with libcanberra.
+</p>
+<p>Default value: TRUE</p>
+<p class="since">Since 2.14</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-enable-input-feedback-sounds"></a><h3>The <code class="literal">"gtk-enable-input-feedback-sounds"</code> property</h3>
+<pre class="programlisting">  "gtk-enable-input-feedback-sounds" <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write</pre>
+<p>
+Whether to play event sounds as feedback to user input.
+</p>
+<p>
+See the <a class="ulink" href="http://www.freedesktop.org/wiki/Specifications/sound-theme-spec" target="_top">Sound Theme spec</a> 
+for more information on event sounds and sound themes.
+</p>
+<p>
+GTK+ itself does not support event sounds, you have to use a loadable 
+module like the one that comes with libcanberra.
+</p>
+<p>Default value: TRUE</p>
+<p class="since">Since 2.14</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-enable-mnemonics"></a><h3>The <code class="literal">"gtk-enable-mnemonics"</code> property</h3>
+<pre class="programlisting">  "gtk-enable-mnemonics"     <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write</pre>
+<p>
+Whether labels and menu items should have visible mnemonics which
+can be activated.
+</p>
+<p>Default value: TRUE</p>
+<p class="since">Since 2.12</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-enable-tooltips"></a><h3>The <code class="literal">"gtk-enable-tooltips"</code> property</h3>
+<pre class="programlisting">  "gtk-enable-tooltips"      <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write</pre>
+<p>
+Whether tooltips should be shown on widgets.
+</p>
+<p>Default value: TRUE</p>
+<p class="since">Since 2.14</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-entry-password-hint-timeout"></a><h3>The <code class="literal">"gtk-entry-password-hint-timeout"</code> property</h3>
+<pre class="programlisting">  "gtk-entry-password-hint-timeout" <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a>                 : Read / Write</pre>
+<p>
+How long to show the last input character in hidden
+entries. This value is in milliseconds. 0 disables showing the
+last char. 600 is a good value for enabling it.
+</p>
+<p>Default value: 0</p>
+<p class="since">Since 2.10</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-entry-select-on-focus"></a><h3>The <code class="literal">"gtk-entry-select-on-focus"</code> property</h3>
+<pre class="programlisting">  "gtk-entry-select-on-focus" <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write</pre>
+<p>Whether to select the contents of an entry when it is focused.</p>
+<p>Default value: TRUE</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-error-bell"></a><h3>The <code class="literal">"gtk-error-bell"</code> property</h3>
+<pre class="programlisting">  "gtk-error-bell"           <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write</pre>
+<p>
+When <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a>, keyboard navigation and other input-related errors
+will cause a beep. Since the error bell is implemented using
+<a href="../gdk/gdk-Windows.html#gdk-window-beep"><code class="function">gdk_window_beep()</code></a>, the windowing system may offer ways to
+configure the error bell in many ways, such as flashing the
+window or similar visual effects.
+</p>
+<p>Default value: TRUE</p>
+<p class="since">Since 2.12</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-fallback-icon-theme"></a><h3>The <code class="literal">"gtk-fallback-icon-theme"</code> property</h3>
+<pre class="programlisting">  "gtk-fallback-icon-theme"  <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write</pre>
+<p>Name of a icon theme to fall back to.</p>
+<p>Default value: NULL</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-file-chooser-backend"></a><h3>The <code class="literal">"gtk-file-chooser-backend"</code> property</h3>
+<pre class="programlisting">  "gtk-file-chooser-backend" <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write</pre>
+<p>Name of the GtkFileChooser backend to use by default.</p>
+<p>Default value: NULL</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-font-name"></a><h3>The <code class="literal">"gtk-font-name"</code> property</h3>
+<pre class="programlisting">  "gtk-font-name"            <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write</pre>
+<p>Name of default font to use.</p>
+<p>Default value: "Sans 10"</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-fontconfig-timestamp"></a><h3>The <code class="literal">"gtk-fontconfig-timestamp"</code> property</h3>
+<pre class="programlisting">  "gtk-fontconfig-timestamp" <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a>                 : Read / Write</pre>
+<p>Timestamp of current fontconfig configuration.</p>
+<p>Default value: 0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-icon-sizes"></a><h3>The <code class="literal">"gtk-icon-sizes"</code> property</h3>
+<pre class="programlisting">  "gtk-icon-sizes"           <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write</pre>
+<p>
+A list of icon sizes. The list is separated by colons, and
+item has the form:
+</p>
+<p>
+<em class="replaceable"><code>size-name</code></em> = <em class="replaceable"><code>width</code></em> , <em class="replaceable"><code>height</code></em>
+</p>
+<p>
+E.g. "gtk-menu=16,16:gtk-button=20,20:gtk-dialog=48,48". 
+GTK+ itself use the following named icon sizes: gtk-menu, 
+gtk-button, gtk-small-toolbar, gtk-large-toolbar, gtk-dnd, 
+gtk-dialog. Applications can register their own named icon 
+sizes with <a class="link" href="gtk-Themeable-Stock-Images.html#gtk-icon-size-register" title="gtk_icon_size_register ()"><code class="function">gtk_icon_size_register()</code></a>.
+</p>
+<p>Default value: NULL</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-icon-theme-name"></a><h3>The <code class="literal">"gtk-icon-theme-name"</code> property</h3>
+<pre class="programlisting">  "gtk-icon-theme-name"      <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write</pre>
+<p>Name of icon theme to use.</p>
+<p>Default value: "hicolor"</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-im-module"></a><h3>The <code class="literal">"gtk-im-module"</code> property</h3>
+<pre class="programlisting">  "gtk-im-module"            <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write</pre>
+<p>
+Which IM (input method) module should be used by default. This is the 
+input method that will be used if the user has not explicitly chosen 
+another input method from the IM context menu.  
+</p>
+<p>
+See <a class="link" href="GtkIMContext.html" title="GtkIMContext"><span class="type">GtkIMContext</span></a> and see the <a class="link" href="GtkSettings.html#GtkSettings--gtk-show-input-method-menu" title='The "gtk-show-input-method-menu" property'><span class="type">"gtk-show-input-method-menu"</span></a> property.
+</p>
+<p>Default value: NULL</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-key-theme-name"></a><h3>The <code class="literal">"gtk-key-theme-name"</code> property</h3>
+<pre class="programlisting">  "gtk-key-theme-name"       <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write</pre>
+<p>Name of key theme RC file to load.</p>
+<p>Default value: NULL</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-keynav-cursor-only"></a><h3>The <code class="literal">"gtk-keynav-cursor-only"</code> property</h3>
+<pre class="programlisting">  "gtk-keynav-cursor-only"   <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write</pre>
+<p>
+When <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a>, keyboard navigation should be able to reach all widgets
+by using the cursor keys only. Tab, Shift etc. keys can't be expected
+to be present on the used input device.
+</p>
+<p>Default value: FALSE</p>
+<p class="since">Since 2.12</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-keynav-wrap-around"></a><h3>The <code class="literal">"gtk-keynav-wrap-around"</code> property</h3>
+<pre class="programlisting">  "gtk-keynav-wrap-around"   <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write</pre>
+<p>
+When <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a>, some widgets will wrap around when doing keyboard
+navigation, such as menus, menubars and notebooks.
+</p>
+<p>Default value: TRUE</p>
+<p class="since">Since 2.12</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-label-select-on-focus"></a><h3>The <code class="literal">"gtk-label-select-on-focus"</code> property</h3>
+<pre class="programlisting">  "gtk-label-select-on-focus" <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write</pre>
+<p>Whether to select the contents of a selectable label when it is focused.</p>
+<p>Default value: TRUE</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-menu-bar-accel"></a><h3>The <code class="literal">"gtk-menu-bar-accel"</code> property</h3>
+<pre class="programlisting">  "gtk-menu-bar-accel"       <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write</pre>
+<p>Keybinding to activate the menu bar.</p>
+<p>Default value: "F10"</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-menu-bar-popup-delay"></a><h3>The <code class="literal">"gtk-menu-bar-popup-delay"</code> property</h3>
+<pre class="programlisting">  "gtk-menu-bar-popup-delay" <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write</pre>
+<p>Delay before the submenus of a menu bar appear.</p>
+<p>Allowed values: &gt;= 0</p>
+<p>Default value: 0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-menu-images"></a><h3>The <code class="literal">"gtk-menu-images"</code> property</h3>
+<pre class="programlisting">  "gtk-menu-images"          <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write</pre>
+<p>Whether images should be shown in menus.</p>
+<p>Default value: TRUE</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-menu-popdown-delay"></a><h3>The <code class="literal">"gtk-menu-popdown-delay"</code> property</h3>
+<pre class="programlisting">  "gtk-menu-popdown-delay"   <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write</pre>
+<p>The time before hiding a submenu when the pointer is moving towards the submenu.</p>
+<p>Allowed values: &gt;= 0</p>
+<p>Default value: 1000</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-menu-popup-delay"></a><h3>The <code class="literal">"gtk-menu-popup-delay"</code> property</h3>
+<pre class="programlisting">  "gtk-menu-popup-delay"     <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write</pre>
+<p>Minimum time the pointer must stay over a menu item before the submenu appear.</p>
+<p>Allowed values: &gt;= 0</p>
+<p>Default value: 225</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-modules"></a><h3>The <code class="literal">"gtk-modules"</code> property</h3>
+<pre class="programlisting">  "gtk-modules"              <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write</pre>
+<p>List of currently active GTK modules.</p>
+<p>Default value: NULL</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-print-backends"></a><h3>The <code class="literal">"gtk-print-backends"</code> property</h3>
+<pre class="programlisting">  "gtk-print-backends"       <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write</pre>
+<p>
+A comma-separated list of print backends to use in the print
+dialog. Available print backends depend on the GTK+ installation,
+and may include "file", "cups", "lpr" or "papi".
+</p>
+<p>Default value: "file,cups"</p>
+<p class="since">Since 2.10</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-print-preview-command"></a><h3>The <code class="literal">"gtk-print-preview-command"</code> property</h3>
+<pre class="programlisting">  "gtk-print-preview-command" <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write</pre>
+<p>
+A command to run for displaying the print preview. The command
+should contain a <code class="literal">f</code> placeholder, which will get replaced by
+the path to the pdf file. The command may also contain a <code class="literal">s</code>
+placeholder, which will get replaced by the path to a file
+containing the print settings in the format produced by 
+<a class="link" href="GtkPrintSettings.html#gtk-print-settings-to-file" title="gtk_print_settings_to_file ()"><code class="function">gtk_print_settings_to_file()</code></a>.
+</p>
+<p>
+The preview application is responsible for removing the pdf file
+and the print settings file when it is done.
+</p>
+<p>Default value: "evince --unlink-tempfile --preview --print-settings %s %f"</p>
+<p class="since">Since 2.10</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-recent-files-limit"></a><h3>The <code class="literal">"gtk-recent-files-limit"</code> property</h3>
+<pre class="programlisting">  "gtk-recent-files-limit"   <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write</pre>
+<p>
+The number of recently used files that should be displayed by default by
+<a class="link" href="GtkRecentChooser.html" title="GtkRecentChooser"><span class="type">GtkRecentChooser</span></a> implementations and by the <a class="link" href="GtkFileChooser.html" title="GtkFileChooser"><span class="type">GtkFileChooser</span></a>. A value of
+-1 means every recently used file stored.
+</p>
+<p>Allowed values: &gt;= G_MAXULONG</p>
+<p>Default value: 50</p>
+<p class="since">Since 2.12</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-recent-files-max-age"></a><h3>The <code class="literal">"gtk-recent-files-max-age"</code> property</h3>
+<pre class="programlisting">  "gtk-recent-files-max-age" <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write</pre>
+<p>
+The maximum age, in days, of the items inside the recently used
+resources list. Items older than this setting will be excised
+from the list. If set to 0, the list will always be empty; if
+set to -1, no item will be removed.
+</p>
+<p>Allowed values: &gt;= G_MAXULONG</p>
+<p>Default value: 30</p>
+<p class="since">Since 2.14</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-scrolled-window-placement"></a><h3>The <code class="literal">"gtk-scrolled-window-placement"</code> property</h3>
+<pre class="programlisting">  "gtk-scrolled-window-placement" <a class="link" href="gtk-Standard-Enumerations.html#GtkCornerType" title="enum GtkCornerType"><span class="type">GtkCornerType</span></a>         : Read / Write</pre>
+<p>
+Where the contents of scrolled windows are located with respect to the 
+scrollbars, if not overridden by the scrolled window's own placement.
+</p>
+<p>Default value: GTK_CORNER_TOP_LEFT</p>
+<p class="since">Since 2.10</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-show-input-method-menu"></a><h3>The <code class="literal">"gtk-show-input-method-menu"</code> property</h3>
+<pre class="programlisting">  "gtk-show-input-method-menu" <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write</pre>
+<p>Whether the context menus of entries and text views should offer to change the input method.</p>
+<p>Default value: TRUE</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-show-unicode-menu"></a><h3>The <code class="literal">"gtk-show-unicode-menu"</code> property</h3>
+<pre class="programlisting">  "gtk-show-unicode-menu"    <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write</pre>
+<p>Whether the context menus of entries and text views should offer to insert control characters.</p>
+<p>Default value: TRUE</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-sound-theme-name"></a><h3>The <code class="literal">"gtk-sound-theme-name"</code> property</h3>
+<pre class="programlisting">  "gtk-sound-theme-name"     <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write</pre>
+<p>
+The XDG sound theme to use for event sounds.
+</p>
+<p>
+See the <a class="ulink" href="http://www.freedesktop.org/wiki/Specifications/sound-theme-spec" target="_top">Sound Theme spec</a> 
+for more information on event sounds and sound themes.
+</p>
+<p>
+GTK+ itself does not support event sounds, you have to use a loadable 
+module like the one that comes with libcanberra.
+</p>
+<p>Default value: "freedesktop"</p>
+<p class="since">Since 2.14</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-split-cursor"></a><h3>The <code class="literal">"gtk-split-cursor"</code> property</h3>
+<pre class="programlisting">  "gtk-split-cursor"         <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write</pre>
+<p>Whether two cursors should be displayed for mixed left-to-right and right-to-left text.</p>
+<p>Default value: TRUE</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-theme-name"></a><h3>The <code class="literal">"gtk-theme-name"</code> property</h3>
+<pre class="programlisting">  "gtk-theme-name"           <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write</pre>
+<p>Name of theme RC file to load.</p>
+<p>Default value: "Raleigh"</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-timeout-expand"></a><h3>The <code class="literal">"gtk-timeout-expand"</code> property</h3>
+<pre class="programlisting">  "gtk-timeout-expand"       <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write</pre>
+<p>Expand value for timeouts, when a widget is expanding a new region.</p>
+<p>Allowed values: &gt;= 0</p>
+<p>Default value: 500</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-timeout-initial"></a><h3>The <code class="literal">"gtk-timeout-initial"</code> property</h3>
+<pre class="programlisting">  "gtk-timeout-initial"      <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write</pre>
+<p>Starting value for timeouts, when button is pressed.</p>
+<p>Allowed values: &gt;= 0</p>
+<p>Default value: 200</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-timeout-repeat"></a><h3>The <code class="literal">"gtk-timeout-repeat"</code> property</h3>
+<pre class="programlisting">  "gtk-timeout-repeat"       <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write</pre>
+<p>Repeat value for timeouts, when button is pressed.</p>
+<p>Allowed values: &gt;= 0</p>
+<p>Default value: 20</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-toolbar-icon-size"></a><h3>The <code class="literal">"gtk-toolbar-icon-size"</code> property</h3>
+<pre class="programlisting">  "gtk-toolbar-icon-size"    <a class="link" href="gtk-Themeable-Stock-Images.html#GtkIconSize" title="enum GtkIconSize"><span class="type">GtkIconSize</span></a>           : Read / Write</pre>
+<p>The size of icons in default toolbars.</p>
+<p>Default value: GTK_ICON_SIZE_LARGE_TOOLBAR</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-toolbar-style"></a><h3>The <code class="literal">"gtk-toolbar-style"</code> property</h3>
+<pre class="programlisting">  "gtk-toolbar-style"        <a class="link" href="gtk-Standard-Enumerations.html#GtkToolbarStyle" title="enum GtkToolbarStyle"><span class="type">GtkToolbarStyle</span></a>       : Read / Write</pre>
+<p>Whether default toolbars have text only, text and icons, icons only, etc.</p>
+<p>Default value: GTK_TOOLBAR_BOTH</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-tooltip-browse-mode-timeout"></a><h3>The <code class="literal">"gtk-tooltip-browse-mode-timeout"</code> property</h3>
+<pre class="programlisting">  "gtk-tooltip-browse-mode-timeout" <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write</pre>
+<p>
+Amount of time, in milliseconds, after which the browse mode
+will be disabled.
+</p>
+<p>
+See <a class="link" href="GtkSettings.html#GtkSettings--gtk-tooltip-browse-timeout" title='The "gtk-tooltip-browse-timeout" property'><span class="type">"gtk-tooltip-browse-timeout"</span></a> for more information
+about browse mode.
+</p>
+<p>Allowed values: &gt;= 0</p>
+<p>Default value: 500</p>
+<p class="since">Since 2.12</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-tooltip-browse-timeout"></a><h3>The <code class="literal">"gtk-tooltip-browse-timeout"</code> property</h3>
+<pre class="programlisting">  "gtk-tooltip-browse-timeout" <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write</pre>
+<p>
+Controls the time after which tooltips will appear when
+browse mode is enabled, in milliseconds.
+</p>
+<p>
+Browse mode is enabled when the mouse pointer moves off an object
+where a tooltip was currently being displayed. If the mouse pointer
+hits another object before the browse mode timeout expires (see
+<a class="link" href="GtkSettings.html#GtkSettings--gtk-tooltip-browse-mode-timeout" title='The "gtk-tooltip-browse-mode-timeout" property'><span class="type">"gtk-tooltip-browse-mode-timeout"</span></a>), it will take the 
+amount of milliseconds specified by this setting to popup the tooltip
+for the new object.
+</p>
+<p>Allowed values: &gt;= 0</p>
+<p>Default value: 60</p>
+<p class="since">Since 2.12</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-tooltip-timeout"></a><h3>The <code class="literal">"gtk-tooltip-timeout"</code> property</h3>
+<pre class="programlisting">  "gtk-tooltip-timeout"      <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write</pre>
+<p>
+Time, in milliseconds, after which a tooltip could appear if the
+cursor is hovering on top of a widget.
+</p>
+<p>Allowed values: &gt;= 0</p>
+<p>Default value: 500</p>
+<p class="since">Since 2.12</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-touchscreen-mode"></a><h3>The <code class="literal">"gtk-touchscreen-mode"</code> property</h3>
+<pre class="programlisting">  "gtk-touchscreen-mode"     <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write</pre>
+<p>
+When <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a>, there are no motion notify events delivered on this screen,
+and widgets can't use the pointer hovering them for any essential
+functionality.
+</p>
+<p>Default value: FALSE</p>
+<p class="since">Since 2.10</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-xft-antialias"></a><h3>The <code class="literal">"gtk-xft-antialias"</code> property</h3>
+<pre class="programlisting">  "gtk-xft-antialias"        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write</pre>
+<p>Whether to antialias Xft fonts; 0=no, 1=yes, -1=default.</p>
+<p>Allowed values: [G_MAXULONG,1]</p>
+<p>Default value: -1</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-xft-dpi"></a><h3>The <code class="literal">"gtk-xft-dpi"</code> property</h3>
+<pre class="programlisting">  "gtk-xft-dpi"              <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write</pre>
+<p>Resolution for Xft, in 1024 * dots/inch. -1 to use default value.</p>
+<p>Allowed values: [G_MAXULONG,1048576]</p>
+<p>Default value: -1</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-xft-hinting"></a><h3>The <code class="literal">"gtk-xft-hinting"</code> property</h3>
+<pre class="programlisting">  "gtk-xft-hinting"          <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write</pre>
+<p>Whether to hint Xft fonts; 0=no, 1=yes, -1=default.</p>
+<p>Allowed values: [G_MAXULONG,1]</p>
+<p>Default value: -1</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-xft-hintstyle"></a><h3>The <code class="literal">"gtk-xft-hintstyle"</code> property</h3>
+<pre class="programlisting">  "gtk-xft-hintstyle"        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write</pre>
+<p>What degree of hinting to use; hintnone, hintslight, hintmedium, or hintfull.</p>
+<p>Default value: NULL</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkSettings--gtk-xft-rgba"></a><h3>The <code class="literal">"gtk-xft-rgba"</code> property</h3>
+<pre class="programlisting">  "gtk-xft-rgba"             <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write</pre>
+<p>Type of subpixel antialiasing; none, rgb, bgr, vrgb, vbgr.</p>
+<p>Default value: NULL</p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

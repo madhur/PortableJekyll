@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>class SafeYAML::Resolver - safe_yaml-0.9.7 Documentation</title>
+
+<link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../index.html">Home</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/safe_yaml/resolver.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link"><a href="../Object.html">Object</a>
+  
+</nav>
+
+    
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li ><a href="#method-c-new">::new</a>
+    
+    <li ><a href="#method-i-get_and_check_node_tag">#get_and_check_node_tag</a>
+    
+    <li ><a href="#method-i-merge_into_hash">#merge_into_hash</a>
+    
+    <li ><a href="#method-i-normalize_map">#normalize_map</a>
+    
+    <li ><a href="#method-i-options">#options</a>
+    
+    <li ><a href="#method-i-resolve_map">#resolve_map</a>
+    
+    <li ><a href="#method-i-resolve_node">#resolve_node</a>
+    
+    <li ><a href="#method-i-resolve_scalar">#resolve_scalar</a>
+    
+    <li ><a href="#method-i-resolve_seq">#resolve_seq</a>
+    
+    <li ><a href="#method-i-tag_is_whitelisted-3F">#tag_is_whitelisted?</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../Object.html">Object</a>
+  
+    <li><a href="../SafeYAML.html">SafeYAML</a>
+  
+    <li><a href="../SafeYAML/Deep.html">SafeYAML::Deep</a>
+  
+    <li><a href="../SafeYAML/Parse.html">SafeYAML::Parse</a>
+  
+    <li><a href="../SafeYAML/Parse/Date.html">SafeYAML::Parse::Date</a>
+  
+    <li><a href="../SafeYAML/Parse/Hexadecimal.html">SafeYAML::Parse::Hexadecimal</a>
+  
+    <li><a href="../SafeYAML/Parse/Sexagesimal.html">SafeYAML::Parse::Sexagesimal</a>
+  
+    <li><a href="../SafeYAML/PsychHandler.html">SafeYAML::PsychHandler</a>
+  
+    <li><a href="../SafeYAML/PsychResolver.html">SafeYAML::PsychResolver</a>
+  
+    <li><a href="../SafeYAML/Resolver.html">SafeYAML::Resolver</a>
+  
+    <li><a href="../SafeYAML/SafeToRubyVisitor.html">SafeYAML::SafeToRubyVisitor</a>
+  
+    <li><a href="../SafeYAML/SyckResolver.html">SafeYAML::SyckResolver</a>
+  
+    <li><a href="../SafeYAML/Transform.html">SafeYAML::Transform</a>
+  
+    <li><a href="../SafeYAML/Transform/ToBoolean.html">SafeYAML::Transform::ToBoolean</a>
+  
+    <li><a href="../SafeYAML/Transform/ToDate.html">SafeYAML::Transform::ToDate</a>
+  
+    <li><a href="../SafeYAML/Transform/ToFloat.html">SafeYAML::Transform::ToFloat</a>
+  
+    <li><a href="../SafeYAML/Transform/ToInteger.html">SafeYAML::Transform::ToInteger</a>
+  
+    <li><a href="../SafeYAML/Transform/ToNil.html">SafeYAML::Transform::ToNil</a>
+  
+    <li><a href="../SafeYAML/Transform/ToSymbol.html">SafeYAML::Transform::ToSymbol</a>
+  
+    <li><a href="../SafeYAML/Transform/TransformationMap.html">SafeYAML::Transform::TransformationMap</a>
+  
+    <li><a href="../SafeYAML/Transform/TransformationMap/CaseAgnosticMap.html">SafeYAML::Transform::TransformationMap::CaseAgnosticMap</a>
+  
+    <li><a href="../SafeYAML/Transform/TransformationMap/ClassMethods.html">SafeYAML::Transform::TransformationMap::ClassMethods</a>
+  
+    <li><a href="../YAML.html">YAML</a>
+  
+    <li><a href="../YAML/Syck.html">YAML::Syck</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class SafeYAML::Resolver</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">(options)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/safe_yaml/resolver.rb, line 3</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">options</span>)
+  <span class="ruby-ivar">@options</span>              = <span class="ruby-constant">SafeYAML</span><span class="ruby-operator">::</span><span class="ruby-constant">OPTIONS</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">options</span> <span class="ruby-operator">||</span> {})
+  <span class="ruby-ivar">@whitelist</span>            = <span class="ruby-ivar">@options</span>[<span class="ruby-value">:whitelisted_tags</span>] <span class="ruby-operator">||</span> []
+  <span class="ruby-ivar">@initializers</span>         = <span class="ruby-ivar">@options</span>[<span class="ruby-value">:custom_initializers</span>] <span class="ruby-operator">||</span> {}
+  <span class="ruby-ivar">@raise_on_unknown_tag</span> = <span class="ruby-ivar">@options</span>[<span class="ruby-value">:raise_on_unknown_tag</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- new-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- new-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-get_and_check_node_tag" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">get_and_check_node_tag</span><span
+            class="method-args">(node)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="get_and_check_node_tag-source">
+            <pre><span class="ruby-comment"># File lib/safe_yaml/resolver.rb, line 62</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_and_check_node_tag</span>(<span class="ruby-identifier">node</span>)
+  <span class="ruby-identifier">tag</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">get_node_tag</span>(<span class="ruby-identifier">node</span>)
+  <span class="ruby-constant">SafeYAML</span>.<span class="ruby-identifier">tag_safety_check!</span>(<span class="ruby-identifier">tag</span>, <span class="ruby-ivar">@options</span>)
+  <span class="ruby-identifier">tag</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- get_and_check_node_tag-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- get_and_check_node_tag-method -->
+
+    
+      <div id="method-i-options" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">options</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="options-source">
+            <pre><span class="ruby-comment"># File lib/safe_yaml/resolver.rb, line 72</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">options</span>
+  <span class="ruby-ivar">@options</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- options-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- options-method -->
+
+    
+      <div id="method-i-resolve_map" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">resolve_map</span><span
+            class="method-args">(node)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="resolve_map-source">
+            <pre><span class="ruby-comment"># File lib/safe_yaml/resolver.rb, line 30</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">resolve_map</span>(<span class="ruby-identifier">node</span>)
+  <span class="ruby-identifier">tag</span>  = <span class="ruby-identifier">get_and_check_node_tag</span>(<span class="ruby-identifier">node</span>)
+  <span class="ruby-identifier">hash</span> = <span class="ruby-ivar">@initializers</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">tag</span>) <span class="ruby-operator">?</span> <span class="ruby-ivar">@initializers</span>[<span class="ruby-identifier">tag</span>].<span class="ruby-identifier">call</span> <span class="ruby-operator">:</span> {}
+  <span class="ruby-identifier">map</span>  = <span class="ruby-identifier">normalize_map</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">get_node_value</span>(<span class="ruby-identifier">node</span>))
+
+  <span class="ruby-comment"># Take the &quot;&lt;&lt;&quot; key nodes first, as these are meant to approximate a form of inheritance.</span>
+  <span class="ruby-identifier">inheritors</span> = <span class="ruby-identifier">map</span>.<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">key_node</span>, <span class="ruby-identifier">value_node</span><span class="ruby-operator">|</span> <span class="ruby-identifier">resolve_node</span>(<span class="ruby-identifier">key_node</span>) <span class="ruby-operator">==</span> <span class="ruby-string">&quot;&lt;&lt;&quot;</span> }
+  <span class="ruby-identifier">inheritors</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key_node</span>, <span class="ruby-identifier">value_node</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">merge_into_hash</span>(<span class="ruby-identifier">hash</span>, <span class="ruby-identifier">resolve_node</span>(<span class="ruby-identifier">value_node</span>))
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-comment"># All that&#39;s left should be normal (non-&quot;&lt;&lt;&quot;) nodes.</span>
+  (<span class="ruby-identifier">map</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">inheritors</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key_node</span>, <span class="ruby-identifier">value_node</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">hash</span>[<span class="ruby-identifier">resolve_node</span>(<span class="ruby-identifier">key_node</span>)] = <span class="ruby-identifier">resolve_node</span>(<span class="ruby-identifier">value_node</span>)
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">hash</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- resolve_map-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- resolve_map-method -->
+
+    
+      <div id="method-i-resolve_node" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">resolve_node</span><span
+            class="method-args">(node)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="resolve_node-source">
+            <pre><span class="ruby-comment"># File lib/safe_yaml/resolver.rb, line 10</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">resolve_node</span>(<span class="ruby-identifier">node</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">node</span> <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">node</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">native_resolve</span>(<span class="ruby-identifier">node</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">tag_is_whitelisted?</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">get_node_tag</span>(<span class="ruby-identifier">node</span>))
+
+  <span class="ruby-keyword">case</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">get_node_type</span>(<span class="ruby-identifier">node</span>)
+  <span class="ruby-keyword">when</span> <span class="ruby-value">:root</span>
+    <span class="ruby-identifier">resolve_root</span>(<span class="ruby-identifier">node</span>)
+  <span class="ruby-keyword">when</span> <span class="ruby-value">:map</span>
+    <span class="ruby-identifier">resolve_map</span>(<span class="ruby-identifier">node</span>)
+  <span class="ruby-keyword">when</span> <span class="ruby-value">:seq</span>
+    <span class="ruby-identifier">resolve_seq</span>(<span class="ruby-identifier">node</span>)
+  <span class="ruby-keyword">when</span> <span class="ruby-value">:scalar</span>
+    <span class="ruby-identifier">resolve_scalar</span>(<span class="ruby-identifier">node</span>)
+  <span class="ruby-keyword">when</span> <span class="ruby-value">:alias</span>
+    <span class="ruby-identifier">resolve_alias</span>(<span class="ruby-identifier">node</span>)
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Don&#39;t know how to resolve this node: #{node.inspect}&quot;</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- resolve_node-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- resolve_node-method -->
+
+    
+      <div id="method-i-resolve_scalar" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">resolve_scalar</span><span
+            class="method-args">(node)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="resolve_scalar-source">
+            <pre><span class="ruby-comment"># File lib/safe_yaml/resolver.rb, line 58</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">resolve_scalar</span>(<span class="ruby-identifier">node</span>)
+  <span class="ruby-constant">Transform</span>.<span class="ruby-identifier">to_proper_type</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">get_node_value</span>(<span class="ruby-identifier">node</span>), <span class="ruby-keyword">self</span>.<span class="ruby-identifier">value_is_quoted?</span>(<span class="ruby-identifier">node</span>), <span class="ruby-identifier">get_and_check_node_tag</span>(<span class="ruby-identifier">node</span>), <span class="ruby-ivar">@options</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- resolve_scalar-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- resolve_scalar-method -->
+
+    
+      <div id="method-i-resolve_seq" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">resolve_seq</span><span
+            class="method-args">(node)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="resolve_seq-source">
+            <pre><span class="ruby-comment"># File lib/safe_yaml/resolver.rb, line 49</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">resolve_seq</span>(<span class="ruby-identifier">node</span>)
+  <span class="ruby-identifier">seq</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">get_node_value</span>(<span class="ruby-identifier">node</span>)
+
+  <span class="ruby-identifier">tag</span> = <span class="ruby-identifier">get_and_check_node_tag</span>(<span class="ruby-identifier">node</span>)
+  <span class="ruby-identifier">arr</span> = <span class="ruby-ivar">@initializers</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">tag</span>) <span class="ruby-operator">?</span> <span class="ruby-ivar">@initializers</span>[<span class="ruby-identifier">tag</span>].<span class="ruby-identifier">call</span> <span class="ruby-operator">:</span> []
+
+  <span class="ruby-identifier">seq</span>.<span class="ruby-identifier">inject</span>(<span class="ruby-identifier">arr</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">array</span>, <span class="ruby-identifier">node</span><span class="ruby-operator">|</span> <span class="ruby-identifier">array</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">resolve_node</span>(<span class="ruby-identifier">node</span>) }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- resolve_seq-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- resolve_seq-method -->
+
+    
+      <div id="method-i-tag_is_whitelisted-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">tag_is_whitelisted?</span><span
+            class="method-args">(tag)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="tag_is_whitelisted-3F-source">
+            <pre><span class="ruby-comment"># File lib/safe_yaml/resolver.rb, line 68</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">tag_is_whitelisted?</span>(<span class="ruby-identifier">tag</span>)
+  <span class="ruby-ivar">@whitelist</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">tag</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- tag_is_whitelisted-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- tag_is_whitelisted-3F-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+     <section id="private-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Private Instance Methods</h3>
+
+    
+      <div id="method-i-merge_into_hash" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">merge_into_hash</span><span
+            class="method-args">(hash, array)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="merge_into_hash-source">
+            <pre><span class="ruby-comment"># File lib/safe_yaml/resolver.rb, line 88</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">merge_into_hash</span>(<span class="ruby-identifier">hash</span>, <span class="ruby-identifier">array</span>)
+  <span class="ruby-identifier">array</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">hash</span>[<span class="ruby-identifier">key</span>] = <span class="ruby-identifier">value</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- merge_into_hash-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- merge_into_hash-method -->
+
+    
+      <div id="method-i-normalize_map" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">normalize_map</span><span
+            class="method-args">(map)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="normalize_map-source">
+            <pre><span class="ruby-comment"># File lib/safe_yaml/resolver.rb, line 77</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">normalize_map</span>(<span class="ruby-identifier">map</span>)
+  <span class="ruby-comment"># Syck creates Hashes from maps.</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">map</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>)
+    <span class="ruby-identifier">map</span>.<span class="ruby-identifier">inject</span>([]) { <span class="ruby-operator">|</span><span class="ruby-identifier">arr</span>, <span class="ruby-identifier">key_and_value</span><span class="ruby-operator">|</span> <span class="ruby-identifier">arr</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">key_and_value</span> }
+
+  <span class="ruby-comment"># Psych is really weird; it flattens out a Hash completely into: [key, value, key, value, ...]</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">map</span>.<span class="ruby-identifier">each_slice</span>(<span class="ruby-value">2</span>).<span class="ruby-identifier">to_a</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- normalize_map-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- normalize_map-method -->
+
+    
+    </section><!-- private-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

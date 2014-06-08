@@ -1,0 +1,349 @@
+2008-08-25 Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+	* Merging tab insert patch from Vivian De Smedt. Removed comments
+	  with vds initials.
+
+2008-02-21 Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+	* unicodehelper functions now defaults to ascii if supplied pyreadline_encoding is 
+	  not a valid encoding. This is a brute force solution to ticket #228 it fixes 
+	  immediate symptom but may not be the correct solution to the underlying problem.
+	
+2008-01-07 Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+	* Reintroduced code to make pyreadline work with emacs. Not tested.
+	  Requested by Frank Wang.
+
+2008-01-04 Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+	* Chunking calls to WriteConsoleW to ensure not exceeding 64k limit
+
+2007-11-28 Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+	* Warning messages for failed calls to parse_and_bind now disabled by default 
+	  Can be enabled by call to debug_output("on_nologfile") in pyreadlineconfig.ini
+
+2007-11-20 Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+	* Applying patch from pan to fix flickering cursor problem when doing input
+	  of chinese.
+	
+2007-11-09 Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+	* make all conversion is done by ensure_unicode or ensure_str to ensure uniform
+	  handling of unicode issues.
+
+2007-11-09 Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+	* More fixes to unicode handling.
+
+2007-11-09 Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+	* Fixes to make clipboard play nice with unicode. Quick that treats the clipboard as
+	  being str with pyreadline_encoding data. Thus convert to unicode when pasting and
+	  converting to str when copying.
+
+2007-11-09 Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+	* More fixes to ensure unicode works when completing on filepaths with non ascii symbols. 
+	  This fix assumes sys.stdout.encoding is valid for the filesystem. A more correct fix
+	  must be applied to the completer code which is outside pyreadline.
+	  Any str characters fed into pyreadline should be converted to unicode using 
+	  unicode_helper.ensure_unicode.
+	* The encoding assumed of strings is sys.stdout.encoding this can be changed by:
+	  e.g.  pyreadline.unicode_helper.pyreadline_codepage="utf8"
+
+2007-10-30 Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+	* Fixing console.title to work with wide characters
+	* Fixing wide character bug for log_sock
+	
+2007-10-30 Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+	* Add tests for history buffer. Add ignore_leading_spaces option for 
+	  history searches for forward_search_history, and reverse_search_history.
+	
+2007-10-29 Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+	* Patch as provided by pan. Changed ensure_text to decode to 
+	  consoles codepage instead of utf8, to ensure proper printing
+	  of tab completion of files/directories with non ascii characters
+	
+2007-07-19 Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+	* Fix bug that made copying fail in some cases 
+	* Fix bug in parse_and_bind, reported by Michael Graz.
+	* Change version string to 1.5.svn
+	
+2007-05-29 Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+	* Increasing version number to 1.4.4
+	* Fixing typo in changelog
+	
+2007-05-29 Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+	* Fixing bug in copy_selection_to_clipboard. Didn't work
+	  when selection started at beginning of line
+
+2007-05-24 Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+	* Additions to manual
+
+2007-05-14 Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+	* Fixing pageup pagedown scrolling of window
+	* Begining work on killring. ctrl-k ctrl-y will not use clipboard anymore
+
+2007-05-14 Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+	* pre_inputhook and startup_hook were not functioning properly.
+
+2007-05-09 Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+	* Fix ticket #153, python2.3 installation problem
+	* Updates to documentation
+
+2007-04-20 Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+	* Change in how Ironpython proagates keyboardinterrupts in console. Still
+	  some issues to resolve to get same traceback as for plain ironpython when 
+	  pressing ctrl-c.
+	
+2007-04-18 Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+	* Removing some test methods that should not have been comitted at rev 2246
+	
+2007-04-17 Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+	* When allowing to bind ctrl-c we now issue a KeyBoardInterrupt if
+	  control-c is pressed twice within ctrl_c_tap_time_interval which
+	  is defaulted to 0.3 s and can be set from the configfile.
+	
+2007-04-16 Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+	* doctest imports pdb which imports readline, this means readline
+	  can be imported when a dummy object has replaced stdout. The dummy 
+	  might miss the encoding property. We now assume stdout.encoding=="ascii" 
+	  in this case.
+	
+2007-04-14 Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+	* Changing binding for control-delete to forward_delete_word, adding tests to verify binding
+	
+
+2007-04-11 
+	* In revisions 2237-2239
+	* Fix to setup.py for new package structure
+	* add clear_history all the way to top_level. Patch provided by Aldarion
+
+2007-03-15 Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+	* Fix buggy get_begidx, get_endidx
+	* Fix to ensure unicode strings can print something using the write_x methods on Console.
+
+2007-03-06 Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+	* Changed tests for ironpython
+	* Added possibility to bind ctrl-c to a function
+	* Refactor clipboard handling
+	* Restructured example config file
+	
+2006-11-15 Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+	* moved ironpython specifics from emacs.py->readline to a hook_wrapper
+	  just as in the hookwrapper for the normal console.
+
+2006-11-15 Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+	* Rearranging pyreadlineconfig.ini
+	
+2006-11-13 Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+	* Fixed bug in tab completion when point is not at end of line
+	* Changed clr.AddReference to clr.AddReferenceToFileAndPath (ironpython_console)
+	* Fix points position after tab completion
+	* Fix for difference in handling of multiline input between cpython and ironpython (emacs.py)
+	* added test_complete case to emacs_test.py
+	* Ported changes to configuration/startup from trunk
+	
+2006-11-03 Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+	* Improvements in ironpython handling.
+	* Detection of ironpython explicit on sys.version instead of relying on presense of ctypes
+	* Lots of fixes to take care of peculiaritis of System.Console in .NET it does not have 
+	  the full windows console functionality. Fill a rectangle is missing, writing without 
+	  affecting cursor is missing, altgr keys show up as alt+ctrl so had to blank alt+ctrl in
+	  keyboard event checking, endoffile signal to from readline is not using EOFError in ironpython
+	  rather returning None
+	* Set selectioncolor by looking at foregroundcolor at startup
+	* open in ironpython does not ignore unknown letters in mode silently, hade "rt" in history open
+	* Have to print prompt in ironpython since ironpythons readline looks at sys.ps1 and print it instead
+	  of passing it into readline explicitly.
+	* Fixed another bug in historysearch
+	
+2006-10-25 Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+	* port set_text_color and set_prompt_color config file options from trunk
+	* Fix bug in history search and add tests for the case.
+	* port ansi color changes from trunk
+	
+2006-10-19 Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+	* Fixed bug in history_search_*
+	* Fixed bug in beginning_of_line_extend_selection and end_of_line_extend_selection
+	* Fixd bugs to make vi_test work again, one test failure remains
+	
+2006-10-19 Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+	* Adding argument handling.
+	* Adding argument to functions:forward_char, backward_char, forward_word, backward_word
+	  forward_word_end, backward_word_end, beginning_of_line_extend_selection, end_of_line_extend_selection
+	  forward_char_extend_selection, backward_char_extend_selection, forward_word_extend_selection,
+	  backward_word_extend_selection, forward_word_end_extend_selection, backward_word_end_extend_selection,
+	  delete_char, backward_delete_char, backward_delete_word, forward_delete_word, 
+	
+2006-10-18 Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+	* Adding functionality to dump_functions
+	* fixing some clipboard bugs
+	* Added transpose_chars, transpose_words, upcase_word, downcase_word
+	  capitalize_word, forward_delete_word, delete_horizontal_spacing
+	* Added alias forward_kill_word for kill_word
+	* Fixed bug in handling control keystrokes
+	* Fixed bug in delete_selection
+	* Changed clipboard handling in kill functions
+	* Change paste to only paste single line and dropping trailing newline
+	* Change paste_mulitline_code docstring
+	
+2006-10-17 Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+	* Fixed history search bug. Exception when no match was found
+	* Added backward_kill_word. (No difference to backward_delete_word)
+	
+2006-09-11 Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+	* Added logserver. Socket based server that can receive logmessage.
+	  To be used when debugging keypresses, could be a security risk as a keyboard sniffer.
+	* Added log_sock call to send logging to logserver
+	* Merging ANSI parsing from trunk
+	* Parsing escape sequence for up down key in parse_bind
+	* Merging bugfix for self_insert of tabs from trunk
+	* Add bindable function that prints keybindings
+
+2006-07-13 Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+	* Work to get selection between ironpython and cpython to work
+	* Some editing works but there are issues with control keys for ironpython
+
+2006-07-04 Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+	* First commit for ironpython. Typing in alphabet works but no special keys.
+	
+	
+2006-04-18 Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+	* Added more tests for emacsmode
+	* Made changes in lineeditor 
+	* Added some new commands for move-selection
+	* primitive logging in tests (both vi and emacs) to show what
+	  functions are tested
+	* winconstants.py are added to remove dependency on win32all
+	
+2006-04-04 Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+	* started tests for emacsmode and lineeditor
+	* assert in lineeditor for point<=len(l_buffer) required changes in vi_mode
+	* Changes in history_search_forward and history_search_backward, added tests
+	* Added a few more properties to basemode
+
+2006-03-31 Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+	* Merged patch from Michael Graz for the vi mode
+	* test directory now have a vi_test, should add more tests
+	
+2006-03-16 Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+	* Added vi patch
+	* Added visible selection mode to emacs mode
+
+2006-03-16 Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+	* Refactored emacs mode
+
+2006-03-12 Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+	* Merged changes from trunk 1158:1201
+	* Did some rearranging of method order in Readline 
+
+2006-02-14 Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+
+	* Started Refactor branch
+	* Refactored line_buffer to separate class
+	* Refactored history buffer to separate class
+	* 
+
+2006-01-31 Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+	
+	* Added experimental mulitline paste. Thís version ALWAYS adds 
+	  a final newline so there is what you paste is always executed!!!
+	* Moved win32paste config parameters from module level into 
+	  readline class (in preparation for adding config file parameter)
+	* Added svn url to long description
+	
+2006-01-29 Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+
+	* Moved exit key (control-D) logic to separate key dispatch handler
+	* Added bind_exit_key to config file
+	* Added un_bind_key command to configfile
+	* Added un_bind_exit_key command to configfile
+
+2006-01-25 Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+
+	* Added doc directory to setup scripts
+
+2006-01-25 Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+
+	* Added copyright notices to all files
+	* Created release.py file to contain relesase related information
+	* Started egg_setup.py
+	* Changed setup.py to use release.py
+	*
+	
+2006-01-23  Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+
+	* Default is now to insert non bound characters. 
+	* rename pyreadline.py to rlmain.py
+	* rename of config file to pyreadlineconfig.ini
+	* Change to config file syntax
+	* bell is now silent as deafult
+	* removed specific keybinding code for keypad
+	
+2006-01-22  Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+
+	* Default is now to insert non bound characters unless they are 
+	  pressed together with control.
+	* Added try except to read_inputrc
+	* Fixed cleanup bug in keysyms, missing saveattr on console
+	* Removed specific codepage code from keysyms
+	
+
+2006-01-22  Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+
+	* Cleaned up bell handling to make sure you can disable bell with the 
+	  bell_style command
+	* Implemented rudimentary config file. Example in doc/.pyinputrc copy to
+	  ~/.pyinputrc and edit to your taste.
+	* Added patch from Ville to improve handling of international characters, 
+	  though changed so that ctrl-character is not inserted.There are probably 
+	  more weirdness to take into account than we do now...
+
+2006-01-22  Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+
+	* Renames of Console and PyReadline complete.
+	
+2006-01-22  Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+
+	* This revision will not compile. Due to limitations in case 
+	  insensitivethe filesystems subversion can not do casechanging
+	  file renames in reliably. This version contains temporary 
+	  renames of some files that makes the package unusable.
+	  
+	  
+2006-01-21  Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+
+	* Added README.txt 
+	* Changed package name to pyreadline, changed setup.py to 
+	  reflect this.
+
+2006-01-21  Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+
+	* Added clipboard functionality. ctypes clipboard code 
+	  borrowed from example code posted to ctypes-users. See
+	  http://aspn.activestate.com/ASPN/Mail/Message/ctypes-users/1771866
+	* Control-Shift-v moved quoted insert from Control-v
+	* Control-v straight paste from clipboard
+	* Alt-v ipython_paste. Does some preprocessing of data. If 
+	  clipboard text is shorter than 300 characters and has no 
+	  newlines and tabs, then assume it is a path and change all 
+	  \ to / and then add \ before all spaces. This means you can 
+	  paste paths and use them in magic command %cd. If text is 
+	  multiline it assumes tabseparated data should be list of 
+	  list, if all is numeric assume it should be an array.
+	* Control-y yank, alias for Control-v.
+	* Control-k kill line, move text from cursor to end of line 
+	  into clipboard. Should be move to kill buffer but the kill 
+	  buffer is not implemented.
+	* Added kill line and yank functionality. As well as mark and 
+	  copy-region-to-clipboard.
+	* Control-m set-mark sets the copy region mark
+	* Control-q copies region between mark and cursor to clipboard
+	* Changed version in setup.py to 1.13-svn
+	
+2006-01-21  Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+
+	* Patch to get swedish characters working when python 
+	  is executed in a cmd window with codepage set to 1252.
+	  Example: issue command chcp 1252. Then change the font to
+	  lucida terminal, this is done in the properties dialog of 
+	  the terminal.
+	
+2006-01-21  Jörgen Stenarson  <jorgen.stenarson -at- bostream.nu>
+
+	* Changed all python files to conform to 4 space indent.
+	* Added changelog
+	* Added os.path.expanduser to expand out ~/.history paths

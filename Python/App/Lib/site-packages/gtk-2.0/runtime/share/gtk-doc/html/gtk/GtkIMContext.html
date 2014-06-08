@@ -1,0 +1,947 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>GtkIMContext</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="GTK+ 2 Reference Manual">
+<link rel="up" href="AbstractObjects.html" title="Abstract Base Classes">
+<link rel="prev" href="GtkWidget.html" title="GtkWidget">
+<link rel="next" href="PlugSocket.html" title="Cross-process Embedding">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="GtkWidget.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="AbstractObjects.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GTK+ 2 Reference Manual</th>
+<td><a accesskey="n" href="PlugSocket.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#GtkIMContext.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#GtkIMContext.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#GtkIMContext.object-hierarchy" class="shortcut">Object Hierarchy</a>
+                   | 
+                  <a href="#GtkIMContext.signals" class="shortcut">Signals</a>
+</td></tr>
+</table>
+<div class="refentry">
+<a name="GtkIMContext"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="GtkIMContext.top_of_page"></a>GtkIMContext</span></h2>
+<p>GtkIMContext — Base class for input method contexts</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="GtkIMContext.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+#include &lt;gtk/gtk.h&gt;
+#include &lt;gtk/gtkimmodule.h&gt;
+
+struct              <a class="link" href="GtkIMContext.html#GtkIMContext-struct" title="struct GtkIMContext">GtkIMContext</a>;
+struct              <a class="link" href="GtkIMContext.html#GtkIMContextClass" title="struct GtkIMContextClass">GtkIMContextClass</a>;
+struct              <a class="link" href="GtkIMContext.html#GtkIMContextInfo" title="struct GtkIMContextInfo">GtkIMContextInfo</a>;
+<span class="returnvalue">void</span>                <a class="link" href="GtkIMContext.html#gtk-im-context-set-client-window" title="gtk_im_context_set_client_window ()">gtk_im_context_set_client_window</a>    (<em class="parameter"><code><a class="link" href="GtkIMContext.html" title="GtkIMContext"><span class="type">GtkIMContext</span></a> *context</code></em>,
+                                                         <em class="parameter"><code><a href="../gdk/gdk-Windows.html#GdkWindow"><span class="type">GdkWindow</span></a> *window</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkIMContext.html#gtk-im-context-get-preedit-string" title="gtk_im_context_get_preedit_string ()">gtk_im_context_get_preedit_string</a>   (<em class="parameter"><code><a class="link" href="GtkIMContext.html" title="GtkIMContext"><span class="type">GtkIMContext</span></a> *context</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> **str</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/pango/pango-Text-Attributes.html#PangoAttrList"><span class="type">PangoAttrList</span></a> **attrs</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> *cursor_pos</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="GtkIMContext.html#gtk-im-context-filter-keypress" title="gtk_im_context_filter_keypress ()">gtk_im_context_filter_keypress</a>      (<em class="parameter"><code><a class="link" href="GtkIMContext.html" title="GtkIMContext"><span class="type">GtkIMContext</span></a> *context</code></em>,
+                                                         <em class="parameter"><code><a href="../gdk/gdk-Event-Structures.html#GdkEventKey"><span class="type">GdkEventKey</span></a> *event</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkIMContext.html#gtk-im-context-focus-in" title="gtk_im_context_focus_in ()">gtk_im_context_focus_in</a>             (<em class="parameter"><code><a class="link" href="GtkIMContext.html" title="GtkIMContext"><span class="type">GtkIMContext</span></a> *context</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkIMContext.html#gtk-im-context-focus-out" title="gtk_im_context_focus_out ()">gtk_im_context_focus_out</a>            (<em class="parameter"><code><a class="link" href="GtkIMContext.html" title="GtkIMContext"><span class="type">GtkIMContext</span></a> *context</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkIMContext.html#gtk-im-context-reset" title="gtk_im_context_reset ()">gtk_im_context_reset</a>                (<em class="parameter"><code><a class="link" href="GtkIMContext.html" title="GtkIMContext"><span class="type">GtkIMContext</span></a> *context</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkIMContext.html#gtk-im-context-set-cursor-location" title="gtk_im_context_set_cursor_location ()">gtk_im_context_set_cursor_location</a>  (<em class="parameter"><code><a class="link" href="GtkIMContext.html" title="GtkIMContext"><span class="type">GtkIMContext</span></a> *context</code></em>,
+                                                         <em class="parameter"><code>const <a href="../gdk/gdk-Points-Rectangles-and-Regions.html#GdkRectangle"><span class="type">GdkRectangle</span></a> *area</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkIMContext.html#gtk-im-context-set-use-preedit" title="gtk_im_context_set_use_preedit ()">gtk_im_context_set_use_preedit</a>      (<em class="parameter"><code><a class="link" href="GtkIMContext.html" title="GtkIMContext"><span class="type">GtkIMContext</span></a> *context</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> use_preedit</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GtkIMContext.html#gtk-im-context-set-surrounding" title="gtk_im_context_set_surrounding ()">gtk_im_context_set_surrounding</a>      (<em class="parameter"><code><a class="link" href="GtkIMContext.html" title="GtkIMContext"><span class="type">GtkIMContext</span></a> *context</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *text</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> len</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> cursor_index</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="GtkIMContext.html#gtk-im-context-get-surrounding" title="gtk_im_context_get_surrounding ()">gtk_im_context_get_surrounding</a>      (<em class="parameter"><code><a class="link" href="GtkIMContext.html" title="GtkIMContext"><span class="type">GtkIMContext</span></a> *context</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> **text</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> *cursor_index</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="GtkIMContext.html#gtk-im-context-delete-surrounding" title="gtk_im_context_delete_surrounding ()">gtk_im_context_delete_surrounding</a>   (<em class="parameter"><code><a class="link" href="GtkIMContext.html" title="GtkIMContext"><span class="type">GtkIMContext</span></a> *context</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> offset</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> n_chars</code></em>);
+</pre>
+</div>
+<div class="refsect1">
+<a name="GtkIMContext.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
+   +----GtkIMContext
+         +----<a class="link" href="GtkIMContextSimple.html" title="GtkIMContextSimple">GtkIMContextSimple</a>
+         +----<a class="link" href="GtkIMMulticontext.html" title="GtkIMMulticontext">GtkIMMulticontext</a>
+</pre>
+</div>
+<div class="refsect1">
+<a name="GtkIMContext.signals"></a><h2>Signals</h2>
+<pre class="synopsis">
+  "<a class="link" href="GtkIMContext.html#GtkIMContext-commit" title='The "commit" signal'>commit</a>"                                         : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS"><code class="literal">Run Last</code></a>
+  "<a class="link" href="GtkIMContext.html#GtkIMContext-delete-surrounding" title='The "delete-surrounding" signal'>delete-surrounding</a>"                             : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS"><code class="literal">Run Last</code></a>
+  "<a class="link" href="GtkIMContext.html#GtkIMContext-preedit-changed" title='The "preedit-changed" signal'>preedit-changed</a>"                                : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS"><code class="literal">Run Last</code></a>
+  "<a class="link" href="GtkIMContext.html#GtkIMContext-preedit-end" title='The "preedit-end" signal'>preedit-end</a>"                                    : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS"><code class="literal">Run Last</code></a>
+  "<a class="link" href="GtkIMContext.html#GtkIMContext-preedit-start" title='The "preedit-start" signal'>preedit-start</a>"                                  : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS"><code class="literal">Run Last</code></a>
+  "<a class="link" href="GtkIMContext.html#GtkIMContext-retrieve-surrounding" title='The "retrieve-surrounding" signal'>retrieve-surrounding</a>"                           : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS"><code class="literal">Run Last</code></a>
+</pre>
+</div>
+<div class="refsect1">
+<a name="GtkIMContext.description"></a><h2>Description</h2>
+<p>
+<a class="link" href="GtkIMContext.html" title="GtkIMContext"><span class="type">GtkIMContext</span></a> defines the interface for GTK+ input methods. An input method
+is used by GTK+ text input widgets like <a class="link" href="GtkEntry.html" title="GtkEntry"><span class="type">GtkEntry</span></a> to map from key events to
+Unicode character strings.
+</p>
+<p>
+The user may change the current input method via a context menu, unless the   
+<a class="link" href="GtkSettings.html#GtkSettings--gtk-show-input-method-menu" title='The "gtk-show-input-method-menu" property'><span class="type">"gtk-show-input-method-menu"</span></a> GtkSettings property is set to FALSE. 
+The default input method can be set programmatically via the 
+<a class="link" href="GtkSettings.html#GtkSettings--gtk-im-module" title='The "gtk-im-module" property'><span class="type">"gtk-im-module"</span></a> GtkSettings property. Alternatively, you may set 
+the GTK_IM_MODULE environment variable as documented in <a class="link" href="gtk-running.html" title="Running GTK+ Applications"><span class="type">gtk-running</span></a>.
+</p>
+<p>
+The <a class="link" href="GtkEntry.html" title="GtkEntry"><span class="type">GtkEntry</span></a> <a class="link" href="GtkEntry.html#GtkEntry--im-module" title='The "im-module" property'><span class="type">"im-module"</span></a> and <a class="link" href="GtkTextView.html" title="GtkTextView"><span class="type">GtkTextView</span></a> <a class="link" href="GtkTextView.html#GtkTextView--im-module" title='The "im-module" property'><span class="type">"im-module"</span></a> 
+properties may also be used to set input methods for specific widget 
+instances. For instance, a certain entry widget might be expected to contain 
+certain characters which would be easier to input with a certain input 
+method.
+</p>
+<p>
+An input method may consume multiple key events in sequence and finally
+output the composed result. This is called preediting, and an input method
+may provide feedback about this process by displaying the intermediate
+composition states as preedit text. For instance, the default GTK+ input
+method implements the input of arbitrary Unicode code points by holding down
+the Control and Shift keys and then typing "U" followed by the hexadecimal
+digits of the code point.  When releasing the Control and Shift keys,
+preediting ends and the character is inserted as text. Ctrl+Shift+u20AC for
+example results in the € sign.
+</p>
+<p>
+Additional input methods can be made available for use by GTK+ widgets as
+loadable modules. An input method module is a small shared library which
+implements a subclass of <a class="link" href="GtkIMContext.html" title="GtkIMContext"><span class="type">GtkIMContext</span></a> or <a class="link" href="GtkIMContextSimple.html" title="GtkIMContextSimple"><span class="type">GtkIMContextSimple</span></a> and exports
+these four functions:
+</p>
+<p>
+</p>
+<div class="informalexample">
+  <table class="listing_frame" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+      <tr>
+        <td class="listing_lines" align="right"><pre>1</pre></td>
+        <td class="listing_code"><pre class="programlisting"><span class="type">void</span><span class="normal"> </span><span class="function">im_module_init</span><span class="symbol">(&lt;</span><span class="usertype">GTKDOCLINK</span><span class="normal"> HREF</span><span class="symbol">=</span><span class="string">"GTypeModule"</span><span class="symbol">&gt;</span><span class="usertype">GTypeModule&lt;/GTKDOCLINK&gt;</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">module</span><span class="symbol">);</span></pre></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+This function should register the <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#GType"><span class="type">GType</span></a> of the <a class="link" href="GtkIMContext.html" title="GtkIMContext"><span class="type">GtkIMContext</span></a> subclass which
+implements the input method by means of <a href="http://library.gnome.org/devel/gobject/unstable/GTypeModule.html#g-type-module-register-type"><code class="function">g_type_module_register_type()</code></a>. Note
+that <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#g-type-register-static"><code class="function">g_type_register_static()</code></a> cannot be used as the type needs to be
+registered dynamically.
+</p>
+<p>
+</p>
+<div class="informalexample">
+  <table class="listing_frame" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+      <tr>
+        <td class="listing_lines" align="right"><pre>1</pre></td>
+        <td class="listing_code"><pre class="programlisting"><span class="type">void</span><span class="normal"> </span><span class="function">im_module_exit</span><span class="symbol">(</span><span class="type">void</span><span class="symbol">);</span></pre></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+Here goes any cleanup code your input method might require on module unload.
+</p>
+<p>
+</p>
+<div class="informalexample">
+  <table class="listing_frame" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+      <tr>
+        <td class="listing_lines" align="right"><pre>1
+2
+3
+4
+5</pre></td>
+        <td class="listing_code"><pre class="programlisting"><span class="type">void</span><span class="normal"> </span><span class="function">im_module_list</span><span class="symbol">(</span><span class="keyword">const</span><span class="normal"> </span><span class="symbol">&lt;</span><span class="usertype">a</span><span class="normal"> class</span><span class="symbol">=</span><span class="string">"link"</span><span class="normal"> href</span><span class="symbol">=</span><span class="string">"GtkIMContext.html#GtkIMContextInfo"</span><span class="normal"> title</span><span class="symbol">=</span><span class="string">"struct GtkIMContextInfo"</span><span class="symbol">&gt;</span><span class="usertype">GtkIMContextInfo&lt;/a&gt;</span><span class="normal"> </span><span class="symbol">***</span><span class="normal">contexts</span><span class="symbol">,</span><span class="normal"> </span><span class="type">int</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">n_contexts</span><span class="symbol">)</span>
+<span class="cbracket">{</span>
+<span class="normal">  </span><span class="symbol">*</span><span class="normal">contexts </span><span class="symbol">=</span><span class="normal"> info_list</span><span class="symbol">;</span>
+<span class="normal">  </span><span class="symbol">*</span><span class="normal">n_contexts </span><span class="symbol">=</span><span class="normal"> </span><span class="function"><a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#G-N-ELEMENTS:CAPS">G_N_ELEMENTS</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">info_list</span><span class="symbol">);</span>
+<span class="cbracket">}</span></pre></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+This function returns the list of input methods provided by the module. The
+example implementation above shows a common solution and simply returns a
+pointer to statically defined array of <a class="link" href="GtkIMContext.html#GtkIMContextInfo" title="struct GtkIMContextInfo"><span class="type">GtkIMContextInfo</span></a> items for each
+provided input method.
+</p>
+<p>
+</p>
+<div class="informalexample">
+  <table class="listing_frame" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+      <tr>
+        <td class="listing_lines" align="right"><pre>1</pre></td>
+        <td class="listing_code"><pre class="programlisting"><span class="symbol">&lt;</span><span class="usertype">a</span><span class="normal"> class</span><span class="symbol">=</span><span class="string">"link"</span><span class="normal"> href</span><span class="symbol">=</span><span class="string">"GtkIMContext.html"</span><span class="normal"> title</span><span class="symbol">=</span><span class="string">"GtkIMContext"</span><span class="symbol">&gt;</span><span class="usertype">GtkIMContext&lt;/a&gt; * im_module_create(const &lt;GTKDOCLINK HREF="gchar"&gt;gchar&lt;/GTKDOCLINK&gt;</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">context_id</span><span class="symbol">);</span></pre></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+This function should return a pointer to a newly created instance of the
+<a class="link" href="GtkIMContext.html" title="GtkIMContext"><span class="type">GtkIMContext</span></a> subclass identified by <em class="parameter"><code>context_id</code></em>. The context ID is the same
+as specified in the <a class="link" href="GtkIMContext.html#GtkIMContextInfo" title="struct GtkIMContextInfo"><span class="type">GtkIMContextInfo</span></a> array returned by <code class="function">im_module_list()</code>.
+</p>
+<p>
+After a new loadable input method module has been installed on the system,
+the configuration file <code class="filename">gtk.immodules</code> needs to be
+regenerated by <a class="link" href="gtk-query-immodules-2.0.html" title="gtk-query-immodules-2.0">gtk-query-immodules-2.0</a>,
+in order for the new input method to become available to GTK+ applications.
+</p>
+</div>
+<div class="refsect1">
+<a name="GtkIMContext.details"></a><h2>Details</h2>
+<div class="refsect2">
+<a name="GtkIMContext-struct"></a><h3>struct GtkIMContext</h3>
+<pre class="programlisting">struct GtkIMContext;</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkIMContextClass"></a><h3>struct GtkIMContextClass</h3>
+<pre class="programlisting">struct GtkIMContextClass {
+  /* Signals */
+  void     (*preedit_start)        (GtkIMContext *context);
+  void     (*preedit_end)          (GtkIMContext *context);
+  void     (*preedit_changed)      (GtkIMContext *context);
+  void     (*commit)               (GtkIMContext *context, const gchar *str);
+  gboolean (*retrieve_surrounding) (GtkIMContext *context);
+  gboolean (*delete_surrounding)   (GtkIMContext *context,
+				    gint          offset,
+				    gint          n_chars);
+
+  /* Virtual functions */
+  void     (*set_client_window)   (GtkIMContext   *context,
+				   GdkWindow      *window);
+  void     (*get_preedit_string)  (GtkIMContext   *context,
+				   gchar         **str,
+				   PangoAttrList **attrs,
+				   gint           *cursor_pos);
+  gboolean (*filter_keypress)     (GtkIMContext   *context,
+			           GdkEventKey    *event);
+  void     (*focus_in)            (GtkIMContext   *context);
+  void     (*focus_out)           (GtkIMContext   *context);
+  void     (*reset)               (GtkIMContext   *context);
+  void     (*set_cursor_location) (GtkIMContext   *context,
+				   GdkRectangle   *area);
+  void     (*set_use_preedit)     (GtkIMContext   *context,
+				   gboolean        use_preedit);
+  void     (*set_surrounding)     (GtkIMContext   *context,
+				   const gchar    *text,
+				   gint            len,
+				   gint            cursor_index);
+  gboolean (*get_surrounding)     (GtkIMContext   *context,
+				   gchar         **text,
+				   gint           *cursor_index);
+};
+</pre>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="GtkIMContextClass.preedit-start"></a>preedit_start</code></em> ()</span></p></td>
+<td>Default handler of the <a class="link" href="GtkIMContext.html#GtkIMContext-preedit-start" title='The "preedit-start" signal'><span class="type">"preedit-start"</span></a> signal.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="GtkIMContextClass.preedit-end"></a>preedit_end</code></em> ()</span></p></td>
+<td>Default handler of the <a class="link" href="GtkIMContext.html#GtkIMContext-preedit-end" title='The "preedit-end" signal'><span class="type">"preedit-end"</span></a> signal.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="GtkIMContextClass.preedit-changed"></a>preedit_changed</code></em> ()</span></p></td>
+<td>Default handler of the <a class="link" href="GtkIMContext.html#GtkIMContext-preedit-changed" title='The "preedit-changed" signal'><span class="type">"preedit-changed"</span></a>
+signal.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="GtkIMContextClass.commit"></a>commit</code></em> ()</span></p></td>
+<td>Default handler of the <a class="link" href="GtkIMContext.html#GtkIMContext-commit" title='The "commit" signal'><span class="type">"commit"</span></a> signal.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="GtkIMContextClass.retrieve-surrounding"></a>retrieve_surrounding</code></em> ()</span></p></td>
+<td>Default handler of the
+<a class="link" href="GtkIMContext.html#GtkIMContext-retrieve-surrounding" title='The "retrieve-surrounding" signal'><span class="type">"retrieve-surrounding"</span></a> signal.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="GtkIMContextClass.delete-surrounding"></a>delete_surrounding</code></em> ()</span></p></td>
+<td>Default handler of the
+<a class="link" href="GtkIMContext.html#GtkIMContext-delete-surrounding" title='The "delete-surrounding" signal'><span class="type">"delete-surrounding"</span></a> signal.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="GtkIMContextClass.set-client-window"></a>set_client_window</code></em> ()</span></p></td>
+<td>Called via <a class="link" href="GtkIMContext.html#gtk-im-context-set-client-window" title="gtk_im_context_set_client_window ()"><code class="function">gtk_im_context_set_client_window()</code></a> when the
+input window where the entered text will appear changes. Override this to
+keep track of the current input window, for instance for the purpose of
+positioning a status display of your input method.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="GtkIMContextClass.get-preedit-string"></a>get_preedit_string</code></em> ()</span></p></td>
+<td>Called via <a class="link" href="GtkIMContext.html#gtk-im-context-get-preedit-string" title="gtk_im_context_get_preedit_string ()"><code class="function">gtk_im_context_get_preedit_string()</code></a> to
+retrieve the text currently being preedited for display at the cursor
+position. Any input method which composes complex characters or any
+other compositions from multiple sequential key presses should override
+this method to provide feedback.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="GtkIMContextClass.filter-keypress"></a>filter_keypress</code></em> ()</span></p></td>
+<td>Called via <a class="link" href="GtkIMContext.html#gtk-im-context-filter-keypress" title="gtk_im_context_filter_keypress ()"><code class="function">gtk_im_context_filter_keypress()</code></a> on every
+key press or release event. Every non-trivial input method needs to
+override this in order to implement the mapping from key events to text.
+A return value of <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> indicates to the caller that the event was
+consumed by the input method. In that case, the <a class="link" href="GtkIMContext.html#GtkIMContext-commit" title='The "commit" signal'><span class="type">"commit"</span></a>
+signal should be emitted upon completion of a key sequence to pass the
+resulting text back to the input widget. Alternatively, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> may be
+returned to indicate that the event wasn't handled by the input method.
+If a builtin mapping exists for the key, it is used to produce a
+character.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="GtkIMContextClass.focus-in"></a>focus_in</code></em> ()</span></p></td>
+<td>Called via <a class="link" href="GtkIMContext.html#gtk-im-context-focus-in" title="gtk_im_context_focus_in ()"><code class="function">gtk_im_context_focus_in()</code></a> when the input widget
+has gained focus. May be overridden to keep track of the current focus.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="GtkIMContextClass.focus-out"></a>focus_out</code></em> ()</span></p></td>
+<td>Called via <a class="link" href="GtkIMContext.html#gtk-im-context-focus-in" title="gtk_im_context_focus_in ()"><code class="function">gtk_im_context_focus_in()</code></a> when the input widget
+has lost focus. May be overridden to keep track of the current focus.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="GtkIMContextClass.reset"></a>reset</code></em> ()</span></p></td>
+<td>Called via <a class="link" href="GtkIMContext.html#gtk-im-context-reset" title="gtk_im_context_reset ()"><code class="function">gtk_im_context_reset()</code></a> to signal a change such as a
+change in cursor position. An input method that implements preediting
+should override this method to clear the preedit state on reset.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="GtkIMContextClass.set-cursor-location"></a>set_cursor_location</code></em> ()</span></p></td>
+<td>Called via <a class="link" href="GtkIMContext.html#gtk-im-context-set-cursor-location" title="gtk_im_context_set_cursor_location ()"><code class="function">gtk_im_context_set_cursor_location()</code></a>
+to inform the input method of the current cursor location relative to
+the client window. May be overridden to implement the display of popup
+windows at the cursor position.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="GtkIMContextClass.set-use-preedit"></a>set_use_preedit</code></em> ()</span></p></td>
+<td>Called via <a class="link" href="GtkIMContext.html#gtk-im-context-set-use-preedit" title="gtk_im_context_set_use_preedit ()"><code class="function">gtk_im_context_set_use_preedit()</code></a> to control
+the use of the preedit string. Override this to display feedback by some
+other means if turned off.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="GtkIMContextClass.set-surrounding"></a>set_surrounding</code></em> ()</span></p></td>
+<td>Called via <a class="link" href="GtkIMContext.html#gtk-im-context-set-surrounding" title="gtk_im_context_set_surrounding ()"><code class="function">gtk_im_context_set_surrounding()</code></a> in response
+to signal <a class="link" href="GtkIMContext.html#GtkIMContext-retrieve-surrounding" title='The "retrieve-surrounding" signal'><span class="type">"retrieve-surrounding"</span></a> to update the input
+method's idea of the context around the cursor. It is not necessary to
+override this method even with input methods which implement
+context-dependent behavior. The base implementation is sufficient for
+<a class="link" href="GtkIMContext.html#gtk-im-context-get-surrounding" title="gtk_im_context_get_surrounding ()"><code class="function">gtk_im_context_get_surrounding()</code></a> to work.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="GtkIMContextClass.get-surrounding"></a>get_surrounding</code></em> ()</span></p></td>
+<td>Called via <a class="link" href="GtkIMContext.html#gtk-im-context-get-surrounding" title="gtk_im_context_get_surrounding ()"><code class="function">gtk_im_context_get_surrounding()</code></a> to update
+the context around the cursor location. It is not necessary to override
+this method even with input methods which implement context-dependent
+behavior. The base implementation emits
+<a class="link" href="GtkIMContext.html#GtkIMContext-retrieve-surrounding" title='The "retrieve-surrounding" signal'><span class="type">"retrieve-surrounding"</span></a> and records the context received
+by the subsequent invocation of <em class="parameter"><code>get_surrounding</code></em>.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkIMContextInfo"></a><h3>struct GtkIMContextInfo</h3>
+<pre class="programlisting">struct GtkIMContextInfo {
+  const gchar *context_id;
+  const gchar *context_name;
+  const gchar *domain;
+  const gchar *domain_dirname;
+  const gchar *default_locales;
+};
+</pre>
+<p>
+Bookkeeping information about a loadable input method.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *<em class="structfield"><code><a name="GtkIMContextInfo.context-id"></a>context_id</code></em>;</span></p></td>
+<td>The unique identification string of the input method.</td>
+</tr>
+<tr>
+<td><p><span class="term">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *<em class="structfield"><code><a name="GtkIMContextInfo.context-name"></a>context_name</code></em>;</span></p></td>
+<td>The human-readable name of the input method.</td>
+</tr>
+<tr>
+<td><p><span class="term">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *<em class="structfield"><code><a name="GtkIMContextInfo.domain"></a>domain</code></em>;</span></p></td>
+<td>Translation domain to be used with <code class="function">dgettext()</code>
+</td>
+</tr>
+<tr>
+<td><p><span class="term">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *<em class="structfield"><code><a name="GtkIMContextInfo.domain-dirname"></a>domain_dirname</code></em>;</span></p></td>
+<td>Name of locale directory for use with <code class="function">bindtextdomain()</code>
+</td>
+</tr>
+<tr>
+<td><p><span class="term">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *<em class="structfield"><code><a name="GtkIMContextInfo.default-locales"></a>default_locales</code></em>;</span></p></td>
+<td>A colon-separated list of locales where this input method
+should be the default. The asterisk "*" sets the default for all locales.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-im-context-set-client-window"></a><h3>gtk_im_context_set_client_window ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_im_context_set_client_window    (<em class="parameter"><code><a class="link" href="GtkIMContext.html" title="GtkIMContext"><span class="type">GtkIMContext</span></a> *context</code></em>,
+                                                         <em class="parameter"><code><a href="../gdk/gdk-Windows.html#GdkWindow"><span class="type">GdkWindow</span></a> *window</code></em>);</pre>
+<p>
+Set the client window for the input context; this is the
+<a href="../gdk/gdk-Windows.html#GdkWindow"><span class="type">GdkWindow</span></a> in which the input appears. This window is
+used in order to correctly position status windows, and may
+also be used for purposes internal to the input method.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>context</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkIMContext.html" title="GtkIMContext"><span class="type">GtkIMContext</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>window</code></em> :</span></p></td>
+<td>the client window. This may be <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to indicate
+that the previous client window no longer exists. <span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-im-context-get-preedit-string"></a><h3>gtk_im_context_get_preedit_string ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_im_context_get_preedit_string   (<em class="parameter"><code><a class="link" href="GtkIMContext.html" title="GtkIMContext"><span class="type">GtkIMContext</span></a> *context</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> **str</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/pango/pango-Text-Attributes.html#PangoAttrList"><span class="type">PangoAttrList</span></a> **attrs</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> *cursor_pos</code></em>);</pre>
+<p>
+Retrieve the current preedit string for the input context,
+and a list of attributes to apply to the string.
+This string should be displayed inserted at the insertion
+point.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>context</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkIMContext.html" title="GtkIMContext"><span class="type">GtkIMContext</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>str</code></em> :</span></p></td>
+<td>location to store the retrieved
+string. The string retrieved must be freed with <a href="http://library.gnome.org/devel/glib/unstable/glib-Memory-Allocation.html#g-free"><code class="function">g_free()</code></a>. <span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>][<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>attrs</code></em> :</span></p></td>
+<td>location to store the retrieved
+attribute list.  When you are done with this list, you
+must unreference it with <a href="/usr/share/gtk-doc/html/pango/pango-Text-Attributes.html#pango-attr-list-unref"><code class="function">pango_attr_list_unref()</code></a>. <span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>][<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>cursor_pos</code></em> :</span></p></td>
+<td>location to store position of cursor (in characters)
+within the preedit string. <span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-im-context-filter-keypress"></a><h3>gtk_im_context_filter_keypress ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gtk_im_context_filter_keypress      (<em class="parameter"><code><a class="link" href="GtkIMContext.html" title="GtkIMContext"><span class="type">GtkIMContext</span></a> *context</code></em>,
+                                                         <em class="parameter"><code><a href="../gdk/gdk-Event-Structures.html#GdkEventKey"><span class="type">GdkEventKey</span></a> *event</code></em>);</pre>
+<p>
+Allow an input method to internally handle key press and release 
+events. If this function returns <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a>, then no further processing
+should be done for this key event.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>context</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkIMContext.html" title="GtkIMContext"><span class="type">GtkIMContext</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>event</code></em> :</span></p></td>
+<td>the key event</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the input method handled the key event.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-im-context-focus-in"></a><h3>gtk_im_context_focus_in ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_im_context_focus_in             (<em class="parameter"><code><a class="link" href="GtkIMContext.html" title="GtkIMContext"><span class="type">GtkIMContext</span></a> *context</code></em>);</pre>
+<p>
+Notify the input method that the widget to which this
+input context corresponds has gained focus. The input method
+may, for example, change the displayed feedback to reflect
+this change.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>context</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkIMContext.html" title="GtkIMContext"><span class="type">GtkIMContext</span></a>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-im-context-focus-out"></a><h3>gtk_im_context_focus_out ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_im_context_focus_out            (<em class="parameter"><code><a class="link" href="GtkIMContext.html" title="GtkIMContext"><span class="type">GtkIMContext</span></a> *context</code></em>);</pre>
+<p>
+Notify the input method that the widget to which this
+input context corresponds has lost focus. The input method
+may, for example, change the displayed feedback or reset the contexts
+state to reflect this change.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>context</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkIMContext.html" title="GtkIMContext"><span class="type">GtkIMContext</span></a>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-im-context-reset"></a><h3>gtk_im_context_reset ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_im_context_reset                (<em class="parameter"><code><a class="link" href="GtkIMContext.html" title="GtkIMContext"><span class="type">GtkIMContext</span></a> *context</code></em>);</pre>
+<p>
+Notify the input method that a change such as a change in cursor
+position has been made. This will typically cause the input
+method to clear the preedit state.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>context</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkIMContext.html" title="GtkIMContext"><span class="type">GtkIMContext</span></a>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-im-context-set-cursor-location"></a><h3>gtk_im_context_set_cursor_location ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_im_context_set_cursor_location  (<em class="parameter"><code><a class="link" href="GtkIMContext.html" title="GtkIMContext"><span class="type">GtkIMContext</span></a> *context</code></em>,
+                                                         <em class="parameter"><code>const <a href="../gdk/gdk-Points-Rectangles-and-Regions.html#GdkRectangle"><span class="type">GdkRectangle</span></a> *area</code></em>);</pre>
+<p>
+Notify the input method that a change in cursor 
+position has been made. The location is relative to the client
+window.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>context</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkIMContext.html" title="GtkIMContext"><span class="type">GtkIMContext</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>area</code></em> :</span></p></td>
+<td>new location</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-im-context-set-use-preedit"></a><h3>gtk_im_context_set_use_preedit ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_im_context_set_use_preedit      (<em class="parameter"><code><a class="link" href="GtkIMContext.html" title="GtkIMContext"><span class="type">GtkIMContext</span></a> *context</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> use_preedit</code></em>);</pre>
+<p>
+Sets whether the IM context should use the preedit string
+to display feedback. If <em class="parameter"><code>use_preedit</code></em> is FALSE (default
+is TRUE), then the IM context may use some other method to display
+feedback, such as displaying it in a child of the root window.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>context</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkIMContext.html" title="GtkIMContext"><span class="type">GtkIMContext</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>use_preedit</code></em> :</span></p></td>
+<td>whether the IM context should use the preedit string.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-im-context-set-surrounding"></a><h3>gtk_im_context_set_surrounding ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gtk_im_context_set_surrounding      (<em class="parameter"><code><a class="link" href="GtkIMContext.html" title="GtkIMContext"><span class="type">GtkIMContext</span></a> *context</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *text</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> len</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> cursor_index</code></em>);</pre>
+<p>
+Sets surrounding context around the insertion point and preedit
+string. This function is expected to be called in response to the
+GtkIMContext::retrieve_surrounding signal, and will likely have no
+effect if called at other times.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>context</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkIMContext.html" title="GtkIMContext"><span class="type">GtkIMContext</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>text</code></em> :</span></p></td>
+<td>text surrounding the insertion point, as UTF-8.
+the preedit string should not be included within
+<em class="parameter"><code>text</code></em>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>len</code></em> :</span></p></td>
+<td>the length of <em class="parameter"><code>text</code></em>, or -1 if <em class="parameter"><code>text</code></em> is nul-terminated</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>cursor_index</code></em> :</span></p></td>
+<td>the byte index of the insertion cursor within <em class="parameter"><code>text</code></em>.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-im-context-get-surrounding"></a><h3>gtk_im_context_get_surrounding ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gtk_im_context_get_surrounding      (<em class="parameter"><code><a class="link" href="GtkIMContext.html" title="GtkIMContext"><span class="type">GtkIMContext</span></a> *context</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> **text</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> *cursor_index</code></em>);</pre>
+<p>
+Retrieves context around the insertion point. Input methods
+typically want context in order to constrain input text based on
+existing text; this is important for languages such as Thai where
+only some sequences of characters are allowed.
+</p>
+<p>
+This function is implemented by emitting the
+GtkIMContext::retrieve_surrounding signal on the input method; in
+response to this signal, a widget should provide as much context as
+is available, up to an entire paragraph, by calling
+<a class="link" href="GtkIMContext.html#gtk-im-context-set-surrounding" title="gtk_im_context_set_surrounding ()"><code class="function">gtk_im_context_set_surrounding()</code></a>. Note that there is no obligation
+for a widget to respond to the ::retrieve_surrounding signal, so input
+methods must be prepared to function without context.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>context</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkIMContext.html" title="GtkIMContext"><span class="type">GtkIMContext</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>text</code></em> :</span></p></td>
+<td>location to store a UTF-8 encoded
+string of text holding context around the insertion point.
+If the function returns <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a>, then you must free the result
+stored in this location with <a href="http://library.gnome.org/devel/glib/unstable/glib-Memory-Allocation.html#g-free"><code class="function">g_free()</code></a>. <span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>][<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>cursor_index</code></em> :</span></p></td>
+<td>(out) location to store byte index of the insertion
+cursor within <em class="parameter"><code>text</code></em>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if surrounding text was provided; in this case
+you must free the result stored in *text.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gtk-im-context-delete-surrounding"></a><h3>gtk_im_context_delete_surrounding ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gtk_im_context_delete_surrounding   (<em class="parameter"><code><a class="link" href="GtkIMContext.html" title="GtkIMContext"><span class="type">GtkIMContext</span></a> *context</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> offset</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> n_chars</code></em>);</pre>
+<p>
+Asks the widget that the input context is attached to to delete
+characters around the cursor position by emitting the
+GtkIMContext::delete_surrounding signal. Note that <em class="parameter"><code>offset</code></em> and <em class="parameter"><code>n_chars</code></em>
+are in characters not in bytes which differs from the usage other
+places in <a class="link" href="GtkIMContext.html" title="GtkIMContext"><span class="type">GtkIMContext</span></a>.
+</p>
+<p>
+In order to use this function, you should first call
+<a class="link" href="GtkIMContext.html#gtk-im-context-get-surrounding" title="gtk_im_context_get_surrounding ()"><code class="function">gtk_im_context_get_surrounding()</code></a> to get the current context, and
+call this function immediately afterwards to make sure that you
+know what you are deleting. You should also account for the fact
+that even if the signal was handled, the input context might not
+have deleted all the characters that were requested to be deleted.
+</p>
+<p>
+This function is used by an input method that wants to make
+subsitutions in the existing text in response to new input. It is
+not useful for applications.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>context</code></em> :</span></p></td>
+<td>a <a class="link" href="GtkIMContext.html" title="GtkIMContext"><span class="type">GtkIMContext</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>offset</code></em> :</span></p></td>
+<td>offset from cursor position in chars;
+a negative value means start before the cursor.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n_chars</code></em> :</span></p></td>
+<td>number of characters to delete.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the signal was handled.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect1">
+<a name="GtkIMContext.signal-details"></a><h2>Signal Details</h2>
+<div class="refsect2">
+<a name="GtkIMContext-commit"></a><h3>The <code class="literal">"commit"</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="GtkIMContext.html" title="GtkIMContext"><span class="type">GtkIMContext</span></a> *context,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>        *str,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>      user_data)      : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS"><code class="literal">Run Last</code></a></pre>
+<p>
+The ::commit signal is emitted when a complete input sequence
+has been entered by the user. This can be a single character
+immediately after a key press or the final result of preediting.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>context</code></em> :</span></p></td>
+<td>the object on which the signal is emitted</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>str</code></em> :</span></p></td>
+<td>the completed character(s) entered by the user</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkIMContext-delete-surrounding"></a><h3>The <code class="literal">"delete-surrounding"</code> signal</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            user_function                      (<a class="link" href="GtkIMContext.html" title="GtkIMContext"><span class="type">GtkIMContext</span></a> *context,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>          offset,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>          n_chars,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>      user_data)      : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS"><code class="literal">Run Last</code></a></pre>
+<p>
+The ::delete-surrounding signal is emitted when the input method
+needs to delete all or part of the context surrounding the cursor.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>context</code></em> :</span></p></td>
+<td>the object on which the signal is emitted</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>offset</code></em> :</span></p></td>
+<td>the character offset from the cursor position of the text
+to be deleted. A negative value indicates a position before
+the cursor.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n_chars</code></em> :</span></p></td>
+<td>the number of characters to be deleted</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the signal was handled.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkIMContext-preedit-changed"></a><h3>The <code class="literal">"preedit-changed"</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="GtkIMContext.html" title="GtkIMContext"><span class="type">GtkIMContext</span></a> *context,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>      user_data)      : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS"><code class="literal">Run Last</code></a></pre>
+<p>
+The ::preedit-changed signal is emitted whenever the preedit sequence
+currently being entered has changed.  It is also emitted at the end of
+a preedit sequence, in which case
+<a class="link" href="GtkIMContext.html#gtk-im-context-get-preedit-string" title="gtk_im_context_get_preedit_string ()"><code class="function">gtk_im_context_get_preedit_string()</code></a> returns the empty string.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>context</code></em> :</span></p></td>
+<td>the object on which the signal is emitted</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkIMContext-preedit-end"></a><h3>The <code class="literal">"preedit-end"</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="GtkIMContext.html" title="GtkIMContext"><span class="type">GtkIMContext</span></a> *context,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>      user_data)      : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS"><code class="literal">Run Last</code></a></pre>
+<p>
+The ::preedit-end signal is emitted when a preediting sequence
+has been completed or canceled.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>context</code></em> :</span></p></td>
+<td>the object on which the signal is emitted</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkIMContext-preedit-start"></a><h3>The <code class="literal">"preedit-start"</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="GtkIMContext.html" title="GtkIMContext"><span class="type">GtkIMContext</span></a> *context,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>      user_data)      : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS"><code class="literal">Run Last</code></a></pre>
+<p>
+The ::preedit-start signal is emitted when a new preediting sequence
+starts.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>context</code></em> :</span></p></td>
+<td>the object on which the signal is emitted</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GtkIMContext-retrieve-surrounding"></a><h3>The <code class="literal">"retrieve-surrounding"</code> signal</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            user_function                      (<a class="link" href="GtkIMContext.html" title="GtkIMContext"><span class="type">GtkIMContext</span></a> *context,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>      user_data)      : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS"><code class="literal">Run Last</code></a></pre>
+<p>
+The ::retrieve-surrounding signal is emitted when the input method
+requires the context surrounding the cursor.  The callback should set
+the input method surrounding context by calling the
+<a class="link" href="GtkIMContext.html#gtk-im-context-set-surrounding" title="gtk_im_context_set_surrounding ()"><code class="function">gtk_im_context_set_surrounding()</code></a> method.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>context</code></em> :</span></p></td>
+<td>the object on which the signal is emitted</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the signal was handled.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

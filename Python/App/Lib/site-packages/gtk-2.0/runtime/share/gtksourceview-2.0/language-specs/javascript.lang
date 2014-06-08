@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+ Author: Scott Martin <scott@coffeeblack.org>
+ Copyright (C) 2004 Scott Martin <scott@coffeeblack.org>
+ Copyright (C) 2005 Stef Walter (formerly Nate Nielsen) <stef@memberwebs.com>
+ Copyright (C) 2005-2007 Marco Barisione <barisione@gmail.com>
+ Copyright (C) 2005-2007 Emanuele Aina
+
+ This library is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Library General Public
+ License as published by the Free Software Foundation; either
+ version 2 of the License, or (at your option) any later version.
+
+ This library is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ Library General Public License for more details.
+
+ You should have received a copy of the GNU Library General Public
+ License along with this library; if not, write to the
+ Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ Boston, MA 02111-1307, USA.
+
+-->
+<language id="js" _name="Javascript" version="2.0" _section="Scripts">
+    <metadata>
+        <property name="mimetypes">application/javascript;application/x-javascript;text/x-javascript;text/javascript;text/x-js</property>
+        <property name="globs">*.js</property>
+        <property name="line-comment-start">//</property>
+        <property name="block-comment-start">/*</property>
+        <property name="block-comment-end">*/</property>
+    </metadata>
+
+    <styles>
+        <style id="comment" _name="Comment" map-to="def:comment"/>
+        <style id="error" _name="Error" map-to="def:error"/>
+        <style id="string" _name="String" map-to="def:string"/>
+        <style id="null-value" _name="Null Value" map-to="def:special-constant"/>
+        <style id="undefined-value" _name="Undefined Value" map-to="def:special-constant"/>
+        <style id="boolean" _name="Boolean value" map-to="def:boolean"/>
+        <style id="keyword" _name="Keyword" map-to="def:keyword"/>
+        <style id="object" _name="Object"/> <!--map-to="def:others"-->
+        <style id="type" _name="Data Type" map-to="def:type"/>
+        <style id="function" _name="Function" map-to="def:function"/>
+        <style id="properties" _name="Properties" map-to="def:statement"/>
+        <style id="constructors" _name="Constructors" map-to="def:type"/>
+        <style id="future-words" _name="Future Reserved Keywords" map-to="def:error"/>
+    </styles>
+
+    <definitions>
+        <context id="js" class="no-spell-check">
+            <include>
+
+                <!-- Comments -->
+                <context id="line-comment" style-ref="comment" class="comment" class-disabled="no-spell-check">
+                    <start>//</start>
+                    <end>$</end>
+                    <include>
+                        <context ref="def:line-continue"/>
+                        <context ref="def:in-comment"/>
+                    </include>
+                </context>
+
+                <context id="block-comment" style-ref="comment" class="comment" class-disabled="no-spell-check">
+                    <start>/\*</start>
+                    <end>\*/</end>
+                    <include>
+                        <context ref="def:in-comment"/>
+                    </include>
+                </context>
+
+                <context id="close-comment-outside-comment" style-ref="error">
+                    <match>\*/(?!\*)</match>
+                </context>
+
+                <!-- Strings -->
+                <context id="string-double" end-at-line-end="true" style-ref="string" class="string" class-disabled="no-spell-check">
+                    <start>"</start>
+                    <end>"</end>
+                    <include>
+                        <context ref="def:line-continue"/>
+                        <context ref="def:escape"/>
+                    </include>
+                </context>
+
+                <context id="string-single" end-at-line-end="true" style-ref="string" class="string" class-disabled="no-spell-check">
+                    <start>'</start>
+                    <end>'</end>
+                    <include>
+                        <context ref="def:line-continue"/>
+                        <context ref="def:escape"/>
+                    </include>
+                </context>
+
+                <!-- Numbers -->
+                <context ref="def:float"/>
+                <context ref="def:decimal"/>
+                <context ref="def:octal"/>
+                <context ref="def:hexadecimal"/>
+
+                <!-- Constants -->
+                <context id="null-value" style-ref="null-value">
+                    <keyword>null</keyword>
+                </context>
+                <context id="undefined-value" style-ref="undefined-value">
+                    <keyword>undefined</keyword>
+                </context>
+                <context id="boolean" style-ref="boolean">
+                    <keyword>false</keyword>
+                    <keyword>true</keyword>
+                </context>
+
+                <!-- Keywords -->
+                <context id="keywords" style-ref="keyword">
+                    <keyword>const</keyword>
+                    <keyword>function</keyword>
+                    <keyword>this</keyword>
+                    <keyword>var</keyword>
+                    <keyword>break</keyword>
+                    <keyword>case</keyword>
+                    <keyword>continue</keyword>
+                    <keyword>default</keyword>
+                    <keyword>do</keyword>
+                    <keyword>else</keyword>
+                    <keyword>for</keyword>
+                    <keyword>if</keyword>
+                    <keyword>in</keyword>
+                    <keyword>return</keyword>
+                    <keyword>switch</keyword>
+                    <keyword>while</keyword>
+                    <keyword>with</keyword>
+                    <keyword>try</keyword>
+                    <keyword>catch</keyword>
+                    <keyword>finally</keyword>
+                    <keyword>delete</keyword>
+                    <keyword>instanceof</keyword>
+                    <keyword>new</keyword>
+                    <keyword>throw</keyword>
+                    <keyword>typeof</keyword>
+                    <keyword>void</keyword>
+                </context>
+
+                <context id="objects" style-ref="object">
+                    <keyword>constructor</keyword>
+                    <keyword>prototype</keyword>
+                </context>
+
+                <context id="types" style-ref="type">
+                    <keyword>Infinity</keyword>
+                    <keyword>NaN</keyword>
+                    <keyword>Math</keyword>
+                    <keyword>NEGATIVE_INFINITY</keyword>
+                    <keyword>POSITIVE_INFINITY</keyword>
+                </context>
+
+                <context id="functions" style-ref="function">
+                    <keyword>eval</keyword>
+                    <keyword>parseInt</keyword>
+                    <keyword>parseFloat</keyword>
+                    <keyword>isNaN</keyword>
+                    <keyword>isFinite</keyword>
+                    <keyword>encodeURI</keyword>
+                    <keyword>decodeURI</keyword>
+                    <keyword>encodeURIComponent</keyword>
+                    <keyword>decodeURIComponent</keyword>
+                    <keyword>toString</keyword>
+                    <keyword>toLocaleString</keyword>
+                    <keyword>valueOf</keyword>
+                    <keyword>hasOwnProperty</keyword>
+                    <keyword>isPrototypeOf</keyword>
+                    <keyword>propertyIsEnumerable</keyword>
+                    <keyword>apply</keyword>
+                    <keyword>call</keyword>
+                    <keyword>concat</keyword>
+                    <keyword>join</keyword>
+                    <keyword>pop</keyword>
+                    <keyword>push</keyword>
+                    <keyword>reverse</keyword>
+                    <keyword>shift</keyword>
+                    <keyword>slice</keyword>
+                    <keyword>sort</keyword>
+                    <keyword>unshift</keyword>
+                    <keyword>fromCharCode</keyword>
+                    <keyword>charAt</keyword>
+                    <keyword>charCodeAt</keyword>
+                    <keyword>indexOf</keyword>
+                    <keyword>lastIndexOf</keyword>
+                    <keyword>localeCompare</keyword>
+                    <keyword>match</keyword>
+                    <keyword>exec</keyword>
+                    <keyword>replace</keyword>
+                    <keyword>search</keyword>
+                    <keyword>split</keyword>
+                    <keyword>substr</keyword>
+                    <keyword>substring</keyword>
+                    <keyword>toLowerCase</keyword>
+                    <keyword>toLocaleLowerCase</keyword>
+                    <keyword>toUpperCase</keyword>
+                    <keyword>toLocaleUpperCase</keyword>
+                    <keyword>toFixed</keyword>
+                    <keyword>toExponential</keyword>
+                    <keyword>toPrecision</keyword>
+                    <keyword>abs</keyword>
+                    <keyword>acos</keyword>
+                    <keyword>asin</keyword>
+                    <keyword>atan</keyword>
+                    <keyword>atan2</keyword>
+                    <keyword>ceil</keyword>
+                    <keyword>cos</keyword>
+                    <keyword>exp</keyword>
+                    <keyword>floor</keyword>
+                    <keyword>log</keyword>
+                    <keyword>max</keyword>
+                    <keyword>min</keyword>
+                    <keyword>pow</keyword>
+                    <keyword>random</keyword>
+                    <keyword>round</keyword>
+                    <keyword>sin</keyword>
+                    <keyword>sqrt</keyword>
+                    <keyword>tan</keyword>
+                    <keyword>parse</keyword>
+                    <keyword>UTC</keyword>
+                    <keyword>toDateString</keyword>
+                    <keyword>toTimeString</keyword>
+                    <keyword>toLocaleString</keyword>
+                    <keyword>toLocaleDateString</keyword>
+                    <keyword>toLocaleTimeString</keyword>
+                    <keyword>getTime</keyword>
+                    <keyword>getFullYear</keyword>
+                    <keyword>getUTCFullYear</keyword>
+                    <keyword>getMonth</keyword>
+                    <keyword>getUTCMonth</keyword>
+                    <keyword>getDate</keyword>
+                    <keyword>getUTCDate</keyword>
+                    <keyword>getDay</keyword>
+                    <keyword>getUTCDay</keyword>
+                    <keyword>getHours</keyword>
+                    <keyword>getUTCHours</keyword>
+                    <keyword>getMinutes</keyword>
+                    <keyword>getUTCMinutes</keyword>
+                    <keyword>getSeconds</keyword>
+                    <keyword>getUTCSeconds</keyword>
+                    <keyword>getMilliseconds</keyword>
+                    <keyword>getUTCMilliseconds</keyword>
+                    <keyword>getTimezoneOffset</keyword>
+                    <keyword>setTime</keyword>
+                    <keyword>setMilliseconds</keyword>
+                    <keyword>setUTCMilliseconds</keyword>
+                    <keyword>setSeconds</keyword>
+                    <keyword>setUTCSeconds</keyword>
+                    <keyword>setMinutes</keyword>
+                    <keyword>setUTCMinutes</keyword>
+                    <keyword>setHours</keyword>
+                    <keyword>setUTCHours</keyword>
+                    <keyword>setDate</keyword>
+                    <keyword>setUTCDate</keyword>
+                    <keyword>setMonth</keyword>
+                    <keyword>setUTCMonth</keyword>
+                    <keyword>setFullYear</keyword>
+                    <keyword>setUTCFullYear</keyword>
+                    <keyword>toUTCString</keyword>
+                    <keyword>escape</keyword>
+                    <keyword>unescape</keyword>
+                    <keyword>getYear</keyword>
+                    <keyword>setYear</keyword>
+                    <keyword>toGMTString</keyword>
+                </context>
+
+                <context id="properties" style-ref="properties">
+                    <keyword>length</keyword>
+                    <keyword>lastIndex</keyword>
+                    <keyword>global</keyword>
+                    <keyword>ignoreCase</keyword>
+                    <keyword>multiline</keyword>
+                    <keyword>source</keyword>
+                    <keyword>name</keyword>
+                    <keyword>message</keyword>
+                </context>
+
+                <context id="constructors" style-ref="constructors">
+                    <keyword>Object</keyword>
+                    <keyword>Function</keyword>
+                    <keyword>Array</keyword>
+                    <keyword>String</keyword>
+                    <keyword>Boolean</keyword>
+                    <keyword>Number</keyword>
+                    <keyword>Date</keyword>
+                    <keyword>RegExp</keyword>
+                    <keyword>Error</keyword>
+                    <keyword>EvalError</keyword>
+                    <keyword>RangeError</keyword>
+                    <keyword>SyntaxError</keyword>
+                    <keyword>TypeError</keyword>
+                    <keyword>URIError</keyword>
+                </context>
+
+                <context id="future-words" style-ref="future-words">
+                    <keyword>abstract</keyword>
+                    <keyword>boolean</keyword>
+                    <keyword>byte</keyword>
+                    <keyword>char</keyword>
+                    <keyword>class</keyword>
+                    <keyword>debugger</keyword>
+                    <keyword>double</keyword>
+                    <keyword>enum</keyword>
+                    <keyword>export</keyword>
+                    <keyword>extends</keyword>
+                    <keyword>final</keyword>
+                    <keyword>float</keyword>
+                    <keyword>goto</keyword>
+                    <keyword>implements</keyword>
+                    <keyword>import</keyword>
+                    <keyword>int</keyword>
+                    <keyword>interface</keyword>
+                    <keyword>long</keyword>
+                    <keyword>native</keyword>
+                    <keyword>package</keyword>
+                    <keyword>private</keyword>
+                    <keyword>protected</keyword>
+                    <keyword>public</keyword>
+                    <keyword>short</keyword>
+                    <keyword>static</keyword>
+                    <keyword>super</keyword>
+                    <keyword>synchronized</keyword>
+                    <keyword>throws</keyword>
+                    <keyword>transient</keyword>
+                    <keyword>volatile</keyword>
+                </context>
+
+            </include>
+        </context>
+    </definitions>
+</language>

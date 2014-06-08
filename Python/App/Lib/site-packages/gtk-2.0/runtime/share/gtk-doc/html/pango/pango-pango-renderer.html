@@ -1,0 +1,965 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>PangoRenderer</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="Pango Reference Manual">
+<link rel="up" href="lowlevel.html" title="Low Level Functionality">
+<link rel="prev" href="lowlevel.html" title="Low Level Functionality">
+<link rel="next" href="PangoFcFontMap.html" title="PangoFcFontMap">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="lowlevel.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="lowlevel.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Pango Reference Manual</th>
+<td><a accesskey="n" href="PangoFcFontMap.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#pango-pango-renderer.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#pango-pango-renderer.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#pango-pango-renderer.object-hierarchy" class="shortcut">Object Hierarchy</a>
+</td></tr>
+</table>
+<div class="refentry">
+<a name="pango-pango-renderer"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="pango-pango-renderer.top_of_page"></a>PangoRenderer</span></h2>
+<p>PangoRenderer — Rendering driver base class</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="pango-pango-renderer.synopsis"></a><h2>Synopsis</h2>
+<a name="PangoRenderer"></a><a name="PangoRenderPart"></a><pre class="synopsis">struct              <a class="link" href="pango-pango-renderer.html#PangoRenderer-struct" title="struct PangoRenderer">PangoRenderer</a>;
+enum                <a class="link" href="pango-pango-renderer.html#PangoRenderPart-enum" title="enum PangoRenderPart">PangoRenderPart</a>;
+#define             <a class="link" href="pango-pango-renderer.html#PANGO-TYPE-RENDER-PART:CAPS" title="PANGO_TYPE_RENDER_PART">PANGO_TYPE_RENDER_PART</a>
+struct              <a class="link" href="pango-pango-renderer.html#PangoRendererClass" title="struct PangoRendererClass">PangoRendererClass</a>;
+<span class="returnvalue">void</span>                <a class="link" href="pango-pango-renderer.html#pango-renderer-draw-layout" title="pango_renderer_draw_layout ()">pango_renderer_draw_layout</a>          (<em class="parameter"><code><a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a> *renderer</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Layout-Objects.html#PangoLayout"><span class="type">PangoLayout</span></a> *layout</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> x</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> y</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="pango-pango-renderer.html#pango-renderer-draw-layout-line" title="pango_renderer_draw_layout_line ()">pango_renderer_draw_layout_line</a>     (<em class="parameter"><code><a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a> *renderer</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Layout-Objects.html#PangoLayoutLine"><span class="type">PangoLayoutLine</span></a> *line</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> x</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> y</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="pango-pango-renderer.html#pango-renderer-draw-glyphs" title="pango_renderer_draw_glyphs ()">pango_renderer_draw_glyphs</a>          (<em class="parameter"><code><a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a> *renderer</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Fonts.html#PangoFont"><span class="type">PangoFont</span></a> *font</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Glyph-Storage.html#PangoGlyphString"><span class="type">PangoGlyphString</span></a> *glyphs</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> x</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> y</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="pango-pango-renderer.html#pango-renderer-draw-glyph-item" title="pango_renderer_draw_glyph_item ()">pango_renderer_draw_glyph_item</a>      (<em class="parameter"><code><a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a> *renderer</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *text</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Glyph-Storage.html#PangoGlyphItem"><span class="type">PangoGlyphItem</span></a> *glyph_item</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> x</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> y</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="pango-pango-renderer.html#pango-renderer-draw-rectangle" title="pango_renderer_draw_rectangle ()">pango_renderer_draw_rectangle</a>       (<em class="parameter"><code><a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a> *renderer</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-pango-renderer.html#PangoRenderPart"><span class="type">PangoRenderPart</span></a> part</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> x</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> y</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> width</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> height</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="pango-pango-renderer.html#pango-renderer-draw-error-underline" title="pango_renderer_draw_error_underline ()">pango_renderer_draw_error_underline</a> (<em class="parameter"><code><a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a> *renderer</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> x</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> y</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> width</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> height</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="pango-pango-renderer.html#pango-renderer-draw-trapezoid" title="pango_renderer_draw_trapezoid ()">pango_renderer_draw_trapezoid</a>       (<em class="parameter"><code><a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a> *renderer</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-pango-renderer.html#PangoRenderPart"><span class="type">PangoRenderPart</span></a> part</code></em>,
+                                                         <em class="parameter"><code><span class="type">double</span> y1_</code></em>,
+                                                         <em class="parameter"><code><span class="type">double</span> x11</code></em>,
+                                                         <em class="parameter"><code><span class="type">double</span> x21</code></em>,
+                                                         <em class="parameter"><code><span class="type">double</span> y2</code></em>,
+                                                         <em class="parameter"><code><span class="type">double</span> x12</code></em>,
+                                                         <em class="parameter"><code><span class="type">double</span> x22</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="pango-pango-renderer.html#pango-renderer-draw-glyph" title="pango_renderer_draw_glyph ()">pango_renderer_draw_glyph</a>           (<em class="parameter"><code><a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a> *renderer</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Fonts.html#PangoFont"><span class="type">PangoFont</span></a> *font</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Glyph-Storage.html#PangoGlyph" title="PangoGlyph"><span class="type">PangoGlyph</span></a> glyph</code></em>,
+                                                         <em class="parameter"><code><span class="type">double</span> x</code></em>,
+                                                         <em class="parameter"><code><span class="type">double</span> y</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="pango-pango-renderer.html#pango-renderer-activate" title="pango_renderer_activate ()">pango_renderer_activate</a>             (<em class="parameter"><code><a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a> *renderer</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="pango-pango-renderer.html#pango-renderer-deactivate" title="pango_renderer_deactivate ()">pango_renderer_deactivate</a>           (<em class="parameter"><code><a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a> *renderer</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="pango-pango-renderer.html#pango-renderer-part-changed" title="pango_renderer_part_changed ()">pango_renderer_part_changed</a>         (<em class="parameter"><code><a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a> *renderer</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-pango-renderer.html#PangoRenderPart"><span class="type">PangoRenderPart</span></a> part</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="pango-pango-renderer.html#pango-renderer-set-color" title="pango_renderer_set_color ()">pango_renderer_set_color</a>            (<em class="parameter"><code><a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a> *renderer</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-pango-renderer.html#PangoRenderPart"><span class="type">PangoRenderPart</span></a> part</code></em>,
+                                                         <em class="parameter"><code>const <a class="link" href="pango-Text-Attributes.html#PangoColor"><span class="type">PangoColor</span></a> *color</code></em>);
+<a class="link" href="pango-Text-Attributes.html#PangoColor"><span class="returnvalue">PangoColor</span></a> *        <a class="link" href="pango-pango-renderer.html#pango-renderer-get-color" title="pango_renderer_get_color ()">pango_renderer_get_color</a>            (<em class="parameter"><code><a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a> *renderer</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-pango-renderer.html#PangoRenderPart"><span class="type">PangoRenderPart</span></a> part</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="pango-pango-renderer.html#pango-renderer-set-matrix" title="pango_renderer_set_matrix ()">pango_renderer_set_matrix</a>           (<em class="parameter"><code><a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a> *renderer</code></em>,
+                                                         <em class="parameter"><code>const <a class="link" href="pango-Glyph-Storage.html#PangoMatrix"><span class="type">PangoMatrix</span></a> *matrix</code></em>);
+const <a class="link" href="pango-Glyph-Storage.html#PangoMatrix"><span class="returnvalue">PangoMatrix</span></a> * <a class="link" href="pango-pango-renderer.html#pango-renderer-get-matrix" title="pango_renderer_get_matrix ()">pango_renderer_get_matrix</a>           (<em class="parameter"><code><a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a> *renderer</code></em>);
+<a class="link" href="pango-Layout-Objects.html#PangoLayout"><span class="returnvalue">PangoLayout</span></a> *       <a class="link" href="pango-pango-renderer.html#pango-renderer-get-layout" title="pango_renderer_get_layout ()">pango_renderer_get_layout</a>           (<em class="parameter"><code><a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a> *renderer</code></em>);
+<a class="link" href="pango-Layout-Objects.html#PangoLayoutLine"><span class="returnvalue">PangoLayoutLine</span></a> *   <a class="link" href="pango-pango-renderer.html#pango-renderer-get-layout-line" title="pango_renderer_get_layout_line ()">pango_renderer_get_layout_line</a>      (<em class="parameter"><code><a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a> *renderer</code></em>);
+</pre>
+</div>
+<div class="refsect1">
+<a name="pango-pango-renderer.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
+   +----PangoRenderer
+         +----<a class="link" href="pango-Xft-Fonts-and-Rendering.html#PangoXftRenderer">PangoXftRenderer</a>
+</pre>
+<pre class="synopsis">
+  GEnum
+   +----PangoRenderPart
+</pre>
+</div>
+<div class="refsect1">
+<a name="pango-pango-renderer.description"></a><h2>Description</h2>
+<p>
+<a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a> is a base class that contains the necessary logic for
+rendering a <a class="link" href="pango-Layout-Objects.html#PangoLayout"><span class="type">PangoLayout</span></a> or <a class="link" href="pango-Layout-Objects.html#PangoLayoutLine"><span class="type">PangoLayoutLine</span></a>. By subclassing
+<a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a> and overriding operations such as <em class="parameter"><code>draw_glyphs</code></em> and
+<em class="parameter"><code>draw_rectangle</code></em>, renderers for particular font backends and
+destinations can be created.
+</p>
+</div>
+<div class="refsect1">
+<a name="pango-pango-renderer.details"></a><h2>Details</h2>
+<div class="refsect2">
+<a name="PangoRenderer-struct"></a><h3>struct PangoRenderer</h3>
+<pre class="programlisting">struct PangoRenderer {
+  PangoMatrix *matrix;		/* May be NULL */
+};
+</pre>
+<p>
+<a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a> is a base class for objects that are used to
+render Pango objects such as <a class="link" href="pango-Glyph-Storage.html#PangoGlyphString"><span class="type">PangoGlyphString</span></a> and
+<a class="link" href="pango-Layout-Objects.html#PangoLayout"><span class="type">PangoLayout</span></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><a class="link" href="pango-Glyph-Storage.html#PangoMatrix"><span class="type">PangoMatrix</span></a> *<em class="structfield"><code><a name="PangoRenderer-struct.matrix"></a>matrix</code></em>;</span></p></td>
+<td>the current transformation matrix for the Renderer; may
+be <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>, which should be treated the same as the identity matrix.</td>
+</tr></tbody>
+</table></div>
+<p class="since">Since 1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="PangoRenderPart-enum"></a><h3>enum PangoRenderPart</h3>
+<pre class="programlisting">typedef enum {
+  PANGO_RENDER_PART_FOREGROUND,
+  PANGO_RENDER_PART_BACKGROUND,
+  PANGO_RENDER_PART_UNDERLINE,
+  PANGO_RENDER_PART_STRIKETHROUGH
+} PangoRenderPart;
+</pre>
+<p>
+<a class="link" href="pango-pango-renderer.html#PangoRenderPart"><span class="type">PangoRenderPart</span></a> defines different items to render for such
+purposes as setting colors.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><a name="PANGO-RENDER-PART-FOREGROUND:CAPS"></a><span class="term"><code class="literal">PANGO_RENDER_PART_FOREGROUND</code></span></p></td>
+<td>the text itself
+</td>
+</tr>
+<tr>
+<td><p><a name="PANGO-RENDER-PART-BACKGROUND:CAPS"></a><span class="term"><code class="literal">PANGO_RENDER_PART_BACKGROUND</code></span></p></td>
+<td>the area behind the text
+</td>
+</tr>
+<tr>
+<td><p><a name="PANGO-RENDER-PART-UNDERLINE:CAPS"></a><span class="term"><code class="literal">PANGO_RENDER_PART_UNDERLINE</code></span></p></td>
+<td>underlines
+</td>
+</tr>
+<tr>
+<td><p><a name="PANGO-RENDER-PART-STRIKETHROUGH:CAPS"></a><span class="term"><code class="literal">PANGO_RENDER_PART_STRIKETHROUGH</code></span></p></td>
+<td>strikethrough lines
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="PANGO-TYPE-RENDER-PART:CAPS"></a><h3>PANGO_TYPE_RENDER_PART</h3>
+<pre class="programlisting">#define PANGO_TYPE_RENDER_PART (pango_render_part_get_type())
+</pre>
+<p>
+The <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> type for <a class="link" href="pango-pango-renderer.html#PangoRenderPart"><span class="type">PangoRenderPart</span></a>.
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="PangoRendererClass"></a><h3>struct PangoRendererClass</h3>
+<pre class="programlisting">struct PangoRendererClass {
+  /* All of the following have default implementations
+   * and take as coordinates user coordinates in Pango units
+   */
+  void (*draw_glyphs) (PangoRenderer     *renderer,
+		       PangoFont         *font,
+		       PangoGlyphString  *glyphs,
+		       int                x,
+		       int                y);
+  void (*draw_rectangle) (PangoRenderer     *renderer,
+			  PangoRenderPart    part,
+			  int                x,
+			  int                y,
+			  int                width,
+			  int                height);
+  void (*draw_error_underline) (PangoRenderer     *renderer,
+				int                x,
+				int                y,
+				int                width,
+				int                height);
+
+  /* Nothing is drawn for shaped glyphs unless this is implemented */
+  void (*draw_shape) (PangoRenderer  *renderer,
+		      PangoAttrShape *attr,
+		      int             x,
+		      int             y);
+
+  /* These two must be implemented and take coordinates in
+   * device space as doubles.
+   */
+  void (*draw_trapezoid) (PangoRenderer  *renderer,
+			  PangoRenderPart part,
+			  double          y1_,
+			  double          x11,
+			  double          x21,
+			  double          y2,
+			  double          x12,
+			  double          x22);
+  void (*draw_glyph) (PangoRenderer *renderer,
+		      PangoFont     *font,
+		      PangoGlyph     glyph,
+		      double         x,
+		      double         y);
+
+  /* Notification of change in rendering attributes
+   */
+  void (*part_changed) (PangoRenderer   *renderer,
+			PangoRenderPart  part);
+
+  /* Paired around drawing operations
+   */
+  void (*begin) (PangoRenderer *renderer);
+  void (*end)   (PangoRenderer *renderer);
+
+  /* Hooks into the details of layout rendering
+   */
+  void (*prepare_run) (PangoRenderer  *renderer,
+		       PangoLayoutRun *run);
+
+  /* All of the following have default implementations
+   * and take as coordinates user coordinates in Pango units
+   */
+  void (*draw_glyph_item) (PangoRenderer     *renderer,
+			   const char        *text,
+			   PangoGlyphItem    *glyph_item,
+			   int                x,
+			   int                y);
+};
+</pre>
+<p>
+Class structure for <a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="PangoRendererClass.draw-glyphs"></a>draw_glyphs</code></em> ()</span></p></td>
+<td>draws a <a class="link" href="pango-Glyph-Storage.html#PangoGlyphString"><span class="type">PangoGlyphString</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="PangoRendererClass.draw-rectangle"></a>draw_rectangle</code></em> ()</span></p></td>
+<td>draws a rectangle</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="PangoRendererClass.draw-error-underline"></a>draw_error_underline</code></em> ()</span></p></td>
+<td>draws a squiggly line that approximately
+covers the given rectangle in the style of an underline used to
+indicate a spelling error.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="PangoRendererClass.draw-shape"></a>draw_shape</code></em> ()</span></p></td>
+<td>draw content for a glyph shaped with <a class="link" href="pango-Text-Attributes.html#PangoAttrShape" title="struct PangoAttrShape"><span class="type">PangoAttrShape</span></a>.
+<em class="parameter"><code>x</code></em>, <em class="parameter"><code>y</code></em> are the coordinates of the left edge of the baseline,
+in user coordinates.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="PangoRendererClass.draw-trapezoid"></a>draw_trapezoid</code></em> ()</span></p></td>
+<td>draws a trapezoidal filled area</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="PangoRendererClass.draw-glyph"></a>draw_glyph</code></em> ()</span></p></td>
+<td>draws a single glyph</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="PangoRendererClass.part-changed"></a>part_changed</code></em> ()</span></p></td>
+<td>do renderer specific processing when rendering
+attributes change</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="PangoRendererClass.begin"></a>begin</code></em> ()</span></p></td>
+<td>Do renderer-specific initialization before drawing</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="PangoRendererClass.end"></a>end</code></em> ()</span></p></td>
+<td>Do renderer-specific cleanup after drawing</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="PangoRendererClass.prepare-run"></a>prepare_run</code></em> ()</span></p></td>
+<td>updates the renderer for a new run</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="PangoRendererClass.draw-glyph-item"></a>draw_glyph_item</code></em> ()</span></p></td>
+<td>draws a <a class="link" href="pango-Glyph-Storage.html#PangoGlyphItem"><span class="type">PangoGlyphItem</span></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-renderer-draw-layout"></a><h3>pango_renderer_draw_layout ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                pango_renderer_draw_layout          (<em class="parameter"><code><a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a> *renderer</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Layout-Objects.html#PangoLayout"><span class="type">PangoLayout</span></a> *layout</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> x</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> y</code></em>);</pre>
+<p>
+Draws <em class="parameter"><code>layout</code></em> with the specified <a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>renderer</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>layout</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-Layout-Objects.html#PangoLayout"><span class="type">PangoLayout</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>x</code></em> :</span></p></td>
+<td>X position of left edge of baseline, in user space coordinates
+in Pango units.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>y</code></em> :</span></p></td>
+<td>Y position of left edge of baseline, in user space coordinates
+in Pango units.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-renderer-draw-layout-line"></a><h3>pango_renderer_draw_layout_line ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                pango_renderer_draw_layout_line     (<em class="parameter"><code><a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a> *renderer</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Layout-Objects.html#PangoLayoutLine"><span class="type">PangoLayoutLine</span></a> *line</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> x</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> y</code></em>);</pre>
+<p>
+Draws <em class="parameter"><code>line</code></em> with the specified <a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>renderer</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>line</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-Layout-Objects.html#PangoLayoutLine"><span class="type">PangoLayoutLine</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>x</code></em> :</span></p></td>
+<td>X position of left edge of baseline, in user space coordinates
+in Pango units.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>y</code></em> :</span></p></td>
+<td>Y position of left edge of baseline, in user space coordinates
+in Pango units.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-renderer-draw-glyphs"></a><h3>pango_renderer_draw_glyphs ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                pango_renderer_draw_glyphs          (<em class="parameter"><code><a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a> *renderer</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Fonts.html#PangoFont"><span class="type">PangoFont</span></a> *font</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Glyph-Storage.html#PangoGlyphString"><span class="type">PangoGlyphString</span></a> *glyphs</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> x</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> y</code></em>);</pre>
+<p>
+Draws the glyphs in <em class="parameter"><code>glyphs</code></em> with the specified <a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>renderer</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>font</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-Fonts.html#PangoFont"><span class="type">PangoFont</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>glyphs</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-Glyph-Storage.html#PangoGlyphString"><span class="type">PangoGlyphString</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>x</code></em> :</span></p></td>
+<td>X position of left edge of baseline, in user space coordinates
+in Pango units.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>y</code></em> :</span></p></td>
+<td>Y position of left edge of baseline, in user space coordinates
+in Pango units.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-renderer-draw-glyph-item"></a><h3>pango_renderer_draw_glyph_item ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                pango_renderer_draw_glyph_item      (<em class="parameter"><code><a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a> *renderer</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *text</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Glyph-Storage.html#PangoGlyphItem"><span class="type">PangoGlyphItem</span></a> *glyph_item</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> x</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> y</code></em>);</pre>
+<p>
+Draws the glyphs in <em class="parameter"><code>glyph_item</code></em> with the specified <a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a>,
+embedding the text associated with the glyphs in the output if the
+output format supports it (PDF for example).
+</p>
+<p>
+Note that <em class="parameter"><code>text</code></em> is the start of the text for layout, which is then
+indexed by <code class="literal"><em class="parameter"><code>glyph_item-&gt;item-&gt;offset</code></em></code>.
+</p>
+<p>
+If <em class="parameter"><code>text</code></em> is <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>, this simply calls <a class="link" href="pango-pango-renderer.html#pango-renderer-draw-glyphs" title="pango_renderer_draw_glyphs ()"><code class="function">pango_renderer_draw_glyphs()</code></a>.
+</p>
+<p>
+The default implementation of this method simply falls back to
+<a class="link" href="pango-pango-renderer.html#pango-renderer-draw-glyphs" title="pango_renderer_draw_glyphs ()"><code class="function">pango_renderer_draw_glyphs()</code></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>renderer</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>text</code></em> :</span></p></td>
+<td>the UTF-8 text that <em class="parameter"><code>glyph_item</code></em> refers to, or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>glyph_item</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-Glyph-Storage.html#PangoGlyphItem"><span class="type">PangoGlyphItem</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>x</code></em> :</span></p></td>
+<td>X position of left edge of baseline, in user space coordinates
+in Pango units.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>y</code></em> :</span></p></td>
+<td>Y position of left edge of baseline, in user space coordinates
+in Pango units.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.22</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-renderer-draw-rectangle"></a><h3>pango_renderer_draw_rectangle ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                pango_renderer_draw_rectangle       (<em class="parameter"><code><a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a> *renderer</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-pango-renderer.html#PangoRenderPart"><span class="type">PangoRenderPart</span></a> part</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> x</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> y</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> width</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> height</code></em>);</pre>
+<p>
+Draws an axis-aligned rectangle in user space coordinates with the
+specified <a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a>.
+</p>
+<p>
+This should be called while <em class="parameter"><code>renderer</code></em> is already active.  Use
+<a class="link" href="pango-pango-renderer.html#pango-renderer-activate" title="pango_renderer_activate ()"><code class="function">pango_renderer_activate()</code></a> to activate a renderer.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>renderer</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>part</code></em> :</span></p></td>
+<td>type of object this rectangle is part of</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>x</code></em> :</span></p></td>
+<td>X position at which to draw rectangle, in user space coordinates in Pango units</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>y</code></em> :</span></p></td>
+<td>Y position at which to draw rectangle, in user space coordinates in Pango units</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>width</code></em> :</span></p></td>
+<td>width of rectangle in Pango units in user space coordinates</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>height</code></em> :</span></p></td>
+<td>height of rectangle in Pango units in user space coordinates</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-renderer-draw-error-underline"></a><h3>pango_renderer_draw_error_underline ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                pango_renderer_draw_error_underline (<em class="parameter"><code><a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a> *renderer</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> x</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> y</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> width</code></em>,
+                                                         <em class="parameter"><code><span class="type">int</span> height</code></em>);</pre>
+<p>
+Draw a squiggly line that approximately covers the given rectangle
+in the style of an underline used to indicate a spelling error.
+(The width of the underline is rounded to an integer number
+of up/down segments and the resulting rectangle is centered
+in the original rectangle)
+</p>
+<p>
+This should be called while <em class="parameter"><code>renderer</code></em> is already active.  Use
+<a class="link" href="pango-pango-renderer.html#pango-renderer-activate" title="pango_renderer_activate ()"><code class="function">pango_renderer_activate()</code></a> to activate a renderer.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>renderer</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>x</code></em> :</span></p></td>
+<td>X coordinate of underline, in Pango units in user coordinate system</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>y</code></em> :</span></p></td>
+<td>Y coordinate of underline, in Pango units in user coordinate system</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>width</code></em> :</span></p></td>
+<td>width of underline, in Pango units in user coordinate system</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>height</code></em> :</span></p></td>
+<td>height of underline, in Pango units in user coordinate system</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-renderer-draw-trapezoid"></a><h3>pango_renderer_draw_trapezoid ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                pango_renderer_draw_trapezoid       (<em class="parameter"><code><a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a> *renderer</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-pango-renderer.html#PangoRenderPart"><span class="type">PangoRenderPart</span></a> part</code></em>,
+                                                         <em class="parameter"><code><span class="type">double</span> y1_</code></em>,
+                                                         <em class="parameter"><code><span class="type">double</span> x11</code></em>,
+                                                         <em class="parameter"><code><span class="type">double</span> x21</code></em>,
+                                                         <em class="parameter"><code><span class="type">double</span> y2</code></em>,
+                                                         <em class="parameter"><code><span class="type">double</span> x12</code></em>,
+                                                         <em class="parameter"><code><span class="type">double</span> x22</code></em>);</pre>
+<p>
+Draws a trapezoid with the parallel sides aligned with the X axis
+using the given <a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a>; coordinates are in device space.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>renderer</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>part</code></em> :</span></p></td>
+<td>type of object this trapezoid is part of</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>y1_</code></em> :</span></p></td>
+<td>Y coordinate of top of trapezoid</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>x11</code></em> :</span></p></td>
+<td>X coordinate of left end of top of trapezoid</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>x21</code></em> :</span></p></td>
+<td>X coordinate of right end of top of trapezoid</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>y2</code></em> :</span></p></td>
+<td>Y coordinate of bottom of trapezoid</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>x12</code></em> :</span></p></td>
+<td>X coordinate of left end of bottom of trapezoid</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>x22</code></em> :</span></p></td>
+<td>X coordinate of right end of bottom of trapezoid</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-renderer-draw-glyph"></a><h3>pango_renderer_draw_glyph ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                pango_renderer_draw_glyph           (<em class="parameter"><code><a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a> *renderer</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Fonts.html#PangoFont"><span class="type">PangoFont</span></a> *font</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-Glyph-Storage.html#PangoGlyph" title="PangoGlyph"><span class="type">PangoGlyph</span></a> glyph</code></em>,
+                                                         <em class="parameter"><code><span class="type">double</span> x</code></em>,
+                                                         <em class="parameter"><code><span class="type">double</span> y</code></em>);</pre>
+<p>
+Draws a single glyph with coordinates in device space.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>renderer</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>font</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-Fonts.html#PangoFont"><span class="type">PangoFont</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>glyph</code></em> :</span></p></td>
+<td>the glyph index of a single glyph</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>x</code></em> :</span></p></td>
+<td>X coordinate of left edge of baseline of glyph</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>y</code></em> :</span></p></td>
+<td>Y coordinate of left edge of baseline of glyph</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-renderer-activate"></a><h3>pango_renderer_activate ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                pango_renderer_activate             (<em class="parameter"><code><a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a> *renderer</code></em>);</pre>
+<p>
+Does initial setup before rendering operations on <em class="parameter"><code>renderer</code></em>.
+<a class="link" href="pango-pango-renderer.html#pango-renderer-deactivate" title="pango_renderer_deactivate ()"><code class="function">pango_renderer_deactivate()</code></a> should be called when done drawing.
+Calls such as <a class="link" href="pango-pango-renderer.html#pango-renderer-draw-layout" title="pango_renderer_draw_layout ()"><code class="function">pango_renderer_draw_layout()</code></a> automatically
+activate the layout before drawing on it. Calls to
+<a class="link" href="pango-pango-renderer.html#pango-renderer-activate" title="pango_renderer_activate ()"><code class="function">pango_renderer_activate()</code></a> and <a class="link" href="pango-pango-renderer.html#pango-renderer-deactivate" title="pango_renderer_deactivate ()"><code class="function">pango_renderer_deactivate()</code></a> can
+be nested and the renderer will only be initialized and
+deinitialized once.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>renderer</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a>
+</td>
+</tr></tbody>
+</table></div>
+<p class="since">Since 1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-renderer-deactivate"></a><h3>pango_renderer_deactivate ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                pango_renderer_deactivate           (<em class="parameter"><code><a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a> *renderer</code></em>);</pre>
+<p>
+Cleans up after rendering operations on <em class="parameter"><code>renderer</code></em>. See
+docs for <a class="link" href="pango-pango-renderer.html#pango-renderer-activate" title="pango_renderer_activate ()"><code class="function">pango_renderer_activate()</code></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>renderer</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a>
+</td>
+</tr></tbody>
+</table></div>
+<p class="since">Since 1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-renderer-part-changed"></a><h3>pango_renderer_part_changed ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                pango_renderer_part_changed         (<em class="parameter"><code><a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a> *renderer</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-pango-renderer.html#PangoRenderPart"><span class="type">PangoRenderPart</span></a> part</code></em>);</pre>
+<p>
+Informs Pango that the way that the rendering is done
+for <em class="parameter"><code>part</code></em> has changed in a way that would prevent multiple
+pieces being joined together into one drawing call. For
+instance, if a subclass of <a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a> was to add a stipple
+option for drawing underlines, it needs to call
+</p>
+<p>
+</p>
+<div class="informalexample">
+  <table class="listing_frame" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+      <tr>
+        <td class="listing_lines" align="right"><pre>1</pre></td>
+        <td class="listing_code"><pre class="programlisting"><span class="function"><a href="pango-pango-renderer.html#pango-renderer-part-changed">pango_renderer_part_changed</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">render</span><span class="symbol">,</span><span class="normal"> <a href="pango-pango-renderer.html#PANGO-RENDER-PART-UNDERLINE:CAPS">PANGO_RENDER_PART_UNDERLINE</a></span><span class="symbol">);</span></pre></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+</p>
+<p>
+When the stipple changes or underlines with different stipples
+might be joined together. Pango automatically calls this for
+changes to colors. (See <a class="link" href="pango-pango-renderer.html#pango-renderer-set-color" title="pango_renderer_set_color ()"><code class="function">pango_renderer_set_color()</code></a>)
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>renderer</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>part</code></em> :</span></p></td>
+<td>the part for which rendering has changed.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-renderer-set-color"></a><h3>pango_renderer_set_color ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                pango_renderer_set_color            (<em class="parameter"><code><a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a> *renderer</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-pango-renderer.html#PangoRenderPart"><span class="type">PangoRenderPart</span></a> part</code></em>,
+                                                         <em class="parameter"><code>const <a class="link" href="pango-Text-Attributes.html#PangoColor"><span class="type">PangoColor</span></a> *color</code></em>);</pre>
+<p>
+Sets the color for part of the rendering.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>renderer</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>part</code></em> :</span></p></td>
+<td>the part to change the color of</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>color</code></em> :</span></p></td>
+<td>the new color or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> to unset the current color. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-renderer-get-color"></a><h3>pango_renderer_get_color ()</h3>
+<pre class="programlisting"><a class="link" href="pango-Text-Attributes.html#PangoColor"><span class="returnvalue">PangoColor</span></a> *        pango_renderer_get_color            (<em class="parameter"><code><a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a> *renderer</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="pango-pango-renderer.html#PangoRenderPart"><span class="type">PangoRenderPart</span></a> part</code></em>);</pre>
+<p>
+Gets the current rendering color for the specified part.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>renderer</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>part</code></em> :</span></p></td>
+<td>the part to get the color for</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the color for the specified part, or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a>
+if it hasn't been set and should be inherited from the
+environment.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-renderer-set-matrix"></a><h3>pango_renderer_set_matrix ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                pango_renderer_set_matrix           (<em class="parameter"><code><a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a> *renderer</code></em>,
+                                                         <em class="parameter"><code>const <a class="link" href="pango-Glyph-Storage.html#PangoMatrix"><span class="type">PangoMatrix</span></a> *matrix</code></em>);</pre>
+<p>
+Sets the transformation matrix that will be applied when rendering.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>renderer</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>matrix</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-Glyph-Storage.html#PangoMatrix"><span class="type">PangoMatrix</span></a>, or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> to unset any existing matrix.
+(No matrix set is the same as setting the identity matrix.). <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-renderer-get-matrix"></a><h3>pango_renderer_get_matrix ()</h3>
+<pre class="programlisting">const <a class="link" href="pango-Glyph-Storage.html#PangoMatrix"><span class="returnvalue">PangoMatrix</span></a> * pango_renderer_get_matrix           (<em class="parameter"><code><a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a> *renderer</code></em>);</pre>
+<p>
+Gets the transformation matrix that will be applied when
+rendering. See <a class="link" href="pango-pango-renderer.html#pango-renderer-set-matrix" title="pango_renderer_set_matrix ()"><code class="function">pango_renderer_set_matrix()</code></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>renderer</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the matrix, or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> if no matrix has been set
+(which is the same as the identity matrix). The returned
+matrix is owned by Pango and must not be modified or
+freed.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-renderer-get-layout"></a><h3>pango_renderer_get_layout ()</h3>
+<pre class="programlisting"><a class="link" href="pango-Layout-Objects.html#PangoLayout"><span class="returnvalue">PangoLayout</span></a> *       pango_renderer_get_layout           (<em class="parameter"><code><a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a> *renderer</code></em>);</pre>
+<p>
+Gets the layout currently being rendered using <em class="parameter"><code>renderer</code></em>.
+Calling this function only makes sense from inside a subclass's
+methods, like in its draw_shape() for example.
+</p>
+<p>
+The returned layout should not be modified while still being
+rendered.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>renderer</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the layout, or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> if no layout is being
+rendered using <em class="parameter"><code>renderer</code></em> at this time. <span class="annotation">[<a href="http://foldoc.org/transfer%20none"><span class="acronym">transfer none</span></a>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.20</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-renderer-get-layout-line"></a><h3>pango_renderer_get_layout_line ()</h3>
+<pre class="programlisting"><a class="link" href="pango-Layout-Objects.html#PangoLayoutLine"><span class="returnvalue">PangoLayoutLine</span></a> *   pango_renderer_get_layout_line      (<em class="parameter"><code><a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a> *renderer</code></em>);</pre>
+<p>
+Gets the layout line currently being rendered using <em class="parameter"><code>renderer</code></em>.
+Calling this function only makes sense from inside a subclass's
+methods, like in its draw_shape() for example.
+</p>
+<p>
+The returned layout line should not be modified while still being
+rendered.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>renderer</code></em> :</span></p></td>
+<td>a <a class="link" href="pango-pango-renderer.html#PangoRenderer"><span class="type">PangoRenderer</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the layout line, or <a href="/usr/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL:CAPS"><code class="literal">NULL</code></a> if no layout line is being
+rendered using <em class="parameter"><code>renderer</code></em> at this time.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.20</p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

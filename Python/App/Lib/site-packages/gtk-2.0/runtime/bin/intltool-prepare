@@ -1,0 +1,343 @@
+#!/opt/perl/bin/perl -w
+# -*- Mode: perl; indent-tabs-mode: nil; c-basic-offset: 4  -*-
+
+#  Intltool .desktop, .directory Prepare Tool
+#
+#  Copyright (C) 2001 Free Software Foundation.
+#
+#  Intltool is free software; you can redistribute it and/or
+#  modify it under the terms of the GNU General Public License as
+#  published by the Free Software Foundation; either version 2 of the
+#  License, or (at your option) any later version.
+#
+#  Intltool is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#  General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program; if not, write to the Free Software
+#  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+#
+#  Author(s): Gediminas Paulauskas <menesis@delfi.lt>
+#	      Kenneth Christiansen <kenneth@gnu.org>
+
+## Release information
+my $PROGRAM      = "intltool-prepare";
+my $PACKAGE      = "intltool";
+my $VERSION      = "0.40.4";
+
+## Loaded modules
+use strict;
+use Getopt::Long;
+use File::Find;
+
+## Scalars used by the option stuff
+my $HELP_ARG    = "0";
+my $VERSION_ARG = "0";
+my $VERBOSE     = "0";
+
+my @languages;
+my @desktop_files;
+my $new;
+my $file;
+
+my $desktop_extension = "(desktop|soundlist|keys|directory)";
+
+my $keywords = "Name|Comment|GenericName|SwallowTitle|description";
+
+## Always print as the first thing
+$| = 1;
+
+## Handle options
+GetOptions (
+            "help|h"            => \$HELP_ARG,
+            "version|v"         => \$VERSION_ARG,
+            "verbose|x"         => \$VERBOSE
+            ) or &invalid_option;
+
+
+## Use the supplied arguments
+## Check for options.
+## This section will check for the different options.
+
+sub split_on_argument {
+
+    if ($VERSION_ARG) {
+        &version;
+
+    } elsif ($HELP_ARG) {
+        &help;
+
+    } else {
+        &main;
+    }
+}
+
+&split_on_argument;
+
+sub main
+{
+    print "Working, please wait...\n" if (! $VERBOSE);
+    &find_desktop_files;
+    &append_keywords;
+    &add_to_potfiles;
+    &perform_rescue;
+    &add_to_cvsignore;
+    &fix_makefiles;
+    &generate_empty;
+}
+
+sub version {
+    print <<_EOF_;
+${PROGRAM} ${PACKAGE} $VERSION
+Written by Gediminas Paulauskas <menesis\@delfi.lt>, 2000.
+
+Copyright (C) 2000 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+_EOF_
+    exit;
+}
+
+sub help
+{
+    print <<_EOF_;
+Usage: ${PROGRAM} [OPTION] KEYWORD...
+Automates preparation steps before software make use of intltool.
+KEYWORD is a list of additional key other than "Name", "Comment"
+and "description".
+
+  -h, --help                 shows this help page
+  -v, --version              shows the version
+  -x, --verbose              show lots of feedback
+
+Report bugs to http://bugzilla.gnome.org/ (product name "$PACKAGE")
+or send email to <xml-i18n-tools\@gnome.org>.
+_EOF_
+    exit;
+}
+
+sub invalid_option
+{
+    ## Handle invalid arguments
+    ## my $opt = $ARGV[0];
+    ## print "$PROGRAM: invalid option -- $opt\n";
+    print STDERR "Try `$PROGRAM --help' for more information.\n";
+    exit 1;
+}
+
+sub append_keywords
+{
+    my $arg;
+    foreach $arg (@ARGV) {
+        $keywords .= "|$arg";
+    }
+}
+
+sub add_to_potfiles
+{
+    open FILE, ">>po/POTFILES.in";
+    my $intro = 0;
+    foreach my $desktop (@desktop_files) {
+        next if contains("po/POTFILES.in", "$desktop.in");
+    # Print explanation comment only once
+        unless ($intro) {
+           print FILE "# files added by intltool-prepare\n";
+           $intro = 1;
+        }
+        print FILE "$desktop.in\n";
+    }
+    close FILE;
+}
+
+sub perform_rescue
+{
+    foreach $file (@desktop_files) {
+        &rescue_file($file);
+    }
+}
+
+sub rescue_file
+{
+    my ($filename) = @_;
+    my ($msgid, $line, $lang);
+
+    print "Rescuing translations from $filename ...\n" if $VERBOSE;
+
+    open ORIG, "<$filename";
+    $line = 1;
+ENTRY: while (<ORIG>) {
+        chomp;
+        $line++;
+	    my $entry = $_;
+        if (($entry =~ /^($keywords)=(.*)$/) ||
+            ($entry =~ /^(\s*description)=(.*)$/)) {
+            $msgid = $2;
+            $msgid =~ s/\\/\\\\/g;
+	    $msgid =~ s/\"/\\"/g;
+        } elsif (($entry =~ /^($keywords)\[(.*?)\]=(.*)$/) ||
+                 ($entry =~ /^(\s*\[)(.*?)\]description=(.*)$/)) {
+            $lang = $2;
+
+            my $msgstr = $3;
+            $msgstr =~ s/\\/\\\\/g;
+            $msgstr =~ s/"/\\"/g;
+	    
+            $line--;
+            if ((-s "po/$lang.po") && 
+                (contains("po/$lang.po", "msgid \"$msgid\""))) {
+                next ENTRY;
+            }
+            
+            open POFILE, ">>po/$lang.po";
+
+            print POFILE "\n#: $filename.in:$line\n";
+            print POFILE "msgid \"$msgid\"\n";
+            print POFILE "msgstr \"$msgstr\"\n";
+
+            close POFILE;
+        }
+    }
+}
+
+sub generate_empty
+{
+    my $all = ' ';
+    foreach my $full (@desktop_files) {
+        $new = "$full.in";
+        $all .= "$new ";
+	    print "Generating empty $new ...\n" if $VERBOSE;
+        open FULL, "<$full";
+        open NEW, ">$new";
+
+        while (<FULL>) {
+            unless (
+		            (/^($keywords)\[.*?\]=.*$/) ||
+        	        (/^\s*\[(.*?)\]description=.*$/)
+		           ) {
+                if (/^($keywords)=.*$/) {
+                    print NEW "_$_";
+                } elsif (/^(\s*)(description=.*)$/) {
+                    print NEW "$1_$2\n";
+                } else {
+                    print NEW;
+                }
+	        }
+        }
+
+        close NEW;
+    }
+    unless ($all eq ' ') {
+        print "*** Please add these files to CVS by following command: ***\n"
+            . "cvs add$all\n";
+    }
+}
+
+sub add_to_cvsignore
+{
+    my $all = ' ';
+    my $ign;
+    foreach $file (@desktop_files) {
+        $file =~ /^(.*\/)?(.+?\.$desktop_extension$)$/;
+        if ($1) {
+            $ign = "$1.cvsignore";
+        } else {
+            $ign = ".cvsignore";
+        }
+        my $basename = $2;
+
+        next if contains($ign, $basename);
+	    
+        print "Appending $basename to $ign\n" if $VERBOSE;
+        open FILE, ">>$ign";
+        print FILE "$basename\n";
+        $all .= "$file ";
+    }
+    close FILE;
+    unless ($all eq ' ') {
+        print "*** Please remove files from CVS by following command: ***\n"
+            . "cvs remove -f$all\n";
+    }
+}
+
+sub fix_makefiles
+{
+    my $file;
+    foreach $file (@desktop_files) {
+        my ($makefile, $line);
+
+        $file =~ /^(.*\/)?(.+?\.$desktop_extension$)$/;
+        if ($1) {
+            $makefile = "$1Makefile.am";
+        } else {
+            $makefile = "Makefile.am";
+        }
+        my $basename = $2;
+        print "Fixing $basename entry in $makefile\n" if $VERBOSE;
+
+        open MAKE, $makefile;
+        open NEWMAKE, ">$makefile.new";
+        my $extra = 0;
+        while ($line = <MAKE>) {
+            $extra = 1 if $line =~ /^EXTRA_DIST/;
+            if ($extra) {
+                if (($line =~ /$basename/) &&
+                    !($line =~ /$basename\.in/)) {
+                    $line =~ s/$basename/$basename\.in/;
+                }
+                $extra = 0 unless $line =~ /\\\s*$/
+            } else {
+                if ($line =~ /^(\w+)_DATA\s*=\s*$basename\s*$/) {
+                    my $name = $1;
+                    $line =~ s/^$name\_DATA/$name\_in_files/;
+                    $line =~ s/$basename/$basename\.in/;
+                    $basename =~ /\.($desktop_extension)$/;
+                    my $ext = $1;
+                    $line .= "$name\_DATA = \$($name\_in_files:.$ext.in=.$ext)\n";
+                    $ext =~ tr/a-z/A-Z/;
+                    if (!contains($makefile, "\@INTLTOOL_$ext\_RULE\@")) {
+                        $line .= "\@INTLTOOL_$ext\_RULE\@\n";
+                    }
+                }
+            }
+            print NEWMAKE $line;
+        }
+        close NEWMAKE;
+        rename "$makefile.new", $makefile;
+    }
+}
+
+sub contains
+{
+    my ($name, $str) = @_;
+    open CONT, "<$name";
+    while (<CONT>) {
+         chomp;
+         return 1 if $_ eq $str;
+    }
+    return 0;
+}
+
+sub find_desktop_files
+{
+    if ($VERBOSE) {
+        print "Found these interesting files:\n";
+    } else {
+        print "Finding interesting files...";
+    }
+    find (\&wanted, '.');
+    print "done\n" unless $VERBOSE;
+}
+
+sub wanted
+{
+    if (/\.$desktop_extension$/) {
+        my $file = $File::Find::name;
+        $file =~ s/\.\///;
+        push @desktop_files, $file;
+        print "$file\n" if $VERBOSE;
+    }
+}
+
+# vim: ts=4 sw=4 expandtab

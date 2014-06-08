@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>class Jekyll::EntryFilter - jekyll-2.0.0.rc1 Documentation</title>
+
+<link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../index.html">Home</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/jekyll/entry_filter.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link"><a href="../Object.html">Object</a>
+  
+</nav>
+
+    
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li ><a href="#method-c-new">::new</a>
+    
+    <li ><a href="#method-i-backup-3F">#backup?</a>
+    
+    <li ><a href="#method-i-base_directory">#base_directory</a>
+    
+    <li ><a href="#method-i-derive_base_directory">#derive_base_directory</a>
+    
+    <li ><a href="#method-i-ensure_leading_slash">#ensure_leading_slash</a>
+    
+    <li ><a href="#method-i-excluded-3F">#excluded?</a>
+    
+    <li ><a href="#method-i-filter">#filter</a>
+    
+    <li ><a href="#method-i-glob_include-3F">#glob_include?</a>
+    
+    <li ><a href="#method-i-included-3F">#included?</a>
+    
+    <li ><a href="#method-i-relative_to_source">#relative_to_source</a>
+    
+    <li ><a href="#method-i-special-3F">#special?</a>
+    
+    <li ><a href="#method-i-symlink-3F">#symlink?</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="../LICENSE.html">LICENSE</a>
+  
+    <li class="file"><a href="../README_markdown.html">README.markdown</a>
+  
+    <li class="file"><a href="../lib/jekyll/mime_types.html">mime.types</a>
+  
+    <li class="file"><a href="../lib/site_template/_includes/footer_html.html">footer.html</a>
+  
+    <li class="file"><a href="../lib/site_template/_includes/head_html.html">head.html</a>
+  
+    <li class="file"><a href="../lib/site_template/_includes/header_html.html">header.html</a>
+  
+    <li class="file"><a href="../lib/site_template/_layouts/default_html.html">default.html</a>
+  
+    <li class="file"><a href="../lib/site_template/_layouts/page_html.html">page.html</a>
+  
+    <li class="file"><a href="../lib/site_template/_layouts/post_html.html">post.html</a>
+  
+    <li class="file"><a href="../lib/site_template/about/index_md.html">index</a>
+  
+    <li class="file"><a href="../lib/site_template/css/main_css.html">main.css</a>
+  
+    <li class="file"><a href="../lib/site_template/feed_xml.html">feed.xml</a>
+  
+    <li class="file"><a href="../lib/site_template/index_html.html">index.html</a>
+  
+    <li class="file"><a href="../lib/site_template/projects/index_md.html">index</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../Jekyll.html">Jekyll</a>
+  
+    <li><a href="../Jekyll/Collection.html">Jekyll::Collection</a>
+  
+    <li><a href="../Jekyll/Command.html">Jekyll::Command</a>
+  
+    <li><a href="../Jekyll/Commands.html">Jekyll::Commands</a>
+  
+    <li><a href="../Jekyll/Commands/Build.html">Jekyll::Commands::Build</a>
+  
+    <li><a href="../Jekyll/Commands/Docs.html">Jekyll::Commands::Docs</a>
+  
+    <li><a href="../Jekyll/Commands/Doctor.html">Jekyll::Commands::Doctor</a>
+  
+    <li><a href="../Jekyll/Commands/New.html">Jekyll::Commands::New</a>
+  
+    <li><a href="../Jekyll/Commands/Serve.html">Jekyll::Commands::Serve</a>
+  
+    <li><a href="../Jekyll/Configuration.html">Jekyll::Configuration</a>
+  
+    <li><a href="../Jekyll/Configuration/FrontmatterDefaults.html">Jekyll::Configuration::FrontmatterDefaults</a>
+  
+    <li><a href="../Jekyll/Converter.html">Jekyll::Converter</a>
+  
+    <li><a href="../Jekyll/Converters.html">Jekyll::Converters</a>
+  
+    <li><a href="../Jekyll/Converters/Identity.html">Jekyll::Converters::Identity</a>
+  
+    <li><a href="../Jekyll/Converters/Markdown.html">Jekyll::Converters::Markdown</a>
+  
+    <li><a href="../Jekyll/Converters/Markdown/KramdownParser.html">Jekyll::Converters::Markdown::KramdownParser</a>
+  
+    <li><a href="../Jekyll/Converters/Markdown/MarukuParser.html">Jekyll::Converters::Markdown::MarukuParser</a>
+  
+    <li><a href="../Jekyll/Converters/Markdown/RDiscountParser.html">Jekyll::Converters::Markdown::RDiscountParser</a>
+  
+    <li><a href="../Jekyll/Converters/Markdown/RedcarpetParser.html">Jekyll::Converters::Markdown::RedcarpetParser</a>
+  
+    <li><a href="../Jekyll/Converters/Markdown/RedcarpetParser/CommonMethods.html">Jekyll::Converters::Markdown::RedcarpetParser::CommonMethods</a>
+  
+    <li><a href="../Jekyll/Converters/Markdown/RedcarpetParser/WithPygments.html">Jekyll::Converters::Markdown::RedcarpetParser::WithPygments</a>
+  
+    <li><a href="../Jekyll/Converters/Markdown/RedcarpetParser/WithRouge.html">Jekyll::Converters::Markdown::RedcarpetParser::WithRouge</a>
+  
+    <li><a href="../Jekyll/Converters/Markdown/RedcarpetParser/WithoutHighlighting.html">Jekyll::Converters::Markdown::RedcarpetParser::WithoutHighlighting</a>
+  
+    <li><a href="../Jekyll/Converters/Textile.html">Jekyll::Converters::Textile</a>
+  
+    <li><a href="../Jekyll/Convertible.html">Jekyll::Convertible</a>
+  
+    <li><a href="../Jekyll/Deprecator.html">Jekyll::Deprecator</a>
+  
+    <li><a href="../Jekyll/Document.html">Jekyll::Document</a>
+  
+    <li><a href="../Jekyll/Draft.html">Jekyll::Draft</a>
+  
+    <li><a href="../Jekyll/EntryFilter.html">Jekyll::EntryFilter</a>
+  
+    <li><a href="../Jekyll/Excerpt.html">Jekyll::Excerpt</a>
+  
+    <li><a href="../Jekyll/FatalException.html">Jekyll::FatalException</a>
+  
+    <li><a href="../Jekyll/Filters.html">Jekyll::Filters</a>
+  
+    <li><a href="../Jekyll/Generator.html">Jekyll::Generator</a>
+  
+    <li><a href="../Jekyll/Generators.html">Jekyll::Generators</a>
+  
+    <li><a href="../Jekyll/Generators/Pagination.html">Jekyll::Generators::Pagination</a>
+  
+    <li><a href="../Jekyll/GistTag.html">Jekyll::GistTag</a>
+  
+    <li><a href="../Jekyll/Layout.html">Jekyll::Layout</a>
+  
+    <li><a href="../Jekyll/LayoutReader.html">Jekyll::LayoutReader</a>
+  
+    <li><a href="../Jekyll/LiquidExtensions.html">Jekyll::LiquidExtensions</a>
+  
+    <li><a href="../Jekyll/Page.html">Jekyll::Page</a>
+  
+    <li><a href="../Jekyll/Pager.html">Jekyll::Pager</a>
+  
+    <li><a href="../Jekyll/Plugin.html">Jekyll::Plugin</a>
+  
+    <li><a href="../Jekyll/PluginManager.html">Jekyll::PluginManager</a>
+  
+    <li><a href="../Jekyll/Post.html">Jekyll::Post</a>
+  
+    <li><a href="../Jekyll/Publisher.html">Jekyll::Publisher</a>
+  
+    <li><a href="../Jekyll/RelatedPosts.html">Jekyll::RelatedPosts</a>
+  
+    <li><a href="../Jekyll/Renderer.html">Jekyll::Renderer</a>
+  
+    <li><a href="../Jekyll/Site.html">Jekyll::Site</a>
+  
+    <li><a href="../Jekyll/Site/Cleaner.html">Jekyll::Site::Cleaner</a>
+  
+    <li><a href="../Jekyll/StaticFile.html">Jekyll::StaticFile</a>
+  
+    <li><a href="../Jekyll/Stevenson.html">Jekyll::Stevenson</a>
+  
+    <li><a href="../Jekyll/Tags.html">Jekyll::Tags</a>
+  
+    <li><a href="../Jekyll/Tags/HighlightBlock.html">Jekyll::Tags::HighlightBlock</a>
+  
+    <li><a href="../Jekyll/Tags/IncludeTag.html">Jekyll::Tags::IncludeTag</a>
+  
+    <li><a href="../Jekyll/Tags/IncludeTagError.html">Jekyll::Tags::IncludeTagError</a>
+  
+    <li><a href="../Jekyll/Tags/PostComparer.html">Jekyll::Tags::PostComparer</a>
+  
+    <li><a href="../Jekyll/Tags/PostUrl.html">Jekyll::Tags::PostUrl</a>
+  
+    <li><a href="../Jekyll/URL.html">Jekyll::URL</a>
+  
+    <li><a href="../Jekyll/Utils.html">Jekyll::Utils</a>
+  
+    <li><a href="../Liquid.html">Liquid</a>
+  
+    <li><a href="../Object.html">Object</a>
+  
+    <li><a href="../SafeYAML.html">SafeYAML</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class Jekyll::EntryFilter</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+    <!-- Constants -->
+    <section id="constants-list" class="section">
+      <h3 class="section-header">Constants</h3>
+      <dl>
+      
+        <dt id="SPECIAL_LEADING_CHARACTERS">SPECIAL_LEADING_CHARACTERS
+        
+        <dd class="description">
+        
+      
+      </dl>
+    </section>
+    
+
+    
+    <!-- Attributes -->
+    <section id="attribute-method-details" class="method-section section">
+      <h3 class="section-header">Attributes</h3>
+
+      
+      <div id="attribute-i-site" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">site</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+    </section><!-- attribute-method-details -->
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">(site, base_directory = nil)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/jekyll/entry_filter.rb, line 7</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">site</span>, <span class="ruby-identifier">base_directory</span> = <span class="ruby-keyword">nil</span>)
+  <span class="ruby-ivar">@site</span> = <span class="ruby-identifier">site</span>
+  <span class="ruby-ivar">@base_directory</span> = <span class="ruby-identifier">derive_base_directory</span>(<span class="ruby-ivar">@site</span>, <span class="ruby-identifier">base_directory</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">dup</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- new-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- new-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-backup-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">backup?</span><span
+            class="method-args">(entry)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="backup-3F-source">
+            <pre><span class="ruby-comment"># File lib/jekyll/entry_filter.rb, line 44</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">backup?</span>(<span class="ruby-identifier">entry</span>)
+  <span class="ruby-identifier">entry</span>[<span class="ruby-value">-1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&#39;~&#39;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- backup-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- backup-3F-method -->
+
+    
+      <div id="method-i-base_directory" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">base_directory</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="base_directory-source">
+            <pre><span class="ruby-comment"># File lib/jekyll/entry_filter.rb, line 12</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">base_directory</span>
+  <span class="ruby-ivar">@base_directory</span>.<span class="ruby-identifier">to_s</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- base_directory-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- base_directory-method -->
+
+    
+      <div id="method-i-derive_base_directory" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">derive_base_directory</span><span
+            class="method-args">(site, base_dir)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="derive_base_directory-source">
+            <pre><span class="ruby-comment"># File lib/jekyll/entry_filter.rb, line 16</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">derive_base_directory</span>(<span class="ruby-identifier">site</span>, <span class="ruby-identifier">base_dir</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">base_dir</span>.<span class="ruby-identifier">start_with?</span>(<span class="ruby-identifier">site</span>.<span class="ruby-identifier">source</span>)
+    <span class="ruby-identifier">base_dir</span>[<span class="ruby-identifier">site</span>.<span class="ruby-identifier">source</span>] = <span class="ruby-string">&quot;&quot;</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">base_dir</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- derive_base_directory-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- derive_base_directory-method -->
+
+    
+      <div id="method-i-ensure_leading_slash" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">ensure_leading_slash</span><span
+            class="method-args">(path)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="ensure_leading_slash-source">
+            <pre><span class="ruby-comment"># File lib/jekyll/entry_filter.rb, line 58</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">ensure_leading_slash</span>(<span class="ruby-identifier">path</span>)
+  <span class="ruby-identifier">path</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">0</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&quot;/&quot;</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">path</span> <span class="ruby-operator">:</span> <span class="ruby-node">&quot;/#{path}&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- ensure_leading_slash-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- ensure_leading_slash-method -->
+
+    
+      <div id="method-i-excluded-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">excluded?</span><span
+            class="method-args">(entry)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="excluded-3F-source">
+            <pre><span class="ruby-comment"># File lib/jekyll/entry_filter.rb, line 48</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">excluded?</span>(<span class="ruby-identifier">entry</span>)
+  <span class="ruby-identifier">excluded</span> = <span class="ruby-identifier">glob_include?</span>(<span class="ruby-identifier">site</span>.<span class="ruby-identifier">exclude</span>, <span class="ruby-identifier">relative_to_source</span>(<span class="ruby-identifier">entry</span>))
+  <span class="ruby-constant">Jekyll</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;excluded?(#{relative_to_source(entry)}) ==&gt; #{excluded}&quot;</span>
+  <span class="ruby-identifier">excluded</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- excluded-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- excluded-3F-method -->
+
+    
+      <div id="method-i-filter" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">filter</span><span
+            class="method-args">(entries)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="filter-source">
+            <pre><span class="ruby-comment"># File lib/jekyll/entry_filter.rb, line 27</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">filter</span>(<span class="ruby-identifier">entries</span>)
+  <span class="ruby-identifier">entries</span>.<span class="ruby-identifier">reject</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">unless</span> <span class="ruby-identifier">included?</span>(<span class="ruby-identifier">e</span>)
+      <span class="ruby-identifier">special?</span>(<span class="ruby-identifier">e</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">backup?</span>(<span class="ruby-identifier">e</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">excluded?</span>(<span class="ruby-identifier">e</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">symlink?</span>(<span class="ruby-identifier">e</span>)
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- filter-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- filter-method -->
+
+    
+      <div id="method-i-glob_include-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">glob_include?</span><span
+            class="method-args">(enum, e)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Returns true if path matches against any glob pattern. Look for more detail
+about glob pattern in method File::fnmatch.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="glob_include-3F-source">
+            <pre><span class="ruby-comment"># File lib/jekyll/entry_filter.rb, line 64</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">glob_include?</span>(<span class="ruby-identifier">enum</span>, <span class="ruby-identifier">e</span>)
+  <span class="ruby-identifier">entry</span> = <span class="ruby-identifier">ensure_leading_slash</span>(<span class="ruby-identifier">e</span>)
+  <span class="ruby-identifier">enum</span>.<span class="ruby-identifier">any?</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">exp</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">item</span> = <span class="ruby-identifier">ensure_leading_slash</span>(<span class="ruby-identifier">exp</span>)
+    <span class="ruby-constant">Jekyll</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;glob_include?(#{entry})&quot;</span>
+    <span class="ruby-constant">Jekyll</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;    ==&gt; File.fnmatch?(#{item}, #{entry}) == #{File.fnmatch?(item, entry)}&quot;</span>
+    <span class="ruby-constant">File</span>.<span class="ruby-identifier">fnmatch?</span>(<span class="ruby-identifier">item</span>, <span class="ruby-identifier">entry</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- glob_include-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- glob_include-3F-method -->
+
+    
+      <div id="method-i-included-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">included?</span><span
+            class="method-args">(entry)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="included-3F-source">
+            <pre><span class="ruby-comment"># File lib/jekyll/entry_filter.rb, line 35</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">included?</span>(<span class="ruby-identifier">entry</span>)
+  <span class="ruby-identifier">glob_include?</span>(<span class="ruby-identifier">site</span>.<span class="ruby-identifier">include</span>, <span class="ruby-identifier">entry</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- included-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- included-3F-method -->
+
+    
+      <div id="method-i-relative_to_source" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">relative_to_source</span><span
+            class="method-args">(entry)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="relative_to_source-source">
+            <pre><span class="ruby-comment"># File lib/jekyll/entry_filter.rb, line 23</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">relative_to_source</span>(<span class="ruby-identifier">entry</span>)
+  <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">base_directory</span>, <span class="ruby-identifier">entry</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- relative_to_source-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- relative_to_source-method -->
+
+    
+      <div id="method-i-special-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">special?</span><span
+            class="method-args">(entry)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="special-3F-source">
+            <pre><span class="ruby-comment"># File lib/jekyll/entry_filter.rb, line 39</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">special?</span>(<span class="ruby-identifier">entry</span>)
+  <span class="ruby-constant">SPECIAL_LEADING_CHARACTERS</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">entry</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">0</span>]) <span class="ruby-operator">||</span>
+    <span class="ruby-constant">SPECIAL_LEADING_CHARACTERS</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">entry</span>)[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">0</span>])
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- special-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- special-3F-method -->
+
+    
+      <div id="method-i-symlink-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">symlink?</span><span
+            class="method-args">(entry)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="symlink-3F-source">
+            <pre><span class="ruby-comment"># File lib/jekyll/entry_filter.rb, line 54</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">symlink?</span>(<span class="ruby-identifier">entry</span>)
+  <span class="ruby-constant">File</span>.<span class="ruby-identifier">symlink?</span>(<span class="ruby-identifier">entry</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">site</span>.<span class="ruby-identifier">safe</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- symlink-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- symlink-3F-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

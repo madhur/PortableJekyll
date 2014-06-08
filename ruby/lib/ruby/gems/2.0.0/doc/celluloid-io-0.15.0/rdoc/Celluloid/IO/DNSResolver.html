@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>class Celluloid::IO::DNSResolver - celluloid-io-0.15.0 Documentation</title>
+
+<link type="text/css" media="screen" href="../../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../../index.html">Home</a>
+    <a href="../../table_of_contents.html#classes">Classes</a>
+    <a href="../../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/celluloid/io/dns_resolver.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">Object
+  
+</nav>
+
+    
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li ><a href="#method-c-generate_id">::generate_id</a>
+    
+    <li ><a href="#method-c-nameservers">::nameservers</a>
+    
+    <li ><a href="#method-c-new">::new</a>
+    
+    <li ><a href="#method-i-build_query">#build_query</a>
+    
+    <li ><a href="#method-i-resolv">#resolv</a>
+    
+    <li ><a href="#method-i-resolve">#resolve</a>
+    
+    <li ><a href="#method-i-resolve_host">#resolve_host</a>
+    
+    <li ><a href="#method-i-resolve_hostname">#resolve_hostname</a>
+    
+    <li ><a href="#method-i-resolve_ip">#resolve_ip</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../../Celluloid.html">Celluloid</a>
+  
+    <li><a href="../../Celluloid/IO.html">Celluloid::IO</a>
+  
+    <li><a href="../../Celluloid/IO/DNSResolver.html">Celluloid::IO::DNSResolver</a>
+  
+    <li><a href="../../Celluloid/IO/Mailbox.html">Celluloid::IO::Mailbox</a>
+  
+    <li><a href="../../Celluloid/IO/Reactor.html">Celluloid::IO::Reactor</a>
+  
+    <li><a href="../../Celluloid/IO/SSLServer.html">Celluloid::IO::SSLServer</a>
+  
+    <li><a href="../../Celluloid/IO/SSLSocket.html">Celluloid::IO::SSLSocket</a>
+  
+    <li><a href="../../Celluloid/IO/Stream.html">Celluloid::IO::Stream</a>
+  
+    <li><a href="../../Celluloid/IO/Stream/Latch.html">Celluloid::IO::Stream::Latch</a>
+  
+    <li><a href="../../Celluloid/IO/TCPServer.html">Celluloid::IO::TCPServer</a>
+  
+    <li><a href="../../Celluloid/IO/TCPSocket.html">Celluloid::IO::TCPSocket</a>
+  
+    <li><a href="../../Celluloid/IO/UDPSocket.html">Celluloid::IO::UDPSocket</a>
+  
+    <li><a href="../../Celluloid/IO/UNIXServer.html">Celluloid::IO::UNIXServer</a>
+  
+    <li><a href="../../Celluloid/IO/UNIXSocket.html">Celluloid::IO::UNIXSocket</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class Celluloid::IO::DNSResolver</h1>
+
+  <div id="description" class="description">
+    
+<p>Asynchronous DNS resolver using <a
+href="UDPSocket.html">Celluloid::IO::UDPSocket</a></p>
+
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+    <!-- Constants -->
+    <section id="constants-list" class="section">
+      <h3 class="section-header">Constants</h3>
+      <dl>
+      
+        <dt id="DNS_PORT">DNS_PORT
+        
+        <dd class="description">
+        
+      
+        <dt id="RESOLV_CONF">RESOLV_CONF
+        
+        <dd class="description">
+        
+      
+      </dl>
+    </section>
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-generate_id" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">generate_id</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="generate_id-source">
+            <pre><span class="ruby-comment"># File lib/celluloid/io/dns_resolver.rb, line 13</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">generate_id</span>
+  <span class="ruby-ivar">@mutex</span>.<span class="ruby-identifier">synchronize</span> { <span class="ruby-ivar">@identifier</span> = (<span class="ruby-ivar">@identifier</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>) <span class="ruby-operator">&amp;</span> <span class="ruby-value">0xFFFF</span> }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- generate_id-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- generate_id-method -->
+
+    
+      <div id="method-c-nameservers" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">nameservers</span><span
+            class="method-args">(config = RESOLV_CONF)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="nameservers-source">
+            <pre><span class="ruby-comment"># File lib/celluloid/io/dns_resolver.rb, line 17</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">nameservers</span>(<span class="ruby-identifier">config</span> = <span class="ruby-constant">RESOLV_CONF</span>)
+  <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">config</span>).<span class="ruby-identifier">scan</span>(<span class="ruby-regexp">/^\s*nameserver\s+([0-9.:]+)/</span>).<span class="ruby-identifier">flatten</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- nameservers-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- nameservers-method -->
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/celluloid/io/dns_resolver.rb, line 21</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>
+  <span class="ruby-ivar">@nameservers</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">nameservers</span>
+
+  <span class="ruby-comment"># TODO: fall back on other nameservers if the first one is unavailable</span>
+  <span class="ruby-ivar">@server</span> = <span class="ruby-ivar">@nameservers</span>.<span class="ruby-identifier">first</span>
+
+  <span class="ruby-comment"># The non-blocking secret sauce is here, as this is actually a</span>
+  <span class="ruby-comment"># Celluloid::IO::UDPSocket</span>
+  <span class="ruby-ivar">@socket</span> = <span class="ruby-constant">UDPSocket</span>.<span class="ruby-identifier">new</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- new-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- new-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-resolve" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">resolve</span><span
+            class="method-args">(hostname)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="resolve-source">
+            <pre><span class="ruby-comment"># File lib/celluloid/io/dns_resolver.rb, line 32</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">resolve</span>(<span class="ruby-identifier">hostname</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">host</span> = <span class="ruby-identifier">resolve_hostname</span>(<span class="ruby-identifier">hostname</span>)
+    <span class="ruby-keyword">unless</span> <span class="ruby-identifier">ip_address</span> = <span class="ruby-identifier">resolve_host</span>(<span class="ruby-identifier">host</span>)
+      <span class="ruby-identifier">raise</span> <span class="ruby-constant">Resolv</span><span class="ruby-operator">::</span><span class="ruby-constant">ResolvError</span>, <span class="ruby-node">&quot;invalid entry in hosts file: #{host}&quot;</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-identifier">ip_address</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">query</span> = <span class="ruby-identifier">build_query</span>(<span class="ruby-identifier">hostname</span>)
+  <span class="ruby-ivar">@socket</span>.<span class="ruby-identifier">send</span> <span class="ruby-identifier">query</span>.<span class="ruby-identifier">encode</span>, <span class="ruby-value">0</span>, <span class="ruby-ivar">@server</span>, <span class="ruby-constant">DNS_PORT</span>
+  <span class="ruby-identifier">data</span>, <span class="ruby-identifier">_</span> = <span class="ruby-ivar">@socket</span>.<span class="ruby-identifier">recvfrom</span>(<span class="ruby-value">512</span>)
+  <span class="ruby-identifier">response</span> = <span class="ruby-constant">Resolv</span><span class="ruby-operator">::</span><span class="ruby-constant">DNS</span><span class="ruby-operator">::</span><span class="ruby-constant">Message</span>.<span class="ruby-identifier">decode</span>(<span class="ruby-identifier">data</span>)
+
+  <span class="ruby-identifier">addrs</span> = []
+  <span class="ruby-comment"># The answer might include IN::CNAME entries so filters them out</span>
+  <span class="ruby-comment"># to include IN::A &amp; IN::AAAA entries only.</span>
+  <span class="ruby-identifier">response</span>.<span class="ruby-identifier">each_answer</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">name</span>, <span class="ruby-identifier">ttl</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span> <span class="ruby-identifier">addrs</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">address</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:address</span>) }
+
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">addrs</span>.<span class="ruby-identifier">empty?</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">addrs</span>.<span class="ruby-identifier">first</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">addrs</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>
+  <span class="ruby-identifier">addrs</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- resolve-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- resolve-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+     <section id="private-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Private Instance Methods</h3>
+
+    
+      <div id="method-i-build_query" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">build_query</span><span
+            class="method-args">(hostname)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="build_query-source">
+            <pre><span class="ruby-comment"># File lib/celluloid/io/dns_resolver.rb, line 68</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">build_query</span>(<span class="ruby-identifier">hostname</span>)
+  <span class="ruby-constant">Resolv</span><span class="ruby-operator">::</span><span class="ruby-constant">DNS</span><span class="ruby-operator">::</span><span class="ruby-constant">Message</span>.<span class="ruby-identifier">new</span>.<span class="ruby-identifier">tap</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">query</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">query</span>.<span class="ruby-identifier">id</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">generate_id</span>
+    <span class="ruby-identifier">query</span>.<span class="ruby-identifier">rd</span> = <span class="ruby-value">1</span>
+    <span class="ruby-identifier">query</span>.<span class="ruby-identifier">add_question</span> <span class="ruby-identifier">hostname</span>, <span class="ruby-constant">Resolv</span><span class="ruby-operator">::</span><span class="ruby-constant">DNS</span><span class="ruby-operator">::</span><span class="ruby-constant">Resource</span><span class="ruby-operator">::</span><span class="ruby-constant">IN</span><span class="ruby-operator">::</span><span class="ruby-constant">A</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- build_query-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- build_query-method -->
+
+    
+      <div id="method-i-resolv" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">resolv</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="resolv-source">
+            <pre><span class="ruby-comment"># File lib/celluloid/io/dns_resolver.rb, line 64</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">resolv</span>
+  <span class="ruby-ivar">@resolv</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Resolv</span><span class="ruby-operator">::</span><span class="ruby-constant">Hosts</span>.<span class="ruby-identifier">new</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- resolv-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- resolv-method -->
+
+    
+      <div id="method-i-resolve_host" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">resolve_host</span><span
+            class="method-args">(host)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="resolve_host-source">
+            <pre><span class="ruby-comment"># File lib/celluloid/io/dns_resolver.rb, line 76</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">resolve_host</span>(<span class="ruby-identifier">host</span>)
+  <span class="ruby-identifier">resolve_ip</span>(<span class="ruby-constant">Resolv</span><span class="ruby-operator">::</span><span class="ruby-constant">IPv4</span>, <span class="ruby-identifier">host</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">resolve_ip</span>(<span class="ruby-constant">Resolv</span><span class="ruby-operator">::</span><span class="ruby-constant">IPv6</span>, <span class="ruby-identifier">host</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- resolve_host-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- resolve_host-method -->
+
+    
+      <div id="method-i-resolve_hostname" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">resolve_hostname</span><span
+            class="method-args">(hostname)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="resolve_hostname-source">
+            <pre><span class="ruby-comment"># File lib/celluloid/io/dns_resolver.rb, line 57</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">resolve_hostname</span>(<span class="ruby-identifier">hostname</span>)
+  <span class="ruby-comment"># Resolv::Hosts#getaddresses pushes onto a stack</span>
+  <span class="ruby-comment"># so since we want the first occurance, simply</span>
+  <span class="ruby-comment"># pop off the stack.</span>
+  <span class="ruby-identifier">resolv</span>.<span class="ruby-identifier">getaddresses</span>(<span class="ruby-identifier">hostname</span>).<span class="ruby-identifier">pop</span> <span class="ruby-keyword">rescue</span> <span class="ruby-keyword">nil</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- resolve_hostname-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- resolve_hostname-method -->
+
+    
+      <div id="method-i-resolve_ip" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">resolve_ip</span><span
+            class="method-args">(klass, host)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="resolve_ip-source">
+            <pre><span class="ruby-comment"># File lib/celluloid/io/dns_resolver.rb, line 80</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">resolve_ip</span>(<span class="ruby-identifier">klass</span>, <span class="ruby-identifier">host</span>)
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">create</span>(<span class="ruby-identifier">host</span>)
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">ArgumentError</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- resolve_ip-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- resolve_ip-method -->
+
+    
+    </section><!-- private-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

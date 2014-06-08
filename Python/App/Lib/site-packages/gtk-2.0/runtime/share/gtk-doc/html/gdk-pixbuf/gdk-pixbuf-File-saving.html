@@ -1,0 +1,642 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>File saving</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="GDK-PixBuf Reference Manual">
+<link rel="up" href="rn01.html" title="API Reference">
+<link rel="prev" href="gdk-pixbuf-File-Loading.html" title="File Loading">
+<link rel="next" href="gdk-pixbuf-Image-Data-in-Memory.html" title="Image Data in Memory">
+<meta name="generator" content="GTK-Doc V1.17.1 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="gdk-pixbuf-File-Loading.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="rn01.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GDK-PixBuf Reference Manual</th>
+<td><a accesskey="n" href="gdk-pixbuf-Image-Data-in-Memory.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#gdk-pixbuf-File-saving.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#gdk-pixbuf-File-saving.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry">
+<a name="gdk-pixbuf-File-saving"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="gdk-pixbuf-File-saving.top_of_page"></a>File saving</span></h2>
+<p>File saving — Saving a pixbuf to a file.</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="gdk-pixbuf-File-saving.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+#include &lt;gdk-pixbuf/gdk-pixbuf.h&gt;
+
+#define             <a class="link" href="gdk-pixbuf-File-saving.html#gdk-pixbuf-savev" title="gdk_pixbuf_savev">gdk_pixbuf_savev</a>
+#define             <a class="link" href="gdk-pixbuf-File-saving.html#gdk-pixbuf-save" title="gdk_pixbuf_save">gdk_pixbuf_save</a>
+<span class="returnvalue">gboolean</span>            (<a class="link" href="gdk-pixbuf-File-saving.html#GdkPixbufSaveFunc" title="GdkPixbufSaveFunc ()">*GdkPixbufSaveFunc</a>)                (<em class="parameter"><code>const <span class="type">gchar</span> *buf</code></em>,
+                                                         <em class="parameter"><code><span class="type">gsize</span> count</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>,
+                                                         <em class="parameter"><code><span class="type">gpointer</span> data</code></em>);
+<span class="returnvalue">gboolean</span>            <a class="link" href="gdk-pixbuf-File-saving.html#gdk-pixbuf-save-to-callback" title="gdk_pixbuf_save_to_callback ()">gdk_pixbuf_save_to_callback</a>         (<em class="parameter"><code><a class="link" href="gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="type">GdkPixbuf</span></a> *pixbuf</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="gdk-pixbuf-File-saving.html#GdkPixbufSaveFunc" title="GdkPixbufSaveFunc ()"><span class="type">GdkPixbufSaveFunc</span></a> save_func</code></em>,
+                                                         <em class="parameter"><code><span class="type">gpointer</span> user_data</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *type</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>,
+                                                         <em class="parameter"><code>...</code></em>);
+<span class="returnvalue">gboolean</span>            <a class="link" href="gdk-pixbuf-File-saving.html#gdk-pixbuf-save-to-callbackv" title="gdk_pixbuf_save_to_callbackv ()">gdk_pixbuf_save_to_callbackv</a>        (<em class="parameter"><code><a class="link" href="gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="type">GdkPixbuf</span></a> *pixbuf</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="gdk-pixbuf-File-saving.html#GdkPixbufSaveFunc" title="GdkPixbufSaveFunc ()"><span class="type">GdkPixbufSaveFunc</span></a> save_func</code></em>,
+                                                         <em class="parameter"><code><span class="type">gpointer</span> user_data</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *type</code></em>,
+                                                         <em class="parameter"><code><span class="type">char</span> **option_keys</code></em>,
+                                                         <em class="parameter"><code><span class="type">char</span> **option_values</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);
+<span class="returnvalue">gboolean</span>            <a class="link" href="gdk-pixbuf-File-saving.html#gdk-pixbuf-save-to-buffer" title="gdk_pixbuf_save_to_buffer ()">gdk_pixbuf_save_to_buffer</a>           (<em class="parameter"><code><a class="link" href="gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="type">GdkPixbuf</span></a> *pixbuf</code></em>,
+                                                         <em class="parameter"><code><span class="type">gchar</span> **buffer</code></em>,
+                                                         <em class="parameter"><code><span class="type">gsize</span> *buffer_size</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *type</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>,
+                                                         <em class="parameter"><code>...</code></em>);
+<span class="returnvalue">gboolean</span>            <a class="link" href="gdk-pixbuf-File-saving.html#gdk-pixbuf-save-to-bufferv" title="gdk_pixbuf_save_to_bufferv ()">gdk_pixbuf_save_to_bufferv</a>          (<em class="parameter"><code><a class="link" href="gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="type">GdkPixbuf</span></a> *pixbuf</code></em>,
+                                                         <em class="parameter"><code><span class="type">gchar</span> **buffer</code></em>,
+                                                         <em class="parameter"><code><span class="type">gsize</span> *buffer_size</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *type</code></em>,
+                                                         <em class="parameter"><code><span class="type">char</span> **option_keys</code></em>,
+                                                         <em class="parameter"><code><span class="type">char</span> **option_values</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);
+<span class="returnvalue">gboolean</span>            <a class="link" href="gdk-pixbuf-File-saving.html#gdk-pixbuf-save-to-stream" title="gdk_pixbuf_save_to_stream ()">gdk_pixbuf_save_to_stream</a>           (<em class="parameter"><code><a class="link" href="gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="type">GdkPixbuf</span></a> *pixbuf</code></em>,
+                                                         <em class="parameter"><code><span class="type">GOutputStream</span> *stream</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *type</code></em>,
+                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>,
+                                                         <em class="parameter"><code>...</code></em>);
+</pre>
+</div>
+<div class="refsect1">
+<a name="gdk-pixbuf-File-saving.description"></a><h2>Description</h2>
+<p>
+These functions allow to save a <a class="link" href="gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="type">GdkPixbuf</span></a> in a number of 
+file formats. The formatted data can be written to a file
+or to a memory buffer. &amp;gdk-pixbuf; can also call a user-defined
+callback on the data, which allows to e.g. write the image 
+to a socket or store it in a database.
+</p>
+</div>
+<div class="refsect1">
+<a name="gdk-pixbuf-File-saving.details"></a><h2>Details</h2>
+<div class="refsect2">
+<a name="gdk-pixbuf-savev"></a><h3>gdk_pixbuf_savev</h3>
+<pre class="programlisting">#define gdk_pixbuf_savev gdk_pixbuf_savev_utf8
+</pre>
+<p>
+Saves pixbuf to a file in <em class="parameter"><code>type</code></em>, which is currently "jpeg", "png", "tiff", "ico" or "bmp".
+If <em class="parameter"><code>error</code></em> is set, <code class="literal">FALSE</code> will be returned. 
+See <a class="link" href="gdk-pixbuf-File-saving.html#gdk-pixbuf-save" title="gdk_pixbuf_save"><code class="function">gdk_pixbuf_save()</code></a> for more details.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>pixbuf</code></em> :</span></p></td>
+<td>a <a class="link" href="gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="type">GdkPixbuf</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>filename</code></em> :</span></p></td>
+<td>name of file to save.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>type</code></em> :</span></p></td>
+<td>name of file format.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>option_keys</code></em> :</span></p></td>
+<td>name of options to set, <a href="/home/mclasen/gnome/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a>-terminated. <span class="annotation">[<acronym title="Parameter points to an array of items."><span class="acronym">array</span></acronym> zero-terminated=1]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>option_values</code></em> :</span></p></td>
+<td>values for named options. <span class="annotation">[<acronym title="Parameter points to an array of items."><span class="acronym">array</span></acronym> zero-terminated=1]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>return location for error, or <a href="/home/mclasen/gnome/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>whether an error was set</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-pixbuf-save"></a><h3>gdk_pixbuf_save</h3>
+<pre class="programlisting">#define gdk_pixbuf_save gdk_pixbuf_save_utf8
+</pre>
+<p>
+Saves pixbuf to a file in format <em class="parameter"><code>type</code></em>. By default, "jpeg", "png", "ico" 
+and "bmp" are possible file formats to save in, but more formats may be
+installed. The list of all writable formats can be determined in the 
+following way:
+</p>
+<p>
+</p>
+<div class="informalexample">
+  <table class="listing_frame" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+      <tr>
+        <td class="listing_lines" align="right"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10</pre></td>
+        <td class="listing_code"><pre class="programlisting"><span class="type">void</span><span class="normal"> </span><span class="function">add_if_writable</span><span class="normal"> </span><span class="symbol">(</span><span class="usertype">GdkPixbufFormat</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">data</span><span class="symbol">,</span><span class="normal"> </span><span class="usertype">GSList</span><span class="normal"> </span><span class="symbol">**</span><span class="normal">list</span><span class="symbol">)</span>
+<span class="cbracket">{</span>
+<span class="normal">  </span><span class="keyword">if</span><span class="normal"> </span><span class="symbol">(</span><span class="function"><a href="gdk-pixbuf-Module-Interface.html#gdk-pixbuf-format-is-writable">gdk_pixbuf_format_is_writable</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">data</span><span class="symbol">))</span>
+<span class="normal">    </span><span class="symbol">*</span><span class="normal">list </span><span class="symbol">=</span><span class="normal"> </span><span class="function">g_slist_prepend</span><span class="normal"> </span><span class="symbol">(*</span><span class="normal">list</span><span class="symbol">,</span><span class="normal"> data</span><span class="symbol">);</span>
+<span class="cbracket">}</span>
+
+<span class="usertype">GSList</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">formats </span><span class="symbol">=</span><span class="normal"> </span><span class="function"><a href="gdk-pixbuf-Module-Interface.html#gdk-pixbuf-get-formats">gdk_pixbuf_get_formats</a></span><span class="normal"> </span><span class="symbol">();</span>
+<span class="usertype">GSList</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">writable_formats </span><span class="symbol">=</span><span class="normal"> <a href="/home/mclasen/gnome/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS">NULL</a></span><span class="symbol">;</span>
+<span class="function">g_slist_foreach</span><span class="normal"> </span><span class="symbol">(</span><span class="normal">formats</span><span class="symbol">,</span><span class="normal"> add_if_writable</span><span class="symbol">,</span><span class="normal"> </span><span class="symbol">&amp;</span><span class="normal">writable_formats</span><span class="symbol">);</span>
+<span class="function">g_slist_free</span><span class="normal"> </span><span class="symbol">(</span><span class="normal">formats</span><span class="symbol">);</span></pre></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+</p>
+<p>
+If <em class="parameter"><code>error</code></em> is set, <code class="literal">FALSE</code> will be returned. Possible errors include 
+those in the <a class="link" href="gdk-pixbuf-The-GdkPixbuf-Structure.html#GDK-PIXBUF-ERROR:CAPS" title="GDK_PIXBUF_ERROR"><span class="type">GDK_PIXBUF_ERROR</span></a> domain and those in the <span class="type">G_FILE_ERROR</span> domain.
+</p>
+<p>
+The variable argument list should be <a href="/home/mclasen/gnome/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a>-terminated; if not empty,
+it should contain pairs of strings that modify the save
+parameters. For example:
+</p>
+<div class="informalexample">
+  <table class="listing_frame" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+      <tr>
+        <td class="listing_lines" align="right"><pre>1
+2</pre></td>
+        <td class="listing_code"><pre class="programlisting"><span class="function"><a href="gdk-pixbuf-File-saving.html#gdk-pixbuf-save">gdk_pixbuf_save</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">pixbuf</span><span class="symbol">,</span><span class="normal"> handle</span><span class="symbol">,</span><span class="normal"> </span><span class="string">"jpeg"</span><span class="symbol">,</span><span class="normal"> </span><span class="symbol">&amp;</span><span class="normal">error</span><span class="symbol">,</span>
+<span class="normal">                 </span><span class="string">"quality"</span><span class="symbol">,</span><span class="normal"> </span><span class="string">"100"</span><span class="symbol">,</span><span class="normal"> <a href="/home/mclasen/gnome/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS">NULL</a></span><span class="symbol">);</span></pre></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+</p>
+<p>
+Currently only few parameters exist. JPEG images can be saved with a
+"quality" parameter; its value should be in the range [0,100].
+</p>
+<p>
+Text chunks can be attached to PNG images by specifying parameters of
+the form "tEXt::key", where key is an ASCII string of length 1-79.
+The values are UTF-8 encoded strings. The PNG compression level can
+be specified using the "compression" parameter; it's value is in an
+integer in the range of [0,9].
+</p>
+<p>
+ICC color profiles can also be embedded into PNG and TIFF images.
+The "icc-profile" value should be the complete ICC profile encoded
+into base64.
+</p>
+<p>
+</p>
+<div class="informalexample">
+  <table class="listing_frame" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+      <tr>
+        <td class="listing_lines" align="right"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></td>
+        <td class="listing_code"><pre class="programlisting"><span class="usertype">gchar</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">contents</span><span class="symbol">;</span>
+<span class="usertype">gchar</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">contents_encode</span><span class="symbol">;</span>
+<span class="usertype">gsize</span><span class="normal"> length</span><span class="symbol">;</span>
+<span class="function">g_file_get_contents</span><span class="normal"> </span><span class="symbol">(</span><span class="string">"/home/hughsie/.color/icc/L225W.icm"</span><span class="symbol">,</span><span class="normal"> </span><span class="symbol">&amp;</span><span class="normal">contents</span><span class="symbol">,</span><span class="normal"> </span><span class="symbol">&amp;</span><span class="normal">length</span><span class="symbol">,</span><span class="normal"> <a href="/home/mclasen/gnome/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS">NULL</a></span><span class="symbol">);</span>
+<span class="normal">contents_encode </span><span class="symbol">=</span><span class="normal"> </span><span class="function">g_base64_encode</span><span class="normal"> </span><span class="symbol">((</span><span class="keyword">const</span><span class="normal"> guchar </span><span class="symbol">*)</span><span class="normal"> contents</span><span class="symbol">,</span><span class="normal"> length</span><span class="symbol">);</span>
+<span class="function"><a href="gdk-pixbuf-File-saving.html#gdk-pixbuf-save">gdk_pixbuf_save</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">pixbuf</span><span class="symbol">,</span><span class="normal"> handle</span><span class="symbol">,</span><span class="normal"> </span><span class="string">"png"</span><span class="symbol">,</span><span class="normal"> </span><span class="symbol">&amp;</span><span class="normal">error</span><span class="symbol">,</span>
+<span class="normal">                 </span><span class="string">"icc-profile"</span><span class="symbol">,</span><span class="normal"> contents_encode</span><span class="symbol">,</span>
+<span class="normal">                 <a href="/home/mclasen/gnome/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS">NULL</a></span><span class="symbol">);</span></pre></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+</p>
+<p>
+TIFF images recognize a "compression" option which acceps an integer value.
+Among the codecs are 1 None, 2 Huffman, 5 LZW, 7 JPEG and 8 Deflate, see
+the libtiff documentation and tiff.h for all supported codec values.
+</p>
+<p>
+ICO images can be saved in depth 16, 24, or 32, by using the "depth"
+parameter. When the ICO saver is given "x_hot" and "y_hot" parameters,
+it produces a CUR instead of an ICO.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>pixbuf</code></em> :</span></p></td>
+<td>a <a class="link" href="gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="type">GdkPixbuf</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>filename</code></em> :</span></p></td>
+<td>name of file to save.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>type</code></em> :</span></p></td>
+<td>name of file format.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>return location for error, or <a href="/home/mclasen/gnome/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>Varargs</code></em> :</span></p></td>
+<td>list of key-value save options</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>whether an error was set</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GdkPixbufSaveFunc"></a><h3>GdkPixbufSaveFunc ()</h3>
+<pre class="programlisting"><span class="returnvalue">gboolean</span>            (*GdkPixbufSaveFunc)                (<em class="parameter"><code>const <span class="type">gchar</span> *buf</code></em>,
+                                                         <em class="parameter"><code><span class="type">gsize</span> count</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>,
+                                                         <em class="parameter"><code><span class="type">gpointer</span> data</code></em>);</pre>
+<p>
+Specifies the type of the function passed to
+<a class="link" href="gdk-pixbuf-File-saving.html#gdk-pixbuf-save-to-callback" title="gdk_pixbuf_save_to_callback ()"><code class="function">gdk_pixbuf_save_to_callback()</code></a>.  It is called once for each block of
+bytes that is "written" by <a class="link" href="gdk-pixbuf-File-saving.html#gdk-pixbuf-save-to-callback" title="gdk_pixbuf_save_to_callback ()"><code class="function">gdk_pixbuf_save_to_callback()</code></a>.  If
+successful it should return <code class="literal">TRUE</code>.  If an error occurs it should set
+<em class="parameter"><code>error</code></em> and return <code class="literal">FALSE</code>, in which case <a class="link" href="gdk-pixbuf-File-saving.html#gdk-pixbuf-save-to-callback" title="gdk_pixbuf_save_to_callback ()"><code class="function">gdk_pixbuf_save_to_callback()</code></a>
+will fail with the same error.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>buf</code></em> :</span></p></td>
+<td>bytes to be written.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>count</code></em> :</span></p></td>
+<td>number of bytes in <em class="parameter"><code>buf</code></em>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>A location to return an error. <span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td>user data passed to <a class="link" href="gdk-pixbuf-File-saving.html#gdk-pixbuf-save-to-callback" title="gdk_pixbuf_save_to_callback ()"><code class="function">gdk_pixbuf_save_to_callback()</code></a>. <span class="annotation">[<acronym title="This parameter is a 'user_data', for callbacks; many bindings can pass NULL here."><span class="acronym">closure</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<code class="literal">TRUE</code> if successful, <code class="literal">FALSE</code> (with <em class="parameter"><code>error</code></em> set) if failed.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.4</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-pixbuf-save-to-callback"></a><h3>gdk_pixbuf_save_to_callback ()</h3>
+<pre class="programlisting"><span class="returnvalue">gboolean</span>            gdk_pixbuf_save_to_callback         (<em class="parameter"><code><a class="link" href="gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="type">GdkPixbuf</span></a> *pixbuf</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="gdk-pixbuf-File-saving.html#GdkPixbufSaveFunc" title="GdkPixbufSaveFunc ()"><span class="type">GdkPixbufSaveFunc</span></a> save_func</code></em>,
+                                                         <em class="parameter"><code><span class="type">gpointer</span> user_data</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *type</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>,
+                                                         <em class="parameter"><code>...</code></em>);</pre>
+<p>
+Saves pixbuf in format <em class="parameter"><code>type</code></em> by feeding the produced data to a 
+callback. Can be used when you want to store the image to something 
+other than a file, such as an in-memory buffer or a socket.  
+If <em class="parameter"><code>error</code></em> is set, <code class="literal">FALSE</code> will be returned. Possible errors
+include those in the <a class="link" href="gdk-pixbuf-The-GdkPixbuf-Structure.html#GDK-PIXBUF-ERROR:CAPS" title="GDK_PIXBUF_ERROR"><span class="type">GDK_PIXBUF_ERROR</span></a> domain and whatever the save
+function generates.
+</p>
+<p>
+See <a class="link" href="gdk-pixbuf-File-saving.html#gdk-pixbuf-save" title="gdk_pixbuf_save"><code class="function">gdk_pixbuf_save()</code></a> for more details.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>pixbuf</code></em> :</span></p></td>
+<td>a <a class="link" href="gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="type">GdkPixbuf</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>save_func</code></em> :</span></p></td>
+<td>a function that is called to save each block of data that
+the save routine generates. <span class="annotation">[<acronym title="The callback is valid only during the call to the method."><span class="acronym">scope call</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data to pass to the save function.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>type</code></em> :</span></p></td>
+<td>name of file format.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>return location for error, or <a href="/home/mclasen/gnome/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>Varargs</code></em> :</span></p></td>
+<td>list of key-value save options</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>whether an error was set</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.4</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-pixbuf-save-to-callbackv"></a><h3>gdk_pixbuf_save_to_callbackv ()</h3>
+<pre class="programlisting"><span class="returnvalue">gboolean</span>            gdk_pixbuf_save_to_callbackv        (<em class="parameter"><code><a class="link" href="gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="type">GdkPixbuf</span></a> *pixbuf</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="gdk-pixbuf-File-saving.html#GdkPixbufSaveFunc" title="GdkPixbufSaveFunc ()"><span class="type">GdkPixbufSaveFunc</span></a> save_func</code></em>,
+                                                         <em class="parameter"><code><span class="type">gpointer</span> user_data</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *type</code></em>,
+                                                         <em class="parameter"><code><span class="type">char</span> **option_keys</code></em>,
+                                                         <em class="parameter"><code><span class="type">char</span> **option_values</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);</pre>
+<p>
+Saves pixbuf to a callback in format <em class="parameter"><code>type</code></em>, which is currently "jpeg",
+"png", "tiff", "ico" or "bmp".  If <em class="parameter"><code>error</code></em> is set, <code class="literal">FALSE</code> will be returned. See
+<a class="link" href="gdk-pixbuf-File-saving.html#gdk-pixbuf-save-to-callback" title="gdk_pixbuf_save_to_callback ()"><code class="function">gdk_pixbuf_save_to_callback()</code></a> for more details.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>pixbuf</code></em> :</span></p></td>
+<td>a <a class="link" href="gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="type">GdkPixbuf</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>save_func</code></em> :</span></p></td>
+<td>a function that is called to save each block of data that
+the save routine generates. <span class="annotation">[<acronym title="The callback is valid only during the call to the method."><span class="acronym">scope call</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data to pass to the save function. <span class="annotation">[<acronym title="This parameter is a 'user_data', for callbacks; many bindings can pass NULL here."><span class="acronym">closure</span></acronym> save_func]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>type</code></em> :</span></p></td>
+<td>name of file format.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>option_keys</code></em> :</span></p></td>
+<td>name of options to set, <a href="/home/mclasen/gnome/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a>-terminated. <span class="annotation">[<acronym title="Parameter points to an array of items."><span class="acronym">array</span></acronym> zero-terminated=1][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> utf8]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>option_values</code></em> :</span></p></td>
+<td>values for named options. <span class="annotation">[<acronym title="Parameter points to an array of items."><span class="acronym">array</span></acronym> zero-terminated=1][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> utf8]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>return location for error, or <a href="/home/mclasen/gnome/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>whether an error was set</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.4</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-pixbuf-save-to-buffer"></a><h3>gdk_pixbuf_save_to_buffer ()</h3>
+<pre class="programlisting"><span class="returnvalue">gboolean</span>            gdk_pixbuf_save_to_buffer           (<em class="parameter"><code><a class="link" href="gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="type">GdkPixbuf</span></a> *pixbuf</code></em>,
+                                                         <em class="parameter"><code><span class="type">gchar</span> **buffer</code></em>,
+                                                         <em class="parameter"><code><span class="type">gsize</span> *buffer_size</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *type</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>,
+                                                         <em class="parameter"><code>...</code></em>);</pre>
+<p>
+Saves pixbuf to a new buffer in format <em class="parameter"><code>type</code></em>, which is currently "jpeg",
+"png", "tiff", "ico" or "bmp".  This is a convenience function that uses
+<a class="link" href="gdk-pixbuf-File-saving.html#gdk-pixbuf-save-to-callback" title="gdk_pixbuf_save_to_callback ()"><code class="function">gdk_pixbuf_save_to_callback()</code></a> to do the real work. Note that the buffer 
+is not nul-terminated and may contain embedded  nuls.
+If <em class="parameter"><code>error</code></em> is set, <code class="literal">FALSE</code> will be returned and <em class="parameter"><code>buffer</code></em> will be set to
+<a href="/home/mclasen/gnome/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a>. Possible errors include those in the <a class="link" href="gdk-pixbuf-The-GdkPixbuf-Structure.html#GDK-PIXBUF-ERROR:CAPS" title="GDK_PIXBUF_ERROR"><span class="type">GDK_PIXBUF_ERROR</span></a>
+domain.
+</p>
+<p>
+See <a class="link" href="gdk-pixbuf-File-saving.html#gdk-pixbuf-save" title="gdk_pixbuf_save"><code class="function">gdk_pixbuf_save()</code></a> for more details.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>pixbuf</code></em> :</span></p></td>
+<td>a <a class="link" href="gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="type">GdkPixbuf</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>buffer</code></em> :</span></p></td>
+<td>location to receive a pointer to the new buffer.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>buffer_size</code></em> :</span></p></td>
+<td>location to receive the size of the new buffer.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>type</code></em> :</span></p></td>
+<td>name of file format.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>return location for error, or <a href="/home/mclasen/gnome/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>Varargs</code></em> :</span></p></td>
+<td>list of key-value save options</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>whether an error was set</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.4</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-pixbuf-save-to-bufferv"></a><h3>gdk_pixbuf_save_to_bufferv ()</h3>
+<pre class="programlisting"><span class="returnvalue">gboolean</span>            gdk_pixbuf_save_to_bufferv          (<em class="parameter"><code><a class="link" href="gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="type">GdkPixbuf</span></a> *pixbuf</code></em>,
+                                                         <em class="parameter"><code><span class="type">gchar</span> **buffer</code></em>,
+                                                         <em class="parameter"><code><span class="type">gsize</span> *buffer_size</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *type</code></em>,
+                                                         <em class="parameter"><code><span class="type">char</span> **option_keys</code></em>,
+                                                         <em class="parameter"><code><span class="type">char</span> **option_values</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);</pre>
+<p>
+Saves pixbuf to a new buffer in format <em class="parameter"><code>type</code></em>, which is currently "jpeg",
+"tiff", "png", "ico" or "bmp".  See <a class="link" href="gdk-pixbuf-File-saving.html#gdk-pixbuf-save-to-buffer" title="gdk_pixbuf_save_to_buffer ()"><code class="function">gdk_pixbuf_save_to_buffer()</code></a> 
+for more details.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>pixbuf</code></em> :</span></p></td>
+<td>a <a class="link" href="gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="type">GdkPixbuf</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>buffer</code></em> :</span></p></td>
+<td>location to receive a pointer to the new buffer.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>buffer_size</code></em> :</span></p></td>
+<td>location to receive the size of the new buffer.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>type</code></em> :</span></p></td>
+<td>name of file format.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>option_keys</code></em> :</span></p></td>
+<td>name of options to set, <a href="/home/mclasen/gnome/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a>-terminated. <span class="annotation">[<acronym title="Parameter points to an array of items."><span class="acronym">array</span></acronym> zero-terminated=1]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>option_values</code></em> :</span></p></td>
+<td>values for named options. <span class="annotation">[<acronym title="Parameter points to an array of items."><span class="acronym">array</span></acronym> zero-terminated=1]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>return location for error, or <a href="/home/mclasen/gnome/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>whether an error was set</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.4</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-pixbuf-save-to-stream"></a><h3>gdk_pixbuf_save_to_stream ()</h3>
+<pre class="programlisting"><span class="returnvalue">gboolean</span>            gdk_pixbuf_save_to_stream           (<em class="parameter"><code><a class="link" href="gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="type">GdkPixbuf</span></a> *pixbuf</code></em>,
+                                                         <em class="parameter"><code><span class="type">GOutputStream</span> *stream</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">char</span> *type</code></em>,
+                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>,
+                                                         <em class="parameter"><code>...</code></em>);</pre>
+<p>
+Saves <em class="parameter"><code>pixbuf</code></em> to an output stream.
+</p>
+<p>
+Supported file formats are currently "jpeg", "tiff", "png", "ico" or 
+"bmp". See <a class="link" href="gdk-pixbuf-File-saving.html#gdk-pixbuf-save-to-buffer" title="gdk_pixbuf_save_to_buffer ()"><code class="function">gdk_pixbuf_save_to_buffer()</code></a> for more details.
+</p>
+<p>
+The <em class="parameter"><code>cancellable</code></em> can be used to abort the operation from another 
+thread. If the operation was cancelled, the error <code class="literal">GIO_ERROR_CANCELLED</code> 
+will be returned. Other possible errors are in the <a class="link" href="gdk-pixbuf-The-GdkPixbuf-Structure.html#GDK-PIXBUF-ERROR:CAPS" title="GDK_PIXBUF_ERROR"><span class="type">GDK_PIXBUF_ERROR</span></a> 
+and <code class="literal">G_IO_ERROR</code> domains. 
+</p>
+<p>
+The stream is not closed.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>pixbuf</code></em> :</span></p></td>
+<td>a <a class="link" href="gdk-pixbuf-The-GdkPixbuf-Structure.html#GdkPixbuf"><span class="type">GdkPixbuf</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>stream</code></em> :</span></p></td>
+<td>a <span class="type">GOutputStream</span> to save the pixbuf to</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>type</code></em> :</span></p></td>
+<td>name of file format</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>cancellable</code></em> :</span></p></td>
+<td>optional <span class="type">GCancellable</span> object, <a href="/home/mclasen/gnome/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a> to ignore</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>return location for error, or <a href="/home/mclasen/gnome/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>Varargs</code></em> :</span></p></td>
+<td>list of key-value save options</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<code class="literal">TRUE</code> if the pixbuf was saved successfully, <code class="literal">FALSE</code> if an
+error was set.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.14</p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.17.1</div>
+</body>
+</html>

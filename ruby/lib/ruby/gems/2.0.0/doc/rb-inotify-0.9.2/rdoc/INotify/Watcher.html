@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>class INotify::Watcher - rb-inotify-0.9.2 Documentation</title>
+
+<link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../index.html">Home</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/rb-inotify/watcher.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">Object
+  
+</nav>
+
+    
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li ><a href="#method-c-new">::new</a>
+    
+    <li ><a href="#method-i-callback-21">#callback!</a>
+    
+    <li ><a href="#method-i-close">#close</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="../README_md.html">README</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../INotify.html">INotify</a>
+  
+    <li><a href="../INotify/Event.html">INotify::Event</a>
+  
+    <li><a href="../INotify/Native.html">INotify::Native</a>
+  
+    <li><a href="../INotify/Native/Event.html">INotify::Native::Event</a>
+  
+    <li><a href="../INotify/Native/FFI.html">INotify::Native::FFI</a>
+  
+    <li><a href="../INotify/Native/FFI/Library.html">INotify::Native::FFI::Library</a>
+  
+    <li><a href="../INotify/Native/Flags.html">INotify::Native::Flags</a>
+  
+    <li><a href="../INotify/Notifier.html">INotify::Notifier</a>
+  
+    <li><a href="../INotify/Watcher.html">INotify::Watcher</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class INotify::Watcher</h1>
+
+  <div id="description" class="description">
+    
+<p>Watchers monitor a single path for changes, specified by
+{INotify::Notifier#watch event flags}. A watcher is usually created via
+{Notifier#watch}.</p>
+
+<p>One {Notifier} may have many {Watcher}s. The <a
+href="Notifier.html">Notifier</a> actually takes care of the checking for
+events, via {Notifier#run run} or {Notifier#process process}. The main
+purpose of having <a href="Watcher.html">Watcher</a> objects is to be able
+to disable them using {#close}.</p>
+
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+    <!-- Attributes -->
+    <section id="attribute-method-details" class="method-section section">
+      <h3 class="section-header">Attributes</h3>
+
+      
+      <div id="attribute-i-flags" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">flags</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>The {INotify::Notifier#watch flags} specifying the events that this <a
+href="Watcher.html">Watcher</a> is watching for, and potentially some
+options as well.</p>
+
+<p>@return [Array&lt;Symbol&gt;]</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-id" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">id</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>The id for this <a href="Watcher.html">Watcher</a>. Used to retrieve this
+<a href="Watcher.html">Watcher</a> from {Notifier#watchers}.</p>
+
+<p>@private @return [Fixnum]</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-notifier" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">notifier</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>The {Notifier} that this <a href="Watcher.html">Watcher</a> belongs to.</p>
+
+<p>@return [Notifier]</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-path" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">path</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>The path that this <a href="Watcher.html">Watcher</a> is watching.</p>
+
+<p>@return [String]</p>
+        
+        </div>
+      </div>
+      
+    </section><!-- attribute-method-details -->
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">(notifier, path, *flags, &callback)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Creates a new {Watcher}.</p>
+
+<p>@private @see <a
+href="Notifier.html#method-i-watch">INotify::Notifier#watch</a></p>
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/rb-inotify/watcher.rb, line 56</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">notifier</span>, <span class="ruby-identifier">path</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">flags</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">callback</span>)
+  <span class="ruby-ivar">@notifier</span> = <span class="ruby-identifier">notifier</span>
+  <span class="ruby-ivar">@callback</span> = <span class="ruby-identifier">callback</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">proc</span> {}
+  <span class="ruby-ivar">@path</span> = <span class="ruby-identifier">path</span>
+  <span class="ruby-ivar">@flags</span> = <span class="ruby-identifier">flags</span>.<span class="ruby-identifier">freeze</span>
+  <span class="ruby-ivar">@id</span> = <span class="ruby-constant">Native</span>.<span class="ruby-identifier">inotify_add_watch</span>(<span class="ruby-ivar">@notifier</span>.<span class="ruby-identifier">fd</span>, <span class="ruby-identifier">path</span>.<span class="ruby-identifier">dup</span>,
+    <span class="ruby-constant">Native</span><span class="ruby-operator">::</span><span class="ruby-constant">Flags</span>.<span class="ruby-identifier">to_mask</span>(<span class="ruby-identifier">flags</span>))
+
+  <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@id</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">0</span>
+    <span class="ruby-ivar">@notifier</span>.<span class="ruby-identifier">watchers</span>[<span class="ruby-ivar">@id</span>] = <span class="ruby-keyword">self</span>
+    <span class="ruby-keyword">return</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">SystemCallError</span>.<span class="ruby-identifier">new</span>(
+    <span class="ruby-node">&quot;Failed to watch #{path.inspect}&quot;</span> <span class="ruby-operator">+</span>
+    <span class="ruby-keyword">case</span> <span class="ruby-constant">FFI</span>.<span class="ruby-identifier">errno</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">EACCES</span><span class="ruby-operator">::</span><span class="ruby-constant">Errno</span>; <span class="ruby-string">&quot;: read access to the given file is not permitted.&quot;</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">EBADF</span><span class="ruby-operator">::</span><span class="ruby-constant">Errno</span>; <span class="ruby-string">&quot;: the given file descriptor is not valid.&quot;</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">EFAULT</span><span class="ruby-operator">::</span><span class="ruby-constant">Errno</span>; <span class="ruby-string">&quot;: path points outside of the process&#39;s accessible address space.&quot;</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">EINVAL</span><span class="ruby-operator">::</span><span class="ruby-constant">Errno</span>; <span class="ruby-string">&quot;: the given event mask contains no legal events; or fd is not an inotify file descriptor.&quot;</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">ENOMEM</span><span class="ruby-operator">::</span><span class="ruby-constant">Errno</span>; <span class="ruby-string">&quot;: insufficient kernel memory was available.&quot;</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">ENOSPC</span><span class="ruby-operator">::</span><span class="ruby-constant">Errno</span>; <span class="ruby-string">&quot;: The user limit on the total number of inotify watches was reached or the kernel failed to allocate a needed resource.&quot;</span>
+    <span class="ruby-keyword">else</span>; <span class="ruby-string">&quot;&quot;</span>
+    <span class="ruby-keyword">end</span>,
+    <span class="ruby-constant">FFI</span>.<span class="ruby-identifier">errno</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- new-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- new-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-callback-21" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">callback!</span><span
+            class="method-args">(event)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Calls this Watcher&#39;s callback with the given {Event}.</p>
+
+<p>@private @param event [Event]</p>
+          
+          
+
+          
+          <div class="method-source-code" id="callback-21-source">
+            <pre><span class="ruby-comment"># File lib/rb-inotify/watcher.rb, line 40</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">callback!</span>(<span class="ruby-identifier">event</span>)
+  <span class="ruby-ivar">@callback</span>[<span class="ruby-identifier">event</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- callback-21-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- callback-21-method -->
+
+    
+      <div id="method-i-close" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">close</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Disables this <a href="Watcher.html">Watcher</a>, so that it doesn&#39;t
+fire any more events.</p>
+
+<p>@raise [SystemCallError] if the watch fails to be disabled for some reason</p>
+          
+          
+
+          
+          <div class="method-source-code" id="close-source">
+            <pre><span class="ruby-comment"># File lib/rb-inotify/watcher.rb, line 47</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">close</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">if</span> <span class="ruby-constant">Native</span>.<span class="ruby-identifier">inotify_rm_watch</span>(<span class="ruby-ivar">@notifier</span>.<span class="ruby-identifier">fd</span>, <span class="ruby-ivar">@id</span>) <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">SystemCallError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;Failed to stop watching #{path.inspect}&quot;</span>, <span class="ruby-constant">FFI</span>.<span class="ruby-identifier">errno</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- close-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- close-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

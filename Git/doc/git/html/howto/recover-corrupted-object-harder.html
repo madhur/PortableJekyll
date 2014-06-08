@@ -1,0 +1,962 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.6.6" />
+<title>How to recover an object from scratch</title>
+<style type="text/css">
+/* Shared CSS for AsciiDoc xhtml11 and html5 backends */
+
+/* Default font. */
+body {
+  font-family: Georgia,serif;
+}
+
+/* Title font. */
+h1, h2, h3, h4, h5, h6,
+div.title, caption.title,
+thead, p.table.header,
+#toctitle,
+#author, #revnumber, #revdate, #revremark,
+#footer {
+  font-family: Arial,Helvetica,sans-serif;
+}
+
+body {
+  margin: 1em 5% 1em 5%;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+}
+a:visited {
+  color: fuchsia;
+}
+
+em {
+  font-style: italic;
+  color: navy;
+}
+
+strong {
+  font-weight: bold;
+  color: #083194;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #527bbd;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+h1, h2, h3 {
+  border-bottom: 2px solid silver;
+}
+h2 {
+  padding-top: 0.5em;
+}
+h3 {
+  float: left;
+}
+h3 + * {
+  clear: left;
+}
+h5 {
+  font-size: 1.0em;
+}
+
+div.sectionbody {
+  margin-left: 0;
+}
+
+hr {
+  border: 1px solid silver;
+}
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+ul, ol, li > p {
+  margin-top: 0;
+}
+ul > li     { color: #aaa; }
+ul > li > * { color: black; }
+
+pre {
+  padding: 0;
+  margin: 0;
+}
+
+#author {
+  color: #527bbd;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+#email {
+}
+#revnumber, #revdate, #revremark {
+}
+
+#footer {
+  font-size: small;
+  border-top: 2px solid silver;
+  padding-top: 0.5em;
+  margin-top: 4.0em;
+}
+#footer-text {
+  float: left;
+  padding-bottom: 0.5em;
+}
+#footer-badges {
+  float: right;
+  padding-bottom: 0.5em;
+}
+
+#preamble {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.imageblock, div.exampleblock, div.verseblock,
+div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
+div.admonitionblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.admonitionblock {
+  margin-top: 2.0em;
+  margin-bottom: 2.0em;
+  margin-right: 10%;
+  color: #606060;
+}
+
+div.content { /* Block element content. */
+  padding: 0;
+}
+
+/* Block element titles. */
+div.title, caption.title {
+  color: #527bbd;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 1.0em;
+  margin-bottom: 0.5em;
+}
+div.title + * {
+  margin-top: 0;
+}
+
+td div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content + div.title {
+  margin-top: 0.0em;
+}
+
+div.sidebarblock > div.content {
+  background: #ffffee;
+  border: 1px solid #dddddd;
+  border-left: 4px solid #f0f0f0;
+  padding: 0.5em;
+}
+
+div.listingblock > div.content {
+  border: 1px solid #dddddd;
+  border-left: 5px solid #f0f0f0;
+  background: #f8f8f8;
+  padding: 0.5em;
+}
+
+div.quoteblock, div.verseblock {
+  padding-left: 1.0em;
+  margin-left: 1.0em;
+  margin-right: 10%;
+  border-left: 5px solid #f0f0f0;
+  color: #888;
+}
+
+div.quoteblock > div.attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock > pre.content {
+  font-family: inherit;
+  font-size: inherit;
+}
+div.verseblock > div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
+div.verseblock + div.attribution {
+  text-align: left;
+}
+
+div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 3px solid #dddddd;
+}
+
+div.exampleblock > div.content {
+  border-left: 3px solid #dddddd;
+  padding-left: 0.5em;
+}
+
+div.imageblock div.content { padding-left: 0; }
+span.image img { border-style: none; }
+a.image:visited { color: white; }
+
+dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: normal;
+  color: navy;
+}
+dd > *:first-child {
+  margin-top: 0.1em;
+}
+
+ul, ol {
+    list-style-position: outside;
+}
+ol.arabic {
+  list-style-type: decimal;
+}
+ol.loweralpha {
+  list-style-type: lower-alpha;
+}
+ol.upperalpha {
+  list-style-type: upper-alpha;
+}
+ol.lowerroman {
+  list-style-type: lower-roman;
+}
+ol.upperroman {
+  list-style-type: upper-roman;
+}
+
+div.compact ul, div.compact ol,
+div.compact p, div.compact p,
+div.compact div, div.compact div {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}
+
+tfoot {
+  font-weight: bold;
+}
+td > div.verse {
+  white-space: pre;
+}
+
+div.hdlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+div.hdlist tr {
+  padding-bottom: 15px;
+}
+dt.hdlist1.strong, td.hdlist1.strong {
+  font-weight: bold;
+}
+td.hdlist1 {
+  vertical-align: top;
+  font-style: normal;
+  padding-right: 0.8em;
+  color: navy;
+}
+td.hdlist2 {
+  vertical-align: top;
+}
+div.hdlist.compact tr {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.comment {
+  background: yellow;
+}
+
+.footnote, .footnoteref {
+  font-size: 0.8em;
+}
+
+span.footnote, span.footnoteref {
+  vertical-align: super;
+}
+
+#footnotes {
+  margin: 20px 0 20px 0;
+  padding: 7px 0 0 0;
+}
+
+#footnotes div.footnote {
+  margin: 0 0 5px 0;
+}
+
+#footnotes hr {
+  border: none;
+  border-top: 1px solid silver;
+  height: 1px;
+  text-align: left;
+  margin-left: 0;
+  width: 20%;
+  min-width: 100px;
+}
+
+div.colist td {
+  padding-right: 0.5em;
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+div.colist td img {
+  margin-top: 0.3em;
+}
+
+@media print {
+  #footer-badges { display: none; }
+}
+
+#toc {
+  margin-bottom: 2.5em;
+}
+
+#toctitle {
+  color: #527bbd;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}
+
+div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+  font-size: 0.9em;
+}
+div.toclevel3 {
+  margin-left: 4em;
+  font-size: 0.9em;
+}
+div.toclevel4 {
+  margin-left: 6em;
+  font-size: 0.9em;
+}
+
+span.aqua { color: aqua; }
+span.black { color: black; }
+span.blue { color: blue; }
+span.fuchsia { color: fuchsia; }
+span.gray { color: gray; }
+span.green { color: green; }
+span.lime { color: lime; }
+span.maroon { color: maroon; }
+span.navy { color: navy; }
+span.olive { color: olive; }
+span.purple { color: purple; }
+span.red { color: red; }
+span.silver { color: silver; }
+span.teal { color: teal; }
+span.white { color: white; }
+span.yellow { color: yellow; }
+
+span.aqua-background { background: aqua; }
+span.black-background { background: black; }
+span.blue-background { background: blue; }
+span.fuchsia-background { background: fuchsia; }
+span.gray-background { background: gray; }
+span.green-background { background: green; }
+span.lime-background { background: lime; }
+span.maroon-background { background: maroon; }
+span.navy-background { background: navy; }
+span.olive-background { background: olive; }
+span.purple-background { background: purple; }
+span.red-background { background: red; }
+span.silver-background { background: silver; }
+span.teal-background { background: teal; }
+span.white-background { background: white; }
+span.yellow-background { background: yellow; }
+
+span.big { font-size: 2em; }
+span.small { font-size: 0.6em; }
+
+span.underline { text-decoration: underline; }
+span.overline { text-decoration: overline; }
+span.line-through { text-decoration: line-through; }
+
+
+/*
+ * xhtml11 specific
+ *
+ * */
+
+tt {
+  font-family: monospace;
+  font-size: inherit;
+  color: navy;
+}
+
+div.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.tableblock > table {
+  border: 3px solid #527bbd;
+}
+thead, p.table.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.table {
+  margin-top: 0;
+}
+/* Because the table frame attribute is overriden by CSS in most browsers. */
+div.tableblock > table[frame="void"] {
+  border-style: none;
+}
+div.tableblock > table[frame="hsides"] {
+  border-left-style: none;
+  border-right-style: none;
+}
+div.tableblock > table[frame="vsides"] {
+  border-top-style: none;
+  border-bottom-style: none;
+}
+
+
+/*
+ * html5 specific
+ *
+ * */
+
+.monospaced {
+  font-family: monospace;
+  font-size: inherit;
+  color: navy;
+}
+
+table.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+thead, p.tableblock.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.tableblock {
+  margin-top: 0;
+}
+table.tableblock {
+  border-width: 3px;
+  border-spacing: 0px;
+  border-style: solid;
+  border-color: #527bbd;
+  border-collapse: collapse;
+}
+th.tableblock, td.tableblock {
+  border-width: 1px;
+  padding: 4px;
+  border-style: solid;
+  border-color: #527bbd;
+}
+
+table.tableblock.frame-topbot {
+  border-left-style: hidden;
+  border-right-style: hidden;
+}
+table.tableblock.frame-sides {
+  border-top-style: hidden;
+  border-bottom-style: hidden;
+}
+table.tableblock.frame-none {
+  border-style: hidden;
+}
+
+th.tableblock.halign-left, td.tableblock.halign-left {
+  text-align: left;
+}
+th.tableblock.halign-center, td.tableblock.halign-center {
+  text-align: center;
+}
+th.tableblock.halign-right, td.tableblock.halign-right {
+  text-align: right;
+}
+
+th.tableblock.valign-top, td.tableblock.valign-top {
+  vertical-align: top;
+}
+th.tableblock.valign-middle, td.tableblock.valign-middle {
+  vertical-align: middle;
+}
+th.tableblock.valign-bottom, td.tableblock.valign-bottom {
+  vertical-align: bottom;
+}
+
+
+/*
+ * manpage specific
+ *
+ * */
+
+body.manpage h1 {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  border-top: 2px solid silver;
+  border-bottom: 2px solid silver;
+}
+body.manpage h2 {
+  border-style: none;
+}
+body.manpage div.sectionbody {
+  margin-left: 3em;
+}
+
+@media print {
+  body.manpage div#toc { display: none; }
+}
+</style>
+<script type="text/javascript">
+/*<![CDATA[*/
+var asciidoc = {  // Namespace.
+
+/////////////////////////////////////////////////////////////////////
+// Table Of Contents generator
+/////////////////////////////////////////////////////////////////////
+
+/* Author: Mihai Bazon, September 2002
+ * http://students.infoiasi.ro/~mishoo
+ *
+ * Table Of Content generator
+ * Version: 0.4
+ *
+ * Feel free to use this script under the terms of the GNU General Public
+ * License, as long as you do not remove or alter this notice.
+ */
+
+ /* modified by Troy D. Hanson, September 2006. License: GPL */
+ /* modified by Stuart Rackham, 2006, 2009. License: GPL */
+
+// toclevels = 1..4.
+toc: function (toclevels) {
+
+  function getText(el) {
+    var text = "";
+    for (var i = el.firstChild; i != null; i = i.nextSibling) {
+      if (i.nodeType == 3 /* Node.TEXT_NODE */) // IE doesn't speak constants.
+        text += i.data;
+      else if (i.firstChild != null)
+        text += getText(i);
+    }
+    return text;
+  }
+
+  function TocEntry(el, text, toclevel) {
+    this.element = el;
+    this.text = text;
+    this.toclevel = toclevel;
+  }
+
+  function tocEntries(el, toclevels) {
+    var result = new Array;
+    var re = new RegExp('[hH]([2-'+(toclevels+1)+'])');
+    // Function that scans the DOM tree for header elements (the DOM2
+    // nodeIterator API would be a better technique but not supported by all
+    // browsers).
+    var iterate = function (el) {
+      for (var i = el.firstChild; i != null; i = i.nextSibling) {
+        if (i.nodeType == 1 /* Node.ELEMENT_NODE */) {
+          var mo = re.exec(i.tagName);
+          if (mo && (i.getAttribute("class") || i.getAttribute("className")) != "float") {
+            result[result.length] = new TocEntry(i, getText(i), mo[1]-1);
+          }
+          iterate(i);
+        }
+      }
+    }
+    iterate(el);
+    return result;
+  }
+
+  var toc = document.getElementById("toc");
+  if (!toc) {
+    return;
+  }
+
+  // Delete existing TOC entries in case we're reloading the TOC.
+  var tocEntriesToRemove = [];
+  var i;
+  for (i = 0; i < toc.childNodes.length; i++) {
+    var entry = toc.childNodes[i];
+    if (entry.nodeName == 'div'
+     && entry.getAttribute("class")
+     && entry.getAttribute("class").match(/^toclevel/))
+      tocEntriesToRemove.push(entry);
+  }
+  for (i = 0; i < tocEntriesToRemove.length; i++) {
+    toc.removeChild(tocEntriesToRemove[i]);
+  }
+
+  // Rebuild TOC entries.
+  var entries = tocEntries(document.getElementById("content"), toclevels);
+  for (var i = 0; i < entries.length; ++i) {
+    var entry = entries[i];
+    if (entry.element.id == "")
+      entry.element.id = "_toc_" + i;
+    var a = document.createElement("a");
+    a.href = "#" + entry.element.id;
+    a.appendChild(document.createTextNode(entry.text));
+    var div = document.createElement("div");
+    div.appendChild(a);
+    div.className = "toclevel" + entry.toclevel;
+    toc.appendChild(div);
+  }
+  if (entries.length == 0)
+    toc.parentNode.removeChild(toc);
+},
+
+
+/////////////////////////////////////////////////////////////////////
+// Footnotes generator
+/////////////////////////////////////////////////////////////////////
+
+/* Based on footnote generation code from:
+ * http://www.brandspankingnew.net/archive/2005/07/format_footnote.html
+ */
+
+footnotes: function () {
+  // Delete existing footnote entries in case we're reloading the footnodes.
+  var i;
+  var noteholder = document.getElementById("footnotes");
+  if (!noteholder) {
+    return;
+  }
+  var entriesToRemove = [];
+  for (i = 0; i < noteholder.childNodes.length; i++) {
+    var entry = noteholder.childNodes[i];
+    if (entry.nodeName == 'div' && entry.getAttribute("class") == "footnote")
+      entriesToRemove.push(entry);
+  }
+  for (i = 0; i < entriesToRemove.length; i++) {
+    noteholder.removeChild(entriesToRemove[i]);
+  }
+
+  // Rebuild footnote entries.
+  var cont = document.getElementById("content");
+  var spans = cont.getElementsByTagName("span");
+  var refs = {};
+  var n = 0;
+  for (i=0; i<spans.length; i++) {
+    if (spans[i].className == "footnote") {
+      n++;
+      var note = spans[i].getAttribute("data-note");
+      if (!note) {
+        // Use [\s\S] in place of . so multi-line matches work.
+        // Because JavaScript has no s (dotall) regex flag.
+        note = spans[i].innerHTML.match(/\s*\[([\s\S]*)]\s*/)[1];
+        spans[i].innerHTML =
+          "[<a id='_footnoteref_" + n + "' href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+        spans[i].setAttribute("data-note", note);
+      }
+      noteholder.innerHTML +=
+        "<div class='footnote' id='_footnote_" + n + "'>" +
+        "<a href='#_footnoteref_" + n + "' title='Return to text'>" +
+        n + "</a>. " + note + "</div>";
+      var id =spans[i].getAttribute("id");
+      if (id != null) refs["#"+id] = n;
+    }
+  }
+  if (n == 0)
+    noteholder.parentNode.removeChild(noteholder);
+  else {
+    // Process footnoterefs.
+    for (i=0; i<spans.length; i++) {
+      if (spans[i].className == "footnoteref") {
+        var href = spans[i].getElementsByTagName("a")[0].getAttribute("href");
+        href = href.match(/#.*/)[0];  // Because IE return full URL.
+        n = refs[href];
+        spans[i].innerHTML =
+          "[<a href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+      }
+    }
+  }
+},
+
+install: function(toclevels) {
+  var timerId;
+
+  function reinstall() {
+    asciidoc.footnotes();
+    if (toclevels) {
+      asciidoc.toc(toclevels);
+    }
+  }
+
+  function reinstallAndRemoveTimer() {
+    clearInterval(timerId);
+    reinstall();
+  }
+
+  timerId = setInterval(reinstall, 500);
+  if (document.addEventListener)
+    document.addEventListener("DOMContentLoaded", reinstallAndRemoveTimer, false);
+  else
+    window.onload = reinstallAndRemoveTimer;
+}
+
+}
+asciidoc.install();
+/*]]>*/
+</script>
+</head>
+<body class="article">
+<div id="header">
+<h1>How to recover an object from scratch</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph"><p>I was recently presented with a repository with a corrupted packfile,
+and was asked if the data was recoverable. This post-mortem describes
+the steps I took to investigate and fix the problem. I thought others
+might find the process interesting, and it might help somebody in the
+same situation.</p></div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph"><p>Note: In this case, no good copy of the repository was available. For
+the much easier case where you can get the corrupted object from
+elsewhere, see <a href="recover-corrupted-blob-object.html">this howto</a>.</p></div>
+</div></div>
+<div class="paragraph"><p>I started with an fsck, which found a problem with exactly one object
+(I&#8217;ve used $pack and $obj below to keep the output readable, and also
+because I&#8217;ll refer to them later):</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>    $ git fsck
+    error: $pack SHA1 checksum mismatch
+    error: index CRC mismatch for object $obj from $pack at offset 51653873
+    error: inflate: data stream error (incorrect data check)
+    error: cannot unpack $obj from $pack at offset 51653873</tt></pre>
+</div></div>
+<div class="paragraph"><p>The pack checksum failing means a byte is munged somewhere, and it is
+presumably in the object mentioned (since both the index checksum and
+zlib were failing).</p></div>
+<div class="paragraph"><p>Reading the zlib source code, I found that "incorrect data check" means
+that the adler-32 checksum at the end of the zlib data did not match the
+inflated data. So stepping the data through zlib would not help, as it
+did not fail until the very end, when we realize the crc does not match.
+The problematic bytes could be anywhere in the object data.</p></div>
+<div class="paragraph"><p>The first thing I did was pull the broken data out of the packfile. I
+needed to know how big the object was, which I found out with:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>    $ git show-index &lt;$idx | cut -d' ' -f1 | sort -n | grep -A1 51653873
+    51653873
+    51664736</tt></pre>
+</div></div>
+<div class="paragraph"><p>Show-index gives us the list of objects and their offsets. We throw away
+everything but the offsets, and then sort them so that our interesting
+offset (which we got from the fsck output above) is followed immediately
+by the offset of the next object. Now we know that the object data is
+10863 bytes long, and we can grab it with:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>  dd if=$pack of=object bs=1 skip=51653873 count=10863</tt></pre>
+</div></div>
+<div class="paragraph"><p>I inspected a hexdump of the data, looking for any obvious bogosity
+(e.g., a 4K run of zeroes would be a good sign of filesystem
+corruption). But everything looked pretty reasonable.</p></div>
+<div class="paragraph"><p>Note that the "object" file isn&#8217;t fit for feeding straight to zlib; it
+has the git packed object header, which is variable-length. We want to
+strip that off so we can start playing with the zlib data directly. You
+can either work your way through it manually (the format is described in
+<a href="../technical/pack-format.html">Documentation/technical/pack-format.txt</a>),
+or you can walk through it in a debugger. I did the latter, creating a
+valid pack like:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>    # pack magic and version
+    printf 'PACK\0\0\0\2' &gt;tmp.pack
+    # pack has one object
+    printf '\0\0\0\1' &gt;&gt;tmp.pack
+    # now add our object data
+    cat object &gt;&gt;tmp.pack
+    # and then append the pack trailer
+    /path/to/git.git/test-sha1 -b &lt;tmp.pack &gt;trailer
+    cat trailer &gt;&gt;tmp.pack</tt></pre>
+</div></div>
+<div class="paragraph"><p>and then running "git index-pack tmp.pack" in the debugger (stop at
+unpack_raw_entry). Doing this, I found that there were 3 bytes of header
+(and the header itself had a sane type and size). So I stripped those
+off with:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>    dd if=object of=zlib bs=1 skip=3</tt></pre>
+</div></div>
+<div class="paragraph"><p>I ran the result through zlib&#8217;s inflate using a custom C program. And
+while it did report the error, I did get the right number of output
+bytes (i.e., it matched git&#8217;s size header that we decoded above). But
+feeding the result back to "git hash-object" didn&#8217;t produce the same
+sha1. So there were some wrong bytes, but I didn&#8217;t know which. The file
+happened to be C source code, so I hoped I could notice something
+obviously wrong with it, but I didn&#8217;t. I even got it to compile!</p></div>
+<div class="paragraph"><p>I also tried comparing it to other versions of the same path in the
+repository, hoping that there would be some part of the diff that didn&#8217;t
+make sense. Unfortunately, this happened to be the only revision of this
+particular file in the repository, so I had nothing to compare against.</p></div>
+<div class="paragraph"><p>So I took a different approach. Working under the guess that the
+corruption was limited to a single byte, I wrote a program to munge each
+byte individually, and try inflating the result. Since the object was
+only 10K compressed, that worked out to about 2.5M attempts, which took
+a few minutes.</p></div>
+<div class="paragraph"><p>The program I used is here:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>#include &lt;stdio.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;string.h&gt;
+#include &lt;signal.h&gt;
+#include &lt;zlib.h&gt;
+
+static int try_zlib(unsigned char *buf, int len)
+{
+        /* make this absurdly large so we don't have to loop */
+        static unsigned char out[1024*1024];
+        z_stream z;
+        int ret;
+
+        memset(&amp;z, 0, sizeof(z));
+        inflateInit(&amp;z);
+
+        z.next_in = buf;
+        z.avail_in = len;
+        z.next_out = out;
+        z.avail_out = sizeof(out);
+
+        ret = inflate(&amp;z, 0);
+        inflateEnd(&amp;z);
+        return ret &gt;= 0;
+}
+
+/* eye candy */
+static int counter = 0;
+static void progress(int sig)
+{
+        fprintf(stderr, "\r%d", counter);
+        alarm(1);
+}
+
+int main(void)
+{
+        /* oversized so we can read the whole buffer in */
+        unsigned char buf[1024*1024];
+        int len;
+        unsigned i, j;
+
+        signal(SIGALRM, progress);
+        alarm(1);
+
+        len = read(0, buf, sizeof(buf));
+        for (i = 0; i &lt; len; i++) {
+                unsigned char c = buf[i];
+                for (j = 0; j &lt;= 0xff; j++) {
+                        buf[i] = j;
+
+                        counter++;
+                        if (try_zlib(buf, len))
+                                printf("i=%d, j=%x\n", i, j);
+                }
+                buf[i] = c;
+        }
+
+        alarm(0);
+        fprintf(stderr, "\n");
+        return 0;
+}</tt></pre>
+</div></div>
+<div class="paragraph"><p>I compiled and ran with:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>  gcc -Wall -Werror -O3 munge.c -o munge -lz
+  ./munge &lt;zlib</tt></pre>
+</div></div>
+<div class="paragraph"><p>There were a few false positives early on (if you write "no data" in the
+zlib header, zlib thinks it&#8217;s just fine :) ). But I got a hit about
+halfway through:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>  i=5642, j=c7</tt></pre>
+</div></div>
+<div class="paragraph"><p>I let it run to completion, and got a few more hits at the end (where it
+was munging the crc to match our broken data). So there was a good
+chance this middle hit was the source of the problem.</p></div>
+<div class="paragraph"><p>I confirmed by tweaking the byte in a hex editor, zlib inflating the
+result (no errors!), and then piping the output into "git hash-object",
+which reported the sha1 of the broken object. Success!</p></div>
+<div class="paragraph"><p>I fixed the packfile itself with:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>  chmod +w $pack
+  printf '\xc7' | dd of=$pack bs=1 seek=51659518 conv=notrunc
+  chmod -w $pack</tt></pre>
+</div></div>
+<div class="paragraph"><p>The <tt>\xc7</tt> comes from the replacement byte our "munge" program found.
+The offset 51659518 is derived by taking the original object offset
+(51653873), adding the replacement offset found by "munge" (5642), and
+then adding back in the 3 bytes of git header we stripped.</p></div>
+<div class="paragraph"><p>After that, "git fsck" ran clean.</p></div>
+<div class="paragraph"><p>As for the corruption itself, I was lucky that it was indeed a single
+byte. In fact, it turned out to be a single bit. The byte 0xc7 was
+corrupted to 0xc5. So presumably it was caused by faulty hardware, or a
+cosmic ray.</p></div>
+<div class="paragraph"><p>And the aborted attempt to look at the inflated output to see what was
+wrong? I could have looked forever and never found it. Here&#8217;s the diff
+between what the corrupted data inflates to, versus the real data:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>  -       cp = strtok (arg, "+");
+  +       cp = strtok (arg, ".");</tt></pre>
+</div></div>
+<div class="paragraph"><p>It tweaked one byte and still ended up as valid, readable C that just
+happened to do something totally different! One takeaway is that on a
+less unlucky day, looking at the zlib output might have actually been
+helpful, as most random changes would actually break the C code.</p></div>
+<div class="paragraph"><p>But more importantly, git&#8217;s hashing and checksumming noticed a problem
+that easily could have gone undetected in another system. The result
+still compiled, but would have caused an interesting bug (that would
+have been blamed on some random commit).</p></div>
+</div>
+</div>
+</div>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2014-02-24 13:03:25 PST
+</div>
+</div>
+</body>
+</html>

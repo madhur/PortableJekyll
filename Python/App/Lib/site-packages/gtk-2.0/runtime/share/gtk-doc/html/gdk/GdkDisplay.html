@@ -1,0 +1,1283 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>GdkDisplay</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="GDK 2 Reference Manual">
+<link rel="up" href="reference.html" title="API Reference">
+<link rel="prev" href="multihead.html" title="Multi-head Support Overview">
+<link rel="next" href="GdkDisplayManager.html" title="GdkDisplayManager">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="multihead.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="reference.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">GDK 2 Reference Manual</th>
+<td><a accesskey="n" href="GdkDisplayManager.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#GdkDisplay.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#GdkDisplay.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#GdkDisplay.object-hierarchy" class="shortcut">Object Hierarchy</a>
+                   | 
+                  <a href="#GdkDisplay.signals" class="shortcut">Signals</a>
+</td></tr>
+</table>
+<div class="refentry">
+<a name="GdkDisplay"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="GdkDisplay.top_of_page"></a>GdkDisplay</span></h2>
+<p>GdkDisplay — Controls the keyboard/mouse pointer grabs and a set of <span class="type">GdkScreen</span>s</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="GdkDisplay.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+#include &lt;gdk/gdk.h&gt;
+
+                    <a class="link" href="GdkDisplay.html#GdkDisplay-struct" title="GdkDisplay">GdkDisplay</a>;
+<a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="returnvalue">GdkDisplay</span></a> *        <a class="link" href="GdkDisplay.html#gdk-display-open" title="gdk_display_open ()">gdk_display_open</a>                    (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *display_name</code></em>);
+<a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="returnvalue">GdkDisplay</span></a> *        <a class="link" href="GdkDisplay.html#gdk-display-get-default" title="gdk_display_get_default ()">gdk_display_get_default</a>             (<em class="parameter"><code><span class="type">void</span></code></em>);
+const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="GdkDisplay.html#gdk-display-get-name" title="gdk_display_get_name ()">gdk_display_get_name</a>                (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                <a class="link" href="GdkDisplay.html#gdk-display-get-n-screens" title="gdk_display_get_n_screens ()">gdk_display_get_n_screens</a>           (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>);
+<a class="link" href="GdkScreen.html" title="GdkScreen"><span class="returnvalue">GdkScreen</span></a> *         <a class="link" href="GdkDisplay.html#gdk-display-get-screen" title="gdk_display_get_screen ()">gdk_display_get_screen</a>              (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> screen_num</code></em>);
+<a class="link" href="GdkScreen.html" title="GdkScreen"><span class="returnvalue">GdkScreen</span></a> *         <a class="link" href="GdkDisplay.html#gdk-display-get-default-screen" title="gdk_display_get_default_screen ()">gdk_display_get_default_screen</a>      (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GdkDisplay.html#gdk-display-pointer-ungrab" title="gdk_display_pointer_ungrab ()">gdk_display_pointer_ungrab</a>          (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint32"><span class="type">guint32</span></a> time_</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GdkDisplay.html#gdk-display-keyboard-ungrab" title="gdk_display_keyboard_ungrab ()">gdk_display_keyboard_ungrab</a>         (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint32"><span class="type">guint32</span></a> time_</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="GdkDisplay.html#gdk-display-pointer-is-grabbed" title="gdk_display_pointer_is_grabbed ()">gdk_display_pointer_is_grabbed</a>      (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GdkDisplay.html#gdk-display-beep" title="gdk_display_beep ()">gdk_display_beep</a>                    (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GdkDisplay.html#gdk-display-sync" title="gdk_display_sync ()">gdk_display_sync</a>                    (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GdkDisplay.html#gdk-display-flush" title="gdk_display_flush ()">gdk_display_flush</a>                   (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GdkDisplay.html#gdk-display-close" title="gdk_display_close ()">gdk_display_close</a>                   (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="GdkDisplay.html#gdk-display-is-closed" title="gdk_display_is_closed ()">gdk_display_is_closed</a>               (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             <a class="link" href="GdkDisplay.html#gdk-display-list-devices" title="gdk_display_list_devices ()">gdk_display_list_devices</a>            (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>);
+<a class="link" href="gdk-Event-Structures.html#GdkEvent" title="union GdkEvent"><span class="returnvalue">GdkEvent</span></a> *          <a class="link" href="GdkDisplay.html#gdk-display-get-event" title="gdk_display_get_event ()">gdk_display_get_event</a>               (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>);
+<a class="link" href="gdk-Event-Structures.html#GdkEvent" title="union GdkEvent"><span class="returnvalue">GdkEvent</span></a> *          <a class="link" href="GdkDisplay.html#gdk-display-peek-event" title="gdk_display_peek_event ()">gdk_display_peek_event</a>              (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GdkDisplay.html#gdk-display-put-event" title="gdk_display_put_event ()">gdk_display_put_event</a>               (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>,
+                                                         <em class="parameter"><code>const <a class="link" href="gdk-Event-Structures.html#GdkEvent" title="union GdkEvent"><span class="type">GdkEvent</span></a> *event</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GdkDisplay.html#gdk-display-add-client-message-filter" title="gdk_display_add_client_message_filter ()">gdk_display_add_client_message_filter</a>
+                                                        (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="gdk-Properties-and-Atoms.html#GdkAtom" title="GdkAtom"><span class="type">GdkAtom</span></a> message_type</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="gdk-Windows.html#GdkFilterFunc" title="GdkFilterFunc ()"><span class="type">GdkFilterFunc</span></a> func</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> data</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GdkDisplay.html#gdk-display-set-double-click-time" title="gdk_display_set_double_click_time ()">gdk_display_set_double_click_time</a>   (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> msec</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GdkDisplay.html#gdk-display-set-double-click-distance" title="gdk_display_set_double_click_distance ()">gdk_display_set_double_click_distance</a>
+                                                        (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> distance</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GdkDisplay.html#gdk-display-get-pointer" title="gdk_display_get_pointer ()">gdk_display_get_pointer</a>             (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GdkScreen.html" title="GdkScreen"><span class="type">GdkScreen</span></a> **screen</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> *x</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> *y</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="gdk-Windows.html#GdkModifierType" title="enum GdkModifierType"><span class="type">GdkModifierType</span></a> *mask</code></em>);
+<a class="link" href="gdk-Windows.html#GdkWindow"><span class="returnvalue">GdkWindow</span></a> *         <a class="link" href="GdkDisplay.html#gdk-display-get-window-at-pointer" title="gdk_display_get_window_at_pointer ()">gdk_display_get_window_at_pointer</a>   (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> *win_x</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> *win_y</code></em>);
+struct              <a class="link" href="GdkDisplay.html#GdkDisplayPointerHooks" title="struct GdkDisplayPointerHooks">GdkDisplayPointerHooks</a>;
+<a class="link" href="GdkDisplay.html#GdkDisplayPointerHooks" title="struct GdkDisplayPointerHooks"><span class="returnvalue">GdkDisplayPointerHooks</span></a> * <a class="link" href="GdkDisplay.html#gdk-display-set-pointer-hooks" title="gdk_display_set_pointer_hooks ()">gdk_display_set_pointer_hooks</a>  (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>,
+                                                         <em class="parameter"><code>const <a class="link" href="GdkDisplay.html#GdkDisplayPointerHooks" title="struct GdkDisplayPointerHooks"><span class="type">GdkDisplayPointerHooks</span></a> *new_hooks</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GdkDisplay.html#gdk-display-warp-pointer" title="gdk_display_warp_pointer ()">gdk_display_warp_pointer</a>            (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GdkScreen.html" title="GdkScreen"><span class="type">GdkScreen</span></a> *screen</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> x</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> y</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="GdkDisplay.html#gdk-display-supports-cursor-color" title="gdk_display_supports_cursor_color ()">gdk_display_supports_cursor_color</a>   (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="GdkDisplay.html#gdk-display-supports-cursor-alpha" title="gdk_display_supports_cursor_alpha ()">gdk_display_supports_cursor_alpha</a>   (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>               <a class="link" href="GdkDisplay.html#gdk-display-get-default-cursor-size" title="gdk_display_get_default_cursor_size ()">gdk_display_get_default_cursor_size</a> (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GdkDisplay.html#gdk-display-get-maximal-cursor-size" title="gdk_display_get_maximal_cursor_size ()">gdk_display_get_maximal_cursor_size</a> (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> *width</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> *height</code></em>);
+<a class="link" href="gdk-Windows.html#GdkWindow"><span class="returnvalue">GdkWindow</span></a> *         <a class="link" href="GdkDisplay.html#gdk-display-get-default-group" title="gdk_display_get_default_group ()">gdk_display_get_default_group</a>       (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="GdkDisplay.html#gdk-display-supports-selection-notification" title="gdk_display_supports_selection_notification ()">gdk_display_supports_selection_notification</a>
+                                                        (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="GdkDisplay.html#gdk-display-request-selection-notification" title="gdk_display_request_selection_notification ()">gdk_display_request_selection_notification</a>
+                                                        (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="gdk-Properties-and-Atoms.html#GdkAtom" title="GdkAtom"><span class="type">GdkAtom</span></a> selection</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="GdkDisplay.html#gdk-display-supports-clipboard-persistence" title="gdk_display_supports_clipboard_persistence ()">gdk_display_supports_clipboard_persistence</a>
+                                                        (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="GdkDisplay.html#gdk-display-store-clipboard" title="gdk_display_store_clipboard ()">gdk_display_store_clipboard</a>         (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="gdk-Windows.html#GdkWindow"><span class="type">GdkWindow</span></a> *clipboard_window</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint32"><span class="type">guint32</span></a> time_</code></em>,
+                                                         <em class="parameter"><code>const <a class="link" href="gdk-Properties-and-Atoms.html#GdkAtom" title="GdkAtom"><span class="type">GdkAtom</span></a> *targets</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> n_targets</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="GdkDisplay.html#gdk-display-supports-shapes" title="gdk_display_supports_shapes ()">gdk_display_supports_shapes</a>         (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="GdkDisplay.html#gdk-display-supports-input-shapes" title="gdk_display_supports_input_shapes ()">gdk_display_supports_input_shapes</a>   (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="GdkDisplay.html#gdk-display-supports-composite" title="gdk_display_supports_composite ()">gdk_display_supports_composite</a>      (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>);
+</pre>
+</div>
+<div class="refsect1">
+<a name="GdkDisplay.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
+   +----GdkDisplay
+</pre>
+</div>
+<div class="refsect1">
+<a name="GdkDisplay.signals"></a><h2>Signals</h2>
+<pre class="synopsis">
+  "<a class="link" href="GdkDisplay.html#GdkDisplay-closed" title='The "closed" signal'>closed</a>"                                         : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS"><code class="literal">Run Last</code></a>
+</pre>
+</div>
+<div class="refsect1">
+<a name="GdkDisplay.description"></a><h2>Description</h2>
+<p>
+<a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> objects purpose are two fold:
+</p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem"><p>To grab/ungrab keyboard focus and mouse pointer</p></li>
+<li class="listitem"><p>To manage and provide information about the <a class="link" href="GdkScreen.html" title="GdkScreen"><span class="type">GdkScreen</span></a>(s)
+		available for this <a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a>
+	  </p></li>
+</ul></div>
+<p>
+</p>
+<p>
+  <a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> objects are the GDK representation of the X Display which can be
+  described as <span class="emphasis"><em>a workstation consisting of a keyboard a pointing
+  device (such as a mouse) and one or more screens</em></span>.
+  It is used to open and keep track of various <a class="link" href="GdkScreen.html" title="GdkScreen"><span class="type">GdkScreen</span></a> objects currently
+  instanciated by the application. It is also used to grab and release the keyboard
+  and the mouse pointer.
+</p>
+</div>
+<div class="refsect1">
+<a name="GdkDisplay.details"></a><h2>Details</h2>
+<div class="refsect2">
+<a name="GdkDisplay-struct"></a><h3>GdkDisplay</h3>
+<pre class="programlisting">typedef struct _GdkDisplay GdkDisplay;</pre>
+<p>
+The <span class="structname">GdkDisplay</span> struct is the GDK representation
+of an X display. All its fields are private and should not be accessed directly.
+</p>
+<p class="since">Since 2.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-display-open"></a><h3>gdk_display_open ()</h3>
+<pre class="programlisting"><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="returnvalue">GdkDisplay</span></a> *        gdk_display_open                    (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *display_name</code></em>);</pre>
+<p>
+Opens a display.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>display_name</code></em> :</span></p></td>
+<td>the name of the display to open</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a <a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a>, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if the display
+could not be opened.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-display-get-default"></a><h3>gdk_display_get_default ()</h3>
+<pre class="programlisting"><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="returnvalue">GdkDisplay</span></a> *        gdk_display_get_default             (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+Gets the default <a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a>. This is a convenience
+function for
+<code class="literal">gdk_display_manager_get_default_display (<a class="link" href="GdkDisplayManager.html#gdk-display-manager-get" title="gdk_display_manager_get ()"><code class="function">gdk_display_manager_get()</code></a>)</code>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a <a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a>, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if there is no default
+display. <span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span>
+</td>
+</tr></tbody>
+</table></div>
+<p class="since">Since 2.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-display-get-name"></a><h3>gdk_display_get_name ()</h3>
+<pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       gdk_display_get_name                (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>);</pre>
+<p>
+Gets the name of the display.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>display</code></em> :</span></p></td>
+<td>a <a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a string representing the display name. This string is owned
+by GDK and should not be modified or freed.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-display-get-n-screens"></a><h3>gdk_display_get_n_screens ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                gdk_display_get_n_screens           (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>);</pre>
+<p>
+Gets the number of screen managed by the <em class="parameter"><code>display</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>display</code></em> :</span></p></td>
+<td>a <a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>number of screens.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-display-get-screen"></a><h3>gdk_display_get_screen ()</h3>
+<pre class="programlisting"><a class="link" href="GdkScreen.html" title="GdkScreen"><span class="returnvalue">GdkScreen</span></a> *         gdk_display_get_screen              (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> screen_num</code></em>);</pre>
+<p>
+Returns a screen object for one of the screens of the display.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>display</code></em> :</span></p></td>
+<td>a <a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>screen_num</code></em> :</span></p></td>
+<td>the screen number</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the <a class="link" href="GdkScreen.html" title="GdkScreen"><span class="type">GdkScreen</span></a> object</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-display-get-default-screen"></a><h3>gdk_display_get_default_screen ()</h3>
+<pre class="programlisting"><a class="link" href="GdkScreen.html" title="GdkScreen"><span class="returnvalue">GdkScreen</span></a> *         gdk_display_get_default_screen      (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>);</pre>
+<p>
+Get the default <a class="link" href="GdkScreen.html" title="GdkScreen"><span class="type">GdkScreen</span></a> for <em class="parameter"><code>display</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>display</code></em> :</span></p></td>
+<td>a <a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the default <a class="link" href="GdkScreen.html" title="GdkScreen"><span class="type">GdkScreen</span></a> object for <em class="parameter"><code>display</code></em>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-display-pointer-ungrab"></a><h3>gdk_display_pointer_ungrab ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gdk_display_pointer_ungrab          (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint32"><span class="type">guint32</span></a> time_</code></em>);</pre>
+<p>
+Release any pointer grab.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>display</code></em> :</span></p></td>
+<td>a <a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>time_</code></em> :</span></p></td>
+<td>a timestap (e.g. <a class="link" href="gdk-Events.html#GDK-CURRENT-TIME:CAPS" title="GDK_CURRENT_TIME"><code class="literal">GDK_CURRENT_TIME</code></a>).</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-display-keyboard-ungrab"></a><h3>gdk_display_keyboard_ungrab ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gdk_display_keyboard_ungrab         (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint32"><span class="type">guint32</span></a> time_</code></em>);</pre>
+<p>
+Release any keyboard grab
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>display</code></em> :</span></p></td>
+<td>a <a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>time_</code></em> :</span></p></td>
+<td>a timestap (e.g <a class="link" href="gdk-Events.html#GDK-CURRENT-TIME:CAPS" title="GDK_CURRENT_TIME"><span class="type">GDK_CURRENT_TIME</span></a>).</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-display-pointer-is-grabbed"></a><h3>gdk_display_pointer_is_grabbed ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gdk_display_pointer_is_grabbed      (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>);</pre>
+<p>
+Test if the pointer is grabbed.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>display</code></em> :</span></p></td>
+<td>a <a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if an active X pointer grab is in effect</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-display-beep"></a><h3>gdk_display_beep ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gdk_display_beep                    (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>);</pre>
+<p>
+Emits a short beep on <em class="parameter"><code>display</code></em>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>display</code></em> :</span></p></td>
+<td>a <a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a>
+</td>
+</tr></tbody>
+</table></div>
+<p class="since">Since 2.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-display-sync"></a><h3>gdk_display_sync ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gdk_display_sync                    (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>);</pre>
+<p>
+Flushes any requests queued for the windowing system and waits until all
+requests have been handled. This is often used for making sure that the
+display is synchronized with the current state of the program. Calling
+<a class="link" href="GdkDisplay.html#gdk-display-sync" title="gdk_display_sync ()"><code class="function">gdk_display_sync()</code></a> before <a class="link" href="gdk-General.html#gdk-error-trap-pop" title="gdk_error_trap_pop ()"><code class="function">gdk_error_trap_pop()</code></a> makes sure that any errors
+generated from earlier requests are handled before the error trap is 
+removed.
+</p>
+<p>
+This is most useful for X11. On windowing systems where requests are
+handled synchronously, this function will do nothing.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>display</code></em> :</span></p></td>
+<td>a <a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a>
+</td>
+</tr></tbody>
+</table></div>
+<p class="since">Since 2.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-display-flush"></a><h3>gdk_display_flush ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gdk_display_flush                   (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>);</pre>
+<p>
+Flushes any requests queued for the windowing system; this happens automatically
+when the main loop blocks waiting for new events, but if your application
+is drawing without returning control to the main loop, you may need
+to call this function explicitely. A common case where this function
+needs to be called is when an application is executing drawing commands
+from a thread other than the thread where the main loop is running.
+</p>
+<p>
+This is most useful for X11. On windowing systems where requests are
+handled synchronously, this function will do nothing.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>display</code></em> :</span></p></td>
+<td>a <a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a>
+</td>
+</tr></tbody>
+</table></div>
+<p class="since">Since 2.4</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-display-close"></a><h3>gdk_display_close ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gdk_display_close                   (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>);</pre>
+<p>
+Closes the connection to the windowing system for the given display,
+and cleans up associated resources.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>display</code></em> :</span></p></td>
+<td>a <a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a>
+</td>
+</tr></tbody>
+</table></div>
+<p class="since">Since 2.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-display-is-closed"></a><h3>gdk_display_is_closed ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gdk_display_is_closed               (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>);</pre>
+<p>
+Finds out if the display has been closed.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>display</code></em> :</span></p></td>
+<td>a <a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the display is closed.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.22</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-display-list-devices"></a><h3>gdk_display_list_devices ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             gdk_display_list_devices            (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>);</pre>
+<p>
+Returns the list of available input devices attached to <em class="parameter"><code>display</code></em>.
+The list is statically allocated and should not be freed.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>display</code></em> :</span></p></td>
+<td>a <a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a list of <a class="link" href="gdk-Input-Devices.html#GdkDevice" title="struct GdkDevice"><span class="type">GdkDevice</span></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-display-get-event"></a><h3>gdk_display_get_event ()</h3>
+<pre class="programlisting"><a class="link" href="gdk-Event-Structures.html#GdkEvent" title="union GdkEvent"><span class="returnvalue">GdkEvent</span></a> *          gdk_display_get_event               (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>);</pre>
+<p>
+Gets the next <a class="link" href="gdk-Event-Structures.html#GdkEvent" title="union GdkEvent"><span class="type">GdkEvent</span></a> to be processed for <em class="parameter"><code>display</code></em>, fetching events from the
+windowing system if necessary.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>display</code></em> :</span></p></td>
+<td>a <a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the next <a class="link" href="gdk-Event-Structures.html#GdkEvent" title="union GdkEvent"><span class="type">GdkEvent</span></a> to be processed, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if no events
+are pending. The returned <a class="link" href="gdk-Event-Structures.html#GdkEvent" title="union GdkEvent"><span class="type">GdkEvent</span></a> should be freed with <a class="link" href="gdk-Events.html#gdk-event-free" title="gdk_event_free ()"><code class="function">gdk_event_free()</code></a>.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-display-peek-event"></a><h3>gdk_display_peek_event ()</h3>
+<pre class="programlisting"><a class="link" href="gdk-Event-Structures.html#GdkEvent" title="union GdkEvent"><span class="returnvalue">GdkEvent</span></a> *          gdk_display_peek_event              (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>);</pre>
+<p>
+Gets a copy of the first <a class="link" href="gdk-Event-Structures.html#GdkEvent" title="union GdkEvent"><span class="type">GdkEvent</span></a> in the <em class="parameter"><code>display</code></em>'s event queue, without
+removing the event from the queue.  (Note that this function will
+not get more events from the windowing system.  It only checks the events
+that have already been moved to the GDK event queue.)
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>display</code></em> :</span></p></td>
+<td>a <a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a copy of the first <a class="link" href="gdk-Event-Structures.html#GdkEvent" title="union GdkEvent"><span class="type">GdkEvent</span></a> on the event queue, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
+if no events are in the queue. The returned <a class="link" href="gdk-Event-Structures.html#GdkEvent" title="union GdkEvent"><span class="type">GdkEvent</span></a> should be freed with
+<a class="link" href="gdk-Events.html#gdk-event-free" title="gdk_event_free ()"><code class="function">gdk_event_free()</code></a>.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-display-put-event"></a><h3>gdk_display_put_event ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gdk_display_put_event               (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>,
+                                                         <em class="parameter"><code>const <a class="link" href="gdk-Event-Structures.html#GdkEvent" title="union GdkEvent"><span class="type">GdkEvent</span></a> *event</code></em>);</pre>
+<p>
+Appends a copy of the given event onto the front of the event
+queue for <em class="parameter"><code>display</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>display</code></em> :</span></p></td>
+<td>a <a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>event</code></em> :</span></p></td>
+<td>a <a class="link" href="gdk-Event-Structures.html#GdkEvent" title="union GdkEvent"><span class="type">GdkEvent</span></a>.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-display-add-client-message-filter"></a><h3>gdk_display_add_client_message_filter ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gdk_display_add_client_message_filter
+                                                        (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="gdk-Properties-and-Atoms.html#GdkAtom" title="GdkAtom"><span class="type">GdkAtom</span></a> message_type</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="gdk-Windows.html#GdkFilterFunc" title="GdkFilterFunc ()"><span class="type">GdkFilterFunc</span></a> func</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> data</code></em>);</pre>
+<p>
+Adds a filter to be called when X ClientMessage events are received.
+See <a class="link" href="gdk-Windows.html#gdk-window-add-filter" title="gdk_window_add_filter ()"><code class="function">gdk_window_add_filter()</code></a> if you are interested in filtering other
+types of events.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>display</code></em> :</span></p></td>
+<td>a <a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> for which this message filter applies</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>message_type</code></em> :</span></p></td>
+<td>the type of ClientMessage events to receive.
+This will be checked against the <em class="parameter"><code>message_type</code></em> field
+of the XClientMessage event struct.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>func</code></em> :</span></p></td>
+<td>the function to call to process the event.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td>user data to pass to <em class="parameter"><code>func</code></em>.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-display-set-double-click-time"></a><h3>gdk_display_set_double_click_time ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gdk_display_set_double_click_time   (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> msec</code></em>);</pre>
+<p>
+Sets the double click time (two clicks within this time interval
+count as a double click and result in a <a class="link" href="gdk-Events.html#GDK-2BUTTON-PRESS:CAPS"><span class="type">GDK_2BUTTON_PRESS</span></a> event).
+Applications should <span class="emphasis"><em>not</em></span> set this, it is a global 
+user-configured setting.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>display</code></em> :</span></p></td>
+<td>a <a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>msec</code></em> :</span></p></td>
+<td>double click time in milliseconds (thousandths of a second)</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-display-set-double-click-distance"></a><h3>gdk_display_set_double_click_distance ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gdk_display_set_double_click_distance
+                                                        (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> distance</code></em>);</pre>
+<p>
+Sets the double click distance (two clicks within this distance
+count as a double click and result in a <a class="link" href="gdk-Events.html#GDK-2BUTTON-PRESS:CAPS"><span class="type">GDK_2BUTTON_PRESS</span></a> event).
+See also <a class="link" href="GdkDisplay.html#gdk-display-set-double-click-time" title="gdk_display_set_double_click_time ()"><code class="function">gdk_display_set_double_click_time()</code></a>.
+Applications should <span class="emphasis"><em>not</em></span> set this, it is a global 
+user-configured setting.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>display</code></em> :</span></p></td>
+<td>a <a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>distance</code></em> :</span></p></td>
+<td>distance in pixels</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.4</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-display-get-pointer"></a><h3>gdk_display_get_pointer ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gdk_display_get_pointer             (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GdkScreen.html" title="GdkScreen"><span class="type">GdkScreen</span></a> **screen</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> *x</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> *y</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="gdk-Windows.html#GdkModifierType" title="enum GdkModifierType"><span class="type">GdkModifierType</span></a> *mask</code></em>);</pre>
+<p>
+Gets the current location of the pointer and the current modifier
+mask for a given display.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>display</code></em> :</span></p></td>
+<td>a <a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>screen</code></em> :</span></p></td>
+<td>location to store the screen that the
+cursor is on, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>][<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>x</code></em> :</span></p></td>
+<td>location to store root window X coordinate of pointer, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>][<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>y</code></em> :</span></p></td>
+<td>location to store root window Y coordinate of pointer, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>][<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mask</code></em> :</span></p></td>
+<td>location to store current modifier mask, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>][<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-display-get-window-at-pointer"></a><h3>gdk_display_get_window_at_pointer ()</h3>
+<pre class="programlisting"><a class="link" href="gdk-Windows.html#GdkWindow"><span class="returnvalue">GdkWindow</span></a> *         gdk_display_get_window_at_pointer   (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> *win_x</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> *win_y</code></em>);</pre>
+<p>
+Obtains the window underneath the mouse pointer, returning the location
+of the pointer in that window in <em class="parameter"><code>win_x</code></em>, <em class="parameter"><code>win_y</code></em> for <em class="parameter"><code>screen</code></em>. Returns <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
+if the window under the mouse pointer is not known to GDK (for example, 
+belongs to another application).
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>display</code></em> :</span></p></td>
+<td>a <a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>win_x</code></em> :</span></p></td>
+<td>return location for x coordinate of the pointer location relative
+to the window origin, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>][<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>win_y</code></em> :</span></p></td>
+<td>return location for y coordinate of the pointer location relative
+&amp;    to the window origin, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>][<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the window under the mouse pointer, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="GdkDisplayPointerHooks"></a><h3>struct GdkDisplayPointerHooks</h3>
+<pre class="programlisting">struct GdkDisplayPointerHooks {
+  void (*get_pointer)              (GdkDisplay      *display,
+				    GdkScreen      **screen,
+				    gint            *x,
+				    gint            *y,
+				    GdkModifierType *mask);
+  GdkWindow* (*window_get_pointer) (GdkDisplay      *display,
+				    GdkWindow       *window,
+				    gint            *x,
+				    gint            *y,
+				    GdkModifierType *mask);
+  GdkWindow* (*window_at_pointer)  (GdkDisplay      *display,
+				    gint            *win_x,
+				    gint            *win_y);
+};
+</pre>
+<p>
+A table of pointers to functions for getting quantities related to
+the current pointer position. Each <a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> has a table of this type,
+which can be set using <a class="link" href="GdkDisplay.html#gdk-display-set-pointer-hooks" title="gdk_display_set_pointer_hooks ()"><code class="function">gdk_display_set_pointer_hooks()</code></a>.
+</p>
+<p>
+This is only useful for such low-level tools as an event recorder.
+Applications should never have any reason to use this facility
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="GdkDisplayPointerHooks.get-pointer"></a>get_pointer</code></em> ()</span></p></td>
+<td>Obtains the current pointer position and modifier state.
+The position is given in coordinates relative to the window containing
+the pointer, which is returned in <em class="parameter"><code>window</code></em>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="GdkDisplayPointerHooks.window-get-pointer"></a>window_get_pointer</code></em> ()</span></p></td>
+<td>Obtains the window underneath the mouse pointer.
+Current pointer position and modifier state are returned in <em class="parameter"><code>x</code></em>, <em class="parameter"><code>y</code></em> and
+<em class="parameter"><code>mask</code></em>. The position is given in coordinates relative to <em class="parameter"><code>window</code></em>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="GdkDisplayPointerHooks.window-at-pointer"></a>window_at_pointer</code></em> ()</span></p></td>
+<td>Obtains the window underneath the mouse pointer,
+returning the location of that window in <em class="parameter"><code>win_x</code></em>, <em class="parameter"><code>win_y</code></em>. Returns <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
+if the window under the mouse pointer is not known to GDK (for example,
+belongs to another application).</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-display-set-pointer-hooks"></a><h3>gdk_display_set_pointer_hooks ()</h3>
+<pre class="programlisting"><a class="link" href="GdkDisplay.html#GdkDisplayPointerHooks" title="struct GdkDisplayPointerHooks"><span class="returnvalue">GdkDisplayPointerHooks</span></a> * gdk_display_set_pointer_hooks  (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>,
+                                                         <em class="parameter"><code>const <a class="link" href="GdkDisplay.html#GdkDisplayPointerHooks" title="struct GdkDisplayPointerHooks"><span class="type">GdkDisplayPointerHooks</span></a> *new_hooks</code></em>);</pre>
+<div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Warning</h3>
+<p><code class="literal">gdk_display_set_pointer_hooks</code> has been deprecated since version 2.24 and should not be used in newly-written code. This function will go away in GTK 3 for lack of use cases.</p>
+</div>
+<p>
+This function allows for hooking into the operation
+of getting the current location of the pointer on a particular
+display. This is only useful for such low-level tools as an
+event recorder. Applications should never have any
+reason to use this facility.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>display</code></em> :</span></p></td>
+<td>a <a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>new_hooks</code></em> :</span></p></td>
+<td>a table of pointers to functions for getting
+quantities related to the current pointer position,
+or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to restore the default table.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the previous pointer hook table</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.2</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-display-warp-pointer"></a><h3>gdk_display_warp_pointer ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gdk_display_warp_pointer            (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="GdkScreen.html" title="GdkScreen"><span class="type">GdkScreen</span></a> *screen</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> x</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> y</code></em>);</pre>
+<p>
+Warps the pointer of <em class="parameter"><code>display</code></em> to the point <em class="parameter"><code>x</code></em>,<em class="parameter"><code>y</code></em> on 
+the screen <em class="parameter"><code>screen</code></em>, unless the pointer is confined
+to a window by a grab, in which case it will be moved
+as far as allowed by the grab. Warping the pointer 
+creates events as if the user had moved the mouse 
+instantaneously to the destination.
+</p>
+<p>
+Note that the pointer should normally be under the
+control of the user. This function was added to cover
+some rare use cases like keyboard navigation support
+for the color picker in the <a href="http://library.gnome.org/devel/gtk/GtkColorSelectionDialog.html"><span class="type">GtkColorSelectionDialog</span></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>display</code></em> :</span></p></td>
+<td>a <a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>screen</code></em> :</span></p></td>
+<td>the screen of <em class="parameter"><code>display</code></em> to warp the pointer to</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>x</code></em> :</span></p></td>
+<td>the x coordinate of the destination</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>y</code></em> :</span></p></td>
+<td>the y coordinate of the destination</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.8</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-display-supports-cursor-color"></a><h3>gdk_display_supports_cursor_color ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gdk_display_supports_cursor_color   (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>);</pre>
+<p>
+Returns <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if multicolored cursors are supported
+on <em class="parameter"><code>display</code></em>. Otherwise, cursors have only a forground
+and a background color.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>display</code></em> :</span></p></td>
+<td>a <a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>whether cursors can have multiple colors.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.4</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-display-supports-cursor-alpha"></a><h3>gdk_display_supports_cursor_alpha ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gdk_display_supports_cursor_alpha   (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>);</pre>
+<p>
+Returns <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if cursors can use an 8bit alpha channel
+on <em class="parameter"><code>display</code></em>. Otherwise, cursors are restricted to bilevel
+alpha (i.e. a mask).
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>display</code></em> :</span></p></td>
+<td>a <a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>whether cursors can have alpha channels.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.4</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-display-get-default-cursor-size"></a><h3>gdk_display_get_default_cursor_size ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>               gdk_display_get_default_cursor_size (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>);</pre>
+<p>
+Returns the default size to use for cursors on <em class="parameter"><code>display</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>display</code></em> :</span></p></td>
+<td>a <a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the default cursor size.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.4</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-display-get-maximal-cursor-size"></a><h3>gdk_display_get_maximal_cursor_size ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gdk_display_get_maximal_cursor_size (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> *width</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> *height</code></em>);</pre>
+<p>
+Gets the maximal size to use for cursors on <em class="parameter"><code>display</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>display</code></em> :</span></p></td>
+<td>a <a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>width</code></em> :</span></p></td>
+<td>the return location for the maximal cursor width</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>height</code></em> :</span></p></td>
+<td>the return location for the maximal cursor height</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.4</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-display-get-default-group"></a><h3>gdk_display_get_default_group ()</h3>
+<pre class="programlisting"><a class="link" href="gdk-Windows.html#GdkWindow"><span class="returnvalue">GdkWindow</span></a> *         gdk_display_get_default_group       (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>);</pre>
+<p>
+Returns the default group leader window for all toplevel windows
+on <em class="parameter"><code>display</code></em>. This window is implicitly created by GDK. 
+See <a class="link" href="gdk-Windows.html#gdk-window-set-group" title="gdk_window_set_group ()"><code class="function">gdk_window_set_group()</code></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>display</code></em> :</span></p></td>
+<td>a <a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The default group leader window for <em class="parameter"><code>display</code></em>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.4</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-display-supports-selection-notification"></a><h3>gdk_display_supports_selection_notification ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gdk_display_supports_selection_notification
+                                                        (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>);</pre>
+<p>
+Returns whether <a class="link" href="gdk-Event-Structures.html#GdkEventOwnerChange" title="struct GdkEventOwnerChange"><span class="type">GdkEventOwnerChange</span></a> events will be 
+sent when the owner of a selection changes.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>display</code></em> :</span></p></td>
+<td>a <a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>whether <a class="link" href="gdk-Event-Structures.html#GdkEventOwnerChange" title="struct GdkEventOwnerChange"><span class="type">GdkEventOwnerChange</span></a> events will
+be sent.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-display-request-selection-notification"></a><h3>gdk_display_request_selection_notification ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gdk_display_request_selection_notification
+                                                        (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="gdk-Properties-and-Atoms.html#GdkAtom" title="GdkAtom"><span class="type">GdkAtom</span></a> selection</code></em>);</pre>
+<p>
+Request <a class="link" href="gdk-Event-Structures.html#GdkEventOwnerChange" title="struct GdkEventOwnerChange"><span class="type">GdkEventOwnerChange</span></a> events for ownership changes
+of the selection named by the given atom.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>display</code></em> :</span></p></td>
+<td>a <a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>selection</code></em> :</span></p></td>
+<td>the <a class="link" href="gdk-Properties-and-Atoms.html#GdkAtom" title="GdkAtom"><span class="type">GdkAtom</span></a> naming the selection for which
+ownership change notification is requested</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>whether <a class="link" href="gdk-Event-Structures.html#GdkEventOwnerChange" title="struct GdkEventOwnerChange"><span class="type">GdkEventOwnerChange</span></a> events will
+be sent.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-display-supports-clipboard-persistence"></a><h3>gdk_display_supports_clipboard_persistence ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gdk_display_supports_clipboard_persistence
+                                                        (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>);</pre>
+<p>
+Returns whether the speicifed display supports clipboard
+persistance; i.e. if it's possible to store the clipboard data after an
+application has quit. On X11 this checks if a clipboard daemon is
+running.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>display</code></em> :</span></p></td>
+<td>a <a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the display supports clipboard persistance.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-display-store-clipboard"></a><h3>gdk_display_store_clipboard ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                gdk_display_store_clipboard         (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="gdk-Windows.html#GdkWindow"><span class="type">GdkWindow</span></a> *clipboard_window</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint32"><span class="type">guint32</span></a> time_</code></em>,
+                                                         <em class="parameter"><code>const <a class="link" href="gdk-Properties-and-Atoms.html#GdkAtom" title="GdkAtom"><span class="type">GdkAtom</span></a> *targets</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> n_targets</code></em>);</pre>
+<p>
+Issues a request to the clipboard manager to store the
+clipboard data. On X11, this is a special program that works
+according to the freedesktop clipboard specification, available at
+<a class="ulink" href="http://www.freedesktop.org/Standards/clipboard-manager-spec" target="_top">
+http://www.freedesktop.org/Standards/clipboard-manager-spec</a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>display</code></em> :</span></p></td>
+<td>a <a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>clipboard_window</code></em> :</span></p></td>
+<td>a <a class="link" href="gdk-Windows.html#GdkWindow"><span class="type">GdkWindow</span></a> belonging to the clipboard owner</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>time_</code></em> :</span></p></td>
+<td>a timestamp</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>targets</code></em> :</span></p></td>
+<td>an array of targets that should be saved, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
+if all available targets should be saved.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n_targets</code></em> :</span></p></td>
+<td>length of the <em class="parameter"><code>targets</code></em> array</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.6</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-display-supports-shapes"></a><h3>gdk_display_supports_shapes ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gdk_display_supports_shapes         (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>);</pre>
+<p>
+Returns <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if <a class="link" href="gdk-Windows.html#gdk-window-shape-combine-mask" title="gdk_window_shape_combine_mask ()"><code class="function">gdk_window_shape_combine_mask()</code></a> can
+be used to create shaped windows on <em class="parameter"><code>display</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>display</code></em> :</span></p></td>
+<td>a <a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if shaped windows are supported</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.10</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-display-supports-input-shapes"></a><h3>gdk_display_supports_input_shapes ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gdk_display_supports_input_shapes   (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>);</pre>
+<p>
+Returns <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if <a class="link" href="gdk-Windows.html#gdk-window-input-shape-combine-mask" title="gdk_window_input_shape_combine_mask ()"><code class="function">gdk_window_input_shape_combine_mask()</code></a> can
+be used to modify the input shape of windows on <em class="parameter"><code>display</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>display</code></em> :</span></p></td>
+<td>a <a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if windows with modified input shape are supported</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.10</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdk-display-supports-composite"></a><h3>gdk_display_supports_composite ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            gdk_display_supports_composite      (<em class="parameter"><code><a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display</code></em>);</pre>
+<p>
+Returns <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if <a class="link" href="gdk-Windows.html#gdk-window-set-composited" title="gdk_window_set_composited ()"><code class="function">gdk_window_set_composited()</code></a> can be used
+to redirect drawing on the window using compositing.
+</p>
+<p>
+Currently this only works on X11 with XComposite and
+XDamage extensions available.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>display</code></em> :</span></p></td>
+<td>a <a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if windows may be composited.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.12</p>
+</div>
+</div>
+<div class="refsect1">
+<a name="GdkDisplay.signal-details"></a><h2>Signal Details</h2>
+<div class="refsect2">
+<a name="GdkDisplay-closed"></a><h3>The <code class="literal">"closed"</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="GdkDisplay.html" title="GdkDisplay"><span class="type">GdkDisplay</span></a> *display,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>    is_error,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>    user_data)      : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS"><code class="literal">Run Last</code></a></pre>
+<p>
+The ::closed signal is emitted when the connection to the windowing
+system for <em class="parameter"><code>display</code></em> is closed.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>display</code></em> :</span></p></td>
+<td>the object on which the signal is emitted</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>is_error</code></em> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the display was closed due to an error</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.2</p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

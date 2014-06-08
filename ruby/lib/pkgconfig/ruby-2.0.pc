@@ -1,0 +1,53 @@
+arch=i386-mingw32
+sitearch=i386-msvcrt
+prefix=C:/Users/Luis/Code/oneclick/rubyinstaller/sandbox/ruby19_mingw
+exec_prefix=${prefix}
+bindir=${exec_prefix}/bin
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+MAJOR=2
+MINOR=0
+TEENY=0
+ruby_version=2.0.0
+RUBY_PROGRAM_VERSION=2.0.0
+RUBY_BASE_NAME=ruby
+RUBY_VERSION_NAME=${RUBY_BASE_NAME}-${ruby_version}
+RUBY_SO_NAME=msvcrt-${RUBY_BASE_NAME}${MAJOR}${MINOR}${TEENY}
+RUBY_INSTALL_NAME=${RUBY_BASE_NAME}
+DEFFILE=
+LIBPATH=
+LIBRUBY_A=lib${RUBY_SO_NAME}-static.a
+LIBRUBY_SO=${RUBY_SO_NAME}.dll
+LIBRUBY=lib${RUBY_SO_NAME}.dll.a
+LIBRUBYARG_SHARED=-l${RUBY_SO_NAME}
+LIBRUBYARG_STATIC=-l${RUBY_SO_NAME}-static
+LIBRUBYARG=${LIBRUBYARG_SHARED}
+LIBS=-lshell32 -lws2_32 -limagehlp -lshlwapi 
+DLDFLAGS= -Wl,--enable-auto-image-base,--enable-auto-import ${DEFFILE}
+archlibdir=${libdir}/${arch}
+sitearchlibdir=${libdir}/${sitearch}
+archincludedir=${includedir}/${arch}
+sitearchincludedir=${includedir}/${sitearch}
+ruby=${bindir}/${RUBY_INSTALL_NAME}.exe
+rubylibprefix=${libdir}/${RUBY_BASE_NAME}
+rubyarchprefix=${rubylibprefix}/${arch}
+rubysitearchprefix=${rubylibprefix}/${sitearch}
+rubylibdir=${rubylibprefix}/${ruby_version}
+vendordir=${rubylibprefix}/vendor_ruby
+sitedir=${rubylibprefix}/site_ruby
+vendorlibdir=${vendordir}/${ruby_version}
+sitelibdir=${sitedir}/${ruby_version}
+rubyarchdir=${rubylibdir}/${arch}
+vendorarchdir=${vendorlibdir}/${sitearch}
+sitearchdir=${sitelibdir}/${sitearch}
+rubyhdrdir=${includedir}/${RUBY_VERSION_NAME}
+vendorhdrdir=${rubyhdrdir}/vendor_ruby
+sitehdrdir=${rubyhdrdir}/site_ruby
+
+Name: Ruby
+Description: Object Oriented Script Language
+Version: ${ruby_version}
+URL: http://www.ruby-lang.org
+Cflags: -I${rubyhdrdir}/${arch} -I${rubyhdrdir}
+Libs: ${DLDFLAGS} ${LIBRUBYARG_SHARED} ${LIBS}
+Requires:

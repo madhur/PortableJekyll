@@ -1,0 +1,428 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Bidirectional Text</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="index.html" title="Pango Reference Manual">
+<link rel="up" href="pango.html" title="Basic Pango Interfaces">
+<link rel="prev" href="pango-Scripts-and-Languages.html" title="Scripts and Languages">
+<link rel="next" href="pango-Vertical-Text.html" title="Vertical Text">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="pango-Scripts-and-Languages.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="pango.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Pango Reference Manual</th>
+<td><a accesskey="n" href="pango-Vertical-Text.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#pango-Bidirectional-Text.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#pango-Bidirectional-Text.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#pango-Bidirectional-Text.object-hierarchy" class="shortcut">Object Hierarchy</a>
+</td></tr>
+</table>
+<div class="refentry">
+<a name="pango-Bidirectional-Text"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="pango-Bidirectional-Text.top_of_page"></a>Bidirectional Text</span></h2>
+<p>Bidirectional Text — Types and functions to help with handling bidirectional text</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="pango-Bidirectional-Text.synopsis"></a><h2>Synopsis</h2>
+<a name="PangoDirection"></a><a name="PangoBidiType"></a><pre class="synopsis">enum                <a class="link" href="pango-Bidirectional-Text.html#PangoDirection-enum" title="enum PangoDirection">PangoDirection</a>;
+<a class="link" href="pango-Bidirectional-Text.html#PangoDirection"><span class="returnvalue">PangoDirection</span></a>      <a class="link" href="pango-Bidirectional-Text.html#pango-unichar-direction" title="pango_unichar_direction ()">pango_unichar_direction</a>             (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Unicode-Manipulation.html#gunichar"><span class="type">gunichar</span></a> ch</code></em>);
+<a class="link" href="pango-Bidirectional-Text.html#PangoDirection"><span class="returnvalue">PangoDirection</span></a>      <a class="link" href="pango-Bidirectional-Text.html#pango-find-base-dir" title="pango_find_base_dir ()">pango_find_base_dir</a>                 (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *text</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> length</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="pango-Bidirectional-Text.html#pango-get-mirror-char" title="pango_get_mirror_char ()">pango_get_mirror_char</a>               (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Unicode-Manipulation.html#gunichar"><span class="type">gunichar</span></a> ch</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Unicode-Manipulation.html#gunichar"><span class="type">gunichar</span></a> *mirrored_ch</code></em>);
+enum                <a class="link" href="pango-Bidirectional-Text.html#PangoBidiType-enum" title="enum PangoBidiType">PangoBidiType</a>;
+<a class="link" href="pango-Bidirectional-Text.html#PangoBidiType"><span class="returnvalue">PangoBidiType</span></a>       <a class="link" href="pango-Bidirectional-Text.html#pango-bidi-type-for-unichar" title="pango_bidi_type_for_unichar ()">pango_bidi_type_for_unichar</a>         (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Unicode-Manipulation.html#gunichar"><span class="type">gunichar</span></a> ch</code></em>);
+</pre>
+</div>
+<div class="refsect1">
+<a name="pango-Bidirectional-Text.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  GEnum
+   +----PangoDirection
+</pre>
+<pre class="synopsis">
+  GEnum
+   +----PangoBidiType
+</pre>
+</div>
+<div class="refsect1">
+<a name="pango-Bidirectional-Text.description"></a><h2>Description</h2>
+<p>
+Pango supports bidirectional text (like Arabic and Hebrew) automatically.
+Some applications however, need some help to correctly handle bidirectional
+text.
+</p>
+<p>
+The <a class="link" href="pango-Bidirectional-Text.html#PangoDirection"><span class="type">PangoDirection</span></a> type can be used with <a class="link" href="pango-Text-Processing.html#pango-context-set-base-dir" title="pango_context_set_base_dir ()"><code class="function">pango_context_set_base_dir()</code></a> to
+instruct Pango about direction of text, though in most cases Pango detects
+that correctly and automatically.  The rest of the facilities in this section
+are used internally by Pango already, and are provided to help applications
+that need more direct control over bidirectional setting of text.
+</p>
+</div>
+<div class="refsect1">
+<a name="pango-Bidirectional-Text.details"></a><h2>Details</h2>
+<div class="refsect2">
+<a name="PangoDirection-enum"></a><h3>enum PangoDirection</h3>
+<pre class="programlisting">typedef enum {
+  PANGO_DIRECTION_LTR,
+  PANGO_DIRECTION_RTL,
+  PANGO_DIRECTION_TTB_LTR,
+  PANGO_DIRECTION_TTB_RTL,
+  PANGO_DIRECTION_WEAK_LTR,
+  PANGO_DIRECTION_WEAK_RTL,
+  PANGO_DIRECTION_NEUTRAL
+} PangoDirection;
+</pre>
+<p>
+The <a class="link" href="pango-Bidirectional-Text.html#PangoDirection"><span class="type">PangoDirection</span></a> type represents a direction in the
+Unicode bidirectional algorithm; not every value in this
+enumeration makes sense for every usage of <a class="link" href="pango-Bidirectional-Text.html#PangoDirection"><span class="type">PangoDirection</span></a>;
+for example, the return value of <a class="link" href="pango-Bidirectional-Text.html#pango-unichar-direction" title="pango_unichar_direction ()"><code class="function">pango_unichar_direction()</code></a>
+and <a class="link" href="pango-Bidirectional-Text.html#pango-find-base-dir" title="pango_find_base_dir ()"><code class="function">pango_find_base_dir()</code></a> cannot be <a class="link" href="pango-Bidirectional-Text.html#PANGO-DIRECTION-WEAK-LTR:CAPS"><code class="literal">PANGO_DIRECTION_WEAK_LTR</code></a>
+or <a class="link" href="pango-Bidirectional-Text.html#PANGO-DIRECTION-WEAK-RTL:CAPS"><code class="literal">PANGO_DIRECTION_WEAK_RTL</code></a>, since every character is either
+neutral or has a strong direction; on the other hand
+<a class="link" href="pango-Bidirectional-Text.html#PANGO-DIRECTION-NEUTRAL:CAPS"><code class="literal">PANGO_DIRECTION_NEUTRAL</code></a> doesn't make sense to pass
+to <a class="link" href="pango-Text-Processing.html#pango-itemize-with-base-dir" title="pango_itemize_with_base_dir ()"><code class="function">pango_itemize_with_base_dir()</code></a>.
+</p>
+<p>
+The <a class="link" href="pango-Bidirectional-Text.html#PANGO-DIRECTION-TTB-LTR:CAPS"><code class="literal">PANGO_DIRECTION_TTB_LTR</code></a>, <a class="link" href="pango-Bidirectional-Text.html#PANGO-DIRECTION-TTB-RTL:CAPS"><code class="literal">PANGO_DIRECTION_TTB_RTL</code></a>
+values come from an earlier interpretation of this
+enumeration as the writing direction of a block of
+text and are no longer used; See <a class="link" href="pango-Vertical-Text.html#PangoGravity"><span class="type">PangoGravity</span></a> for how
+vertical text is handled in Pango.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><a name="PANGO-DIRECTION-LTR:CAPS"></a><span class="term"><code class="literal">PANGO_DIRECTION_LTR</code></span></p></td>
+<td>A strong left-to-right direction
+</td>
+</tr>
+<tr>
+<td><p><a name="PANGO-DIRECTION-RTL:CAPS"></a><span class="term"><code class="literal">PANGO_DIRECTION_RTL</code></span></p></td>
+<td>A strong right-to-left direction
+</td>
+</tr>
+<tr>
+<td><p><a name="PANGO-DIRECTION-TTB-LTR:CAPS"></a><span class="term"><code class="literal">PANGO_DIRECTION_TTB_LTR</code></span></p></td>
+<td>Deprecated value; treated the
+  same as <a class="link" href="pango-Bidirectional-Text.html#PANGO-DIRECTION-RTL:CAPS"><code class="literal">PANGO_DIRECTION_RTL</code></a>.
+</td>
+</tr>
+<tr>
+<td><p><a name="PANGO-DIRECTION-TTB-RTL:CAPS"></a><span class="term"><code class="literal">PANGO_DIRECTION_TTB_RTL</code></span></p></td>
+<td>Deprecated value; treated the
+  same as <a class="link" href="pango-Bidirectional-Text.html#PANGO-DIRECTION-LTR:CAPS"><code class="literal">PANGO_DIRECTION_LTR</code></a>
+</td>
+</tr>
+<tr>
+<td><p><a name="PANGO-DIRECTION-WEAK-LTR:CAPS"></a><span class="term"><code class="literal">PANGO_DIRECTION_WEAK_LTR</code></span></p></td>
+<td>A weak left-to-right direction
+</td>
+</tr>
+<tr>
+<td><p><a name="PANGO-DIRECTION-WEAK-RTL:CAPS"></a><span class="term"><code class="literal">PANGO_DIRECTION_WEAK_RTL</code></span></p></td>
+<td>A weak right-to-left direction
+</td>
+</tr>
+<tr>
+<td><p><a name="PANGO-DIRECTION-NEUTRAL:CAPS"></a><span class="term"><code class="literal">PANGO_DIRECTION_NEUTRAL</code></span></p></td>
+<td>No direction specified
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-unichar-direction"></a><h3>pango_unichar_direction ()</h3>
+<pre class="programlisting"><a class="link" href="pango-Bidirectional-Text.html#PangoDirection"><span class="returnvalue">PangoDirection</span></a>      pango_unichar_direction             (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Unicode-Manipulation.html#gunichar"><span class="type">gunichar</span></a> ch</code></em>);</pre>
+<p>
+Determines the inherent direction of a character; either
+<a class="link" href="pango-Bidirectional-Text.html#PANGO-DIRECTION-LTR:CAPS"><code class="literal">PANGO_DIRECTION_LTR</code></a>, <a class="link" href="pango-Bidirectional-Text.html#PANGO-DIRECTION-RTL:CAPS"><code class="literal">PANGO_DIRECTION_RTL</code></a>, or
+<a class="link" href="pango-Bidirectional-Text.html#PANGO-DIRECTION-NEUTRAL:CAPS"><code class="literal">PANGO_DIRECTION_NEUTRAL</code></a>.
+</p>
+<p>
+This function is useful to categorize characters into left-to-right
+letters, right-to-left letters, and everything else.  If full
+Unicode bidirectional type of a character is needed,
+<code class="function">pango_bidi_type_for_gunichar()</code> can be used instead.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ch</code></em> :</span></p></td>
+<td>a Unicode character</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the direction of the character.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-find-base-dir"></a><h3>pango_find_base_dir ()</h3>
+<pre class="programlisting"><a class="link" href="pango-Bidirectional-Text.html#PangoDirection"><span class="returnvalue">PangoDirection</span></a>      pango_find_base_dir                 (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *text</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> length</code></em>);</pre>
+<p>
+Searches a string the first character that has a strong
+direction, according to the Unicode bidirectional algorithm.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>text</code></em> :</span></p></td>
+<td>the text to process</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>length</code></em> :</span></p></td>
+<td>length of <em class="parameter"><code>text</code></em> in bytes (may be -1 if <em class="parameter"><code>text</code></em> is nul-terminated)</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The direction corresponding to the first strong character.
+If no such character is found, then <a class="link" href="pango-Bidirectional-Text.html#PANGO-DIRECTION-NEUTRAL:CAPS"><code class="literal">PANGO_DIRECTION_NEUTRAL</code></a> is returned.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.4</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-get-mirror-char"></a><h3>pango_get_mirror_char ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            pango_get_mirror_char               (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Unicode-Manipulation.html#gunichar"><span class="type">gunichar</span></a> ch</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Unicode-Manipulation.html#gunichar"><span class="type">gunichar</span></a> *mirrored_ch</code></em>);</pre>
+<div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Warning</h3>
+<p><code class="literal">pango_get_mirror_char</code> is deprecated and should not be used in newly-written code.</p>
+</div>
+<p>
+If <em class="parameter"><code>ch</code></em> has the Unicode mirrored property and there is another Unicode
+character that typically has a glyph that is the mirror image of <em class="parameter"><code>ch</code></em>'s
+glyph, puts that character in the address pointed to by <em class="parameter"><code>mirrored_ch</code></em>.
+</p>
+<p>
+Use <a href="http://library.gnome.org/devel/glib/unstable/glib-Unicode-Manipulation.html#g-unichar-get-mirror-char"><code class="function">g_unichar_get_mirror_char()</code></a> instead; the docs for that function
+provide full details.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ch</code></em> :</span></p></td>
+<td>a Unicode character</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mirrored_ch</code></em> :</span></p></td>
+<td>location to store the mirrored character</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if <em class="parameter"><code>ch</code></em> has a mirrored character and <em class="parameter"><code>mirrored_ch</code></em> is
+filled in, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> otherwise</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="PangoBidiType-enum"></a><h3>enum PangoBidiType</h3>
+<pre class="programlisting">typedef enum {
+  /* Strong types */
+  PANGO_BIDI_TYPE_L,
+  PANGO_BIDI_TYPE_LRE,
+  PANGO_BIDI_TYPE_LRO,
+  PANGO_BIDI_TYPE_R,
+  PANGO_BIDI_TYPE_AL,
+  PANGO_BIDI_TYPE_RLE,
+  PANGO_BIDI_TYPE_RLO,
+
+  /* Weak types */
+  PANGO_BIDI_TYPE_PDF,
+  PANGO_BIDI_TYPE_EN,
+  PANGO_BIDI_TYPE_ES,
+  PANGO_BIDI_TYPE_ET,
+  PANGO_BIDI_TYPE_AN,
+  PANGO_BIDI_TYPE_CS,
+  PANGO_BIDI_TYPE_NSM,
+  PANGO_BIDI_TYPE_BN,
+
+  /* Neutral types */
+  PANGO_BIDI_TYPE_B,
+  PANGO_BIDI_TYPE_S,
+  PANGO_BIDI_TYPE_WS,
+  PANGO_BIDI_TYPE_ON
+} PangoBidiType;
+</pre>
+<p>
+The <a class="link" href="pango-Bidirectional-Text.html#PangoBidiType"><span class="type">PangoBidiType</span></a> type represents the bidirectional character
+type of a Unicode character as specified by the
+<a class="ulink" href="http://www.unicode.org/reports/tr9/" target="_top">Unicode bidirectional algorithm</a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><a name="PANGO-BIDI-TYPE-L:CAPS"></a><span class="term"><code class="literal">PANGO_BIDI_TYPE_L</code></span></p></td>
+<td>Left-to-Right
+</td>
+</tr>
+<tr>
+<td><p><a name="PANGO-BIDI-TYPE-LRE:CAPS"></a><span class="term"><code class="literal">PANGO_BIDI_TYPE_LRE</code></span></p></td>
+<td>Left-to-Right Embedding
+</td>
+</tr>
+<tr>
+<td><p><a name="PANGO-BIDI-TYPE-LRO:CAPS"></a><span class="term"><code class="literal">PANGO_BIDI_TYPE_LRO</code></span></p></td>
+<td>Left-to-Right Override
+</td>
+</tr>
+<tr>
+<td><p><a name="PANGO-BIDI-TYPE-R:CAPS"></a><span class="term"><code class="literal">PANGO_BIDI_TYPE_R</code></span></p></td>
+<td>Right-to-Left
+</td>
+</tr>
+<tr>
+<td><p><a name="PANGO-BIDI-TYPE-AL:CAPS"></a><span class="term"><code class="literal">PANGO_BIDI_TYPE_AL</code></span></p></td>
+<td>Right-to-Left Arabic
+</td>
+</tr>
+<tr>
+<td><p><a name="PANGO-BIDI-TYPE-RLE:CAPS"></a><span class="term"><code class="literal">PANGO_BIDI_TYPE_RLE</code></span></p></td>
+<td>Right-to-Left Embedding
+</td>
+</tr>
+<tr>
+<td><p><a name="PANGO-BIDI-TYPE-RLO:CAPS"></a><span class="term"><code class="literal">PANGO_BIDI_TYPE_RLO</code></span></p></td>
+<td>Right-to-Left Override
+</td>
+</tr>
+<tr>
+<td><p><a name="PANGO-BIDI-TYPE-PDF:CAPS"></a><span class="term"><code class="literal">PANGO_BIDI_TYPE_PDF</code></span></p></td>
+<td>Pop Directional Format
+</td>
+</tr>
+<tr>
+<td><p><a name="PANGO-BIDI-TYPE-EN:CAPS"></a><span class="term"><code class="literal">PANGO_BIDI_TYPE_EN</code></span></p></td>
+<td>European Number
+</td>
+</tr>
+<tr>
+<td><p><a name="PANGO-BIDI-TYPE-ES:CAPS"></a><span class="term"><code class="literal">PANGO_BIDI_TYPE_ES</code></span></p></td>
+<td>European Number Separator
+</td>
+</tr>
+<tr>
+<td><p><a name="PANGO-BIDI-TYPE-ET:CAPS"></a><span class="term"><code class="literal">PANGO_BIDI_TYPE_ET</code></span></p></td>
+<td>European Number Terminator
+</td>
+</tr>
+<tr>
+<td><p><a name="PANGO-BIDI-TYPE-AN:CAPS"></a><span class="term"><code class="literal">PANGO_BIDI_TYPE_AN</code></span></p></td>
+<td>Arabic Number
+</td>
+</tr>
+<tr>
+<td><p><a name="PANGO-BIDI-TYPE-CS:CAPS"></a><span class="term"><code class="literal">PANGO_BIDI_TYPE_CS</code></span></p></td>
+<td>Common Number Separator
+</td>
+</tr>
+<tr>
+<td><p><a name="PANGO-BIDI-TYPE-NSM:CAPS"></a><span class="term"><code class="literal">PANGO_BIDI_TYPE_NSM</code></span></p></td>
+<td>Nonspacing Mark
+</td>
+</tr>
+<tr>
+<td><p><a name="PANGO-BIDI-TYPE-BN:CAPS"></a><span class="term"><code class="literal">PANGO_BIDI_TYPE_BN</code></span></p></td>
+<td>Boundary Neutral
+</td>
+</tr>
+<tr>
+<td><p><a name="PANGO-BIDI-TYPE-B:CAPS"></a><span class="term"><code class="literal">PANGO_BIDI_TYPE_B</code></span></p></td>
+<td>Paragraph Separator
+</td>
+</tr>
+<tr>
+<td><p><a name="PANGO-BIDI-TYPE-S:CAPS"></a><span class="term"><code class="literal">PANGO_BIDI_TYPE_S</code></span></p></td>
+<td>Segment Separator
+</td>
+</tr>
+<tr>
+<td><p><a name="PANGO-BIDI-TYPE-WS:CAPS"></a><span class="term"><code class="literal">PANGO_BIDI_TYPE_WS</code></span></p></td>
+<td>Whitespace
+</td>
+</tr>
+<tr>
+<td><p><a name="PANGO-BIDI-TYPE-ON:CAPS"></a><span class="term"><code class="literal">PANGO_BIDI_TYPE_ON</code></span></p></td>
+<td>Other Neutrals
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.22</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="pango-bidi-type-for-unichar"></a><h3>pango_bidi_type_for_unichar ()</h3>
+<pre class="programlisting"><a class="link" href="pango-Bidirectional-Text.html#PangoBidiType"><span class="returnvalue">PangoBidiType</span></a>       pango_bidi_type_for_unichar         (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Unicode-Manipulation.html#gunichar"><span class="type">gunichar</span></a> ch</code></em>);</pre>
+<p>
+Determines the normative bidirectional character type of a
+character, as specified in the Unicode Character Database.
+</p>
+<p>
+A simplified version of this function is available as
+<code class="function">pango_unichar_get_direction()</code>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ch</code></em> :</span></p></td>
+<td>a Unicode character</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the bidirectional character type, as used in the
+Unicode bidirectional algorithm.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 1.22</p>
+</div>
+</div>
+<div class="refsect1">
+<a name="pango-Bidirectional-Text.see-also"></a><h2>See Also</h2>
+<p>
+<a class="link" href="pango-Text-Processing.html#pango-context-get-base-dir" title="pango_context_get_base_dir ()"><code class="function">pango_context_get_base_dir()</code></a>,
+<a class="link" href="pango-Text-Processing.html#pango-context-set-base-dir" title="pango_context_set_base_dir ()"><code class="function">pango_context_set_base_dir()</code></a>,
+<a class="link" href="pango-Text-Processing.html#pango-itemize-with-base-dir" title="pango_itemize_with_base_dir ()"><code class="function">pango_itemize_with_base_dir()</code></a>
+</p>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

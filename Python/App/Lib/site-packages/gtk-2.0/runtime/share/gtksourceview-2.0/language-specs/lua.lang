@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+ Author: Bjørn Lindeijer <bjorn@lindeijer.nl>
+ Copyright (C) 2004 Bjørn Lindeijer <bjorn@lindeijer.nl>
+
+ This library is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Library General Public
+ License as published by the Free Software Foundation; either
+ version 2 of the License, or (at your option) any later version.
+
+ This library is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ Library General Public License for more details.
+
+ You should have received a copy of the GNU Library General Public
+ License along with this library; if not, write to the
+ Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ Boston, MA 02111-1307, USA.
+
+-->
+<language id="lua" _name="Lua" version="2.0" _section="Scripts">
+  <metadata>
+    <property name="mimetypes">text/x-lua</property>
+    <property name="globs">*.lua</property>
+    <property name="line-comment-start">--</property>
+    <property name="block-comment-start">--[[</property>
+    <property name="block-comment-end">]]</property>
+  </metadata>
+
+  <styles>
+    <style id="comment" _name="Comment" map-to="def:comment"/>
+    <style id="string" _name="String" map-to="def:string"/>
+    <style id="keyword" _name="Keyword" map-to="def:keyword"/>
+    <style id="escape" _name="Escaped Character" map-to="def:special-char"/>
+    <style id="reserved" _name="Reserved Identifier" map-to="def:keyword"/>
+    <style id="function" _name="Function" map-to="def:function"/>
+    <style id="nil-value" _name="Nil Constant" map-to="def:special-constant"/>
+    <style id="boolean" _name="Boolean value" map-to="def:boolean"/>
+  </styles>
+
+  <definitions>
+    <context id="lua-escape" style-ref="escape">
+      <match>\\(\d\d?\d?|.)</match>
+    </context>
+
+    <context id="string" style-ref="string" end-at-line-end="true" class="string" class-disabled="no-spell-check">
+      <start>["']</start>
+      <end>\%{0@start}</end>
+      <include>
+        <context ref="lua-escape"/>
+        <context ref="def:line-continue"/>
+      </include>
+    </context>
+
+    <context id="multi-line-string" style-ref="string" class="string" class-disabled="no-spell-check">
+      <start>\[(=*)\[</start>
+      <end>]\%{1@start}]</end>
+    </context>
+
+    <context id="block-comment" style-ref="comment" class="comment" class-disabled="no-spell-check">
+      <start>--\[(=*)\[</start>
+      <end>]\%{1@start}]</end>
+      <include>
+	<context ref="def:in-comment"/>
+      </include>
+    </context>
+
+    <context id="line-comment" style-ref="comment" end-at-line-end="true" class="comment" class-disabled="no-spell-check">
+      <start>--</start>
+      <include>
+	<context ref="def:in-comment"/>
+      </include>
+    </context>
+
+    <context id="keywords" style-ref="keyword">
+      <keyword>and</keyword>
+      <keyword>break</keyword>
+      <keyword>do</keyword>
+      <keyword>else</keyword>
+      <keyword>elseif</keyword>
+      <keyword>end</keyword>
+      <keyword>for</keyword>
+      <keyword>function</keyword>
+      <keyword>if</keyword>
+      <keyword>in</keyword>
+      <keyword>local</keyword>
+      <keyword>not</keyword>
+      <keyword>or</keyword>
+      <keyword>repeat</keyword>
+      <keyword>return</keyword>
+      <keyword>then</keyword>
+      <keyword>until</keyword>
+      <keyword>while</keyword>
+    </context>
+
+    <context id="functions" style-ref="function">
+      <keyword>assert</keyword>
+      <keyword>collectgarbage</keyword>
+      <keyword>dofile</keyword>
+      <keyword>error</keyword>
+      <keyword>getfenv</keyword>
+      <keyword>getmetatable</keyword>
+      <keyword>gcinfo</keyword>
+      <keyword>ipairs</keyword>
+      <keyword>loadfile</keyword>
+      <keyword>loadlib</keyword>
+      <keyword>loadstring</keyword>
+      <keyword>next</keyword>
+      <keyword>pairs</keyword>
+      <keyword>pcall</keyword>
+      <keyword>print</keyword>
+      <keyword>rawequal</keyword>
+      <keyword>rawget</keyword>
+      <keyword>rawset</keyword>
+      <keyword>require</keyword>
+      <keyword>setfenv</keyword>
+      <keyword>setmetatable</keyword>
+      <keyword>tonumber</keyword>
+      <keyword>tostring</keyword>
+      <keyword>type</keyword>
+      <keyword>unpack</keyword>
+      <keyword>xpcall</keyword>
+    </context>
+
+    <context id="lua-reserved" style-ref="reserved">
+      <keyword>_[A-Z][A-Za-z0-9_]*</keyword>
+    </context>
+
+    <context id="nil-value" style-ref="nil-value">
+       <keyword>nil</keyword>
+    </context>
+
+    <context id="boolean" style-ref="boolean">
+       <keyword>false</keyword>
+       <keyword>true</keyword>
+    </context>
+
+    <context id="lua" class="no-spell-check">
+      <include>
+        <context ref="def:shebang"/>
+        <context ref="multi-line-string"/>
+        <context ref="string"/>
+        <context ref="block-comment"/>
+        <context ref="line-comment"/>
+        <context ref="keywords"/>
+        <context ref="functions"/>
+        <context ref="lua-reserved"/>
+        <context ref="nil-value"/>
+        <context ref="boolean"/>
+      </include>
+    </context>
+
+  </definitions>
+</language>

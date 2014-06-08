@@ -1,0 +1,803 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+ Author: Yevgen Muntyan <muntyan@tamu.edu>
+ Copyright (C) 2006-2007 Yevgen Muntyan <muntyan@tamu.edu>
+
+ This library is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Library General Public
+ License as published by the Free Software Foundation; either
+ version 2 of the License, or (at your option) any later version.
+
+ This library is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ Library General Public License for more details.
+
+ You should have received a copy of the GNU Library General Public
+ License along with this library; if not, write to the
+ Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ Boston, MA 02111-1307, USA.
+
+-->
+<language id="m4" _name="m4" _section="Scripts" version="2.0">
+  <metadata>
+    <property name="mimetypes">application/x-m4</property>
+    <property name="globs">*.m4;configure.ac;configure.in</property>
+    <property name="line-comment-start">#</property>
+  </metadata>
+
+  <styles>
+    <style id="m4-comment" _name="m4-comment" map-to="sh:comment"/>
+    <style id="m4-macro" _name="m4 Macro" map-to="def:keyword"/>
+    <style id="ac-macro" _name="Autoconf Macro" map-to="def:keyword"/>
+    <style id="ac-macro-obsolete" _name="Obsolete Autoconf Macro" map-to="def:keyword"/>
+  </styles>
+
+  <definitions>
+    <context id="m4-quoted"><!-- style-ref="test:_yellow"-->
+      <start>\[</start>
+      <end>\]</end>
+      <include>
+        <context ref="m4-pure"/>
+      </include>
+    </context>
+
+    <context id="m4-quoted-shell">
+      <start>\[</start>
+      <end>\]</end>
+      <include>
+        <context ref="m4"/>
+      </include>
+    </context>
+
+    <context id="m4-function-call"><!-- style-ref="test:_violet"-->
+      <start>(?&lt;=[\w\d_])\((?!\))</start>
+      <end>\)</end>
+      <include>
+        <context ref="ARG-M"/>
+        <context>
+          <start>,</start>
+          <end>(?=[,\)])</end>
+          <include>
+            <context ref="ARG-M"/>
+          </include>
+        </context>
+      </include>
+    </context>
+
+    <context id="m4-comment" style-ref="m4-comment" end-at-line-end="true" class="comment" class-disabled="no-spell-check">
+      <start>dnl</start>
+      <include>
+        <context ref="def:in-line-comment"/>
+      </include>
+    </context>
+
+    <context id="NO-ARGS" style-ref="def:error">
+      <start>,</start>
+      <end>(?=\))</end>
+    </context>
+
+    <context id="ARG-M">
+      <include>
+        <context ref="m4-pure"/>
+      </include>
+    </context>
+
+    <context id="ARG-S">
+      <include>
+        <context>
+          <start>\[</start>
+          <end>\]</end>
+          <include>
+            <context ref="m4"/>
+          </include>
+        </context>
+        <context ref="m4"/>
+      </include>
+    </context>
+
+    <context id="TO-ARGS-S">
+      <start>,</start>
+      <end>(?=[,\)])</end>
+      <include>
+        <context ref="ARGS-S"/>
+      </include>
+    </context>
+
+    <context id="TO-ARGS-M">
+      <start>,</start>
+      <end>(?=[,\)])</end>
+      <include>
+        <context ref="ARGS-M"/>
+      </include>
+    </context>
+
+    <context id="TO-ARGS-MS">
+      <start>,</start>
+      <end>(?=[,\)])</end>
+      <include>
+        <context ref="ARGS-MS"/>
+      </include>
+    </context>
+
+    <context id="TO-ARGS-SM">
+      <start>,</start>
+      <end>(?=[,\)])</end>
+      <include>
+        <context ref="ARGS-SM"/>
+      </include>
+    </context>
+
+    <context id="TO-ARGS-MSSM">
+      <start>,</start>
+      <end>(?=[,\)])</end>
+      <include>
+        <context ref="ARGS-MSSM"/>
+      </include>
+    </context>
+
+    <context id="TO-ARGS-MSS">
+      <start>,</start>
+      <end>(?=[,\)])</end>
+      <include>
+        <context ref="ARGS-MSS"/>
+      </include>
+    </context>
+
+    <context id="TO-ARGS-SSM">
+      <start>,</start>
+      <end>(?=[,\)])</end>
+      <include>
+        <context ref="ARGS-SSM"/>
+      </include>
+    </context>
+
+    <context id="TO-ARGS-SS">
+      <start>,</start>
+      <end>(?=[,\)])</end>
+      <include>
+        <context ref="ARGS-SS"/>
+      </include>
+    </context>
+
+    <context id="ARGS-S"><include>
+      <context ref="ARG-S"/>
+      <context ref="NO-ARGS"/>
+    </include></context>
+
+    <context id="ARGS-M"><include>
+      <context ref="ARG-M"/>
+      <context ref="NO-ARGS"/>
+    </include></context>
+
+    <context id="ARGS-MS"><include>
+      <context ref="ARG-M"/>
+      <context ref="TO-ARGS-S"/>
+    </include></context>
+
+    <context id="ARGS-SM"><include>
+      <context ref="ARG-S"/>
+      <context ref="TO-ARGS-M"/>
+    </include></context>
+
+    <context id="ARGS-SS"><include>
+      <context ref="ARG-S"/>
+      <context ref="TO-ARGS-S"/>
+    </include></context>
+
+    <context id="ARGS-MSS"><include>
+      <context ref="ARG-M"/>
+      <context ref="TO-ARGS-SS"/>
+    </include></context>
+
+    <context id="ARGS-SSM"><include>
+      <context ref="ARG-S"/>
+      <context ref="TO-ARGS-SM"/>
+    </include></context>
+
+    <context id="ARGS-MMS"><include>
+      <context ref="ARG-M"/>
+      <context ref="TO-ARGS-MS"/>
+    </include></context>
+
+    <context id="ARGS-MMSS"><include>
+      <context ref="ARG-M"/>
+      <context ref="TO-ARGS-MSS"/>
+    </include></context>
+
+    <context id="ARGS-MSSM"><include>
+      <context ref="ARG-M"/>
+      <context ref="TO-ARGS-SSM"/>
+    </include></context>
+
+    <context id="ARGS-MMSSM"><include>
+      <context ref="ARG-M"/>
+      <context ref="TO-ARGS-MSSM"/>
+    </include></context>
+
+    <context id="func-m">
+      <start>\b(AC_LANG)\s*(\()</start>
+      <end>\)</end>
+      <include>
+        <context sub-pattern="1" where="start" style-ref="ac-macro"/>
+        <context sub-pattern="2" where="start" style-ref="ac-macro"/>
+        <context sub-pattern="0" where="end" style-ref="ac-macro"/>
+        <context ref="ARGS-M"/>
+      </include>
+    </context>
+
+    <context id="func-ms">
+      <start>\b(AC_DEFUN(_ONCE)?|AM_CONDITIONAL|glib_DEFUN|AC_CACHE_VAL|AC_SUBST)\s*(\()</start>
+      <end>\)</end>
+      <include>
+        <context sub-pattern="1" where="start" style-ref="ac-macro"/>
+        <context sub-pattern="2" where="start" style-ref="ac-macro"/>
+        <context sub-pattern="0" where="end" style-ref="ac-macro"/>
+        <context ref="ARGS-MS"/>
+      </include>
+    </context>
+
+    <context id="func-ss">
+      <start>\b(AC_OUTPUT_COMMANDS)\s*(\()</start>
+      <end>\)</end>
+      <include>
+        <context sub-pattern="1" where="start" style-ref="ac-macro"/>
+        <context sub-pattern="2" where="start" style-ref="ac-macro"/>
+        <context sub-pattern="0" where="end" style-ref="ac-macro"/>
+        <context ref="ARGS-SS"/>
+      </include>
+    </context>
+
+    <context id="func-mms">
+      <start>\b(m4_foreach|AC_CACHE_CHECK)\s*(\()</start>
+      <end>\)</end>
+      <include>
+        <context sub-pattern="1" where="start" style-ref="m4-macro"/>
+        <context sub-pattern="2" where="start" style-ref="m4-macro"/>
+        <context sub-pattern="0" where="end" style-ref="m4-macro"/>
+        <context ref="ARGS-MMS"/>
+      </include>
+    </context>
+
+    <context id="func-mmss">
+      <start>\b(AC_ARG_ENABLE|AC_ARG_WITH|AC_TRY_LINK|AC_TRY_COMPILE|PKG_CHECK_MODULES)\s*(\()</start>
+      <end>\)</end>
+      <include>
+        <context sub-pattern="1" where="start" style-ref="ac-macro"/>
+        <context sub-pattern="2" where="start" style-ref="ac-macro"/>
+        <context sub-pattern="0" where="end" style-ref="ac-macro"/>
+        <context ref="ARGS-MMSS"/>
+      </include>
+    </context>
+
+    <context id="func-mmssm">
+      <start>\b(AC_CHECK_LIB|AC_SEARCH_LIBS)\s*(\()</start>
+      <end>\)</end>
+      <include>
+        <context sub-pattern="1" where="start" style-ref="ac-macro"/>
+        <context sub-pattern="2" where="start" style-ref="ac-macro"/>
+        <context sub-pattern="0" where="end" style-ref="ac-macro"/>
+        <context ref="ARGS-MMSSM"/>
+      </include>
+    </context>
+
+    <context id="func-mss">
+      <start>\b(AC_(CONFIG_COMMANDS|ENABLE|WITH|TRY_CPP|LINK_IFELSE|CHECK_FUNCS?))\s*(\()</start>
+      <end>\)</end>
+      <include>
+        <context sub-pattern="1" where="start" style-ref="ac-macro"/>
+        <context sub-pattern="3" where="start" style-ref="ac-macro"/>
+        <context sub-pattern="0" where="end" style-ref="ac-macro"/>
+        <context ref="ARGS-MSS"/>
+      </include>
+    </context>
+
+    <context id="func-mssm">
+      <start>\b(AC_CHECK_HEADERS?)\s*(\()</start>
+      <end>\)</end>
+      <include>
+        <context sub-pattern="1" where="start" style-ref="ac-macro"/>
+        <context sub-pattern="2" where="start" style-ref="ac-macro"/>
+        <context sub-pattern="0" where="end" style-ref="ac-macro"/>
+        <context ref="ARGS-MSSM"/>
+      </include>
+    </context>
+
+    <context id="m4-pure">
+      <include>
+        <context ref="m4-comment"/>
+        <context ref="func-m"/>
+        <context ref="func-ms"/>
+        <context ref="func-ss"/>
+        <context ref="func-mss"/>
+        <context ref="func-mms"/>
+        <context ref="func-mmss"/>
+        <context ref="func-mssm"/>
+        <context ref="func-mmssm"/>
+        <context ref="ac-m4-macro"/>
+        <context ref="m4-macro"/>
+        <context ref="ac-macros-1"/>
+        <context ref="ac-macros-2"/>
+        <context ref="ac-macros-obsolete"/>
+        <context ref="am-macros-1"/>
+        <context ref="am-macros-2"/>
+        <context ref="m4-function-call"/>
+        <context ref="m4-quoted"/>
+        <context extend-parent="false" style-ref="def:error">
+          <match>\]</match>
+        </context>
+      </include>
+    </context>
+
+    <context id="shell-line-comment" style-ref="sh:comment" end-at-line-end="true" class="comment" class-disabled="no-spell-check">
+      <start>(?&lt;!\S)#|(?&lt;=\[)#</start>
+      <include>
+        <context ref="sh:line-comment" original="true"/>
+      </include>
+    </context>
+
+    <replace id="sh:sh" ref="m4"/>
+    <replace id="sh:line-comment" ref="shell-line-comment"/>
+
+    <context id="m4" class="no-spell-check">
+      <include>
+        <context ref="m4-quoted-shell"/>
+        <context ref="m4-pure"/>
+        <context ref="sh:sh" original="true"/>
+        <context id="bad-paren" extend-parent="false" style-ref="def:error">
+          <match>\)</match>
+        </context>
+      </include>
+    </context>
+
+    <context id="ac-m4-macro" style-ref="m4-macro">
+      <prefix>\bm4_</prefix>
+      <keyword>append(_uniq)?</keyword>
+      <keyword>bpatsubst</keyword>
+      <keyword>bregexp</keyword>
+      <keyword>builtin</keyword>
+      <keyword>decr</keyword>
+      <keyword>define</keyword>
+      <keyword>defn</keyword>
+      <keyword>dnl</keyword>
+      <keyword>dquote</keyword>
+      <keyword>dumpdef</keyword>
+      <keyword>errprint</keyword>
+      <keyword>esyscmd</keyword>
+      <keyword>eval</keyword>
+      <keyword>exit</keyword>
+      <keyword>for(each(_w)?)?</keyword>
+      <keyword>format</keyword>
+      <keyword>if(def)?</keyword>
+      <keyword>include</keyword>
+      <keyword>incr</keyword>
+      <keyword>index</keyword>
+      <keyword>indir</keyword>
+      <keyword>len</keyword>
+      <keyword>maketemp</keyword>
+      <keyword>mkstemp</keyword>
+      <keyword>normalize</keyword>
+      <keyword>pattern_(allow|forbid)</keyword>
+      <keyword>popdef</keyword>
+      <keyword>pushdef</keyword>
+      <keyword>quote</keyword>
+      <keyword>re_escape</keyword>
+      <keyword>shift</keyword>
+      <keyword>sinclude</keyword>
+      <keyword>split</keyword>
+      <keyword>substr</keyword>
+      <keyword>syscmd</keyword>
+      <keyword>sysval</keyword>
+      <keyword>to(lower|upper)</keyword>
+      <keyword>translit</keyword>
+      <keyword>undefine</keyword>
+      <keyword>wrap</keyword>
+    </context>
+
+    <context id="m4-macro" style-ref="m4-macro">
+      <keyword>define</keyword>
+    </context>
+
+    <context id="ac-macros-1" style-ref="ac-macro">
+      <prefix>\bAC_</prefix>
+      <keyword>AC_PROG_MKDIR_P</keyword>
+      <keyword>AIX</keyword>
+      <keyword>ARG_(ENABLE|PROGRAM|VAR|WITH)</keyword>
+      <keyword>BEFORE</keyword>
+      <keyword>CACHE_(CHECK|LOAD|SAVE|VAL)</keyword>
+      <keyword>CANONICAL_(BUILD|HOST|TARGET)</keyword>
+      <keyword>C_BIGENDIAN</keyword>
+      <keyword>C_CHAR_UNSIGNED</keyword>
+      <keyword>C_CONST</keyword>
+      <keyword>C_FLEXIBLE_ARRAY_MEMBER</keyword>
+      <keyword>CHECK_ALIGNOF</keyword>
+      <keyword>CHECK_DECL(S(_ONCE)?)?</keyword>
+      <keyword>CHECK_FILES?</keyword>
+      <keyword>CHECK_FUNCS_ONCE</keyword>
+      <keyword>CHECK_HEADERS_ONCE</keyword>
+      <keyword>CHECK_LIB</keyword>
+      <keyword>CHECK_MEMBERS?</keyword>
+      <keyword>CHECK_PROGS?</keyword>
+      <keyword>CHECK_SIZEOF</keyword>
+      <keyword>CHECK_TARGET_TOOLS?</keyword>
+      <keyword>CHECK_TOOLS?</keyword>
+      <keyword>CHECK_TYPES?</keyword>
+      <keyword>C_INLINE</keyword>
+      <keyword>COMPILE_IFELSE</keyword>
+      <keyword>COMPUTE_INT</keyword>
+      <keyword>CONFIG_AUX_DIR</keyword>
+      <keyword>CONFIG_COMMANDS(_POST|_PRE)?</keyword>
+      <keyword>CONFIG_FILES</keyword>
+      <keyword>CONFIG_HEADERS</keyword>
+      <keyword>CONFIG_LIBOBJ_DIR</keyword>
+      <keyword>CONFIG_LINKS</keyword>
+      <keyword>CONFIG_MACRO_DIR</keyword>
+      <keyword>CONFIG_SRCDIR</keyword>
+      <keyword>CONFIG_SUBDIRS</keyword>
+      <keyword>CONFIG_TESTDIR</keyword>
+      <keyword>COPYRIGHT</keyword>
+      <keyword>C_PROTOTYPES</keyword>
+      <keyword>C_RESTRICT</keyword>
+      <keyword>C_STRINGIZE</keyword>
+      <keyword>C_TYPEOF</keyword>
+      <keyword>C_VARARRAYS</keyword>
+      <keyword>C_VOLATILE</keyword>
+      <keyword>DATAROOTDIR_CHECKED</keyword>
+      <keyword>DEFINE(_UNQUOTED)?</keyword>
+      <keyword>DEFUN(_ONCE)?</keyword>
+      <keyword>DIAGNOSE</keyword>
+      <keyword>EGREP_CPP</keyword>
+      <keyword>EGREP_HEADER</keyword>
+      <keyword>ENABLE</keyword>
+      <keyword>ERLANG_CHECK_LIB</keyword>
+      <keyword>ERLANG_NEED_ERLC?</keyword>
+      <keyword>ERLANG_PATH_ERLC?</keyword>
+      <keyword>ERLANG_SUBST_(LIB_DIR|ROOT_DIR|(INSTALL_LIB_(DIR|SUBDIR)))</keyword>
+      <keyword>F77_DUMMY_MAIN</keyword>
+      <keyword>F77_FUNC</keyword>
+      <keyword>F77_LIBRARY_LDFLAGS</keyword>
+      <keyword>F77_MAIN</keyword>
+      <keyword>F77_WRAPPERS</keyword>
+      <keyword>FATAL</keyword>
+      <keyword>FC_FREEFORM</keyword>
+      <keyword>FC_FUNC</keyword>
+      <keyword>FC_LIBRARY_LDFLAGS</keyword>
+      <keyword>FC_MAIN</keyword>
+      <keyword>FC_SRCEXT</keyword>
+      <keyword>FC_WRAPPERS</keyword>
+      <keyword>FUNC_ALLOCA</keyword>
+      <keyword>FUNC_CHOWN</keyword>
+      <keyword>FUNC_CLOSEDIR_VOID</keyword>
+      <keyword>FUNC_ERROR_AT_LINE</keyword>
+      <keyword>FUNC_FNMATCH(_GNU)?</keyword>
+      <keyword>FUNC_FORK</keyword>
+      <keyword>FUNC_FSEEKO</keyword>
+      <keyword>FUNC_GETGROUPS</keyword>
+      <keyword>FUNC_GETLOADAVG</keyword>
+      <keyword>FUNC_GETMNTENT</keyword>
+      <keyword>FUNC_GETPGRP</keyword>
+      <keyword>FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK</keyword>
+      <keyword>FUNC_LSTAT</keyword>
+      <keyword>FUNC_MALLOC</keyword>
+      <keyword>FUNC_MBRTOWC</keyword>
+      <keyword>FUNC_MEMCMP</keyword>
+      <keyword>FUNC_MKTIME</keyword>
+      <keyword>FUNC_MMAP</keyword>
+      <keyword>FUNC_OBSTACK</keyword>
+      <keyword>FUNC_REALLOC</keyword>
+      <keyword>FUNC_SELECT_ARGTYPES</keyword>
+      <keyword>FUNC_SETPGRP</keyword>
+      <keyword>FUNC_SETVBUF_REVERSED</keyword>
+      <keyword>FUNC_STAT</keyword>
+      <keyword>FUNC_STRCOLL</keyword>
+      <keyword>FUNC_STRERROR_R</keyword>
+      <keyword>FUNC_STRFTIME</keyword>
+      <keyword>FUNC_STRNLEN</keyword>
+      <keyword>FUNC_STRTOD</keyword>
+      <keyword>FUNC_STRTOLD</keyword>
+      <keyword>FUNC_UTIME_NULL</keyword>
+      <keyword>FUNC_VPRINTF</keyword>
+      <keyword>GNU_SOURCE</keyword>
+      <keyword>HAVE_C_BACKSLASH_A</keyword>
+      <keyword>HEADER_ASSERT</keyword>
+      <keyword>HEADER_DIRENT</keyword>
+      <keyword>HEADER_MAJOR</keyword>
+      <keyword>HEADER_RESOLV</keyword>
+      <keyword>HEADER_STAT</keyword>
+      <keyword>HEADER_STDBOOL</keyword>
+      <keyword>HEADER_STDC</keyword>
+      <keyword>HEADER_SYS_WAIT</keyword>
+      <keyword>HEADER_TIME</keyword>
+      <keyword>HEADER_TIOCGWINSZ</keyword>
+      <keyword>HELP_STRING</keyword>
+      <keyword>INCLUDES_DEFAULT</keyword>
+      <keyword>INIT</keyword>
+      <keyword>ISC_POSIX</keyword>
+      <keyword>LANG_ASSERT</keyword>
+      <keyword>LANG_CALL</keyword>
+      <keyword>LANG_CONFTEST</keyword>
+      <keyword>LANG_FUNC_LINK_TRY</keyword>
+      <keyword>LANG_POP</keyword>
+      <keyword>LANG_PROGRAM</keyword>
+      <keyword>LANG_PUSH</keyword>
+      <keyword>LANG_SOURCE</keyword>
+      <keyword>LANG_WERROR</keyword>
+      <keyword>LIBOBJ</keyword>
+      <keyword>LIBSOURCES?</keyword>
+      <keyword>LINK_IFELSE</keyword>
+      <keyword>MINIX</keyword>
+      <keyword>MSG_CHECKING</keyword>
+      <keyword>MSG_ERROR</keyword>
+      <keyword>MSG_FAILURE</keyword>
+      <keyword>MSG_NOTICE</keyword>
+      <keyword>MSG_RESULT</keyword>
+      <keyword>MSG_WARN</keyword>
+      <keyword>OUTPUT</keyword>
+      <keyword>PACKAGE_BUGREPORT</keyword>
+      <keyword>PACKAGE_NAME</keyword>
+      <keyword>PACKAGE_STRING</keyword>
+      <keyword>PACKAGE_TARNAME</keyword>
+      <keyword>PACKAGE_VERSION</keyword>
+      <keyword>PATH_PROGS?</keyword>
+      <keyword>PATH_TARGET_TOOL</keyword>
+      <keyword>PATH_TOOL</keyword>
+      <keyword>PATH_X</keyword>
+      <keyword>PATH_XTRA</keyword>
+      <keyword>PREFIX_DEFAULT</keyword>
+      <keyword>PREFIX_PROGRAM</keyword>
+      <keyword>PREPROC_IFELSE</keyword>
+      <keyword>PREREQ</keyword>
+      <keyword>PRESERVE_HELP_ORDER</keyword>
+      <keyword>PROG_AWK</keyword>
+      <keyword>PROG_CC(_C(89|99|_O))?</keyword>
+      <keyword>PROG_CC_STDC</keyword>
+      <keyword>PROG_CPP(_WERROR)?</keyword>
+      <keyword>PROG_CXX(CPP|_C_O)?</keyword>
+      <keyword>PROG_EGREP</keyword>
+      <keyword>PROG_F77(_C_O)?</keyword>
+      <keyword>PROG_FC(_C_O)?</keyword>
+      <keyword>PROG_FGREP</keyword>
+      <keyword>PROG_GCC_TRADITIONAL</keyword>
+      <keyword>PROG_GREP</keyword>
+      <keyword>PROG_INSTALL</keyword>
+      <keyword>PROG_LEX</keyword>
+      <keyword>PROG_LIBTOOL</keyword>
+      <keyword>PROG_LN_S</keyword>
+      <keyword>PROG_MAKE_SET</keyword>
+      <keyword>PROG_OBJCCPP</keyword>
+      <keyword>PROG_OBJC</keyword>
+      <keyword>PROG_RANLIB</keyword>
+      <keyword>PROG_SED</keyword>
+      <keyword>PROG_YACC</keyword>
+      <keyword>REPLACE_FNMATCH</keyword>
+      <keyword>REPLACE_FUNCS</keyword>
+      <keyword>REQUIRE_AUX_FILE</keyword>
+      <keyword>REQUIRE_CPP</keyword>
+      <keyword>REQUIRE</keyword>
+      <keyword>REVISION</keyword>
+      <keyword>RUN_IFELSE</keyword>
+      <keyword>SEARCH_LIBS</keyword>
+      <keyword>STRUCT_DIRENT_D_(INO|TYPE)</keyword>
+      <keyword>STRUCT_ST_BLKSIZE</keyword>
+      <keyword>STRUCT_ST_BLOCKS</keyword>
+      <keyword>STRUCT_ST_RDEV</keyword>
+      <keyword>STRUCT_TIMEZONE</keyword>
+      <keyword>STRUCT_TM</keyword>
+      <keyword>SUBST_FILE</keyword>
+      <keyword>SYS_INTERPRETER</keyword>
+      <keyword>SYS_LARGEFILE</keyword>
+      <keyword>SYS_LONG_FILE_NAMES</keyword>
+      <keyword>SYS_POSIX_TERMIOS</keyword>
+      <keyword>TYPE_GETGROUPS</keyword>
+      <keyword>TYPE_INT(16_T|32_T|64_T|8_T)</keyword>
+      <keyword>TYPE_INTMAX_T</keyword>
+      <keyword>TYPE_INTPTR_T</keyword>
+      <keyword>TYPE_LONG_DOUBLE(_WIDER)?</keyword>
+      <keyword>TYPE_LONG_LONG_INT</keyword>
+      <keyword>TYPE_MBSTATE_T</keyword>
+      <keyword>TYPE_MODE_T</keyword>
+      <keyword>TYPE_OFF_T</keyword>
+      <keyword>TYPE_PID_T</keyword>
+      <keyword>TYPE_SIGNAL</keyword>
+      <keyword>TYPE_SIZE_T</keyword>
+      <keyword>TYPE_SSIZE_T</keyword>
+      <keyword>TYPE_UID_T</keyword>
+      <keyword>TYPE_UINT(16_T|32_T|64_T|8_T)</keyword>
+      <keyword>TYPE_UINTMAX_T</keyword>
+      <keyword>TYPE_UINTPTR_T</keyword>
+      <keyword>TYPE_UNSIGNED_LONG_LONG_INT</keyword>
+      <keyword>USE_SYSTEM_EXTENSIONS</keyword>
+      <keyword>WARNING</keyword>
+      <keyword>WITH</keyword>
+    </context>
+
+    <context id="ac-macros-2" style-ref="ac-macro">
+      <keyword>AH_BOTTOM</keyword>
+      <keyword>AH_HEADER</keyword>
+      <keyword>AH_TEMPLATE</keyword>
+      <keyword>AH_TOP</keyword>
+      <keyword>AH_VERBATIM</keyword>
+      <keyword>AS_BOURNE_COMPATIBLE</keyword>
+      <keyword>AS_CASE</keyword>
+      <keyword>AS_DIRNAME</keyword>
+      <keyword>AS_IF</keyword>
+      <keyword>AS_MESSAGE_FD</keyword>
+      <keyword>AS_MESSAGE_LOG_FD</keyword>
+      <keyword>AS_MKDIR_P</keyword>
+      <keyword>AS_ORIGINAL_STDIN_FD</keyword>
+      <keyword>AS_SET_CATFILE</keyword>
+      <keyword>AS_SHELL_SANITIZE</keyword>
+      <keyword>AS_TR_CPP</keyword>
+      <keyword>AS_TR_SH</keyword>
+      <keyword>AU_ALIAS</keyword>
+      <keyword>AU_DEFUN</keyword>
+    </context>
+
+    <context id="ac-macros-obsolete" style-ref="ac-macro-obsolete">
+      <prefix>\bAC_</prefix>
+      <keyword>ALLOCA</keyword>
+      <keyword>ARG_ARRAY</keyword>
+      <keyword>CANONICAL_SYSTEM</keyword>
+      <keyword>C_CROSS</keyword>
+      <keyword>CHAR_UNSIGNED</keyword>
+      <keyword>CHECKING</keyword>
+      <keyword>CHECK_TYPE</keyword>
+      <keyword>C_LONG_DOUBLE</keyword>
+      <keyword>COMPILE_CHECK</keyword>
+      <keyword>CONST</keyword>
+      <keyword>CROSS_CHECK</keyword>
+      <keyword>CYGWIN</keyword>
+      <keyword>DECL_SYS_SIGLIST</keyword>
+      <keyword>DECL_YYTEXT</keyword>
+      <keyword>DIR_HEADER</keyword>
+      <keyword>DISABLE_FAST_INSTALL</keyword>
+      <keyword>DISABLE_SHARED</keyword>
+      <keyword>DISABLE_STATIC</keyword>
+      <keyword>DYNIX_SEQ</keyword>
+      <keyword>EMXOS2</keyword>
+      <keyword>ERROR</keyword>
+      <keyword>EXEEXT</keyword>
+      <keyword>FIND_X</keyword>
+      <keyword>FIND_XTRA</keyword>
+      <keyword>FOREACH</keyword>
+      <keyword>FUNC_CHECK</keyword>
+      <keyword>FUNC_WAIT3</keyword>
+      <keyword>GCC_TRADITIONAL</keyword>
+      <keyword>GETGROUPS_T</keyword>
+      <keyword>GETLOADAVG</keyword>
+      <keyword>HAVE_FUNCS</keyword>
+      <keyword>HAVE_HEADERS</keyword>
+      <keyword>HAVE_LIBRARY</keyword>
+      <keyword>HAVE_POUNDBANG</keyword>
+      <keyword>HEADER_CHECK</keyword>
+      <keyword>HEADER_EGREP</keyword>
+      <keyword>HELP_STRING</keyword>
+      <keyword>INIT</keyword>
+      <keyword>INLINE</keyword>
+      <keyword>INT_16_BITS</keyword>
+      <keyword>IRIX_SUN</keyword>
+      <keyword>LANG_C</keyword>
+      <keyword>LANG_CPLUSPLUS</keyword>
+      <keyword>LANG_FORTRAN77</keyword>
+      <keyword>LANG_OBJC</keyword>
+      <keyword>LANG_RESTORE</keyword>
+      <keyword>LANG_SAVE</keyword>
+      <keyword>LIBTOOL_DLOPEN</keyword>
+      <keyword>LIBTOOL_WIN32_DLL</keyword>
+      <keyword>LINK_FILES</keyword>
+      <keyword>LN_S</keyword>
+      <keyword>LONG_64_BITS</keyword>
+      <keyword>LONG_DOUBLE</keyword>
+      <keyword>LONG_FILE_NAMES</keyword>
+      <keyword>MAJOR_HEADER</keyword>
+      <keyword>MEMORY_H</keyword>
+      <keyword>MINGW32</keyword>
+      <keyword>MINUS_C_MINUS_O</keyword>
+      <keyword>MMAP</keyword>
+      <keyword>MODE_T</keyword>
+      <keyword>OBJEXT</keyword>
+      <keyword>OBSOLETE</keyword>
+      <keyword>OFF_T</keyword>
+      <keyword>OUTPUT_COMMANDS</keyword>
+      <keyword>OUTPUT</keyword>
+      <keyword>PID_T</keyword>
+      <keyword>PREFIX</keyword>
+      <keyword>PROGRAM_CHECK</keyword>
+      <keyword>PROGRAM_EGREP</keyword>
+      <keyword>PROGRAM_PATH</keyword>
+      <keyword>PROGRAMS_CHECK</keyword>
+      <keyword>PROGRAMS_PATH</keyword>
+      <keyword>REMOTE_TAPE</keyword>
+      <keyword>RESTARTABLE_SYSCALLS</keyword>
+      <keyword>RETSIGTYPE</keyword>
+      <keyword>RSH</keyword>
+      <keyword>SCO_INTL</keyword>
+      <keyword>SET_MAKE</keyword>
+      <keyword>SETVBUF_REVERSED</keyword>
+      <keyword>SIZEOF_TYPE</keyword>
+      <keyword>SIZE_T</keyword>
+      <keyword>STAT_MACROS_BROKEN</keyword>
+      <keyword>ST_BLKSIZE</keyword>
+      <keyword>ST_BLOCKS</keyword>
+      <keyword>STDC_HEADERS</keyword>
+      <keyword>STRCOLL</keyword>
+      <keyword>ST_RDEV</keyword>
+      <keyword>SYS_RESTARTABLE_SYSCALLS</keyword>
+      <keyword>SYS_SIGLIST_DECLARED</keyword>
+      <keyword>TEST_CPP</keyword>
+      <keyword>TEST_PROGRAM</keyword>
+      <keyword>TIME_WITH_SYS_TIME</keyword>
+      <keyword>TIMEZONE</keyword>
+      <keyword>TRY_COMPILE</keyword>
+      <keyword>TRY_CPP</keyword>
+      <keyword>TRY_LINK_FUNC</keyword>
+      <keyword>TRY_LINK</keyword>
+      <keyword>TRY_RUN</keyword>
+      <keyword>UID_T</keyword>
+      <keyword>UNISTD_H</keyword>
+      <keyword>USG</keyword>
+      <keyword>UTIME_NULL</keyword>
+      <keyword>VALIDATE_CACHED_SYSTEM_TUPLE</keyword>
+      <keyword>VERBOSE</keyword>
+      <keyword>VFORK</keyword>
+      <keyword>VPRINTF</keyword>
+      <keyword>WAIT3</keyword>
+      <keyword>WARN</keyword>
+      <keyword>WORDS_BIGENDIAN</keyword>
+      <keyword>XENIX_DIR</keyword>
+      <keyword>YYTEXT_POINTER</keyword>
+    </context>
+
+    <context id="am-macros-1" style-ref="ac-macro">
+      <keyword>_AM_DEPENDENCIES</keyword>
+    </context>
+
+    <context id="am-macros-2" style-ref="ac-macro">
+      <prefix>\bAM_</prefix>
+      <keyword>CONDITIONAL</keyword>
+      <keyword>CONFIG_HEADER</keyword>
+      <keyword>C_PROTOTYPES</keyword>
+      <keyword>DEP_TRACK</keyword>
+      <keyword>DISABLE_SHARED</keyword>
+      <keyword>DISABLE_STATIC</keyword>
+      <keyword>ENABLE_MULTILIB</keyword>
+      <keyword>GNU_GETTEXT</keyword>
+      <keyword>HEADER_TIOCGWINSZ_NEEDS_SYS_IOCTL</keyword>
+      <keyword>INIT_AUTOMAKE</keyword>
+      <keyword>INSTALLCHECK_STD_OPTIONS_EXEMPT</keyword>
+      <keyword>JAVACFLAGS</keyword>
+      <keyword>MAINTAINER_MODE</keyword>
+      <keyword>MAKE_INCLUDE</keyword>
+      <keyword>MAKEINFOFLAGS</keyword>
+      <keyword>OUTPUT_DEPENDENCY_COMMANDS</keyword>
+      <keyword>PATH_LISPDIR</keyword>
+      <keyword>PROG_AS</keyword>
+      <keyword>PROG_CC_C_O</keyword>
+      <keyword>PROG_CC_STDC</keyword>
+      <keyword>PROG_GCJ</keyword>
+      <keyword>PROG_INSTALL_STRIP</keyword>
+      <keyword>PROG_LEX</keyword>
+      <keyword>PROG_LIBTOOL</keyword>
+      <keyword>RFLAGS</keyword>
+      <keyword>RUNTESTFLAGS</keyword>
+      <keyword>SANITY_CHECK</keyword>
+      <keyword>SET_DEPDIR</keyword>
+      <keyword>SYS_POSIX_TERMIOS</keyword>
+      <keyword>WITH_DMALLOC</keyword>
+      <keyword>WITH_REGEX</keyword>
+    </context>
+
+    <context id="misc-macros" style-ref="ac-macro">
+      <keyword>AM_GLIB_GNU_GETTEXT</keyword>
+      <keyword>AM_GLIB_DEFINE_LOCALEDIR</keyword>
+      <keyword>AM_GNU_GETTEXT(_VERSION|_NEED)?</keyword>
+      <keyword>AC_PROG_INTLTOOL</keyword>
+      <keyword>IT_PROG_INTLTOOL</keyword>
+      <keyword>AM_PATH_PROG_WITH_TEST</keyword>
+      <keyword>PKG_PROG_PKG_CONFIG</keyword>
+      <keyword>PKG_CHECK_EXISTS</keyword>
+      <keyword>PKG_CHECK_MODULES</keyword>
+    </context>
+  </definitions>
+</language>

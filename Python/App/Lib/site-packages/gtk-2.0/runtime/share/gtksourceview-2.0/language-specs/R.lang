@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+ Author: Vaidotas Zemlys <mpiktas@gmail.com>
+ Copyright (C) 2005 Vaidotas Zemlys <mpiktas@gmail.com>
+
+ This library is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Library General Public
+ License as published by the Free Software Foundation; either
+ version 2 of the License, or (at your option) any later version.
+
+ This library is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ Library General Public License for more details.
+
+ You should have received a copy of the GNU Library General Public
+ License along with this library; if not, write to the
+ Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ Boston, MA 02111-1307, USA.
+
+-->
+<language id="r" _name="R" version="2.0" _section="Scientific">
+  <metadata>
+    <property name="mimetypes">text/x-R</property>
+    <property name="globs">*.R;*.Rout;*.r;*.Rhistory;*.Rt;*.Rout.save;*.Rout.fail</property>
+    <property name="line-comment-start">#</property>
+  </metadata>
+
+  <styles>
+    <style id="keyword" _name="Keyword" map-to="def:keyword"/>
+    <style id="reserved-classes" _name="Reserved Class" map-to="def:type"/>
+    <style id="assignment-operator" _name="Assignment Operator" map-to="def:operator"/>
+    <style id="delimiter" _name="Delimiter" map-to="def:operator"/>
+    <style id="special-constant" _name="Special Constant" map-to="def:special-constant"/>
+    <style id="boolean" _name="Boolean value" map-to="def:boolean"/>
+    <style id="integer-number" _name="Integer Number" map-to="def:base-n-integer"/>
+    <style id="floating-point" _name="Floating point number" map-to="def:floating-point"/>
+  </styles>
+
+  <definitions>
+
+    <context id="keywords" style-ref="keyword">
+      <keyword>break</keyword>
+      <keyword>else</keyword>
+      <keyword>for</keyword>
+      <keyword>if</keyword>
+      <keyword>in</keyword>
+      <keyword>next</keyword>
+      <keyword>repeat</keyword>
+      <keyword>return</keyword>
+      <keyword>switch</keyword>
+      <keyword>try</keyword>
+      <keyword>while</keyword>
+    </context>
+
+    <context id="reserved-classes" style-ref="reserved-classes">
+      <keyword>array</keyword>
+      <keyword>character</keyword>
+      <keyword>complex</keyword>
+      <keyword>data.frame</keyword>
+      <keyword>double</keyword>
+      <keyword>factor</keyword>
+      <keyword>function</keyword>
+      <keyword>integer</keyword>
+      <keyword>list</keyword>
+      <keyword>logical</keyword>
+      <keyword>matrix</keyword>
+      <keyword>numeric</keyword>
+      <keyword>vector</keyword>
+    </context>
+
+    <context id="assignment-operator" style-ref="assignment-operator">
+      <match>(&lt;){1,2}-</match>
+    </context>
+
+    <context id="delimiters" style-ref="delimiter">
+      <match>[\)\(]+|[\{\}]+|[][]+</match>
+    </context>
+
+    <context id="special-constants" style-ref="special-constant">
+      <keyword>Inf</keyword>
+      <keyword>NA</keyword>
+      <keyword>NaN</keyword>
+      <keyword>NULL</keyword>
+    </context>
+
+    <context id="boolean" style-ref="boolean">
+      <keyword>FALSE</keyword>
+      <keyword>TRUE</keyword>
+    </context>
+
+    <context id="integer-number" style-ref="integer-number">
+      <match extended="true">
+        (?&lt;![\w\.])
+        ([1-9][0-9]*|0)[i]?
+        (?![\w\.])
+      </match>
+    </context>
+
+    <context id="floating-point" style-ref="floating-point">
+      <match extended="true">
+        (?&lt;![\w\.])
+        ([0-9]+[Ee][-+]?[0-9]+|
+         ([0-9]*\.[0-9]+|[0-9]+\.)([Ee][-+]?[0-9]+)?)
+        [i]?
+        (?![\w\.])
+      </match>
+    </context>
+
+    <context id="r">
+      <include>
+        <context ref="def:shell-like-comment"/>
+        <context ref="def:string"/>
+        <context ref="def:single-quoted-string"/>
+        <context ref="keywords"/>
+        <context ref="assignment-operator"/>
+        <context ref="delimiters"/>
+        <context ref="special-constants"/>
+        <context ref="boolean"/>
+        <context ref="integer-number"/>
+        <context ref="floating-point"/>
+      </include>
+    </context>
+
+  </definitions>
+
+</language>

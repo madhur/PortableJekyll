@@ -1,0 +1,1864 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.6.6" />
+<title>gitattributes(5)</title>
+<style type="text/css">
+/* Shared CSS for AsciiDoc xhtml11 and html5 backends */
+
+/* Default font. */
+body {
+  font-family: Georgia,serif;
+}
+
+/* Title font. */
+h1, h2, h3, h4, h5, h6,
+div.title, caption.title,
+thead, p.table.header,
+#toctitle,
+#author, #revnumber, #revdate, #revremark,
+#footer {
+  font-family: Arial,Helvetica,sans-serif;
+}
+
+body {
+  margin: 1em 5% 1em 5%;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+}
+a:visited {
+  color: fuchsia;
+}
+
+em {
+  font-style: italic;
+  color: navy;
+}
+
+strong {
+  font-weight: bold;
+  color: #083194;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #527bbd;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+h1, h2, h3 {
+  border-bottom: 2px solid silver;
+}
+h2 {
+  padding-top: 0.5em;
+}
+h3 {
+  float: left;
+}
+h3 + * {
+  clear: left;
+}
+h5 {
+  font-size: 1.0em;
+}
+
+div.sectionbody {
+  margin-left: 0;
+}
+
+hr {
+  border: 1px solid silver;
+}
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+ul, ol, li > p {
+  margin-top: 0;
+}
+ul > li     { color: #aaa; }
+ul > li > * { color: black; }
+
+pre {
+  padding: 0;
+  margin: 0;
+}
+
+#author {
+  color: #527bbd;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+#email {
+}
+#revnumber, #revdate, #revremark {
+}
+
+#footer {
+  font-size: small;
+  border-top: 2px solid silver;
+  padding-top: 0.5em;
+  margin-top: 4.0em;
+}
+#footer-text {
+  float: left;
+  padding-bottom: 0.5em;
+}
+#footer-badges {
+  float: right;
+  padding-bottom: 0.5em;
+}
+
+#preamble {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.imageblock, div.exampleblock, div.verseblock,
+div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
+div.admonitionblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.admonitionblock {
+  margin-top: 2.0em;
+  margin-bottom: 2.0em;
+  margin-right: 10%;
+  color: #606060;
+}
+
+div.content { /* Block element content. */
+  padding: 0;
+}
+
+/* Block element titles. */
+div.title, caption.title {
+  color: #527bbd;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 1.0em;
+  margin-bottom: 0.5em;
+}
+div.title + * {
+  margin-top: 0;
+}
+
+td div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content + div.title {
+  margin-top: 0.0em;
+}
+
+div.sidebarblock > div.content {
+  background: #ffffee;
+  border: 1px solid #dddddd;
+  border-left: 4px solid #f0f0f0;
+  padding: 0.5em;
+}
+
+div.listingblock > div.content {
+  border: 1px solid #dddddd;
+  border-left: 5px solid #f0f0f0;
+  background: #f8f8f8;
+  padding: 0.5em;
+}
+
+div.quoteblock, div.verseblock {
+  padding-left: 1.0em;
+  margin-left: 1.0em;
+  margin-right: 10%;
+  border-left: 5px solid #f0f0f0;
+  color: #888;
+}
+
+div.quoteblock > div.attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock > pre.content {
+  font-family: inherit;
+  font-size: inherit;
+}
+div.verseblock > div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
+div.verseblock + div.attribution {
+  text-align: left;
+}
+
+div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 3px solid #dddddd;
+}
+
+div.exampleblock > div.content {
+  border-left: 3px solid #dddddd;
+  padding-left: 0.5em;
+}
+
+div.imageblock div.content { padding-left: 0; }
+span.image img { border-style: none; }
+a.image:visited { color: white; }
+
+dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: normal;
+  color: navy;
+}
+dd > *:first-child {
+  margin-top: 0.1em;
+}
+
+ul, ol {
+    list-style-position: outside;
+}
+ol.arabic {
+  list-style-type: decimal;
+}
+ol.loweralpha {
+  list-style-type: lower-alpha;
+}
+ol.upperalpha {
+  list-style-type: upper-alpha;
+}
+ol.lowerroman {
+  list-style-type: lower-roman;
+}
+ol.upperroman {
+  list-style-type: upper-roman;
+}
+
+div.compact ul, div.compact ol,
+div.compact p, div.compact p,
+div.compact div, div.compact div {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}
+
+tfoot {
+  font-weight: bold;
+}
+td > div.verse {
+  white-space: pre;
+}
+
+div.hdlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+div.hdlist tr {
+  padding-bottom: 15px;
+}
+dt.hdlist1.strong, td.hdlist1.strong {
+  font-weight: bold;
+}
+td.hdlist1 {
+  vertical-align: top;
+  font-style: normal;
+  padding-right: 0.8em;
+  color: navy;
+}
+td.hdlist2 {
+  vertical-align: top;
+}
+div.hdlist.compact tr {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.comment {
+  background: yellow;
+}
+
+.footnote, .footnoteref {
+  font-size: 0.8em;
+}
+
+span.footnote, span.footnoteref {
+  vertical-align: super;
+}
+
+#footnotes {
+  margin: 20px 0 20px 0;
+  padding: 7px 0 0 0;
+}
+
+#footnotes div.footnote {
+  margin: 0 0 5px 0;
+}
+
+#footnotes hr {
+  border: none;
+  border-top: 1px solid silver;
+  height: 1px;
+  text-align: left;
+  margin-left: 0;
+  width: 20%;
+  min-width: 100px;
+}
+
+div.colist td {
+  padding-right: 0.5em;
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+div.colist td img {
+  margin-top: 0.3em;
+}
+
+@media print {
+  #footer-badges { display: none; }
+}
+
+#toc {
+  margin-bottom: 2.5em;
+}
+
+#toctitle {
+  color: #527bbd;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}
+
+div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+  font-size: 0.9em;
+}
+div.toclevel3 {
+  margin-left: 4em;
+  font-size: 0.9em;
+}
+div.toclevel4 {
+  margin-left: 6em;
+  font-size: 0.9em;
+}
+
+span.aqua { color: aqua; }
+span.black { color: black; }
+span.blue { color: blue; }
+span.fuchsia { color: fuchsia; }
+span.gray { color: gray; }
+span.green { color: green; }
+span.lime { color: lime; }
+span.maroon { color: maroon; }
+span.navy { color: navy; }
+span.olive { color: olive; }
+span.purple { color: purple; }
+span.red { color: red; }
+span.silver { color: silver; }
+span.teal { color: teal; }
+span.white { color: white; }
+span.yellow { color: yellow; }
+
+span.aqua-background { background: aqua; }
+span.black-background { background: black; }
+span.blue-background { background: blue; }
+span.fuchsia-background { background: fuchsia; }
+span.gray-background { background: gray; }
+span.green-background { background: green; }
+span.lime-background { background: lime; }
+span.maroon-background { background: maroon; }
+span.navy-background { background: navy; }
+span.olive-background { background: olive; }
+span.purple-background { background: purple; }
+span.red-background { background: red; }
+span.silver-background { background: silver; }
+span.teal-background { background: teal; }
+span.white-background { background: white; }
+span.yellow-background { background: yellow; }
+
+span.big { font-size: 2em; }
+span.small { font-size: 0.6em; }
+
+span.underline { text-decoration: underline; }
+span.overline { text-decoration: overline; }
+span.line-through { text-decoration: line-through; }
+
+
+/*
+ * xhtml11 specific
+ *
+ * */
+
+tt {
+  font-family: monospace;
+  font-size: inherit;
+  color: navy;
+}
+
+div.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.tableblock > table {
+  border: 3px solid #527bbd;
+}
+thead, p.table.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.table {
+  margin-top: 0;
+}
+/* Because the table frame attribute is overriden by CSS in most browsers. */
+div.tableblock > table[frame="void"] {
+  border-style: none;
+}
+div.tableblock > table[frame="hsides"] {
+  border-left-style: none;
+  border-right-style: none;
+}
+div.tableblock > table[frame="vsides"] {
+  border-top-style: none;
+  border-bottom-style: none;
+}
+
+
+/*
+ * html5 specific
+ *
+ * */
+
+.monospaced {
+  font-family: monospace;
+  font-size: inherit;
+  color: navy;
+}
+
+table.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+thead, p.tableblock.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.tableblock {
+  margin-top: 0;
+}
+table.tableblock {
+  border-width: 3px;
+  border-spacing: 0px;
+  border-style: solid;
+  border-color: #527bbd;
+  border-collapse: collapse;
+}
+th.tableblock, td.tableblock {
+  border-width: 1px;
+  padding: 4px;
+  border-style: solid;
+  border-color: #527bbd;
+}
+
+table.tableblock.frame-topbot {
+  border-left-style: hidden;
+  border-right-style: hidden;
+}
+table.tableblock.frame-sides {
+  border-top-style: hidden;
+  border-bottom-style: hidden;
+}
+table.tableblock.frame-none {
+  border-style: hidden;
+}
+
+th.tableblock.halign-left, td.tableblock.halign-left {
+  text-align: left;
+}
+th.tableblock.halign-center, td.tableblock.halign-center {
+  text-align: center;
+}
+th.tableblock.halign-right, td.tableblock.halign-right {
+  text-align: right;
+}
+
+th.tableblock.valign-top, td.tableblock.valign-top {
+  vertical-align: top;
+}
+th.tableblock.valign-middle, td.tableblock.valign-middle {
+  vertical-align: middle;
+}
+th.tableblock.valign-bottom, td.tableblock.valign-bottom {
+  vertical-align: bottom;
+}
+
+
+/*
+ * manpage specific
+ *
+ * */
+
+body.manpage h1 {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  border-top: 2px solid silver;
+  border-bottom: 2px solid silver;
+}
+body.manpage h2 {
+  border-style: none;
+}
+body.manpage div.sectionbody {
+  margin-left: 3em;
+}
+
+@media print {
+  body.manpage div#toc { display: none; }
+}
+</style>
+<script type="text/javascript">
+/*<![CDATA[*/
+var asciidoc = {  // Namespace.
+
+/////////////////////////////////////////////////////////////////////
+// Table Of Contents generator
+/////////////////////////////////////////////////////////////////////
+
+/* Author: Mihai Bazon, September 2002
+ * http://students.infoiasi.ro/~mishoo
+ *
+ * Table Of Content generator
+ * Version: 0.4
+ *
+ * Feel free to use this script under the terms of the GNU General Public
+ * License, as long as you do not remove or alter this notice.
+ */
+
+ /* modified by Troy D. Hanson, September 2006. License: GPL */
+ /* modified by Stuart Rackham, 2006, 2009. License: GPL */
+
+// toclevels = 1..4.
+toc: function (toclevels) {
+
+  function getText(el) {
+    var text = "";
+    for (var i = el.firstChild; i != null; i = i.nextSibling) {
+      if (i.nodeType == 3 /* Node.TEXT_NODE */) // IE doesn't speak constants.
+        text += i.data;
+      else if (i.firstChild != null)
+        text += getText(i);
+    }
+    return text;
+  }
+
+  function TocEntry(el, text, toclevel) {
+    this.element = el;
+    this.text = text;
+    this.toclevel = toclevel;
+  }
+
+  function tocEntries(el, toclevels) {
+    var result = new Array;
+    var re = new RegExp('[hH]([2-'+(toclevels+1)+'])');
+    // Function that scans the DOM tree for header elements (the DOM2
+    // nodeIterator API would be a better technique but not supported by all
+    // browsers).
+    var iterate = function (el) {
+      for (var i = el.firstChild; i != null; i = i.nextSibling) {
+        if (i.nodeType == 1 /* Node.ELEMENT_NODE */) {
+          var mo = re.exec(i.tagName);
+          if (mo && (i.getAttribute("class") || i.getAttribute("className")) != "float") {
+            result[result.length] = new TocEntry(i, getText(i), mo[1]-1);
+          }
+          iterate(i);
+        }
+      }
+    }
+    iterate(el);
+    return result;
+  }
+
+  var toc = document.getElementById("toc");
+  if (!toc) {
+    return;
+  }
+
+  // Delete existing TOC entries in case we're reloading the TOC.
+  var tocEntriesToRemove = [];
+  var i;
+  for (i = 0; i < toc.childNodes.length; i++) {
+    var entry = toc.childNodes[i];
+    if (entry.nodeName == 'div'
+     && entry.getAttribute("class")
+     && entry.getAttribute("class").match(/^toclevel/))
+      tocEntriesToRemove.push(entry);
+  }
+  for (i = 0; i < tocEntriesToRemove.length; i++) {
+    toc.removeChild(tocEntriesToRemove[i]);
+  }
+
+  // Rebuild TOC entries.
+  var entries = tocEntries(document.getElementById("content"), toclevels);
+  for (var i = 0; i < entries.length; ++i) {
+    var entry = entries[i];
+    if (entry.element.id == "")
+      entry.element.id = "_toc_" + i;
+    var a = document.createElement("a");
+    a.href = "#" + entry.element.id;
+    a.appendChild(document.createTextNode(entry.text));
+    var div = document.createElement("div");
+    div.appendChild(a);
+    div.className = "toclevel" + entry.toclevel;
+    toc.appendChild(div);
+  }
+  if (entries.length == 0)
+    toc.parentNode.removeChild(toc);
+},
+
+
+/////////////////////////////////////////////////////////////////////
+// Footnotes generator
+/////////////////////////////////////////////////////////////////////
+
+/* Based on footnote generation code from:
+ * http://www.brandspankingnew.net/archive/2005/07/format_footnote.html
+ */
+
+footnotes: function () {
+  // Delete existing footnote entries in case we're reloading the footnodes.
+  var i;
+  var noteholder = document.getElementById("footnotes");
+  if (!noteholder) {
+    return;
+  }
+  var entriesToRemove = [];
+  for (i = 0; i < noteholder.childNodes.length; i++) {
+    var entry = noteholder.childNodes[i];
+    if (entry.nodeName == 'div' && entry.getAttribute("class") == "footnote")
+      entriesToRemove.push(entry);
+  }
+  for (i = 0; i < entriesToRemove.length; i++) {
+    noteholder.removeChild(entriesToRemove[i]);
+  }
+
+  // Rebuild footnote entries.
+  var cont = document.getElementById("content");
+  var spans = cont.getElementsByTagName("span");
+  var refs = {};
+  var n = 0;
+  for (i=0; i<spans.length; i++) {
+    if (spans[i].className == "footnote") {
+      n++;
+      var note = spans[i].getAttribute("data-note");
+      if (!note) {
+        // Use [\s\S] in place of . so multi-line matches work.
+        // Because JavaScript has no s (dotall) regex flag.
+        note = spans[i].innerHTML.match(/\s*\[([\s\S]*)]\s*/)[1];
+        spans[i].innerHTML =
+          "[<a id='_footnoteref_" + n + "' href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+        spans[i].setAttribute("data-note", note);
+      }
+      noteholder.innerHTML +=
+        "<div class='footnote' id='_footnote_" + n + "'>" +
+        "<a href='#_footnoteref_" + n + "' title='Return to text'>" +
+        n + "</a>. " + note + "</div>";
+      var id =spans[i].getAttribute("id");
+      if (id != null) refs["#"+id] = n;
+    }
+  }
+  if (n == 0)
+    noteholder.parentNode.removeChild(noteholder);
+  else {
+    // Process footnoterefs.
+    for (i=0; i<spans.length; i++) {
+      if (spans[i].className == "footnoteref") {
+        var href = spans[i].getElementsByTagName("a")[0].getAttribute("href");
+        href = href.match(/#.*/)[0];  // Because IE return full URL.
+        n = refs[href];
+        spans[i].innerHTML =
+          "[<a href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+      }
+    }
+  }
+},
+
+install: function(toclevels) {
+  var timerId;
+
+  function reinstall() {
+    asciidoc.footnotes();
+    if (toclevels) {
+      asciidoc.toc(toclevels);
+    }
+  }
+
+  function reinstallAndRemoveTimer() {
+    clearInterval(timerId);
+    reinstall();
+  }
+
+  timerId = setInterval(reinstall, 500);
+  if (document.addEventListener)
+    document.addEventListener("DOMContentLoaded", reinstallAndRemoveTimer, false);
+  else
+    window.onload = reinstallAndRemoveTimer;
+}
+
+}
+asciidoc.install();
+/*]]>*/
+</script>
+</head>
+<body class="manpage">
+<div id="header">
+<h1>
+gitattributes(5) Manual Page
+</h1>
+<h2>NAME</h2>
+<div class="sectionbody">
+<p>gitattributes -
+   defining attributes per path
+</p>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_synopsis">SYNOPSIS</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>$GIT_DIR/info/attributes, .gitattributes</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_description">DESCRIPTION</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>A <tt>gitattributes</tt> file is a simple text file that gives
+<tt>attributes</tt> to pathnames.</p></div>
+<div class="paragraph"><p>Each line in <tt>gitattributes</tt> file is of form:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><tt>pattern attr1 attr2 ...</tt></pre>
+</div></div>
+<div class="paragraph"><p>That is, a pattern followed by an attributes list,
+separated by whitespaces.  When the pattern matches the
+path in question, the attributes listed on the line are given to
+the path.</p></div>
+<div class="paragraph"><p>Each attribute can be in one of these states for a given path:</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+Set
+</dt>
+<dd>
+<p>
+        The path has the attribute with special value "true";
+        this is specified by listing only the name of the
+        attribute in the attribute list.
+</p>
+</dd>
+<dt class="hdlist1">
+Unset
+</dt>
+<dd>
+<p>
+        The path has the attribute with special value "false";
+        this is specified by listing the name of the attribute
+        prefixed with a dash <tt>-</tt> in the attribute list.
+</p>
+</dd>
+<dt class="hdlist1">
+Set to a value
+</dt>
+<dd>
+<p>
+        The path has the attribute with specified string value;
+        this is specified by listing the name of the attribute
+        followed by an equal sign <tt>=</tt> and its value in the
+        attribute list.
+</p>
+</dd>
+<dt class="hdlist1">
+Unspecified
+</dt>
+<dd>
+<p>
+        No pattern matches the path, and nothing says if
+        the path has or does not have the attribute, the
+        attribute for the path is said to be Unspecified.
+</p>
+</dd>
+</dl></div>
+<div class="paragraph"><p>When more than one pattern matches the path, a later line
+overrides an earlier line.  This overriding is done per
+attribute.  The rules how the pattern matches paths are the
+same as in <tt>.gitignore</tt> files; see <a href="gitignore.html">gitignore(5)</a>.
+Unlike <tt>.gitignore</tt>, negative patterns are forbidden.</p></div>
+<div class="paragraph"><p>When deciding what attributes are assigned to a path, Git
+consults <tt>$GIT_DIR/info/attributes</tt> file (which has the highest
+precedence), <tt>.gitattributes</tt> file in the same directory as the
+path in question, and its parent directories up to the toplevel of the
+work tree (the further the directory that contains <tt>.gitattributes</tt>
+is from the path in question, the lower its precedence). Finally
+global and system-wide files are considered (they have the lowest
+precedence).</p></div>
+<div class="paragraph"><p>When the <tt>.gitattributes</tt> file is missing from the work tree, the
+path in the index is used as a fall-back.  During checkout process,
+<tt>.gitattributes</tt> in the index is used and then the file in the
+working tree is used as a fall-back.</p></div>
+<div class="paragraph"><p>If you wish to affect only a single repository (i.e., to assign
+attributes to files that are particular to
+one user&#8217;s workflow for that repository), then
+attributes should be placed in the <tt>$GIT_DIR/info/attributes</tt> file.
+Attributes which should be version-controlled and distributed to other
+repositories (i.e., attributes of interest to all users) should go into
+<tt>.gitattributes</tt> files. Attributes that should affect all repositories
+for a single user should be placed in a file specified by the
+<tt>core.attributesfile</tt> configuration option (see <a href="git-config.html">git-config(1)</a>).
+Its default value is $XDG_CONFIG_HOME/git/attributes. If $XDG_CONFIG_HOME
+is either not set or empty, $HOME/.config/git/attributes is used instead.
+Attributes for all users on a system should be placed in the
+<tt>$(prefix)/etc/gitattributes</tt> file.</p></div>
+<div class="paragraph"><p>Sometimes you would need to override an setting of an attribute
+for a path to <tt>Unspecified</tt> state.  This can be done by listing
+the name of the attribute prefixed with an exclamation point <tt>!</tt>.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_effects">EFFECTS</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Certain operations by Git can be influenced by assigning
+particular attributes to a path.  Currently, the following
+operations are attributes-aware.</p></div>
+<div class="sect2">
+<h3 id="_checking_out_and_checking_in">Checking-out and checking-in</h3>
+<div class="paragraph"><p>These attributes affect how the contents stored in the
+repository are copied to the working tree files when commands
+such as <em>git checkout</em> and <em>git merge</em> run.  They also affect how
+Git stores the contents you prepare in the working tree in the
+repository upon <em>git add</em> and <em>git commit</em>.</p></div>
+<div class="sect3">
+<h4 id="_tt_text_tt"><tt>text</tt></h4>
+<div class="paragraph"><p>This attribute enables and controls end-of-line normalization.  When a
+text file is normalized, its line endings are converted to LF in the
+repository.  To control what line ending style is used in the working
+directory, use the <tt>eol</tt> attribute for a single file and the
+<tt>core.eol</tt> configuration variable for all text files.</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+Set
+</dt>
+<dd>
+<p>
+        Setting the <tt>text</tt> attribute on a path enables end-of-line
+        normalization and marks the path as a text file.  End-of-line
+        conversion takes place without guessing the content type.
+</p>
+</dd>
+<dt class="hdlist1">
+Unset
+</dt>
+<dd>
+<p>
+        Unsetting the <tt>text</tt> attribute on a path tells Git not to
+        attempt any end-of-line conversion upon checkin or checkout.
+</p>
+</dd>
+<dt class="hdlist1">
+Set to string value "auto"
+</dt>
+<dd>
+<p>
+        When <tt>text</tt> is set to "auto", the path is marked for automatic
+        end-of-line normalization.  If Git decides that the content is
+        text, its line endings are normalized to LF on checkin.
+</p>
+</dd>
+<dt class="hdlist1">
+Unspecified
+</dt>
+<dd>
+<p>
+        If the <tt>text</tt> attribute is unspecified, Git uses the
+        <tt>core.autocrlf</tt> configuration variable to determine if the
+        file should be converted.
+</p>
+</dd>
+</dl></div>
+<div class="paragraph"><p>Any other value causes Git to act as if <tt>text</tt> has been left
+unspecified.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_tt_eol_tt"><tt>eol</tt></h4>
+<div class="paragraph"><p>This attribute sets a specific line-ending style to be used in the
+working directory.  It enables end-of-line normalization without any
+content checks, effectively setting the <tt>text</tt> attribute.</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+Set to string value "crlf"
+</dt>
+<dd>
+<p>
+        This setting forces Git to normalize line endings for this
+        file on checkin and convert them to CRLF when the file is
+        checked out.
+</p>
+</dd>
+<dt class="hdlist1">
+Set to string value "lf"
+</dt>
+<dd>
+<p>
+        This setting forces Git to normalize line endings to LF on
+        checkin and prevents conversion to CRLF when the file is
+        checked out.
+</p>
+</dd>
+</dl></div>
+</div>
+<div class="sect3">
+<h4 id="_backwards_compatibility_with_tt_crlf_tt_attribute">Backwards compatibility with <tt>crlf</tt> attribute</h4>
+<div class="paragraph"><p>For backwards compatibility, the <tt>crlf</tt> attribute is interpreted as
+follows:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>crlf            text
+-crlf           -text
+crlf=input      eol=lf</tt></pre>
+</div></div>
+</div>
+<div class="sect3">
+<h4 id="_end_of_line_conversion">End-of-line conversion</h4>
+<div class="paragraph"><p>While Git normally leaves file contents alone, it can be configured to
+normalize line endings to LF in the repository and, optionally, to
+convert them to CRLF when files are checked out.</p></div>
+<div class="paragraph"><p>Here is an example that will make Git normalize .txt, .vcproj and .sh
+files, ensure that .vcproj files have CRLF and .sh files have LF in
+the working directory, and prevent .jpg files from being normalized
+regardless of their content.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>*.txt           text
+*.vcproj        eol=crlf
+*.sh            eol=lf
+*.jpg           -text</tt></pre>
+</div></div>
+<div class="paragraph"><p>Other source code management systems normalize all text files in their
+repositories, and there are two ways to enable similar automatic
+normalization in Git.</p></div>
+<div class="paragraph"><p>If you simply want to have CRLF line endings in your working directory
+regardless of the repository you are working with, you can set the
+config variable "core.autocrlf" without changing any attributes.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>[core]
+        autocrlf = true</tt></pre>
+</div></div>
+<div class="paragraph"><p>This does not force normalization of all text files, but does ensure
+that text files that you introduce to the repository have their line
+endings normalized to LF when they are added, and that files that are
+already normalized in the repository stay normalized.</p></div>
+<div class="paragraph"><p>If you want to interoperate with a source code management system that
+enforces end-of-line normalization, or you simply want all text files
+in your repository to be normalized, you should instead set the <tt>text</tt>
+attribute to "auto" for <em>all</em> files.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>*       text=auto</tt></pre>
+</div></div>
+<div class="paragraph"><p>This ensures that all files that Git considers to be text will have
+normalized (LF) line endings in the repository.  The <tt>core.eol</tt>
+configuration variable controls which line endings Git will use for
+normalized files in your working directory; the default is to use the
+native line ending for your platform, or CRLF if <tt>core.autocrlf</tt> is
+set.</p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">When <tt>text=auto</tt> normalization is enabled in an existing
+repository, any text files containing CRLFs should be normalized.  If
+they are not they will be normalized the next time someone tries to
+change them, causing unfortunate misattribution.  From a clean working
+directory:</td>
+</tr></table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>$ echo "* text=auto" &gt;&gt;.gitattributes
+$ rm .git/index     # Remove the index to force Git to
+$ git reset         # re-scan the working directory
+$ git status        # Show files that will be normalized
+$ git add -u
+$ git add .gitattributes
+$ git commit -m "Introduce end-of-line normalization"</tt></pre>
+</div></div>
+<div class="paragraph"><p>If any files that should not be normalized show up in <em>git status</em>,
+unset their <tt>text</tt> attribute before running <em>git add -u</em>.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>manual.pdf      -text</tt></pre>
+</div></div>
+<div class="paragraph"><p>Conversely, text files that Git does not detect can have normalization
+enabled manually.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>weirdchars.txt  text</tt></pre>
+</div></div>
+<div class="paragraph"><p>If <tt>core.safecrlf</tt> is set to "true" or "warn", Git verifies if
+the conversion is reversible for the current setting of
+<tt>core.autocrlf</tt>.  For "true", Git rejects irreversible
+conversions; for "warn", Git only prints a warning but accepts
+an irreversible conversion.  The safety triggers to prevent such
+a conversion done to the files in the work tree, but there are a
+few exceptions.  Even though&#8230;</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<em>git add</em> itself does not touch the files in the work tree, the
+  next checkout would, so the safety triggers;
+</p>
+</li>
+<li>
+<p>
+<em>git apply</em> to update a text file with a patch does touch the files
+  in the work tree, but the operation is about text files and CRLF
+  conversion is about fixing the line ending inconsistencies, so the
+  safety does not trigger;
+</p>
+</li>
+<li>
+<p>
+<em>git diff</em> itself does not touch the files in the work tree, it is
+  often run to inspect the changes you intend to next <em>git add</em>.  To
+  catch potential problems early, safety triggers.
+</p>
+</li>
+</ul></div>
+</div>
+<div class="sect3">
+<h4 id="_tt_ident_tt"><tt>ident</tt></h4>
+<div class="paragraph"><p>When the attribute <tt>ident</tt> is set for a path, Git replaces
+<tt>$Id$</tt> in the blob object with <tt>$Id:</tt>, followed by the
+40-character hexadecimal blob object name, followed by a dollar
+sign <tt>$</tt> upon checkout.  Any byte sequence that begins with
+<tt>$Id:</tt> and ends with <tt>$</tt> in the worktree file is replaced
+with <tt>$Id$</tt> upon check-in.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_tt_filter_tt"><tt>filter</tt></h4>
+<div class="paragraph"><p>A <tt>filter</tt> attribute can be set to a string value that names a
+filter driver specified in the configuration.</p></div>
+<div class="paragraph"><p>A filter driver consists of a <tt>clean</tt> command and a <tt>smudge</tt>
+command, either of which can be left unspecified.  Upon
+checkout, when the <tt>smudge</tt> command is specified, the command is
+fed the blob object from its standard input, and its standard
+output is used to update the worktree file.  Similarly, the
+<tt>clean</tt> command is used to convert the contents of worktree file
+upon checkin.</p></div>
+<div class="paragraph"><p>One use of the content filtering is to massage the content into a shape
+that is more convenient for the platform, filesystem, and the user to use.
+For this mode of operation, the key phrase here is "more convenient" and
+not "turning something unusable into usable".  In other words, the intent
+is that if someone unsets the filter driver definition, or does not have
+the appropriate filter program, the project should still be usable.</p></div>
+<div class="paragraph"><p>Another use of the content filtering is to store the content that cannot
+be directly used in the repository (e.g. a UUID that refers to the true
+content stored outside Git, or an encrypted content) and turn it into a
+usable form upon checkout (e.g. download the external content, or decrypt
+the encrypted content).</p></div>
+<div class="paragraph"><p>These two filters behave differently, and by default, a filter is taken as
+the former, massaging the contents into more convenient shape.  A missing
+filter driver definition in the config, or a filter driver that exits with
+a non-zero status, is not an error but makes the filter a no-op passthru.</p></div>
+<div class="paragraph"><p>You can declare that a filter turns a content that by itself is unusable
+into a usable content by setting the filter.&lt;driver&gt;.required configuration
+variable to <tt>true</tt>.</p></div>
+<div class="paragraph"><p>For example, in .gitattributes, you would assign the <tt>filter</tt>
+attribute for paths.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>*.c     filter=indent</tt></pre>
+</div></div>
+<div class="paragraph"><p>Then you would define a "filter.indent.clean" and "filter.indent.smudge"
+configuration in your .git/config to specify a pair of commands to
+modify the contents of C programs when the source files are checked
+in ("clean" is run) and checked out (no change is made because the
+command is "cat").</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>[filter "indent"]
+        clean = indent
+        smudge = cat</tt></pre>
+</div></div>
+<div class="paragraph"><p>For best results, <tt>clean</tt> should not alter its output further if it is
+run twice ("clean&#8594;clean" should be equivalent to "clean"), and
+multiple <tt>smudge</tt> commands should not alter <tt>clean</tt>'s output
+("smudge&#8594;smudge&#8594;clean" should be equivalent to "clean").  See the
+section on merging below.</p></div>
+<div class="paragraph"><p>The "indent" filter is well-behaved in this regard: it will not modify
+input that is already correctly indented.  In this case, the lack of a
+smudge filter means that the clean filter <em>must</em> accept its own output
+without modifying it.</p></div>
+<div class="paragraph"><p>If a filter <em>must</em> succeed in order to make the stored contents usable,
+you can declare that the filter is <tt>required</tt>, in the configuration:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>[filter "crypt"]
+        clean = openssl enc ...
+        smudge = openssl enc -d ...
+        required</tt></pre>
+</div></div>
+<div class="paragraph"><p>Sequence "%f" on the filter command line is replaced with the name of
+the file the filter is working on.  A filter might use this in keyword
+substitution.  For example:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>[filter "p4"]
+        clean = git-p4-filter --clean %f
+        smudge = git-p4-filter --smudge %f</tt></pre>
+</div></div>
+</div>
+<div class="sect3">
+<h4 id="_interaction_between_checkin_checkout_attributes">Interaction between checkin/checkout attributes</h4>
+<div class="paragraph"><p>In the check-in codepath, the worktree file is first converted
+with <tt>filter</tt> driver (if specified and corresponding driver
+defined), then the result is processed with <tt>ident</tt> (if
+specified), and then finally with <tt>text</tt> (again, if specified
+and applicable).</p></div>
+<div class="paragraph"><p>In the check-out codepath, the blob content is first converted
+with <tt>text</tt>, and then <tt>ident</tt> and fed to <tt>filter</tt>.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_merging_branches_with_differing_checkin_checkout_attributes">Merging branches with differing checkin/checkout attributes</h4>
+<div class="paragraph"><p>If you have added attributes to a file that cause the canonical
+repository format for that file to change, such as adding a
+clean/smudge filter or text/eol/ident attributes, merging anything
+where the attribute is not in place would normally cause merge
+conflicts.</p></div>
+<div class="paragraph"><p>To prevent these unnecessary merge conflicts, Git can be told to run a
+virtual check-out and check-in of all three stages of a file when
+resolving a three-way merge by setting the <tt>merge.renormalize</tt>
+configuration variable.  This prevents changes caused by check-in
+conversion from causing spurious merge conflicts when a converted file
+is merged with an unconverted file.</p></div>
+<div class="paragraph"><p>As long as a "smudge&#8594;clean" results in the same output as a "clean"
+even on files that are already smudged, this strategy will
+automatically resolve all filter-related conflicts.  Filters that do
+not act in this way may cause additional merge conflicts that must be
+resolved manually.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_generating_diff_text">Generating diff text</h3>
+<div class="sect3">
+<h4 id="_tt_diff_tt"><tt>diff</tt></h4>
+<div class="paragraph"><p>The attribute <tt>diff</tt> affects how Git generates diffs for particular
+files. It can tell Git whether to generate a textual patch for the path
+or to treat the path as a binary file.  It can also affect what line is
+shown on the hunk header <tt>@@ -k,l +n,m @@</tt> line, tell Git to use an
+external command to generate the diff, or ask Git to convert binary
+files to a text format before generating the diff.</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+Set
+</dt>
+<dd>
+<p>
+        A path to which the <tt>diff</tt> attribute is set is treated
+        as text, even when they contain byte values that
+        normally never appear in text files, such as NUL.
+</p>
+</dd>
+<dt class="hdlist1">
+Unset
+</dt>
+<dd>
+<p>
+        A path to which the <tt>diff</tt> attribute is unset will
+        generate <tt>Binary files differ</tt> (or a binary patch, if
+        binary patches are enabled).
+</p>
+</dd>
+<dt class="hdlist1">
+Unspecified
+</dt>
+<dd>
+<p>
+        A path to which the <tt>diff</tt> attribute is unspecified
+        first gets its contents inspected, and if it looks like
+        text, it is treated as text.  Otherwise it would
+        generate <tt>Binary files differ</tt>.
+</p>
+</dd>
+<dt class="hdlist1">
+String
+</dt>
+<dd>
+<p>
+        Diff is shown using the specified diff driver.  Each driver may
+        specify one or more options, as described in the following
+        section. The options for the diff driver "foo" are defined
+        by the configuration variables in the "diff.foo" section of the
+        Git config file.
+</p>
+</dd>
+</dl></div>
+</div>
+<div class="sect3">
+<h4 id="_defining_an_external_diff_driver">Defining an external diff driver</h4>
+<div class="paragraph"><p>The definition of a diff driver is done in <tt>gitconfig</tt>, not
+<tt>gitattributes</tt> file, so strictly speaking this manual page is a
+wrong place to talk about it.  However&#8230;</p></div>
+<div class="paragraph"><p>To define an external diff driver <tt>jcdiff</tt>, add a section to your
+<tt>$GIT_DIR/config</tt> file (or <tt>$HOME/.gitconfig</tt> file) like this:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>[diff "jcdiff"]
+        command = j-c-diff</tt></pre>
+</div></div>
+<div class="paragraph"><p>When Git needs to show you a diff for the path with <tt>diff</tt>
+attribute set to <tt>jcdiff</tt>, it calls the command you specified
+with the above configuration, i.e. <tt>j-c-diff</tt>, with 7
+parameters, just like <tt>GIT_EXTERNAL_DIFF</tt> program is called.
+See <a href="git.html">git(1)</a> for details.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_defining_a_custom_hunk_header">Defining a custom hunk-header</h4>
+<div class="paragraph"><p>Each group of changes (called a "hunk") in the textual diff output
+is prefixed with a line of the form:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><tt>@@ -k,l +n,m @@ TEXT</tt></pre>
+</div></div>
+<div class="paragraph"><p>This is called a <em>hunk header</em>.  The "TEXT" portion is by default a line
+that begins with an alphabet, an underscore or a dollar sign; this
+matches what GNU <em>diff -p</em> output uses.  This default selection however
+is not suited for some contents, and you can use a customized pattern
+to make a selection.</p></div>
+<div class="paragraph"><p>First, in .gitattributes, you would assign the <tt>diff</tt> attribute
+for paths.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>*.tex   diff=tex</tt></pre>
+</div></div>
+<div class="paragraph"><p>Then, you would define a "diff.tex.xfuncname" configuration to
+specify a regular expression that matches a line that you would
+want to appear as the hunk header "TEXT". Add a section to your
+<tt>$GIT_DIR/config</tt> file (or <tt>$HOME/.gitconfig</tt> file) like this:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>[diff "tex"]
+        xfuncname = "^(\\\\(sub)*section\\{.*)$"</tt></pre>
+</div></div>
+<div class="paragraph"><p>Note.  A single level of backslashes are eaten by the
+configuration file parser, so you would need to double the
+backslashes; the pattern above picks a line that begins with a
+backslash, and zero or more occurrences of <tt>sub</tt> followed by
+<tt>section</tt> followed by open brace, to the end of line.</p></div>
+<div class="paragraph"><p>There are a few built-in patterns to make this easier, and <tt>tex</tt>
+is one of them, so you do not have to write the above in your
+configuration file (you still need to enable this with the
+attribute mechanism, via <tt>.gitattributes</tt>).  The following built in
+patterns are available:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<tt>ada</tt> suitable for source code in the Ada language.
+</p>
+</li>
+<li>
+<p>
+<tt>bibtex</tt> suitable for files with BibTeX coded references.
+</p>
+</li>
+<li>
+<p>
+<tt>cpp</tt> suitable for source code in the C and C++ languages.
+</p>
+</li>
+<li>
+<p>
+<tt>csharp</tt> suitable for source code in the C# language.
+</p>
+</li>
+<li>
+<p>
+<tt>fortran</tt> suitable for source code in the Fortran language.
+</p>
+</li>
+<li>
+<p>
+<tt>html</tt> suitable for HTML/XHTML documents.
+</p>
+</li>
+<li>
+<p>
+<tt>java</tt> suitable for source code in the Java language.
+</p>
+</li>
+<li>
+<p>
+<tt>matlab</tt> suitable for source code in the MATLAB language.
+</p>
+</li>
+<li>
+<p>
+<tt>objc</tt> suitable for source code in the Objective-C language.
+</p>
+</li>
+<li>
+<p>
+<tt>pascal</tt> suitable for source code in the Pascal/Delphi language.
+</p>
+</li>
+<li>
+<p>
+<tt>perl</tt> suitable for source code in the Perl language.
+</p>
+</li>
+<li>
+<p>
+<tt>php</tt> suitable for source code in the PHP language.
+</p>
+</li>
+<li>
+<p>
+<tt>python</tt> suitable for source code in the Python language.
+</p>
+</li>
+<li>
+<p>
+<tt>ruby</tt> suitable for source code in the Ruby language.
+</p>
+</li>
+<li>
+<p>
+<tt>tex</tt> suitable for source code for LaTeX documents.
+</p>
+</li>
+</ul></div>
+</div>
+<div class="sect3">
+<h4 id="_customizing_word_diff">Customizing word diff</h4>
+<div class="paragraph"><p>You can customize the rules that <tt>git diff --word-diff</tt> uses to
+split words in a line, by specifying an appropriate regular expression
+in the "diff.*.wordRegex" configuration variable.  For example, in TeX
+a backslash followed by a sequence of letters forms a command, but
+several such commands can be run together without intervening
+whitespace.  To separate them, use a regular expression in your
+<tt>$GIT_DIR/config</tt> file (or <tt>$HOME/.gitconfig</tt> file) like this:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>[diff "tex"]
+        wordRegex = "\\\\[a-zA-Z]+|[{}]|\\\\.|[^\\{}[:space:]]+"</tt></pre>
+</div></div>
+<div class="paragraph"><p>A built-in pattern is provided for all languages listed in the
+previous section.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_performing_text_diffs_of_binary_files">Performing text diffs of binary files</h4>
+<div class="paragraph"><p>Sometimes it is desirable to see the diff of a text-converted
+version of some binary files. For example, a word processor
+document can be converted to an ASCII text representation, and
+the diff of the text shown. Even though this conversion loses
+some information, the resulting diff is useful for human
+viewing (but cannot be applied directly).</p></div>
+<div class="paragraph"><p>The <tt>textconv</tt> config option is used to define a program for
+performing such a conversion. The program should take a single
+argument, the name of a file to convert, and produce the
+resulting text on stdout.</p></div>
+<div class="paragraph"><p>For example, to show the diff of the exif information of a
+file instead of the binary information (assuming you have the
+exif tool installed), add the following section to your
+<tt>$GIT_DIR/config</tt> file (or <tt>$HOME/.gitconfig</tt> file):</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>[diff "jpg"]
+        textconv = exif</tt></pre>
+</div></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">The text conversion is generally a one-way conversion;
+in this example, we lose the actual image contents and focus
+just on the text data. This means that diffs generated by
+textconv are <em>not</em> suitable for applying. For this reason,
+only <tt>git diff</tt> and the <tt>git log</tt> family of commands (i.e.,
+log, whatchanged, show) will perform text conversion. <tt>git
+format-patch</tt> will never generate this output. If you want to
+send somebody a text-converted diff of a binary file (e.g.,
+because it quickly conveys the changes you have made), you
+should generate it separately and send it as a comment <em>in
+addition to</em> the usual binary diff that you might send.</td>
+</tr></table>
+</div>
+<div class="paragraph"><p>Because text conversion can be slow, especially when doing a
+large number of them with <tt>git log -p</tt>, Git provides a mechanism
+to cache the output and use it in future diffs.  To enable
+caching, set the "cachetextconv" variable in your diff driver&#8217;s
+config. For example:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>[diff "jpg"]
+        textconv = exif
+        cachetextconv = true</tt></pre>
+</div></div>
+<div class="paragraph"><p>This will cache the result of running "exif" on each blob
+indefinitely. If you change the textconv config variable for a
+diff driver, Git will automatically invalidate the cache entries
+and re-run the textconv filter. If you want to invalidate the
+cache manually (e.g., because your version of "exif" was updated
+and now produces better output), you can remove the cache
+manually with <tt>git update-ref -d refs/notes/textconv/jpg</tt> (where
+"jpg" is the name of the diff driver, as in the example above).</p></div>
+</div>
+<div class="sect3">
+<h4 id="_choosing_textconv_versus_external_diff">Choosing textconv versus external diff</h4>
+<div class="paragraph"><p>If you want to show differences between binary or specially-formatted
+blobs in your repository, you can choose to use either an external diff
+command, or to use textconv to convert them to a diff-able text format.
+Which method you choose depends on your exact situation.</p></div>
+<div class="paragraph"><p>The advantage of using an external diff command is flexibility. You are
+not bound to find line-oriented changes, nor is it necessary for the
+output to resemble unified diff. You are free to locate and report
+changes in the most appropriate way for your data format.</p></div>
+<div class="paragraph"><p>A textconv, by comparison, is much more limiting. You provide a
+transformation of the data into a line-oriented text format, and Git
+uses its regular diff tools to generate the output. There are several
+advantages to choosing this method:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+Ease of use. It is often much simpler to write a binary to text
+   transformation than it is to perform your own diff. In many cases,
+   existing programs can be used as textconv filters (e.g., exif,
+   odt2txt).
+</p>
+</li>
+<li>
+<p>
+Git diff features. By performing only the transformation step
+   yourself, you can still utilize many of Git&#8217;s diff features,
+   including colorization, word-diff, and combined diffs for merges.
+</p>
+</li>
+<li>
+<p>
+Caching. Textconv caching can speed up repeated diffs, such as those
+   you might trigger by running <tt>git log -p</tt>.
+</p>
+</li>
+</ol></div>
+</div>
+<div class="sect3">
+<h4 id="_marking_files_as_binary">Marking files as binary</h4>
+<div class="paragraph"><p>Git usually guesses correctly whether a blob contains text or binary
+data by examining the beginning of the contents. However, sometimes you
+may want to override its decision, either because a blob contains binary
+data later in the file, or because the content, while technically
+composed of text characters, is opaque to a human reader. For example,
+many postscript files contain only ascii characters, but produce noisy
+and meaningless diffs.</p></div>
+<div class="paragraph"><p>The simplest way to mark a file as binary is to unset the diff
+attribute in the <tt>.gitattributes</tt> file:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>*.ps -diff</tt></pre>
+</div></div>
+<div class="paragraph"><p>This will cause Git to generate <tt>Binary files differ</tt> (or a binary
+patch, if binary patches are enabled) instead of a regular diff.</p></div>
+<div class="paragraph"><p>However, one may also want to specify other diff driver attributes. For
+example, you might want to use <tt>textconv</tt> to convert postscript files to
+an ascii representation for human viewing, but otherwise treat them as
+binary files. You cannot specify both <tt>-diff</tt> and <tt>diff=ps</tt> attributes.
+The solution is to use the <tt>diff.*.binary</tt> config option:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>[diff "ps"]
+  textconv = ps2ascii
+  binary = true</tt></pre>
+</div></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_performing_a_three_way_merge">Performing a three-way merge</h3>
+<div class="sect3">
+<h4 id="_tt_merge_tt"><tt>merge</tt></h4>
+<div class="paragraph"><p>The attribute <tt>merge</tt> affects how three versions of a file are
+merged when a file-level merge is necessary during <tt>git merge</tt>,
+and other commands such as <tt>git revert</tt> and <tt>git cherry-pick</tt>.</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+Set
+</dt>
+<dd>
+<p>
+        Built-in 3-way merge driver is used to merge the
+        contents in a way similar to <em>merge</em> command of <tt>RCS</tt>
+        suite.  This is suitable for ordinary text files.
+</p>
+</dd>
+<dt class="hdlist1">
+Unset
+</dt>
+<dd>
+<p>
+        Take the version from the current branch as the
+        tentative merge result, and declare that the merge has
+        conflicts.  This is suitable for binary files that do
+        not have a well-defined merge semantics.
+</p>
+</dd>
+<dt class="hdlist1">
+Unspecified
+</dt>
+<dd>
+<p>
+        By default, this uses the same built-in 3-way merge
+        driver as is the case when the <tt>merge</tt> attribute is set.
+        However, the <tt>merge.default</tt> configuration variable can name
+        different merge driver to be used with paths for which the
+        <tt>merge</tt> attribute is unspecified.
+</p>
+</dd>
+<dt class="hdlist1">
+String
+</dt>
+<dd>
+<p>
+        3-way merge is performed using the specified custom
+        merge driver.  The built-in 3-way merge driver can be
+        explicitly specified by asking for "text" driver; the
+        built-in "take the current branch" driver can be
+        requested with "binary".
+</p>
+</dd>
+</dl></div>
+</div>
+<div class="sect3">
+<h4 id="_built_in_merge_drivers">Built-in merge drivers</h4>
+<div class="paragraph"><p>There are a few built-in low-level merge drivers defined that
+can be asked for via the <tt>merge</tt> attribute.</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+text
+</dt>
+<dd>
+<p>
+        Usual 3-way file level merge for text files.  Conflicted
+        regions are marked with conflict markers <tt>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</tt>,
+        <tt>=======</tt> and <tt>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</tt>.  The version from your branch
+        appears before the <tt>=======</tt> marker, and the version
+        from the merged branch appears after the <tt>=======</tt>
+        marker.
+</p>
+</dd>
+<dt class="hdlist1">
+binary
+</dt>
+<dd>
+<p>
+        Keep the version from your branch in the work tree, but
+        leave the path in the conflicted state for the user to
+        sort out.
+</p>
+</dd>
+<dt class="hdlist1">
+union
+</dt>
+<dd>
+<p>
+        Run 3-way file level merge for text files, but take
+        lines from both versions, instead of leaving conflict
+        markers.  This tends to leave the added lines in the
+        resulting file in random order and the user should
+        verify the result. Do not use this if you do not
+        understand the implications.
+</p>
+</dd>
+</dl></div>
+</div>
+<div class="sect3">
+<h4 id="_defining_a_custom_merge_driver">Defining a custom merge driver</h4>
+<div class="paragraph"><p>The definition of a merge driver is done in the <tt>.git/config</tt>
+file, not in the <tt>gitattributes</tt> file, so strictly speaking this
+manual page is a wrong place to talk about it.  However&#8230;</p></div>
+<div class="paragraph"><p>To define a custom merge driver <tt>filfre</tt>, add a section to your
+<tt>$GIT_DIR/config</tt> file (or <tt>$HOME/.gitconfig</tt> file) like this:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>[merge "filfre"]
+        name = feel-free merge driver
+        driver = filfre %O %A %B
+        recursive = binary</tt></pre>
+</div></div>
+<div class="paragraph"><p>The <tt>merge.*.name</tt> variable gives the driver a human-readable
+name.</p></div>
+<div class="paragraph"><p>The &#8216;merge.*.driver` variable&#8217;s value is used to construct a
+command to run to merge ancestor&#8217;s version (<tt>%O</tt>), current
+version (<tt>%A</tt>) and the other branches&#8217; version (<tt>%B</tt>).  These
+three tokens are replaced with the names of temporary files that
+hold the contents of these versions when the command line is
+built. Additionally, %L will be replaced with the conflict marker
+size (see below).</p></div>
+<div class="paragraph"><p>The merge driver is expected to leave the result of the merge in
+the file named with <tt>%A</tt> by overwriting it, and exit with zero
+status if it managed to merge them cleanly, or non-zero if there
+were conflicts.</p></div>
+<div class="paragraph"><p>The <tt>merge.*.recursive</tt> variable specifies what other merge
+driver to use when the merge driver is called for an internal
+merge between common ancestors, when there are more than one.
+When left unspecified, the driver itself is used for both
+internal merge and the final merge.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_tt_conflict_marker_size_tt"><tt>conflict-marker-size</tt></h4>
+<div class="paragraph"><p>This attribute controls the length of conflict markers left in
+the work tree file during a conflicted merge.  Only setting to
+the value to a positive integer has any meaningful effect.</p></div>
+<div class="paragraph"><p>For example, this line in <tt>.gitattributes</tt> can be used to tell the merge
+machinery to leave much longer (instead of the usual 7-character-long)
+conflict markers when merging the file <tt>Documentation/git-merge.txt</tt>
+results in a conflict.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>Documentation/git-merge.txt     conflict-marker-size=32</tt></pre>
+</div></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_checking_whitespace_errors">Checking whitespace errors</h3>
+<div class="sect3">
+<h4 id="_tt_whitespace_tt"><tt>whitespace</tt></h4>
+<div class="paragraph"><p>The <tt>core.whitespace</tt> configuration variable allows you to define what
+<em>diff</em> and <em>apply</em> should consider whitespace errors for all paths in
+the project (See <a href="git-config.html">git-config(1)</a>).  This attribute gives you finer
+control per path.</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+Set
+</dt>
+<dd>
+<p>
+        Notice all types of potential whitespace errors known to Git.
+        The tab width is taken from the value of the <tt>core.whitespace</tt>
+        configuration variable.
+</p>
+</dd>
+<dt class="hdlist1">
+Unset
+</dt>
+<dd>
+<p>
+        Do not notice anything as error.
+</p>
+</dd>
+<dt class="hdlist1">
+Unspecified
+</dt>
+<dd>
+<p>
+        Use the value of the <tt>core.whitespace</tt> configuration variable to
+        decide what to notice as error.
+</p>
+</dd>
+<dt class="hdlist1">
+String
+</dt>
+<dd>
+<p>
+        Specify a comma separate list of common whitespace problems to
+        notice in the same format as the <tt>core.whitespace</tt> configuration
+        variable.
+</p>
+</dd>
+</dl></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_creating_an_archive">Creating an archive</h3>
+<div class="sect3">
+<h4 id="_tt_export_ignore_tt"><tt>export-ignore</tt></h4>
+<div class="paragraph"><p>Files and directories with the attribute <tt>export-ignore</tt> won&#8217;t be added to
+archive files.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_tt_export_subst_tt"><tt>export-subst</tt></h4>
+<div class="paragraph"><p>If the attribute <tt>export-subst</tt> is set for a file then Git will expand
+several placeholders when adding this file to an archive.  The
+expansion depends on the availability of a commit ID, i.e., if
+<a href="git-archive.html">git-archive(1)</a> has been given a tree instead of a commit or a
+tag then no replacement will be done.  The placeholders are the same
+as those for the option <tt>--pretty=format:</tt> of <a href="git-log.html">git-log(1)</a>,
+except that they need to be wrapped like this: <tt>$Format:PLACEHOLDERS$</tt>
+in the file.  E.g. the string <tt>$Format:%H$</tt> will be replaced by the
+commit hash.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_packing_objects">Packing objects</h3>
+<div class="sect3">
+<h4 id="_tt_delta_tt"><tt>delta</tt></h4>
+<div class="paragraph"><p>Delta compression will not be attempted for blobs for paths with the
+attribute <tt>delta</tt> set to false.</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_viewing_files_in_gui_tools">Viewing files in GUI tools</h3>
+<div class="sect3">
+<h4 id="_tt_encoding_tt"><tt>encoding</tt></h4>
+<div class="paragraph"><p>The value of this attribute specifies the character encoding that should
+be used by GUI tools (e.g. <a href="gitk.html">gitk(1)</a> and <a href="git-gui.html">git-gui(1)</a>) to
+display the contents of the relevant file. Note that due to performance
+considerations <a href="gitk.html">gitk(1)</a> does not use this attribute unless you
+manually enable per-file encodings in its options.</p></div>
+<div class="paragraph"><p>If this attribute is not set or has an invalid value, the value of the
+<tt>gui.encoding</tt> configuration variable is used instead
+(See <a href="git-config.html">git-config(1)</a>).</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_using_macro_attributes">USING MACRO ATTRIBUTES</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>You do not want any end-of-line conversions applied to, nor textual diffs
+produced for, any binary file you track.  You would need to specify e.g.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>*.jpg -text -diff</tt></pre>
+</div></div>
+<div class="paragraph"><p>but that may become cumbersome, when you have many attributes.  Using
+macro attributes, you can define an attribute that, when set, also
+sets or unsets a number of other attributes at the same time.  The
+system knows a built-in macro attribute, <tt>binary</tt>:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>*.jpg binary</tt></pre>
+</div></div>
+<div class="paragraph"><p>Setting the "binary" attribute also unsets the "text" and "diff"
+attributes as above.  Note that macro attributes can only be "Set",
+though setting one might have the effect of setting or unsetting other
+attributes or even returning other attributes to the "Unspecified"
+state.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_defining_macro_attributes">DEFINING MACRO ATTRIBUTES</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Custom macro attributes can be defined only in top-level gitattributes
+files (<tt>$GIT_DIR/info/attributes</tt>, the <tt>.gitattributes</tt> file at the
+top level of the working tree, or the global or system-wide
+gitattributes files), not in <tt>.gitattributes</tt> files in working tree
+subdirectories.  The built-in macro attribute "binary" is equivalent
+to:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>[attr]binary -diff -merge -text</tt></pre>
+</div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_example">EXAMPLE</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>If you have these three <tt>gitattributes</tt> file:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>(in $GIT_DIR/info/attributes)
+
+a*      foo !bar -baz
+
+(in .gitattributes)
+abc     foo bar baz
+
+(in t/.gitattributes)
+ab*     merge=filfre
+abc     -foo -bar
+*.c     frotz</tt></pre>
+</div></div>
+<div class="paragraph"><p>the attributes given to path <tt>t/abc</tt> are computed as follows:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+By examining <tt>t/.gitattributes</tt> (which is in the same
+   directory as the path in question), Git finds that the first
+   line matches.  <tt>merge</tt> attribute is set.  It also finds that
+   the second line matches, and attributes <tt>foo</tt> and <tt>bar</tt>
+   are unset.
+</p>
+</li>
+<li>
+<p>
+Then it examines <tt>.gitattributes</tt> (which is in the parent
+   directory), and finds that the first line matches, but
+   <tt>t/.gitattributes</tt> file already decided how <tt>merge</tt>, <tt>foo</tt>
+   and <tt>bar</tt> attributes should be given to this path, so it
+   leaves <tt>foo</tt> and <tt>bar</tt> unset.  Attribute <tt>baz</tt> is set.
+</p>
+</li>
+<li>
+<p>
+Finally it examines <tt>$GIT_DIR/info/attributes</tt>.  This file
+   is used to override the in-tree settings.  The first line is
+   a match, and <tt>foo</tt> is set, <tt>bar</tt> is reverted to unspecified
+   state, and <tt>baz</tt> is unset.
+</p>
+</li>
+</ol></div>
+<div class="paragraph"><p>As the result, the attributes assignment to <tt>t/abc</tt> becomes:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>foo     set to true
+bar     unspecified
+baz     set to false
+merge   set to string value "filfre"
+frotz   unspecified</tt></pre>
+</div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_see_also">SEE ALSO</h2>
+<div class="sectionbody">
+<div class="paragraph"><p><a href="git-check-attr.html">git-check-attr(1)</a>.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_git">GIT</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Part of the <a href="git.html">git(1)</a> suite</p></div>
+</div>
+</div>
+</div>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2014-01-27 13:30:07 PST
+</div>
+</div>
+</body>
+</html>

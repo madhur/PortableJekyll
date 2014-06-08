@@ -1,0 +1,7 @@
+Gem::Specification.new do |s|
+  s.name = "rake"
+  s.version = "0.9.6"
+  s.summary = "This rake is bundled with Ruby"
+  s.executables = ["rake"]
+  s.files = ["rake.rb", "rake/alt_system.rb", "rake/application.rb", "rake/backtrace.rb", "rake/classic_namespace.rb", "rake/clean.rb", "rake/cloneable.rb", "rake/contrib/compositepublisher.rb", "rake/contrib/ftptools.rb", "rake/contrib/publisher.rb", "rake/contrib/rubyforgepublisher.rb", "rake/contrib/sshpublisher.rb", "rake/contrib/sys.rb", "rake/default_loader.rb", "rake/dsl_definition.rb", "rake/early_time.rb", "rake/ext/core.rb", "rake/ext/module.rb", "rake/ext/string.rb", "rake/ext/time.rb", "rake/file_creation_task.rb", "rake/file_list.rb", "rake/file_task.rb", "rake/file_utils.rb", "rake/file_utils_ext.rb", "rake/gempackagetask.rb", "rake/invocation_chain.rb", "rake/invocation_exception_mixin.rb", "rake/loaders/makefile.rb", "rake/multi_task.rb", "rake/name_space.rb", "rake/packagetask.rb", "rake/pathmap.rb", "rake/phony.rb", "rake/private_reader.rb", "rake/promise.rb", "rake/pseudo_status.rb", "rake/rake_module.rb", "rake/rake_test_loader.rb", "rake/rdoctask.rb", "rake/ruby182_test_unit_fix.rb", "rake/rule_recursion_overflow_error.rb", "rake/runtest.rb", "rake/task.rb", "rake/tasklib.rb", "rake/task_arguments.rb", "rake/task_argument_error.rb", "rake/task_manager.rb", "rake/testtask.rb", "rake/thread_history_display.rb", "rake/thread_pool.rb", "rake/trace_output.rb", "rake/version.rb", "rake/win32.rb"]
+end

@@ -1,0 +1,249 @@
+============================
+wxPython 2.9 Migration Guide
+============================
+
+This document will help explain some of the changes in wxPython 2.9
+since the 2.8 series that may cause some issues when migrating
+existing applications to the new version of wxPython.  For a list of
+new things that have been added to wxPython, and the not so major
+changes that are not documented here, be sure to read the CHANGES_
+file like usual. 
+
+.. _CHANGES: CHANGES.html
+
+
+Aliases Removed or Deprecated
+-----------------------------
+
+Over the years there have been a number of aliases that I added to
+wxPython that seemed like a good idea at the time, but really just
+added to the clutter.  Many of these have been removed in the 2.9
+release series.  Unfortunately a list of removed names wasn't kept,
+but they should be obvious when you run into them.  For example there
+were some aliases for the various wxColour functions, etc. that
+allowed the use of the American spelling.  So if you get an exception
+about wxColor not being found, just add the extra 'u' to the name and
+you'll be all set.
+
+
+Grid Sizer Assertions
+---------------------
+
+The grid sizer classes now assert if you specify both the number of
+rows and the number of columns in the constructor, and you add more
+items than will fit in the specified number of rows.  You can avoid
+this assertion simply by specify only the number of columns and let
+the sizer work out the number of rows for itself based on the number
+of items added to the sizer.  For example, instead of::
+
+    sizer = wx.FlexGridSizer(2, 4, 5, 5)
+
+You can use::
+
+    sizer = wx.FlexGridSizer(cols=4, hgap=5, vgap=5)
+    
+
+
+Box Sizers Proportional Layout
+------------------------------
+
+When items in a box sizer have a proportion greater than zero that
+indicates that the item should get a portion of the space that is
+still available after non-proportional items have been given space.
+Prior to 2.9.1 that space was allocated solely based on the proportion
+values.  Starting with 2.9.1 the minimum or best size of the items is
+checked first, and proportional items will not be made smaller than
+their minimum or best size.
+
+
+Building wxPython
+-----------------
+
+There is now a script called build-wxpython.py that can be used to
+build both wxWidgets and wxPython with all the correct options and
+flags.  See wxPython/docs/BUILD.txt for details.
+
+
+No More ANSI Build
+------------------
+
+The ANSI builds of wxPython are finally dead and gone.  Long live
+Unicode!
+
+If you've always used the ansi builds in the past, or are not familiar
+with working with Unicode objects, the recommended way to deal with
+this change is to only use encoded string objects at the I/O points of
+your application, (e.g., when reading/writing the data to files or a
+database) and use Unicode objects everywhere else.  If you have string
+literals in your code that are more than just ascii then add the "#
+-*- coding: [codec name] -*-" line at the top of the file, and put a
+'u' in front of the string's quotes.  That way those literals will be
+Unicode objects from the beginning (compile-time) and won't need to be
+decoded at run-time.
+
+This approach will also work in a 2.8 unicode build, so you can start
+preparing for the move to 2.9.x by making the changes now while still
+working with wxPython 2.8.
+
+
+wx.TextAttr.Merge
+-----------------
+
+I don't remember exactly why I did this but in 2.9 I commented out the
+static version of wxTextAttr::Merge and uncommented the non-static
+method.  So in other words what we have now is a wrapper for::
+
+    void Merge(const wxTextAttr& overlay)
+
+instead of::
+
+    static wxTextAttr Merge(const wxTextAttr& base, const wxTextAttr& overlay)
+
+The non-static version will still do a merge, but will merge it into
+self instead of making a new instance of the wx.TextAttr::
+
+    base.Merge(overlay) # base is modified
+
+If you prefer the old semantics then you can use the new Combine
+static method like this::
+
+    newAttr = wx.TextAttr.Combine(overlay, base, None)
+
+
+
+Miscellaneous Other Stuff
+-------------------------
+
+DoPrepareDC and PrepareDC are no longer in wx.Window.  They are only
+in wx.ScrolledWindow since that is the only place (and in derived
+classes) where the methods have any effect.
+
+
+
+
+
+
+
+===================================
+Upcoming Changes in Project Phoenix
+===================================
+
+The remainder of this document describes some migration issues for
+Project Phoenix, which will one day replace the current wxPython
+implementation.  These changes do not yet apply to any released
+version of Python and are currently provided only for informational
+purposes and for a glimpse into the future.  For more information
+about Project Phoenix please see the ProjectPhoenix_ pages in the
+wiki.
+
+.. _ProjectPhoenix: http://wiki.wxpython.org/ProjectPhoenix
+
+
+
+Overloaded Functions
+--------------------
+
+Up to this point in order to support more than one of the versions of
+an overloaded C++ function or class method we have had to rename all
+but one of them.  For example, for the wxWindow::SetSize method we
+have SetSize, SetDimensions, SetRect and SetSizeWH.  One of the
+features of the new tools used for Project Pheonix is that we no
+longer need to do that and instead we can have just one function or
+method in the Python API and the propper version of the C++ function
+or method is chosen at runtime based on the types of parameters passed
+to the function.  So in most cases the renamed versions of the
+overloaded functions have been removed and you can call the function
+with the same name as the C++ API.
+
+This also includes the default constructor for all widget classes,
+used for the 2-phase create. Previously they were renamed to to be the
+class name with "Pre" prepended to it.  For example, wx.PreWindow(),
+wx.PreFrame(), etc.  Now in the Phoenix build of wxPython that is no
+longer neccessary and you can just call the class with no parameters
+like normal.
+
+For those renamed items that are more commonly used in the old
+wxPython I'll add some alias that will issue a DeprecationWarning for
+the first release or two after we switch over to the Phoenix version
+of the code, and then remove them in a later release.
+
+
+
+Unicode and Auto-Converting Strings
+-----------------------------------
+
+As mentioned earlier, there are no longer separate ansi/Unicode builds
+of wxPython starting with the first 2.9.x releases.  All wxPython
+builds are now essentially the same as the old Unicode builds. This
+means that all string objects passed to wx API functions or methods
+are converted to Unicode before calling the C++ function or method.
+By default wxPython would use the encoding specified by the locale
+that was current at the time of the import of the wx module.
+
+However using the default locale could sometimes cause issues because
+it meant that slightly different encodings could be used on different
+platforms, even in the same locale, or the program could end up using
+an encoding in a different locale that the developer has not tested
+their code with.
+
+Project Phoenix takes this Unicode simplification one step further by
+stipulating that only the utf-8 encoding will be used for
+auto-converting string objects to the Unicode objects that will be
+passed on to the wx APIs.  If you need to deal with text using a
+different encoding then you will need to convert it to Unicode
+yourself before passing the text to the wx API.  For the most part this
+should not be much of a problem for well written programs that support
+Unicode because they will typically only convert to/from Unicode when
+reading/writing text to a file or database, and will use Unicode objects
+throughout the rest of the code.  The common exception to this is that
+string-literals are often used in the code for specifying labels,
+etc. for UI elements.  If your text for the string literals in your
+code are all ascii or utf-8 then you should not need to make any
+changes at all.  If you have literals with some other encoding then
+you'll need to deal with them one way or another, either change the
+encoding of your source file to utf-8, or convert the literals from
+your encoding to Unicode before passing the text to the wx API.
+
+
+
+RawControlDown and Mac accelerators
+-----------------------------------
+
+First a little background.  Probably 95% of the places in a Windows or
+GTK application where you would use a Ctrl key, the equivalent on Mac
+would be to use the Cmd key instead.  For example, the traditional
+accelerator for paste is Ctrl-V on Windows and Cmd-V on Macs.  The
+reason for this difference is probably lost in the mists of time, so
+let's just call it tradition or the quirkiness of Apple.
+
+wxMac does a few things to help cross-platform applications to fit in
+and behave more natively on Macs, so one of the first things it did
+was to automatically convert things like "Ctrl-V" in menu accelerators
+to "Cmd-V".  Later on we added the concept of the CmdDown and related
+modifier flags to help key and char event handlers to not care whether
+it is the Control key or the Meta (command) key that is being pressed.
+In other words, CmdDown would be True on non-Macs if the Control key
+is pressed, and it would be True on Macs if the Command key is
+pressed.  If it was implemented in Python code it would look like
+this::
+
+    def CmdDown(self):
+        if 'wxMac' in wx.PlatformInfo:
+            return self.MetaDown()
+        else:
+            return self.ControlDown()
+
+That was the situation in 2.8.  
+
+In 2.9 things have been taken one step further.  I'm not sure all of
+the reasons behind this, but one of them was to make it possible to
+have real Ctrl accelerators on Mac, in addition to those that get
+automatically converted to Cmd accelerators.  So now we have
+RawControlDown and associated modifier flags and etc.  On non-Mac
+platforms RawControlDown is the same as ControlDown.  On Macs
+RawControlDown is used for the real Ctrl key on the keyboard, and
+ControlDown is used for the command key.  You can also use accelerator
+strings like "RawCtrl-H" in menu items to create an accelerator that
+will always use Ctrl on all platforms, and not be converted to Cmd on
+Macs.
+

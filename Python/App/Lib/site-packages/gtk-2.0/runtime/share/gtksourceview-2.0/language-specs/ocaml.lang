@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- vim: set sts=2 sw=2: -->
+<!--
+ Author: Eric Cooper <ecc@cmu.edu>
+ Copyright (C) 2007 Eric Cooper <ecc@cmu.edu>
+ Copyright (C) 2007 Eric Norige <thelema314@gmail.com>
+ Copyright (C) 2009 Alexandr Kuleshov <sterh@live.ru>
+
+ This library is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Library General Public
+ License as published by the Free Software Foundation; either
+ version 2 of the License, or (at your option) any later version.
+
+ This library is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ Library General Public License for more details.
+
+ You should have received a copy of the GNU Library General Public
+ License along with this library; if not, write to the
+ Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ Boston, MA 02111-1307, USA.
+-->
+<language id="objective-caml" _name="Objective Caml" version="2.0" _section="Sources">
+  <metadata>
+    <property name="mimetypes">text/x-ocaml</property>
+    <property name="globs">*.ml;*.mli;*.mll;*.mly</property>
+    <property name="block-comment-start">(*</property>
+    <property name="block-comment-end">*)</property>
+  </metadata>
+
+  <styles>
+    <style id="comment" _name="Comment" map-to="def:comment"/>
+    <style id="ocamldoc" _name="Ocamldoc Comments" map-to="def:note"/>
+    <style id="base-n-integer" _name="Base-N Integer" map-to="def:base-n-integer"/>
+    <style id="floating-point" _name="Floating Point number" map-to="def:floating-point"/>
+    <style id="decimal" _name="Decimal number" map-to="def:decimal"/>
+    <style id="string" _name="String" map-to="def:string"/>
+    <style id="keyword" _name="Keyword" map-to="def:keyword"/>
+    <style id="meta-keyword" _name="Type, module or object keyword" map-to="def:keyword"/>
+    <style id="fun-keyword" _name="Builtin-function keyword" map-to="def:keyword"/>
+    <style id="type" _name="Data Type" map-to="def:type"/>
+    <style id="label" _name="Labeled argument" map-to="def:type"/>
+    <style id="poly-variant" _name="Polymorphic Variant" map-to="def:type"/>
+    <style id="variant" _name="Variant Constructor" map-to="def:type"/>
+    <style id="type-var" _name="Type Variable" map-to="def:type"/>
+    <style id="module" _name="Module Path" map-to="def:type"/>
+    <style id="escape" _name="Escaped Character" map-to="def:special-char"/>
+    <style id="boolean" _name="Boolean value" map-to="def:boolean"/>
+    <style id="error" _name="Error" map-to="def:error"/>
+    <style id="std-modules" _name="Standart Modules" map-to="def:type"/>
+  </styles>
+
+  <definitions>
+    <define-regex id="cap-ident">\b[A-Z][A-Za-z0-9_']*</define-regex>
+    <define-regex id="low-ident">\b[a-z][A-Za-z0-9_']*</define-regex>
+    <define-regex id="char-esc">\\((\\|"|'|n|t|b|r)|[0-9]{3}|x[0-9a-fA-F]{2})</define-regex>
+
+    <context id="escape-seq" style-ref="escape">
+      <match>\%{char-esc}</match>
+    </context>
+
+    <!-- here's the main context -->
+    <context id="objective-caml" class="no-spell-check">
+      <include>
+	<context id="ocamldoc" style-ref="ocamldoc">
+	  <start>\(\*\*</start>
+	  <end>\*\)</end>
+	  <include>
+	    <context id="comment-in-comment" style-ref="comment" class="comment" class-disabled="no-spell-check">
+	      <start>\(\*</start>
+	      <end>\*\)</end>
+	      <include>
+		<context ref="string"/>
+		<context ref="comment-in-comment"/>
+		<context ref="def:in-comment:*"/>
+	      </include>
+	    </context>
+	    <context ref="string"/>
+	    <context ref="def:in-comment:*"/>
+	  </include>
+	</context>
+	<context id="comment" style-ref="comment" class="comment" class-disabled="no-spell-check">
+	  <start>\(\*</start>
+	  <end>\*\)</end>
+	  <include>
+	    <context ref="string"/>
+	    <context ref="comment-in-comment"/>
+	    <context ref="def:in-comment:*"/>
+	  </include>
+	</context>
+	<context id="decimal" style-ref="decimal">
+	  <match>[-]?[0-9][0-9_]*[lLn]?</match>
+	</context>
+	<context id="hex-number" style-ref="base-n-integer">
+	  <match>[-]?0[xX][0-9A-Fa-f][0-9A-Fa-f_]*[lL]?</match>
+	</context>
+	<context id="octal-number" style-ref="base-n-integer">
+	  <match>[-]?0[oO][0-7][0-7_]*[lL]?</match>
+	</context>
+	<context id="binary-number" style-ref="base-n-integer">
+	  <match>[-]?0[bB][01][01_]*[lL]?</match>
+	</context>
+	<context id="floating-point-number" style-ref="floating-point">
+	  <match>[-]?[0-9][0-9_]*(\.[0-9_]*)?([Ee][+-]?[0-9][0-9_]*)?</match>
+	</context>
+	<context id="label" style-ref="label">
+	  <match>[~?]\%{low-ident}</match>
+	</context>
+	<context id="poly-variant" style-ref="poly-variant">
+	  <match>`\%{cap-ident}</match>
+	</context>
+	<context id="modpath" style-ref="module">
+	  <!-- include final '.'?  At the moment, no.  -->
+	  <match>\%{cap-ident}(\.\%{cap-ident})*(?=\.)</match>
+	</context>
+	<context id="variant" style-ref="variant">
+	  <match>\%{cap-ident}</match>
+	</context>
+	<context id="string" style-ref="string">
+	  <start>"</start>
+	  <end>"</end>
+	  <include>
+	    <context ref="escape-seq"/>
+	  </include>
+	</context>
+	<context id="character-constant" style-ref="string">
+	  <match>('\%{char-esc}')|('[^\\']')</match>
+	</context>
+	<context id="type-var" style-ref="type-var">
+	  <match>'\%{low-ident}</match>
+	</context>
+	<context id="arraylit">
+	  <start>\[\|</start>
+	  <end>\|\]</end>
+	  <include>
+	    <context ref="objective-caml"/>
+	  </include>
+	</context>
+	<context id="badarray" style-ref="error" extend-parent="false">
+	  <match>\|\]</match>
+	</context>
+	<context id="listlit">
+	  <start>\[</start>
+	  <end>(?&lt;!\|)\]</end>
+	  <include>
+	    <context ref="objective-caml"/>
+	  </include>
+	</context>
+	<context id="badlist" style-ref="error" extend-parent="false">
+	  <match>\]</match>
+	</context>
+	<context id="boolean-constant" style-ref="boolean">
+	  <keyword>true</keyword>
+	  <keyword>false</keyword>
+	</context>
+	<!-- Flow control & common keywords -->
+	<context id="keywords" style-ref="keyword">
+	  <keyword>and</keyword>
+	  <keyword>assert</keyword>
+	  <keyword>begin</keyword>
+	  <keyword>do</keyword>
+	  <keyword>done</keyword>
+	  <keyword>downto</keyword>
+	  <keyword>else</keyword>
+	  <keyword>end</keyword>
+	  <keyword>for</keyword>
+	  <keyword>fun</keyword>
+	  <keyword>function</keyword>
+	  <keyword>if</keyword>
+	  <keyword>in</keyword>
+	  <keyword>let</keyword>
+	  <keyword>match</keyword>
+	  <keyword>rec</keyword>
+	  <keyword>then</keyword>
+	  <keyword>to</keyword>
+	  <keyword>try</keyword>
+	  <keyword>val</keyword>
+	  <keyword>when</keyword>
+	  <keyword>while</keyword>
+	  <keyword>with</keyword>
+	</context>
+	<!-- types, objects and modules -->
+	<context id="meta-words" style-ref="meta-keyword">
+	  <keyword>as</keyword>
+	  <keyword>class</keyword>
+	  <keyword>constraint</keyword>
+	  <keyword>exception</keyword>
+	  <keyword>external</keyword>
+	  <keyword>functor</keyword>
+	  <keyword>include</keyword>
+	  <keyword>inherit</keyword>
+	  <keyword>initializer</keyword>
+	  <keyword>method</keyword>
+	  <keyword>module</keyword>
+	  <keyword>mutable</keyword>
+	  <keyword>new</keyword>
+	  <keyword>object</keyword>
+	  <keyword>of</keyword>
+	  <keyword>open</keyword>
+	  <keyword>private</keyword>
+	  <keyword>struct</keyword>
+	  <keyword>sig</keyword>
+	  <keyword>type</keyword>
+	  <keyword>virtual</keyword>
+	</context>
+	<context id="function-keywords" style-ref="fun-keyword">
+	  <!-- function-like keywords -->
+	  <keyword>asr</keyword>
+	  <keyword>land</keyword>
+	  <keyword>lazy</keyword>
+	  <keyword>lor</keyword>
+	  <keyword>lsl</keyword>
+	  <keyword>lsr</keyword>
+	  <keyword>lxor</keyword>
+	  <keyword>mod</keyword>
+	  <keyword>or</keyword>
+	  <!-- from pervasives, but same as others -->
+	  <keyword>lnot</keyword>
+	</context>
+	<context id="types" style-ref="type">
+	  <!-- pervasives types -->
+	  <keyword>option</keyword>
+	  <keyword>ignore</keyword>
+	  <keyword>ref</keyword>
+	  <keyword>array</keyword>
+	  <keyword>bool</keyword>
+	  <keyword>char</keyword>
+	  <keyword>float</keyword>
+	  <keyword>int</keyword>
+	  <keyword>list</keyword>
+	  <keyword>string</keyword>
+	  <keyword>unit</keyword>
+	</context>
+	<context id="standart-modules" style-ref="std-modules">
+	  <!--Standart modules -->
+	  <keyword>arg</keyword>
+	  <keyword>arith_status</keyword>
+	  <keyword>array</keyword>
+	  <keyword>arrayLabels</keyword>
+	  <keyword>big_int</keyword>
+	  <keyword>bigarray</keyword>
+	  <keyword>buffer</keyword>
+	  <keyword>callback</keyword>
+	  <keyword>camlinternalMod</keyword>
+	  <keyword>camlinternalOO</keyword>
+	  <keyword>char</keyword>
+	  <keyword>complex</keyword>
+	  <keyword>condition</keyword>
+	  <keyword>dbm</keyword>
+	  <keyword>digest</keyword>
+	  <keyword>dynLink</keyword>
+	  <keyword>event</keyword>
+	  <keyword>filename</keyword>
+	  <keyword>format</keyword>
+	  <keyword>gc</keyword>
+	  <keyword>genlex</keyword>
+	  <keyword>graphics</keyword>
+	  <keyword>graphicsX11</keyword>
+	  <keyword>hashtbl</keyword>
+	  <keyword>int32</keyword>
+	  <keyword>int64</keyword>
+	  <keyword>largeFile</keyword>
+	  <keyword>lazy</keyword>
+	  <keyword>lexing</keyword>
+	  <keyword>list</keyword>
+	  <keyword>listLabels</keyword>
+	  <keyword>map</keyword>
+	  <keyword>marshal</keyword>
+	  <keyword>moreLabels</keyword>
+	  <keyword>mutex</keyword>
+	  <keyword>mativeint</keyword>
+	  <keyword>num</keyword>
+	  <keyword>oo</keyword>
+	  <keyword>parsing</keyword>
+	  <keyword>printexc</keyword>
+	  <keyword>printf</keyword>
+	  <keyword>queue</keyword>
+	  <keyword>random</keyword>
+	  <keyword>scanf</keyword>
+	  <keyword>set</keyword>
+	  <keyword>sort</keyword>
+	  <keyword>stack</keyword>
+	  <keyword>stdLabels</keyword>
+	  <keyword>str</keyword>
+	  <keyword>stream</keyword>
+	  <keyword>stringLabels</keyword>
+	  <keyword>sys</keyword>
+	  <keyword>thread</keyword>
+	  <keyword>threadUnix</keyword>
+	  <keyword>unix</keyword>
+	  <keyword>unixLabels</keyword>
+	  <keyword>weak</keyword>
+	  <!-- Standart modules -->
+	</context>
+      </include>
+    </context>
+  </definitions>
+</language>

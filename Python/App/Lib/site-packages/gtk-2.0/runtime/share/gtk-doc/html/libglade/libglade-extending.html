@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Extending Libglade</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.74.3">
+<link rel="home" href="index.html" title="Libglade - Graphical Interface Description Loader API">
+<link rel="up" href="libglade-notes.html" title="Libglade Programming Notes">
+<link rel="prev" href="libglade-i18n.html" title="Internationalisation with Libglade">
+<link rel="next" href="libglade-embedding.html" title="Embedding Libglade Interfaces">
+<meta name="generator" content="GTK-Doc V1.12 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="libglade-notes.html" title="Libglade Programming Notes">
+<link rel="chapter" href="libglade-dtd.html" title="Glade 2.0 File Format">
+<link rel="part" href="libglade-lib.html" title="Part I. Libglade Library Reference">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle">
+<td><a accesskey="p" href="libglade-i18n.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="libglade-notes.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Libglade - Graphical Interface Description Loader API</th>
+<td><a accesskey="n" href="libglade-embedding.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="sect1" lang="en">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="libglade-extending"></a>Extending Libglade</h2></div></div></div>
+<p>In some cases, libglade may not provide support for the
+      widgets you want to use, or you may want to insert a bit of hand
+      coded interface into the larger libglade generated
+      interface.  Libglade provides support for doing this.</p>
+<p>If you are only need a few custom widgets (eg. a word
+      processor may have a custom widget for the document editing
+      area), the simplest choice is probably Glade's custom widget.
+      It allows you to specify a custom function that will be used to
+      create the widget.  The signature of the function is as
+      follows:</p>
+<pre class="programlisting">
+GtkWidget *custom_func(gchar *widget_name, gchar *string1, gchar *string2,
+                       gint int1, gint int2);
+</pre>
+<p>When calling this function, widget_name is the name of the
+      widget given in the XML file, and
+      <em class="parameter"><code>string1</code></em>, <em class="parameter"><code>string2</code></em>,
+      <em class="parameter"><code>int1</code></em> and <em class="parameter"><code>int2</code></em> are
+      arbitrary constants whose values also come from the XML file.
+      Libglade supports the custom widget using gmodule.  For most
+      cases, this is sufficient.</p>
+<p>If you wish to get libglade to recognise a new widget type
+      directly, your best option is to ensure that it implements
+      properties for all settings required to construct the widget,
+      and packing properties if the widget happens to be a container.
+      If the widget satisifies this requirement, libglade will support
+      the widget with no extra code (provided the widget's
+      <code class="function">get_type()</code> function has been called to
+      register it with GLib).</p>
+<p>If a widget has more complex requirements, a libglade
+      module must be written (or if the library containing the widget
+      already depends on libglade, it may build the module in).  In
+      the module, a widget construction routine and a build children
+      routine must be registered.  If the widget can be manipulated
+      via properties for construction or adding children, <a class="link" href="libglade-Libglade-Build.html#glade-standard-build-widget" title="glade_standard_build_widget ()"><code class="function">glade_standard_build_widget</code></a>
+      or <a class="link" href="libglade-Libglade-Build.html#glade-standard-build-children" title="glade_standard_build_children ()"><code class="function">glade_standard_build_children</code></a>
+      can be used here.</p>
+<p>If the widget mostly supports properties, custom handlers
+      for particular properties can be registered with <a class="link" href="libglade-Libglade-Build.html#glade-register-custom-prop" title="glade_register_custom_prop ()"><code class="function">glade_register_custom_prop</code></a>.</p>
+<p>If the widget implements no properties (and you have no
+      way to convince the author to do so), you will most likely need
+      to implement custom handlers for construction and adding
+      children.</p>
+<p>For a more extensive example of registering new widget
+      types and build functions, see
+      <code class="filename">glade/glade-gtk.c</code> in the libglade package.
+      For more information on the exact API's used to register new
+      widget types with libglade, see the <a class="link" href="libglade-Libglade-Build.html" title="Libglade Build">Libglade Build</a> section
+      of this manual.</p>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.12</div>
+</body>
+</html>
