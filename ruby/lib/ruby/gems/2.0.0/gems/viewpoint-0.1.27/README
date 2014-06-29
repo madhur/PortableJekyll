@@ -1,0 +1,114 @@
+--------------------------------------------------------------------------
+                   Viewpoint for Exchange Web Services
+                http://github.com/zenchild/Viewpoint/wiki
+--------------------------------------------------------------------------
+This program attempts to create a client access library for Exchange Web
+Services (EWS) in Ruby.
+
+!!!CAUTION!!!  This is currently BETA code and has changed dramatically from
+the original version of Viewpoint which was based on Soap4r.  This version
+has essentially been gutted and written on top of Handsoap.  Development
+has been much more flexible, but the interface to Viewpoint has changed
+quite a bit.  I have tried to write good code comments and I will keep
+enhancing this.  I will also try and post examples on my blog as I write
+them or they are asked for.
+
+BLOG:  http://distributed-frostbite.blogspot.com/
+Add me in LinkedIn:  http://www.linkedin.com/in/danwanek
+Find me on irc.freenode.net in #ruby-lang (zenChild)
+
+--------------------------------------------------------------------------
+MAJOR CHANGES TO THE FIRST VERSION:
+
+New SOAP backend
+  Viewpoint now uses Handsoap as its back-end instead of soap4r.  While
+  soap4r does some very nice things for you automatically, it ends up
+  making your code base fairly large and it complicates any customizations
+  that you might want to make.  One example is adding custom headers. Soap4r
+  required you to create a subclass to use as a sort of hook. I can do the
+  same thing in Handsoap with a one-liner in the services #on_create_document
+  method.
+
+Models are completely rewritten
+  The models are completely new and not backward compatible with the old
+  version of Viewpoint.  Some of the methods still exist, but don't count
+  on them.  I've tried to make this version much more extensible than the
+  last.
+
+Delegate access is supported
+  One thing that was often asked for, but missing from the previous version
+  was delegate access to mailboxes and calendars.  This is now supported via
+  the 'act_as' parameter to the GenericFolder::get_folder method. For example:
+  ofolder = Folder.get_folder(:inbox,'otheruser@test.com')
+  If your user has delegate access to the Inbox for otheruser@test.com this
+  operation will retrieve their inbox and allow you to manipulate it as you
+  would with your own Inbox.
+
+  There is also some support for manipulation of delegate access itself via
+  the methods MailboxUser#add_delegate!, MailboxUser#update_delegate!, and 
+  MailboxUser#get_delegate_info.
+
+Misc other changes
+  Since it's a complete rewrite there are tons of other changes that you'll
+  notice.  I've tried to keep the code comments coming so stay tuned to the
+  API docs for library information.  I'll also be posting more examples to
+  my blog.
+
+--------------------------------------------------------------------------
+TO USE:
+require 'rubygems'
+require 'viewpoint'
+# See REQUIRED GEMS below
+
+REQUIRED GEMS:
+
+# Handsoap (Thanks jrun for pointing me this way!)
+gem install -r handsoap
+# Nokogiri XML Parser
+gem install -r nokogiri
+# HttpClient
+gem install -r httpclient
+# NTLM Library
+gem install -r rubyntlm
+
+# iCalendar (still forthcoming in this release)
+gem install -r icalendar
+
+--------------------------------------------------------------------------
+DESIGN GOALS/GUIDELINES:
+
+  1. The SOAP back-end should not know about the Model.
+    I went around and around on this one for awhile.  There are some
+    simplicity advantages to creating Model objects within the SOAP
+    responses, but I ultimately decided against it so that one could use
+    the SOAP back-end without the Model.  Essentially the SOAP classes
+    pass back a Hash that the Model uses to create its own objects.
+
+  2. The use of Hashes is not a crime.
+    While some people decidedly do not like Hashes and believe complex
+    hashing should be in the form of objects, there are some instances
+    where hashing is just plain simpler and flexible.  To that end, I use
+    hashes pretty extensively in Viewpoint, both for objects being passed
+    to the SOAP back-end and returned from it.
+
+  3. Follow EWS naming conventions where it makes sense.
+    I try and follow the naming conventions of the Exchange Web Service
+    operations as much as it makes sense.  There are some things howerver
+    where they do not and I have deviated somewhat.  For example,
+    an instance method named delete_folder doesn't make much sense, but
+    an instance method named delete! is pretty clear what it deletes.
+--------------------------------------------------------------------------
+!!!SHOUTS OUT!!!
+--------------------------------------------------------------------------
+* Thanks to Harold Lee (https://github.com/haroldl) for working on the
+  get_user_availability code.
+--------------------------------------------------------------------------
+DISCLAIMER:  If you see something that could be done better or would like
+to help out in the development of this code please feel free to clone the
+'git' repository and send me patches:
+git clone git://github.com/zenchild/Viewpoint.git
+or add an issue on GitHub:
+http://github.com/zenchild/Viewpoint/issues
+
+Cheers!
+--------------------------------------------------------------------------

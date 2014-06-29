@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>class Liquid::Context - liquid-2.6.1 Documentation</title>
+
+<link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../index.html">Home</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/liquid/context.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">Object
+  
+</nav>
+
+    
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li ><a href="#method-c-new">::new</a>
+    
+    <li ><a href="#method-i-5B-5D">#[]</a>
+    
+    <li ><a href="#method-i-5B-5D-3D">#[]=</a>
+    
+    <li ><a href="#method-i-add_filters">#add_filters</a>
+    
+    <li ><a href="#method-i-clear_instance_assigns">#clear_instance_assigns</a>
+    
+    <li ><a href="#method-i-find_variable">#find_variable</a>
+    
+    <li ><a href="#method-i-handle_error">#handle_error</a>
+    
+    <li ><a href="#method-i-has_interrupt-3F">#has_interrupt?</a>
+    
+    <li ><a href="#method-i-has_key-3F">#has_key?</a>
+    
+    <li ><a href="#method-i-invoke">#invoke</a>
+    
+    <li ><a href="#method-i-lookup_and_evaluate">#lookup_and_evaluate</a>
+    
+    <li ><a href="#method-i-merge">#merge</a>
+    
+    <li ><a href="#method-i-pop">#pop</a>
+    
+    <li ><a href="#method-i-pop_interrupt">#pop_interrupt</a>
+    
+    <li ><a href="#method-i-push">#push</a>
+    
+    <li ><a href="#method-i-push_interrupt">#push_interrupt</a>
+    
+    <li ><a href="#method-i-resolve">#resolve</a>
+    
+    <li ><a href="#method-i-resource_limits_reached-3F">#resource_limits_reached?</a>
+    
+    <li ><a href="#method-i-squash_instance_assigns_with_environments">#squash_instance_assigns_with_environments</a>
+    
+    <li ><a href="#method-i-stack">#stack</a>
+    
+    <li ><a href="#method-i-strainer">#strainer</a>
+    
+    <li ><a href="#method-i-variable">#variable</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="../History_md.html">History</a>
+  
+    <li class="file"><a href="../README_md.html">README</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../Array.html">Array</a>
+  
+    <li><a href="../Date.html">Date</a>
+  
+    <li><a href="../DateTime.html">DateTime</a>
+  
+    <li><a href="../FalseClass.html">FalseClass</a>
+  
+    <li><a href="../Hash.html">Hash</a>
+  
+    <li><a href="../Liquid.html">Liquid</a>
+  
+    <li><a href="../Liquid/ArgumentError.html">Liquid::ArgumentError</a>
+  
+    <li><a href="../Liquid/Assign.html">Liquid::Assign</a>
+  
+    <li><a href="../Liquid/BlankFileSystem.html">Liquid::BlankFileSystem</a>
+  
+    <li><a href="../Liquid/Block.html">Liquid::Block</a>
+  
+    <li><a href="../Liquid/Break.html">Liquid::Break</a>
+  
+    <li><a href="../Liquid/BreakInterrupt.html">Liquid::BreakInterrupt</a>
+  
+    <li><a href="../Liquid/Capture.html">Liquid::Capture</a>
+  
+    <li><a href="../Liquid/Case.html">Liquid::Case</a>
+  
+    <li><a href="../Liquid/Comment.html">Liquid::Comment</a>
+  
+    <li><a href="../Liquid/Condition.html">Liquid::Condition</a>
+  
+    <li><a href="../Liquid/Context.html">Liquid::Context</a>
+  
+    <li><a href="../Liquid/ContextError.html">Liquid::ContextError</a>
+  
+    <li><a href="../Liquid/Continue.html">Liquid::Continue</a>
+  
+    <li><a href="../Liquid/ContinueInterrupt.html">Liquid::ContinueInterrupt</a>
+  
+    <li><a href="../Liquid/Cycle.html">Liquid::Cycle</a>
+  
+    <li><a href="../Liquid/Decrement.html">Liquid::Decrement</a>
+  
+    <li><a href="../Liquid/Document.html">Liquid::Document</a>
+  
+    <li><a href="../Liquid/Drop.html">Liquid::Drop</a>
+  
+    <li><a href="../Liquid/ElseCondition.html">Liquid::ElseCondition</a>
+  
+    <li><a href="../Liquid/Error.html">Liquid::Error</a>
+  
+    <li><a href="../Liquid/FileSystemError.html">Liquid::FileSystemError</a>
+  
+    <li><a href="../Liquid/FilterNotFound.html">Liquid::FilterNotFound</a>
+  
+    <li><a href="../Liquid/For.html">Liquid::For</a>
+  
+    <li><a href="../Liquid/If.html">Liquid::If</a>
+  
+    <li><a href="../Liquid/Ifchanged.html">Liquid::Ifchanged</a>
+  
+    <li><a href="../Liquid/Include.html">Liquid::Include</a>
+  
+    <li><a href="../Liquid/Increment.html">Liquid::Increment</a>
+  
+    <li><a href="../Liquid/Interrupt.html">Liquid::Interrupt</a>
+  
+    <li><a href="../Liquid/LocalFileSystem.html">Liquid::LocalFileSystem</a>
+  
+    <li><a href="../Liquid/MemoryError.html">Liquid::MemoryError</a>
+  
+    <li><a href="../Liquid/Raw.html">Liquid::Raw</a>
+  
+    <li><a href="../Liquid/StackLevelError.html">Liquid::StackLevelError</a>
+  
+    <li><a href="../Liquid/StandardError.html">Liquid::StandardError</a>
+  
+    <li><a href="../Liquid/StandardFilters.html">Liquid::StandardFilters</a>
+  
+    <li><a href="../Liquid/Strainer.html">Liquid::Strainer</a>
+  
+    <li><a href="../Liquid/SyntaxError.html">Liquid::SyntaxError</a>
+  
+    <li><a href="../Liquid/TableRow.html">Liquid::TableRow</a>
+  
+    <li><a href="../Liquid/Tag.html">Liquid::Tag</a>
+  
+    <li><a href="../Liquid/Template.html">Liquid::Template</a>
+  
+    <li><a href="../Liquid/Unless.html">Liquid::Unless</a>
+  
+    <li><a href="../Liquid/Utils.html">Liquid::Utils</a>
+  
+    <li><a href="../Liquid/Variable.html">Liquid::Variable</a>
+  
+    <li><a href="../LiquidView.html">LiquidView</a>
+  
+    <li><a href="../Module.html">Module</a>
+  
+    <li><a href="../NilClass.html">NilClass</a>
+  
+    <li><a href="../Numeric.html">Numeric</a>
+  
+    <li><a href="../String.html">String</a>
+  
+    <li><a href="../Time.html">Time</a>
+  
+    <li><a href="../TrueClass.html">TrueClass</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class Liquid::Context</h1>
+
+  <div id="description" class="description">
+    
+<p><a href="Context.html">Context</a> keeps the variable stack and resolves
+variables, as well as keywords</p>
+
+<pre class="ruby"><span class="ruby-identifier">context</span>[<span class="ruby-string">&#39;variable&#39;</span>] = <span class="ruby-string">&#39;testing&#39;</span>
+<span class="ruby-identifier">context</span>[<span class="ruby-string">&#39;variable&#39;</span>] <span class="ruby-comment">#=&gt; &#39;testing&#39;</span>
+<span class="ruby-identifier">context</span>[<span class="ruby-string">&#39;true&#39;</span>]     <span class="ruby-comment">#=&gt; true</span>
+<span class="ruby-identifier">context</span>[<span class="ruby-string">&#39;10.2232&#39;</span>]  <span class="ruby-comment">#=&gt; 10.2232</span>
+
+<span class="ruby-identifier">context</span>.<span class="ruby-identifier">stack</span> <span class="ruby-keyword">do</span>
+   <span class="ruby-identifier">context</span>[<span class="ruby-string">&#39;bob&#39;</span>] = <span class="ruby-string">&#39;bobsen&#39;</span>
+<span class="ruby-keyword">end</span>
+
+<span class="ruby-identifier">context</span>[<span class="ruby-string">&#39;bob&#39;</span>]  <span class="ruby-comment">#=&gt; nil  class Context</span>
+</pre>
+
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+    <!-- Constants -->
+    <section id="constants-list" class="section">
+      <h3 class="section-header">Constants</h3>
+      <dl>
+      
+        <dt id="LITERALS">LITERALS
+        
+        <dd class="description">
+        
+      
+      </dl>
+    </section>
+    
+
+    
+    <!-- Attributes -->
+    <section id="attribute-method-details" class="method-section section">
+      <h3 class="section-header">Attributes</h3>
+
+      
+      <div id="attribute-i-environments" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">environments</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-errors" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">errors</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-registers" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">registers</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-resource_limits" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">resource_limits</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-scopes" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">scopes</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+    </section><!-- attribute-method-details -->
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">(environments = {}, outer_scope = {}, registers = {}, rethrow_errors = false, resource_limits = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/liquid/context.rb, line 18</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">environments</span> = {}, <span class="ruby-identifier">outer_scope</span> = {}, <span class="ruby-identifier">registers</span> = {}, <span class="ruby-identifier">rethrow_errors</span> = <span class="ruby-keyword">false</span>, <span class="ruby-identifier">resource_limits</span> = {})
+  <span class="ruby-ivar">@environments</span>    = [<span class="ruby-identifier">environments</span>].<span class="ruby-identifier">flatten</span>
+  <span class="ruby-ivar">@scopes</span>          = [(<span class="ruby-identifier">outer_scope</span> <span class="ruby-operator">||</span> {})]
+  <span class="ruby-ivar">@registers</span>       = <span class="ruby-identifier">registers</span>
+  <span class="ruby-ivar">@errors</span>          = []
+  <span class="ruby-ivar">@rethrow_errors</span>  = <span class="ruby-identifier">rethrow_errors</span>
+  <span class="ruby-ivar">@resource_limits</span> = (<span class="ruby-identifier">resource_limits</span> <span class="ruby-operator">||</span> {}).<span class="ruby-identifier">merge!</span>({ <span class="ruby-value">:render_score_current</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>, <span class="ruby-value">:assign_score_current</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span> })
+  <span class="ruby-identifier">squash_instance_assigns_with_environments</span>
+
+  <span class="ruby-ivar">@interrupts</span> = []
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- new-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- new-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-5B-5D" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">[]</span><span
+            class="method-args">(key)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="5B-5D-source">
+            <pre><span class="ruby-comment"># File lib/liquid/context.rb, line 126</span>
+<span class="ruby-keyword">def</span> <span class="ruby-operator">[]</span>(<span class="ruby-identifier">key</span>)
+  <span class="ruby-identifier">resolve</span>(<span class="ruby-identifier">key</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- 5B-5D-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- 5B-5D-method -->
+
+    
+      <div id="method-i-5B-5D-3D" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">[]=</span><span
+            class="method-args">(key, value)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Only allow <a href="../String.html">String</a>, <a
+href="../Numeric.html">Numeric</a>, <a href="../Hash.html">Hash</a>, <a
+href="../Array.html">Array</a>, Proc, Boolean or <code>Liquid::Drop</code></p>
+          
+          
+
+          
+          <div class="method-source-code" id="5B-5D-3D-source">
+            <pre><span class="ruby-comment"># File lib/liquid/context.rb, line 122</span>
+<span class="ruby-keyword">def</span> <span class="ruby-operator">[]=</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span>)
+  <span class="ruby-ivar">@scopes</span>[<span class="ruby-value">0</span>][<span class="ruby-identifier">key</span>] = <span class="ruby-identifier">value</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- 5B-5D-3D-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- 5B-5D-3D-method -->
+
+    
+      <div id="method-i-add_filters" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">add_filters</span><span
+            class="method-args">(filters)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Adds filters to this context.</p>
+
+<p>Note that this does not register the filters with the main <a
+href="Template.html">Template</a> object. see
+<code>Template.register_filter</code> for that</p>
+          
+          
+
+          
+          <div class="method-source-code" id="add_filters-source">
+            <pre><span class="ruby-comment"># File lib/liquid/context.rb, line 44</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">add_filters</span>(<span class="ruby-identifier">filters</span>)
+  <span class="ruby-identifier">filters</span> = [<span class="ruby-identifier">filters</span>].<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">compact</span>
+
+  <span class="ruby-identifier">filters</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;Expected module but got: #{f.class}&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">f</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Module</span>)
+    <span class="ruby-constant">Strainer</span>.<span class="ruby-identifier">add_known_filter</span>(<span class="ruby-identifier">f</span>)
+    <span class="ruby-identifier">strainer</span>.<span class="ruby-identifier">extend</span>(<span class="ruby-identifier">f</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- add_filters-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- add_filters-method -->
+
+    
+      <div id="method-i-clear_instance_assigns" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">clear_instance_assigns</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="clear_instance_assigns-source">
+            <pre><span class="ruby-comment"># File lib/liquid/context.rb, line 117</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">clear_instance_assigns</span>
+  <span class="ruby-ivar">@scopes</span>[<span class="ruby-value">0</span>] = {}
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- clear_instance_assigns-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- clear_instance_assigns-method -->
+
+    
+      <div id="method-i-handle_error" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">handle_error</span><span
+            class="method-args">(e)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="handle_error-source">
+            <pre><span class="ruby-comment"># File lib/liquid/context.rb, line 69</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">handle_error</span>(<span class="ruby-identifier">e</span>)
+  <span class="ruby-identifier">errors</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">e</span>)
+  <span class="ruby-identifier">raise</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@rethrow_errors</span>
+
+  <span class="ruby-keyword">case</span> <span class="ruby-identifier">e</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-constant">SyntaxError</span>
+    <span class="ruby-node">&quot;Liquid syntax error: #{e.message}&quot;</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-node">&quot;Liquid error: #{e.message}&quot;</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- handle_error-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- handle_error-method -->
+
+    
+      <div id="method-i-has_interrupt-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">has_interrupt?</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>are there any not handled interrupts?</p>
+          
+          
+
+          
+          <div class="method-source-code" id="has_interrupt-3F-source">
+            <pre><span class="ruby-comment"># File lib/liquid/context.rb, line 55</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">has_interrupt?</span>
+  <span class="ruby-ivar">@interrupts</span>.<span class="ruby-identifier">any?</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- has_interrupt-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- has_interrupt-3F-method -->
+
+    
+      <div id="method-i-has_key-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">has_key?</span><span
+            class="method-args">(key)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="has_key-3F-source">
+            <pre><span class="ruby-comment"># File lib/liquid/context.rb, line 130</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">key</span>)
+  <span class="ruby-identifier">resolve</span>(<span class="ruby-identifier">key</span>) <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- has_key-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- has_key-3F-method -->
+
+    
+      <div id="method-i-invoke" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">invoke</span><span
+            class="method-args">(method, *args)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="invoke-source">
+            <pre><span class="ruby-comment"># File lib/liquid/context.rb, line 81</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">invoke</span>(<span class="ruby-identifier">method</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+  <span class="ruby-identifier">strainer</span>.<span class="ruby-identifier">invoke</span>(<span class="ruby-identifier">method</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- invoke-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- invoke-method -->
+
+    
+      <div id="method-i-merge" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">merge</span><span
+            class="method-args">(new_scopes)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Merge a hash of variables in the current local scope</p>
+          
+          
+
+          
+          <div class="method-source-code" id="merge-source">
+            <pre><span class="ruby-comment"># File lib/liquid/context.rb, line 92</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">merge</span>(<span class="ruby-identifier">new_scopes</span>)
+  <span class="ruby-ivar">@scopes</span>[<span class="ruby-value">0</span>].<span class="ruby-identifier">merge!</span>(<span class="ruby-identifier">new_scopes</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- merge-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- merge-method -->
+
+    
+      <div id="method-i-pop" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">pop</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Pop from the stack. use <code>Context#stack</code> instead</p>
+          
+          
+
+          
+          <div class="method-source-code" id="pop-source">
+            <pre><span class="ruby-comment"># File lib/liquid/context.rb, line 97</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">pop</span>
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">ContextError</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@scopes</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>
+  <span class="ruby-ivar">@scopes</span>.<span class="ruby-identifier">shift</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- pop-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- pop-method -->
+
+    
+      <div id="method-i-pop_interrupt" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">pop_interrupt</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>pop an interrupt from the stack</p>
+          
+          
+
+          
+          <div class="method-source-code" id="pop_interrupt-source">
+            <pre><span class="ruby-comment"># File lib/liquid/context.rb, line 65</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">pop_interrupt</span>
+  <span class="ruby-ivar">@interrupts</span>.<span class="ruby-identifier">pop</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- pop_interrupt-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- pop_interrupt-method -->
+
+    
+      <div id="method-i-push" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">push</span><span
+            class="method-args">(new_scope={})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Push new local scope on the stack. use <code>Context#stack</code> instead</p>
+          
+          
+
+          
+          <div class="method-source-code" id="push-source">
+            <pre><span class="ruby-comment"># File lib/liquid/context.rb, line 86</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">push</span>(<span class="ruby-identifier">new_scope</span>={})
+  <span class="ruby-ivar">@scopes</span>.<span class="ruby-identifier">unshift</span>(<span class="ruby-identifier">new_scope</span>)
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">StackLevelError</span>, <span class="ruby-string">&quot;Nesting too deep&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@scopes</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">100</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- push-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- push-method -->
+
+    
+      <div id="method-i-push_interrupt" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">push_interrupt</span><span
+            class="method-args">(e)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>push an interrupt to the stack. this interrupt is considered not handled.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="push_interrupt-source">
+            <pre><span class="ruby-comment"># File lib/liquid/context.rb, line 60</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">push_interrupt</span>(<span class="ruby-identifier">e</span>)
+  <span class="ruby-ivar">@interrupts</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">e</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- push_interrupt-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- push_interrupt-method -->
+
+    
+      <div id="method-i-resource_limits_reached-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">resource_limits_reached?</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="resource_limits_reached-3F-source">
+            <pre><span class="ruby-comment"># File lib/liquid/context.rb, line 30</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">resource_limits_reached?</span>
+  (<span class="ruby-ivar">@resource_limits</span>[<span class="ruby-value">:render_length_limit</span>] <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@resource_limits</span>[<span class="ruby-value">:render_length_current</span>] <span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@resource_limits</span>[<span class="ruby-value">:render_length_limit</span>]) <span class="ruby-operator">||</span>
+  (<span class="ruby-ivar">@resource_limits</span>[<span class="ruby-value">:render_score_limit</span>]  <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@resource_limits</span>[<span class="ruby-value">:render_score_current</span>]  <span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@resource_limits</span>[<span class="ruby-value">:render_score_limit</span>] ) <span class="ruby-operator">||</span>
+  (<span class="ruby-ivar">@resource_limits</span>[<span class="ruby-value">:assign_score_limit</span>]  <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@resource_limits</span>[<span class="ruby-value">:assign_score_current</span>]  <span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@resource_limits</span>[<span class="ruby-value">:assign_score_limit</span>] )
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- resource_limits_reached-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- resource_limits_reached-3F-method -->
+
+    
+      <div id="method-i-stack" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">stack</span><span
+            class="method-args">(new_scope={}) { || ... }</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Pushes a new local scope on the stack, pops it at the end of the block</p>
+
+<p>Example:</p>
+
+<pre class="ruby"><span class="ruby-identifier">context</span>.<span class="ruby-identifier">stack</span> <span class="ruby-keyword">do</span>
+   <span class="ruby-identifier">context</span>[<span class="ruby-string">&#39;var&#39;</span>] = <span class="ruby-string">&#39;hi&#39;</span>
+<span class="ruby-keyword">end</span>
+
+<span class="ruby-identifier">context</span>[<span class="ruby-string">&#39;var]  #=&gt; nil
+</span></pre>
+          
+          
+
+          
+          <div class="method-source-code" id="stack-source">
+            <pre><span class="ruby-comment"># File lib/liquid/context.rb, line 110</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">stack</span>(<span class="ruby-identifier">new_scope</span>={})
+  <span class="ruby-identifier">push</span>(<span class="ruby-identifier">new_scope</span>)
+  <span class="ruby-keyword">yield</span>
+<span class="ruby-keyword">ensure</span>
+  <span class="ruby-identifier">pop</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- stack-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- stack-method -->
+
+    
+      <div id="method-i-strainer" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">strainer</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="strainer-source">
+            <pre><span class="ruby-comment"># File lib/liquid/context.rb, line 36</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">strainer</span>
+  <span class="ruby-ivar">@strainer</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Strainer</span>.<span class="ruby-identifier">create</span>(<span class="ruby-keyword">self</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- strainer-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- strainer-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+     <section id="private-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Private Instance Methods</h3>
+
+    
+      <div id="method-i-find_variable" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">find_variable</span><span
+            class="method-args">(key)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Fetches an object starting at the local scope and then moving up the
+hierachy</p>
+          
+          
+
+          
+          <div class="method-source-code" id="find_variable-source">
+            <pre><span class="ruby-comment"># File lib/liquid/context.rb, line 173</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">find_variable</span>(<span class="ruby-identifier">key</span>)
+  <span class="ruby-identifier">scope</span> = <span class="ruby-ivar">@scopes</span>.<span class="ruby-identifier">find</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span> <span class="ruby-identifier">s</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">key</span>) }
+  <span class="ruby-identifier">variable</span> = <span class="ruby-keyword">nil</span>
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">scope</span>.<span class="ruby-identifier">nil?</span>
+    <span class="ruby-ivar">@environments</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">variable</span> = <span class="ruby-identifier">lookup_and_evaluate</span>(<span class="ruby-identifier">e</span>, <span class="ruby-identifier">key</span>)
+        <span class="ruby-identifier">scope</span> = <span class="ruby-identifier">e</span>
+        <span class="ruby-keyword">break</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">scope</span>     <span class="ruby-operator">||=</span> <span class="ruby-ivar">@environments</span>.<span class="ruby-identifier">last</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@scopes</span>.<span class="ruby-identifier">last</span>
+  <span class="ruby-identifier">variable</span>  <span class="ruby-operator">||=</span> <span class="ruby-identifier">lookup_and_evaluate</span>(<span class="ruby-identifier">scope</span>, <span class="ruby-identifier">key</span>)
+
+  <span class="ruby-identifier">variable</span> = <span class="ruby-identifier">variable</span>.<span class="ruby-identifier">to_liquid</span>
+  <span class="ruby-identifier">variable</span>.<span class="ruby-identifier">context</span> = <span class="ruby-keyword">self</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">variable</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:context=</span>)
+
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">variable</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- find_variable-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- find_variable-method -->
+
+    
+      <div id="method-i-lookup_and_evaluate" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">lookup_and_evaluate</span><span
+            class="method-args">(obj, key)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="lookup_and_evaluate-source">
+            <pre><span class="ruby-comment"># File lib/liquid/context.rb, line 247</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">lookup_and_evaluate</span>(<span class="ruby-identifier">obj</span>, <span class="ruby-identifier">key</span>)
+  <span class="ruby-keyword">if</span> (<span class="ruby-identifier">value</span> = <span class="ruby-identifier">obj</span>[<span class="ruby-identifier">key</span>]).<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Proc</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:[]=</span>)
+    <span class="ruby-identifier">obj</span>[<span class="ruby-identifier">key</span>] = (<span class="ruby-identifier">value</span>.<span class="ruby-identifier">arity</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">call</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">call</span>(<span class="ruby-keyword">self</span>)
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">value</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- lookup_and_evaluate-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- lookup_and_evaluate-method -->
+
+    
+      <div id="method-i-resolve" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">resolve</span><span
+            class="method-args">(key)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Look up variable, either resolve directly after considering the name. We
+can directly handle Strings, digits, floats and booleans (true,false). <a
+href="If.html">If</a> no match is made we lookup the variable in the
+current scope and later move up to the parent blocks to see if we can
+resolve the variable somewhere up the tree. Some special keywords return
+symbols. Those symbols are to be called on the rhs object in expressions</p>
+
+<p>Example:</p>
+
+<pre class="ruby"><span class="ruby-identifier">products</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">empty</span> <span class="ruby-comment">#=&gt; products.empty?</span>
+</pre>
+          
+          
+
+          
+          <div class="method-source-code" id="resolve-source">
+            <pre><span class="ruby-comment"># File lib/liquid/context.rb, line 151</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">resolve</span>(<span class="ruby-identifier">key</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-constant">LITERALS</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">key</span>)
+    <span class="ruby-constant">LITERALS</span>[<span class="ruby-identifier">key</span>]
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-keyword">case</span> <span class="ruby-identifier">key</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-regexp">/^&#39;(.*)&#39;$/</span> <span class="ruby-comment"># Single quoted strings</span>
+      <span class="ruby-node">$1</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-regexp">/^&quot;(.*)&quot;$/</span> <span class="ruby-comment"># Double quoted strings</span>
+      <span class="ruby-node">$1</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-regexp">/^(-?\d+)$/</span> <span class="ruby-comment"># Integer and floats</span>
+      <span class="ruby-node">$1</span>.<span class="ruby-identifier">to_i</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-regexp">/^\((\S+)\.\.(\S+)\)$/</span> <span class="ruby-comment"># Ranges</span>
+      (<span class="ruby-identifier">resolve</span>(<span class="ruby-node">$1</span>).<span class="ruby-identifier">to_i</span><span class="ruby-operator">..</span><span class="ruby-identifier">resolve</span>(<span class="ruby-node">$2</span>).<span class="ruby-identifier">to_i</span>)
+    <span class="ruby-keyword">when</span> <span class="ruby-regexp">/^(-?\d[\d\.]+)$/</span> <span class="ruby-comment"># Floats</span>
+      <span class="ruby-node">$1</span>.<span class="ruby-identifier">to_f</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">variable</span>(<span class="ruby-identifier">key</span>)
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- resolve-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- resolve-method -->
+
+    
+      <div id="method-i-squash_instance_assigns_with_environments" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">squash_instance_assigns_with_environments</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="squash_instance_assigns_with_environments-source">
+            <pre><span class="ruby-comment"># File lib/liquid/context.rb, line 255</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">squash_instance_assigns_with_environments</span>
+  <span class="ruby-ivar">@scopes</span>.<span class="ruby-identifier">last</span>.<span class="ruby-identifier">each_key</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span><span class="ruby-operator">|</span>
+    <span class="ruby-ivar">@environments</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">env</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">env</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">k</span>)
+        <span class="ruby-identifier">scopes</span>.<span class="ruby-identifier">last</span>[<span class="ruby-identifier">k</span>] = <span class="ruby-identifier">lookup_and_evaluate</span>(<span class="ruby-identifier">env</span>, <span class="ruby-identifier">k</span>)
+        <span class="ruby-keyword">break</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- squash_instance_assigns_with_environments-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- squash_instance_assigns_with_environments-method -->
+
+    
+      <div id="method-i-variable" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">variable</span><span
+            class="method-args">(markup)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Resolves namespaced queries gracefully.</p>
+
+<p>Example</p>
+
+<pre class="ruby"><span class="ruby-ivar">@context</span>[<span class="ruby-string">&#39;hash&#39;</span>] = {<span class="ruby-string">&quot;name&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;tobi&#39;</span>}
+<span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&#39;tobi&#39;</span>, <span class="ruby-ivar">@context</span>[<span class="ruby-string">&#39;hash.name&#39;</span>]
+<span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&#39;tobi&#39;</span>, <span class="ruby-ivar">@context</span>[<span class="ruby-string">&#39;hash[&quot;name&quot;]&#39;</span>]
+</pre>
+          
+          
+
+          
+          <div class="method-source-code" id="variable-source">
+            <pre><span class="ruby-comment"># File lib/liquid/context.rb, line 201</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">variable</span>(<span class="ruby-identifier">markup</span>)
+  <span class="ruby-identifier">parts</span> = <span class="ruby-identifier">markup</span>.<span class="ruby-identifier">scan</span>(<span class="ruby-constant">VariableParser</span>)
+  <span class="ruby-identifier">square_bracketed</span> = <span class="ruby-regexp">/^\[(.*)\]$/</span>
+
+  <span class="ruby-identifier">first_part</span> = <span class="ruby-identifier">parts</span>.<span class="ruby-identifier">shift</span>
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">first_part</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">square_bracketed</span>
+    <span class="ruby-identifier">first_part</span> = <span class="ruby-identifier">resolve</span>(<span class="ruby-node">$1</span>)
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">object</span> = <span class="ruby-identifier">find_variable</span>(<span class="ruby-identifier">first_part</span>)
+
+    <span class="ruby-identifier">parts</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">part</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">part</span> = <span class="ruby-identifier">resolve</span>(<span class="ruby-node">$1</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">part_resolved</span> = (<span class="ruby-identifier">part</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">square_bracketed</span>)
+
+      <span class="ruby-comment"># If object is a hash- or array-like object we look for the</span>
+      <span class="ruby-comment"># presence of the key and if its available we return it</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">object</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:[]</span>) <span class="ruby-keyword">and</span>
+        ((<span class="ruby-identifier">object</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:has_key?</span>) <span class="ruby-keyword">and</span> <span class="ruby-identifier">object</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">part</span>)) <span class="ruby-keyword">or</span>
+         (<span class="ruby-identifier">object</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:fetch</span>) <span class="ruby-keyword">and</span> <span class="ruby-identifier">part</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Integer</span>)))
+
+        <span class="ruby-comment"># if its a proc we will replace the entry with the proc</span>
+        <span class="ruby-identifier">res</span> = <span class="ruby-identifier">lookup_and_evaluate</span>(<span class="ruby-identifier">object</span>, <span class="ruby-identifier">part</span>)
+        <span class="ruby-identifier">object</span> = <span class="ruby-identifier">res</span>.<span class="ruby-identifier">to_liquid</span>
+
+        <span class="ruby-comment"># Some special cases. If the part wasn&#39;t in square brackets and</span>
+        <span class="ruby-comment"># no key with the same name was found we interpret following calls</span>
+        <span class="ruby-comment"># as commands and call them on the current object</span>
+      <span class="ruby-keyword">elsif</span> <span class="ruby-operator">!</span><span class="ruby-identifier">part_resolved</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">object</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">part</span>) <span class="ruby-keyword">and</span> [<span class="ruby-string">&#39;size&#39;</span>, <span class="ruby-string">&#39;first&#39;</span>, <span class="ruby-string">&#39;last&#39;</span>].<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">part</span>)
+
+        <span class="ruby-identifier">object</span> = <span class="ruby-identifier">object</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">part</span>.<span class="ruby-identifier">intern</span>).<span class="ruby-identifier">to_liquid</span>
+
+        <span class="ruby-comment"># No key was present with the desired value and it wasn&#39;t one of the directly supported</span>
+        <span class="ruby-comment"># keywords either. The only thing we got left is to return nil</span>
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
+      <span class="ruby-keyword">end</span>
+
+      <span class="ruby-comment"># If we are dealing with a drop here we have to</span>
+      <span class="ruby-identifier">object</span>.<span class="ruby-identifier">context</span> = <span class="ruby-keyword">self</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">object</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:context=</span>)
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">object</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- variable-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- variable-method -->
+
+    
+    </section><!-- private-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

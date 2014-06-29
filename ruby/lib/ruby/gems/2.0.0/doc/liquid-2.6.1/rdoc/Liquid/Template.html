@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>class Liquid::Template - liquid-2.6.1 Documentation</title>
+
+<link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../index.html">Home</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/liquid/template.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">Object
+  
+</nav>
+
+    
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li ><a href="#method-c-file_system">::file_system</a>
+    
+    <li ><a href="#method-c-file_system-3D">::file_system=</a>
+    
+    <li ><a href="#method-c-new">::new</a>
+    
+    <li ><a href="#method-c-parse">::parse</a>
+    
+    <li ><a href="#method-c-register_filter">::register_filter</a>
+    
+    <li ><a href="#method-c-register_tag">::register_tag</a>
+    
+    <li ><a href="#method-c-tags">::tags</a>
+    
+    <li ><a href="#method-i-assigns">#assigns</a>
+    
+    <li ><a href="#method-i-errors">#errors</a>
+    
+    <li ><a href="#method-i-instance_assigns">#instance_assigns</a>
+    
+    <li ><a href="#method-i-parse">#parse</a>
+    
+    <li ><a href="#method-i-registers">#registers</a>
+    
+    <li ><a href="#method-i-render">#render</a>
+    
+    <li ><a href="#method-i-render-21">#render!</a>
+    
+    <li ><a href="#method-i-tokenize">#tokenize</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="../History_md.html">History</a>
+  
+    <li class="file"><a href="../README_md.html">README</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../Array.html">Array</a>
+  
+    <li><a href="../Date.html">Date</a>
+  
+    <li><a href="../DateTime.html">DateTime</a>
+  
+    <li><a href="../FalseClass.html">FalseClass</a>
+  
+    <li><a href="../Hash.html">Hash</a>
+  
+    <li><a href="../Liquid.html">Liquid</a>
+  
+    <li><a href="../Liquid/ArgumentError.html">Liquid::ArgumentError</a>
+  
+    <li><a href="../Liquid/Assign.html">Liquid::Assign</a>
+  
+    <li><a href="../Liquid/BlankFileSystem.html">Liquid::BlankFileSystem</a>
+  
+    <li><a href="../Liquid/Block.html">Liquid::Block</a>
+  
+    <li><a href="../Liquid/Break.html">Liquid::Break</a>
+  
+    <li><a href="../Liquid/BreakInterrupt.html">Liquid::BreakInterrupt</a>
+  
+    <li><a href="../Liquid/Capture.html">Liquid::Capture</a>
+  
+    <li><a href="../Liquid/Case.html">Liquid::Case</a>
+  
+    <li><a href="../Liquid/Comment.html">Liquid::Comment</a>
+  
+    <li><a href="../Liquid/Condition.html">Liquid::Condition</a>
+  
+    <li><a href="../Liquid/Context.html">Liquid::Context</a>
+  
+    <li><a href="../Liquid/ContextError.html">Liquid::ContextError</a>
+  
+    <li><a href="../Liquid/Continue.html">Liquid::Continue</a>
+  
+    <li><a href="../Liquid/ContinueInterrupt.html">Liquid::ContinueInterrupt</a>
+  
+    <li><a href="../Liquid/Cycle.html">Liquid::Cycle</a>
+  
+    <li><a href="../Liquid/Decrement.html">Liquid::Decrement</a>
+  
+    <li><a href="../Liquid/Document.html">Liquid::Document</a>
+  
+    <li><a href="../Liquid/Drop.html">Liquid::Drop</a>
+  
+    <li><a href="../Liquid/ElseCondition.html">Liquid::ElseCondition</a>
+  
+    <li><a href="../Liquid/Error.html">Liquid::Error</a>
+  
+    <li><a href="../Liquid/FileSystemError.html">Liquid::FileSystemError</a>
+  
+    <li><a href="../Liquid/FilterNotFound.html">Liquid::FilterNotFound</a>
+  
+    <li><a href="../Liquid/For.html">Liquid::For</a>
+  
+    <li><a href="../Liquid/If.html">Liquid::If</a>
+  
+    <li><a href="../Liquid/Ifchanged.html">Liquid::Ifchanged</a>
+  
+    <li><a href="../Liquid/Include.html">Liquid::Include</a>
+  
+    <li><a href="../Liquid/Increment.html">Liquid::Increment</a>
+  
+    <li><a href="../Liquid/Interrupt.html">Liquid::Interrupt</a>
+  
+    <li><a href="../Liquid/LocalFileSystem.html">Liquid::LocalFileSystem</a>
+  
+    <li><a href="../Liquid/MemoryError.html">Liquid::MemoryError</a>
+  
+    <li><a href="../Liquid/Raw.html">Liquid::Raw</a>
+  
+    <li><a href="../Liquid/StackLevelError.html">Liquid::StackLevelError</a>
+  
+    <li><a href="../Liquid/StandardError.html">Liquid::StandardError</a>
+  
+    <li><a href="../Liquid/StandardFilters.html">Liquid::StandardFilters</a>
+  
+    <li><a href="../Liquid/Strainer.html">Liquid::Strainer</a>
+  
+    <li><a href="../Liquid/SyntaxError.html">Liquid::SyntaxError</a>
+  
+    <li><a href="../Liquid/TableRow.html">Liquid::TableRow</a>
+  
+    <li><a href="../Liquid/Tag.html">Liquid::Tag</a>
+  
+    <li><a href="../Liquid/Template.html">Liquid::Template</a>
+  
+    <li><a href="../Liquid/Unless.html">Liquid::Unless</a>
+  
+    <li><a href="../Liquid/Utils.html">Liquid::Utils</a>
+  
+    <li><a href="../Liquid/Variable.html">Liquid::Variable</a>
+  
+    <li><a href="../LiquidView.html">LiquidView</a>
+  
+    <li><a href="../Module.html">Module</a>
+  
+    <li><a href="../NilClass.html">NilClass</a>
+  
+    <li><a href="../Numeric.html">Numeric</a>
+  
+    <li><a href="../String.html">String</a>
+  
+    <li><a href="../Time.html">Time</a>
+  
+    <li><a href="../TrueClass.html">TrueClass</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class Liquid::Template</h1>
+
+  <div id="description" class="description">
+    
+<p>Templates are central to liquid. Interpretating templates is a two step
+process. First you compile the source code you got. During compile time
+some extensive error checking is performed. your code should expect to get
+some SyntaxErrors.</p>
+
+<p>After you have a compiled template you can then <code>render</code> it. You
+can use a compiled template over and over again and keep it cached.</p>
+
+<p>Example:</p>
+
+<pre class="ruby"><span class="ruby-identifier">template</span> = <span class="ruby-constant">Liquid</span><span class="ruby-operator">::</span><span class="ruby-constant">Template</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">source</span>)
+<span class="ruby-identifier">template</span>.<span class="ruby-identifier">render</span>(<span class="ruby-string">&#39;user_name&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;bob&#39;</span>)
+</pre>
+
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+    <!-- Attributes -->
+    <section id="attribute-method-details" class="method-section section">
+      <h3 class="section-header">Attributes</h3>
+
+      
+      <div id="attribute-i-resource_limits" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">resource_limits</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-root" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">root</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+    </section><!-- attribute-method-details -->
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-file_system" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">file_system</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="file_system-source">
+            <pre><span class="ruby-comment"># File lib/liquid/template.rb, line 21</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">file_system</span>
+  <span class="ruby-identifier">@@file_system</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- file_system-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- file_system-method -->
+
+    
+      <div id="method-c-file_system-3D" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">file_system=</span><span
+            class="method-args">(obj)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="file_system-3D-source">
+            <pre><span class="ruby-comment"># File lib/liquid/template.rb, line 25</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">file_system=</span>(<span class="ruby-identifier">obj</span>)
+  <span class="ruby-identifier">@@file_system</span> = <span class="ruby-identifier">obj</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- file_system-3D-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- file_system-3D-method -->
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>creates a new <code>Template</code> from an array of tokens. Use
+<code>Template.parse</code> instead</p>
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/liquid/template.rb, line 52</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>
+  <span class="ruby-ivar">@resource_limits</span> = {}
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- new-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- new-method -->
+
+    
+      <div id="method-c-parse" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">parse</span><span
+            class="method-args">(source)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>creates a new <code>Template</code> object from liquid source code</p>
+          
+          
+
+          
+          <div class="method-source-code" id="parse-source">
+            <pre><span class="ruby-comment"># File lib/liquid/template.rb, line 44</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">parse</span>(<span class="ruby-identifier">source</span>)
+  <span class="ruby-identifier">template</span> = <span class="ruby-constant">Template</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-identifier">template</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">source</span>)
+  <span class="ruby-identifier">template</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- parse-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- parse-method -->
+
+    
+      <div id="method-c-register_filter" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">register_filter</span><span
+            class="method-args">(mod)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Pass a module with filter methods which should be available to all liquid
+views. Good for registering the standard library</p>
+          
+          
+
+          
+          <div class="method-source-code" id="register_filter-source">
+            <pre><span class="ruby-comment"># File lib/liquid/template.rb, line 39</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">register_filter</span>(<span class="ruby-identifier">mod</span>)
+  <span class="ruby-constant">Strainer</span>.<span class="ruby-identifier">global_filter</span>(<span class="ruby-identifier">mod</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- register_filter-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- register_filter-method -->
+
+    
+      <div id="method-c-register_tag" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">register_tag</span><span
+            class="method-args">(name, klass)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="register_tag-source">
+            <pre><span class="ruby-comment"># File lib/liquid/template.rb, line 29</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">register_tag</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">klass</span>)
+  <span class="ruby-identifier">tags</span>[<span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_s</span>] = <span class="ruby-identifier">klass</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- register_tag-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- register_tag-method -->
+
+    
+      <div id="method-c-tags" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">tags</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="tags-source">
+            <pre><span class="ruby-comment"># File lib/liquid/template.rb, line 33</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">tags</span>
+  <span class="ruby-ivar">@tags</span> <span class="ruby-operator">||=</span> {}
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- tags-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- tags-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-assigns" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">assigns</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="assigns-source">
+            <pre><span class="ruby-comment"># File lib/liquid/template.rb, line 67</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">assigns</span>
+  <span class="ruby-ivar">@assigns</span> <span class="ruby-operator">||=</span> {}
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- assigns-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- assigns-method -->
+
+    
+      <div id="method-i-errors" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">errors</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="errors-source">
+            <pre><span class="ruby-comment"># File lib/liquid/template.rb, line 75</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">errors</span>
+  <span class="ruby-ivar">@errors</span> <span class="ruby-operator">||=</span> []
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- errors-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- errors-method -->
+
+    
+      <div id="method-i-instance_assigns" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">instance_assigns</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="instance_assigns-source">
+            <pre><span class="ruby-comment"># File lib/liquid/template.rb, line 71</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">instance_assigns</span>
+  <span class="ruby-ivar">@instance_assigns</span> <span class="ruby-operator">||=</span> {}
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- instance_assigns-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- instance_assigns-method -->
+
+    
+      <div id="method-i-parse" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">parse</span><span
+            class="method-args">(source)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Parse source code. Returns self for easy chaining</p>
+          
+          
+
+          
+          <div class="method-source-code" id="parse-source">
+            <pre><span class="ruby-comment"># File lib/liquid/template.rb, line 58</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">parse</span>(<span class="ruby-identifier">source</span>)
+  <span class="ruby-ivar">@root</span> = <span class="ruby-constant">Document</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">tokenize</span>(<span class="ruby-identifier">source</span>))
+  <span class="ruby-keyword">self</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- parse-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- parse-method -->
+
+    
+      <div id="method-i-registers" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">registers</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="registers-source">
+            <pre><span class="ruby-comment"># File lib/liquid/template.rb, line 63</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">registers</span>
+  <span class="ruby-ivar">@registers</span> <span class="ruby-operator">||=</span> {}
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- registers-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- registers-method -->
+
+    
+      <div id="method-i-render" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">render</span><span
+            class="method-args">(*args)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Render takes a hash with local variables.</p>
+
+<p>if you use the same filters over and over again consider registering them
+globally with <code>Template.register_filter</code></p>
+
+<p>Following options can be passed:</p>
+
+<pre>* &lt;tt&gt;filters&lt;/tt&gt; : array with local filters
+* &lt;tt&gt;registers&lt;/tt&gt; : hash with register variables. Those can be accessed from
+  filters and tags and might be useful to integrate liquid more with its host application</pre>
+          
+          
+
+          
+          <div class="method-source-code" id="render-source">
+            <pre><span class="ruby-comment"># File lib/liquid/template.rb, line 90</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">render</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-string">&#39;&#39;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@root</span>.<span class="ruby-identifier">nil?</span>
+
+  <span class="ruby-identifier">context</span> = <span class="ruby-keyword">case</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">first</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-constant">Liquid</span><span class="ruby-operator">::</span><span class="ruby-constant">Context</span>
+    <span class="ruby-identifier">args</span>.<span class="ruby-identifier">shift</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-constant">Liquid</span><span class="ruby-operator">::</span><span class="ruby-constant">Drop</span>
+    <span class="ruby-identifier">drop</span> = <span class="ruby-identifier">args</span>.<span class="ruby-identifier">shift</span>
+    <span class="ruby-identifier">drop</span>.<span class="ruby-identifier">context</span> = <span class="ruby-constant">Context</span>.<span class="ruby-identifier">new</span>([<span class="ruby-identifier">drop</span>, <span class="ruby-identifier">assigns</span>], <span class="ruby-identifier">instance_assigns</span>, <span class="ruby-identifier">registers</span>, <span class="ruby-ivar">@rethrow_errors</span>, <span class="ruby-ivar">@resource_limits</span>)
+  <span class="ruby-keyword">when</span> <span class="ruby-constant">Hash</span>
+    <span class="ruby-constant">Context</span>.<span class="ruby-identifier">new</span>([<span class="ruby-identifier">args</span>.<span class="ruby-identifier">shift</span>, <span class="ruby-identifier">assigns</span>], <span class="ruby-identifier">instance_assigns</span>, <span class="ruby-identifier">registers</span>, <span class="ruby-ivar">@rethrow_errors</span>, <span class="ruby-ivar">@resource_limits</span>)
+  <span class="ruby-keyword">when</span> <span class="ruby-keyword">nil</span>
+    <span class="ruby-constant">Context</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">assigns</span>, <span class="ruby-identifier">instance_assigns</span>, <span class="ruby-identifier">registers</span>, <span class="ruby-ivar">@rethrow_errors</span>, <span class="ruby-ivar">@resource_limits</span>)
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-string">&quot;Expect Hash or Liquid::Context as parameter&quot;</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">case</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">last</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-constant">Hash</span>
+    <span class="ruby-identifier">options</span> = <span class="ruby-identifier">args</span>.<span class="ruby-identifier">pop</span>
+
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:registers</span>].<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>)
+      <span class="ruby-keyword">self</span>.<span class="ruby-identifier">registers</span>.<span class="ruby-identifier">merge!</span>(<span class="ruby-identifier">options</span>[<span class="ruby-value">:registers</span>])
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:filters</span>]
+      <span class="ruby-identifier">context</span>.<span class="ruby-identifier">add_filters</span>(<span class="ruby-identifier">options</span>[<span class="ruby-value">:filters</span>])
+    <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">when</span> <span class="ruby-constant">Module</span>
+    <span class="ruby-identifier">context</span>.<span class="ruby-identifier">add_filters</span>(<span class="ruby-identifier">args</span>.<span class="ruby-identifier">pop</span>)
+  <span class="ruby-keyword">when</span> <span class="ruby-constant">Array</span>
+    <span class="ruby-identifier">context</span>.<span class="ruby-identifier">add_filters</span>(<span class="ruby-identifier">args</span>.<span class="ruby-identifier">pop</span>)
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-comment"># render the nodelist.</span>
+    <span class="ruby-comment"># for performance reasons we get an array back here. join will make a string out of it.</span>
+    <span class="ruby-identifier">result</span> = <span class="ruby-ivar">@root</span>.<span class="ruby-identifier">render</span>(<span class="ruby-identifier">context</span>)
+    <span class="ruby-identifier">result</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:join</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">result</span>.<span class="ruby-identifier">join</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">result</span>
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Liquid</span><span class="ruby-operator">::</span><span class="ruby-constant">MemoryError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">context</span>.<span class="ruby-identifier">handle_error</span>(<span class="ruby-identifier">e</span>)
+  <span class="ruby-keyword">ensure</span>
+    <span class="ruby-ivar">@errors</span> = <span class="ruby-identifier">context</span>.<span class="ruby-identifier">errors</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- render-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- render-method -->
+
+    
+      <div id="method-i-render-21" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">render!</span><span
+            class="method-args">(*args)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="render-21-source">
+            <pre><span class="ruby-comment"># File lib/liquid/template.rb, line 137</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">render!</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+  <span class="ruby-ivar">@rethrow_errors</span> = <span class="ruby-keyword">true</span>; <span class="ruby-identifier">render</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- render-21-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- render-21-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+     <section id="private-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Private Instance Methods</h3>
+
+    
+      <div id="method-i-tokenize" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">tokenize</span><span
+            class="method-args">(source)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Uses the <code>Liquid::TemplateParser</code> regexp to tokenize the passed
+source</p>
+          
+          
+
+          
+          <div class="method-source-code" id="tokenize-source">
+            <pre><span class="ruby-comment"># File lib/liquid/template.rb, line 144</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">tokenize</span>(<span class="ruby-identifier">source</span>)
+  <span class="ruby-identifier">source</span> = <span class="ruby-identifier">source</span>.<span class="ruby-identifier">source</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">source</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:source</span>)
+  <span class="ruby-keyword">return</span> [] <span class="ruby-keyword">if</span> <span class="ruby-identifier">source</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">empty?</span>
+  <span class="ruby-identifier">tokens</span> = <span class="ruby-identifier">source</span>.<span class="ruby-identifier">split</span>(<span class="ruby-constant">TemplateParser</span>)
+
+  <span class="ruby-comment"># removes the rogue empty element at the beginning of the array</span>
+  <span class="ruby-identifier">tokens</span>.<span class="ruby-identifier">shift</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">tokens</span>[<span class="ruby-value">0</span>] <span class="ruby-keyword">and</span> <span class="ruby-identifier">tokens</span>[<span class="ruby-value">0</span>].<span class="ruby-identifier">empty?</span>
+
+  <span class="ruby-identifier">tokens</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- tokenize-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- tokenize-method -->
+
+    
+    </section><!-- private-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+
