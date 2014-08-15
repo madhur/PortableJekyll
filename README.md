@@ -1,11 +1,11 @@
 Portable Jekyll
 ==============
 
-The portable version contains everything which is required to run Jekyll v2.0.3 on Windows:
+The portable version contains everything which is required to run Jekyll v2.3 on Windows:
 
 * Ruby 2.0
 * Ruby development Kit
-* Git 1.9.2
+* Git 2.0
 * Python 2.7.5
 
 ##Usage Instructions##
