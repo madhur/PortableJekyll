@@ -27,7 +27,7 @@ BEGIN {
 	CGI->compile() if $ENV{'MOD_PERL'};
 }
 
-our $version = "1.9.2.msysgit.0";
+our $version = "2.0.0";
 
 our ($my_url, $my_uri, $base_url, $path_info, $home_link);
 sub evaluate_uri {
@@ -7129,7 +7129,7 @@ sub git_blob {
 	git_print_page_path($file_name, "blob", $hash_base);
 	print "<div class=\"page_body\">\n";
 	if ($mimetype =~ m!^image/!) {
-		print qq!<img type="!.esc_attr($mimetype).qq!"!;
+		print qq!<img class="blob" type="!.esc_attr($mimetype).qq!"!;
 		if ($file_name) {
 			print qq! alt="!.esc_attr($file_name).qq!" title="!.esc_attr($file_name).qq!"!;
 		}
