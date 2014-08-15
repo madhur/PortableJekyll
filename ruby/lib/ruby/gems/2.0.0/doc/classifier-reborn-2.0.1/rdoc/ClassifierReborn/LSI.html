@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>class ClassifierReborn::LSI - classifier-reborn-2.0.1 Documentation</title>
+
+<link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../index.html">Home</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/classifier-reborn/lsi.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link"><a href="../Object.html">Object</a>
+  
+</nav>
+
+    
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li ><a href="#method-c-new">::new</a>
+    
+    <li ><a href="#method-i-3C-3C">#&lt;&lt;</a>
+    
+    <li ><a href="#method-i-add_item">#add_item</a>
+    
+    <li ><a href="#method-i-build_index">#build_index</a>
+    
+    <li ><a href="#method-i-build_reduced_matrix">#build_reduced_matrix</a>
+    
+    <li ><a href="#method-i-categories_for">#categories_for</a>
+    
+    <li ><a href="#method-i-classify">#classify</a>
+    
+    <li ><a href="#method-i-find_related">#find_related</a>
+    
+    <li ><a href="#method-i-highest_ranked_stems">#highest_ranked_stems</a>
+    
+    <li ><a href="#method-i-highest_relative_content">#highest_relative_content</a>
+    
+    <li ><a href="#method-i-items">#items</a>
+    
+    <li ><a href="#method-i-make_word_list">#make_word_list</a>
+    
+    <li ><a href="#method-i-needs_rebuild-3F">#needs_rebuild?</a>
+    
+    <li ><a href="#method-i-node_for_content">#node_for_content</a>
+    
+    <li ><a href="#method-i-proximity_array_for_content">#proximity_array_for_content</a>
+    
+    <li ><a href="#method-i-proximity_norms_for_content">#proximity_norms_for_content</a>
+    
+    <li ><a href="#method-i-remove_item">#remove_item</a>
+    
+    <li ><a href="#method-i-search">#search</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="../LICENSE.html">LICENSE</a>
+  
+    <li class="file"><a href="../README_markdown.html">README.markdown</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../Array.html">Array</a>
+  
+    <li><a href="../ClassifierReborn.html">ClassifierReborn</a>
+  
+    <li><a href="../ClassifierReborn/Bayes.html">ClassifierReborn::Bayes</a>
+  
+    <li><a href="../ClassifierReborn/ContentNode.html">ClassifierReborn::ContentNode</a>
+  
+    <li><a href="../ClassifierReborn/Hasher.html">ClassifierReborn::Hasher</a>
+  
+    <li><a href="../ClassifierReborn/LSI.html">ClassifierReborn::LSI</a>
+  
+    <li><a href="../ClassifierReborn/Summarizer.html">ClassifierReborn::Summarizer</a>
+  
+    <li><a href="../ClassifierReborn/WordList.html">ClassifierReborn::WordList</a>
+  
+    <li><a href="../GSL.html">GSL</a>
+  
+    <li><a href="../GSL/Matrix.html">GSL::Matrix</a>
+  
+    <li><a href="../GSL/Vector.html">GSL::Vector</a>
+  
+    <li><a href="../Matrix.html">Matrix</a>
+  
+    <li><a href="../Object.html">Object</a>
+  
+    <li><a href="../Vector.html">Vector</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class ClassifierReborn::LSI</h1>
+
+  <div id="description" class="description">
+    
+<p>This class implements a Latent Semantic Indexer, which can search, classify
+and cluster data based on underlying semantic relations. For more
+information on the algorithms used, please consult <a
+href="http://en.wikipedia.org/wiki/Latent_Semantic_Indexing">Wikipedia</a>.</p>
+
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+    <!-- Attributes -->
+    <section id="attribute-method-details" class="method-section section">
+      <h3 class="section-header">Attributes</h3>
+
+      
+      <div id="attribute-i-auto_rebuild" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">auto_rebuild</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-word_list" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">word_list</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+    </section><!-- attribute-method-details -->
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">(options = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Create a fresh index. If you want to call <a
+href="LSI.html#method-i-build_index">build_index</a> manually, use</p>
+
+<pre class="ruby"><span class="ruby-constant">ClassifierReborn</span><span class="ruby-operator">::</span><span class="ruby-constant">LSI</span>.<span class="ruby-identifier">new</span> :<span class="ruby-identifier">auto_rebuild</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">false</span>
+</pre>
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/classifier-reborn/lsi.rb, line 34</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">options</span> = {})
+  <span class="ruby-ivar">@auto_rebuild</span> = <span class="ruby-keyword">true</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:auto_rebuild</span>] <span class="ruby-operator">==</span> <span class="ruby-keyword">false</span>
+  <span class="ruby-ivar">@word_list</span>, <span class="ruby-ivar">@items</span> = <span class="ruby-constant">WordList</span>.<span class="ruby-identifier">new</span>, {}
+  <span class="ruby-ivar">@version</span>, <span class="ruby-ivar">@built_at_version</span> = <span class="ruby-value">0</span>, <span class="ruby-value">-1</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- new-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- new-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-3C-3C" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">&lt;&lt;</span><span
+            class="method-args">( item )</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>A less flexible shorthand for <a
+href="LSI.html#method-i-add_item">#add_item</a> that assumes you are
+passing in a string with no categorries. item will be duck typed via to_s .</p>
+          
+          
+
+          
+          <div class="method-source-code" id="3C-3C-source">
+            <pre><span class="ruby-comment"># File lib/classifier-reborn/lsi.rb, line 71</span>
+<span class="ruby-keyword">def</span> <span class="ruby-operator">&lt;&lt;</span>( <span class="ruby-identifier">item</span> )
+  <span class="ruby-identifier">add_item</span> <span class="ruby-identifier">item</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- 3C-3C-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- 3C-3C-method -->
+
+    
+      <div id="method-i-add_item" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">add_item</span><span
+            class="method-args">( item, *categories, &block )</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Adds an item to the index. item is assumed to be a string, but any item may
+be indexed so long as it responds to to_s or if you provide an optional
+block explaining how the indexer can fetch fresh string data. This optional
+block is passed the item, so the item may only be a reference to a URL or
+file name.</p>
+
+<p>For example:</p>
+
+<pre class="ruby"><span class="ruby-identifier">lsi</span> = <span class="ruby-constant">ClassifierReborn</span><span class="ruby-operator">::</span><span class="ruby-constant">LSI</span>.<span class="ruby-identifier">new</span>
+<span class="ruby-identifier">lsi</span>.<span class="ruby-identifier">add_item</span> <span class="ruby-string">&quot;This is just plain text&quot;</span>
+<span class="ruby-identifier">lsi</span>.<span class="ruby-identifier">add_item</span> <span class="ruby-string">&quot;/home/me/filename.txt&quot;</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span> <span class="ruby-identifier">x</span> }
+<span class="ruby-identifier">ar</span> = <span class="ruby-constant">ActiveRecordObject</span>.<span class="ruby-identifier">find</span>( :<span class="ruby-identifier">all</span> )
+<span class="ruby-identifier">lsi</span>.<span class="ruby-identifier">add_item</span> <span class="ruby-identifier">ar</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">ar</span>.<span class="ruby-identifier">categories</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-identifier">ar</span>.<span class="ruby-identifier">content</span> }
+</pre>
+          
+          
+
+          
+          <div class="method-source-code" id="add_item-source">
+            <pre><span class="ruby-comment"># File lib/classifier-reborn/lsi.rb, line 60</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">add_item</span>( <span class="ruby-identifier">item</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">categories</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span> )
+  <span class="ruby-identifier">clean_word_hash</span> = <span class="ruby-constant">Hasher</span>.<span class="ruby-identifier">clean_word_hash</span>(<span class="ruby-identifier">block</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">block</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">item</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">item</span>.<span class="ruby-identifier">to_s</span>)
+  <span class="ruby-ivar">@items</span>[<span class="ruby-identifier">item</span>] = <span class="ruby-constant">ContentNode</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">clean_word_hash</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">categories</span>)
+  <span class="ruby-ivar">@version</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+  <span class="ruby-identifier">build_index</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@auto_rebuild</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- add_item-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- add_item-method -->
+
+    
+      <div id="method-i-build_index" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">build_index</span><span
+            class="method-args">( cutoff=0.75 )</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This function rebuilds the index if needs_rebuild? returns true. For very
+large document spaces, this indexing operation may take some time to
+complete, so it may be wise to place the operation in another thread.</p>
+
+<p>As a rule, indexing will be fairly swift on modern machines until you have
+well over 500 documents indexed, or have an incredibly diverse vocabulary
+for your documents.</p>
+
+<p>The optional parameter “cutoff” is a tuning parameter. When the index is
+built, a certain number of s-values are discarded from the system. The
+cutoff parameter tells the indexer how many of these values to keep. A
+value of 1 for cutoff means that no semantic analysis will take place,
+turning the <a href="LSI.html">LSI</a> class into a simple vector search
+engine.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="build_index-source">
+            <pre><span class="ruby-comment"># File lib/classifier-reborn/lsi.rb, line 117</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">build_index</span>( <span class="ruby-identifier">cutoff</span>=<span class="ruby-value">0.75</span> )
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">needs_rebuild?</span>
+  <span class="ruby-identifier">make_word_list</span>
+
+  <span class="ruby-identifier">doc_list</span> = <span class="ruby-ivar">@items</span>.<span class="ruby-identifier">values</span>
+  <span class="ruby-identifier">tda</span> = <span class="ruby-identifier">doc_list</span>.<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">node</span><span class="ruby-operator">|</span> <span class="ruby-identifier">node</span>.<span class="ruby-identifier">raw_vector_with</span>( <span class="ruby-ivar">@word_list</span> ) }
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">$GSL</span>
+     <span class="ruby-identifier">tdm</span> = <span class="ruby-constant">GSL</span><span class="ruby-operator">::</span><span class="ruby-constant">Matrix</span>.<span class="ruby-identifier">alloc</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">tda</span>).<span class="ruby-identifier">trans</span>
+     <span class="ruby-identifier">ntdm</span> = <span class="ruby-identifier">build_reduced_matrix</span>(<span class="ruby-identifier">tdm</span>, <span class="ruby-identifier">cutoff</span>)
+
+     <span class="ruby-identifier">ntdm</span>.<span class="ruby-identifier">size</span>[<span class="ruby-value">1</span>].<span class="ruby-identifier">times</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">col</span><span class="ruby-operator">|</span>
+       <span class="ruby-identifier">vec</span> = <span class="ruby-constant">GSL</span><span class="ruby-operator">::</span><span class="ruby-constant">Vector</span>.<span class="ruby-identifier">alloc</span>( <span class="ruby-identifier">ntdm</span>.<span class="ruby-identifier">column</span>(<span class="ruby-identifier">col</span>) ).<span class="ruby-identifier">row</span>
+       <span class="ruby-identifier">doc_list</span>[<span class="ruby-identifier">col</span>].<span class="ruby-identifier">lsi_vector</span> = <span class="ruby-identifier">vec</span>
+       <span class="ruby-identifier">doc_list</span>[<span class="ruby-identifier">col</span>].<span class="ruby-identifier">lsi_norm</span> = <span class="ruby-identifier">vec</span>.<span class="ruby-identifier">normalize</span>
+     <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">else</span>
+     <span class="ruby-identifier">tdm</span> = <span class="ruby-constant">Matrix</span>.<span class="ruby-identifier">rows</span>(<span class="ruby-identifier">tda</span>).<span class="ruby-identifier">trans</span>
+     <span class="ruby-identifier">ntdm</span> = <span class="ruby-identifier">build_reduced_matrix</span>(<span class="ruby-identifier">tdm</span>, <span class="ruby-identifier">cutoff</span>)
+
+     <span class="ruby-identifier">ntdm</span>.<span class="ruby-identifier">row_size</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">col</span><span class="ruby-operator">|</span>
+       <span class="ruby-identifier">doc_list</span>[<span class="ruby-identifier">col</span>].<span class="ruby-identifier">lsi_vector</span> = <span class="ruby-identifier">ntdm</span>.<span class="ruby-identifier">column</span>(<span class="ruby-identifier">col</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">doc_list</span>[<span class="ruby-identifier">col</span>]
+       <span class="ruby-identifier">doc_list</span>[<span class="ruby-identifier">col</span>].<span class="ruby-identifier">lsi_norm</span> = <span class="ruby-identifier">ntdm</span>.<span class="ruby-identifier">column</span>(<span class="ruby-identifier">col</span>).<span class="ruby-identifier">normalize</span>  <span class="ruby-keyword">if</span> <span class="ruby-identifier">doc_list</span>[<span class="ruby-identifier">col</span>]
+     <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-ivar">@built_at_version</span> = <span class="ruby-ivar">@version</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- build_index-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- build_index-method -->
+
+    
+      <div id="method-i-categories_for" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">categories_for</span><span
+            class="method-args">(item)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Returns the categories for a given indexed items. You are free to add and
+remove items from this as you see fit. It does not invalide an index to
+change its categories.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="categories_for-source">
+            <pre><span class="ruby-comment"># File lib/classifier-reborn/lsi.rb, line 77</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">categories_for</span>(<span class="ruby-identifier">item</span>)
+  <span class="ruby-keyword">return</span> [] <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@items</span>[<span class="ruby-identifier">item</span>]
+  <span class="ruby-keyword">return</span> <span class="ruby-ivar">@items</span>[<span class="ruby-identifier">item</span>].<span class="ruby-identifier">categories</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- categories_for-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- categories_for-method -->
+
+    
+      <div id="method-i-classify" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">classify</span><span
+            class="method-args">( doc, cutoff=0.30, &block )</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This function uses a voting system to categorize documents, based on the
+categories of other documents. It uses the same logic as the <a
+href="LSI.html#method-i-find_related">#find_related</a> function to find
+related documents, then returns the most obvious category from this list.</p>
+
+<p>cutoff signifies the number of documents to consider when clasifying text.
+A cutoff of 1 means that every document in the index votes on what category
+the document is in. This may not always make sense.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="classify-source">
+            <pre><span class="ruby-comment"># File lib/classifier-reborn/lsi.rb, line 251</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">classify</span>( <span class="ruby-identifier">doc</span>, <span class="ruby-identifier">cutoff</span>=<span class="ruby-value">0.30</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span> )
+  <span class="ruby-identifier">icutoff</span> = (<span class="ruby-ivar">@items</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">cutoff</span>).<span class="ruby-identifier">round</span>
+  <span class="ruby-identifier">carry</span> = <span class="ruby-identifier">proximity_array_for_content</span>( <span class="ruby-identifier">doc</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span> )
+  <span class="ruby-identifier">carry</span> = <span class="ruby-identifier">carry</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-identifier">icutoff</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>]
+  <span class="ruby-identifier">votes</span> = {}
+  <span class="ruby-identifier">carry</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">pair</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">categories</span> = <span class="ruby-ivar">@items</span>[<span class="ruby-identifier">pair</span>[<span class="ruby-value">0</span>]].<span class="ruby-identifier">categories</span>
+    <span class="ruby-identifier">categories</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">category</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">votes</span>[<span class="ruby-identifier">category</span>] <span class="ruby-operator">||=</span> <span class="ruby-value">0.0</span>
+      <span class="ruby-identifier">votes</span>[<span class="ruby-identifier">category</span>] <span class="ruby-operator">+=</span> <span class="ruby-identifier">pair</span>[<span class="ruby-value">1</span>]
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">ranking</span> = <span class="ruby-identifier">votes</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">sort_by</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-identifier">votes</span>[<span class="ruby-identifier">x</span>] }
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">ranking</span>[<span class="ruby-value">-1</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- classify-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- classify-method -->
+
+    
+      <div id="method-i-find_related" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">find_related</span><span
+            class="method-args">( doc, max_nearest=3, &block )</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This function takes content and finds other documents that are semantically
+“close”, returning an array of documents sorted from most to least
+relavant. max_nearest specifies the number of documents to return. A value
+of 0 means that it returns all the indexed documents, sorted by relavence.</p>
+
+<p>This is particularly useful for identifing clusters in your document space.
+For example you may want to identify several “What&#39;s Related” items for
+weblog articles, or find paragraphs that relate to each other in an essay.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="find_related-source">
+            <pre><span class="ruby-comment"># File lib/classifier-reborn/lsi.rb, line 235</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">find_related</span>( <span class="ruby-identifier">doc</span>, <span class="ruby-identifier">max_nearest</span>=<span class="ruby-value">3</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span> )
+  <span class="ruby-identifier">carry</span> =
+    <span class="ruby-identifier">proximity_array_for_content</span>( <span class="ruby-identifier">doc</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span> ).<span class="ruby-identifier">reject</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">pair</span><span class="ruby-operator">|</span> <span class="ruby-identifier">pair</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">doc</span> }
+  <span class="ruby-identifier">result</span> = <span class="ruby-identifier">carry</span>.<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-identifier">x</span>[<span class="ruby-value">0</span>] }
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">result</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-identifier">max_nearest</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- find_related-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- find_related-method -->
+
+    
+      <div id="method-i-highest_ranked_stems" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">highest_ranked_stems</span><span
+            class="method-args">( doc, count=3 )</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Prototype, only works on indexed documents. I have no clue if this is going
+to work, but in theory it&#39;s supposed to.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="highest_ranked_stems-source">
+            <pre><span class="ruby-comment"># File lib/classifier-reborn/lsi.rb, line 271</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">highest_ranked_stems</span>( <span class="ruby-identifier">doc</span>, <span class="ruby-identifier">count</span>=<span class="ruby-value">3</span> )
+  <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;Requested stem ranking on non-indexed content!&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@items</span>[<span class="ruby-identifier">doc</span>]
+  <span class="ruby-identifier">arr</span> = <span class="ruby-identifier">node_for_content</span>(<span class="ruby-identifier">doc</span>).<span class="ruby-identifier">lsi_vector</span>.<span class="ruby-identifier">to_a</span>
+  <span class="ruby-identifier">top_n</span> = <span class="ruby-identifier">arr</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">reverse</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-identifier">count</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>]
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">top_n</span>.<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-ivar">@word_list</span>.<span class="ruby-identifier">word_for_index</span>(<span class="ruby-identifier">arr</span>.<span class="ruby-identifier">index</span>(<span class="ruby-identifier">x</span>))}
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- highest_ranked_stems-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- highest_ranked_stems-method -->
+
+    
+      <div id="method-i-highest_relative_content" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">highest_relative_content</span><span
+            class="method-args">( max_chunks=10 )</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns max_chunks entries, ordered by their average semantic
+rating. Essentially, the average distance of each entry from all other
+entries is calculated, the highest are returned.</p>
+
+<p>This can be used to build a summary service, or to provide more information
+about your dataset&#39;s general content. For example, if you were to use
+categorize on the results of this data, you could gather information on
+what your dataset is generally about.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="highest_relative_content-source">
+            <pre><span class="ruby-comment"># File lib/classifier-reborn/lsi.rb, line 154</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">highest_relative_content</span>( <span class="ruby-identifier">max_chunks</span>=<span class="ruby-value">10</span> )
+   <span class="ruby-keyword">return</span> [] <span class="ruby-keyword">if</span> <span class="ruby-identifier">needs_rebuild?</span>
+
+   <span class="ruby-identifier">avg_density</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
+   <span class="ruby-ivar">@items</span>.<span class="ruby-identifier">each_key</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-identifier">avg_density</span>[<span class="ruby-identifier">x</span>] = <span class="ruby-identifier">proximity_array_for_content</span>(<span class="ruby-identifier">x</span>).<span class="ruby-identifier">inject</span>(<span class="ruby-value">0.0</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">x</span>,<span class="ruby-identifier">y</span><span class="ruby-operator">|</span> <span class="ruby-identifier">x</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">y</span>[<span class="ruby-value">1</span>]} }
+
+   <span class="ruby-identifier">avg_density</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">sort_by</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-identifier">avg_density</span>[<span class="ruby-identifier">x</span>] }.<span class="ruby-identifier">reverse</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-identifier">max_chunks</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>].<span class="ruby-identifier">map</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- highest_relative_content-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- highest_relative_content-method -->
+
+    
+      <div id="method-i-items" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">items</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Returns an array of items that are indexed.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="items-source">
+            <pre><span class="ruby-comment"># File lib/classifier-reborn/lsi.rb, line 92</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">items</span>
+  <span class="ruby-ivar">@items</span>.<span class="ruby-identifier">keys</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- items-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- items-method -->
+
+    
+      <div id="method-i-needs_rebuild-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">needs_rebuild?</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Returns true if the index needs to be rebuilt.  The index needs to be built
+after all informaton is added, but before you start using it for search,
+classification and cluster detection.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="needs_rebuild-3F-source">
+            <pre><span class="ruby-comment"># File lib/classifier-reborn/lsi.rb, line 43</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">needs_rebuild?</span>
+  (<span class="ruby-ivar">@items</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>) <span class="ruby-operator">&amp;&amp;</span> (<span class="ruby-ivar">@version</span> <span class="ruby-operator">!=</span> <span class="ruby-ivar">@built_at_version</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- needs_rebuild-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- needs_rebuild-3F-method -->
+
+    
+      <div id="method-i-proximity_array_for_content" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">proximity_array_for_content</span><span
+            class="method-args">( doc, &block )</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This function is the primitive that <a
+href="LSI.html#method-i-find_related">#find_related</a> and classify build
+upon. It returns an array of 2-element arrays. The first element of this
+array is a document, and the second is its “score”, defining how “close” it
+is to other indexed items.</p>
+
+<p>These values are somewhat arbitrary, having to do with the vector space
+created by your content, so the magnitude is interpretable but not always
+meaningful between indexes.</p>
+
+<p>The parameter doc is the content to compare. If that content is not
+indexed, you can pass an optional block to define how to create the text
+data. See <a href="LSI.html#method-i-add_item">#add_item</a> for examples
+of how this works.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="proximity_array_for_content-source">
+            <pre><span class="ruby-comment"># File lib/classifier-reborn/lsi.rb, line 175</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">proximity_array_for_content</span>( <span class="ruby-identifier">doc</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span> )
+  <span class="ruby-keyword">return</span> [] <span class="ruby-keyword">if</span> <span class="ruby-identifier">needs_rebuild?</span>
+
+  <span class="ruby-identifier">content_node</span> = <span class="ruby-identifier">node_for_content</span>( <span class="ruby-identifier">doc</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span> )
+  <span class="ruby-identifier">result</span> =
+    <span class="ruby-ivar">@items</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">collect</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">item</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">$GSL</span>
+         <span class="ruby-identifier">val</span> = <span class="ruby-identifier">content_node</span>.<span class="ruby-identifier">search_vector</span> <span class="ruby-operator">*</span> <span class="ruby-ivar">@items</span>[<span class="ruby-identifier">item</span>].<span class="ruby-identifier">search_vector</span>.<span class="ruby-identifier">col</span>
+      <span class="ruby-keyword">else</span>
+         <span class="ruby-identifier">val</span> = (<span class="ruby-constant">Matrix</span>[<span class="ruby-identifier">content_node</span>.<span class="ruby-identifier">search_vector</span>] <span class="ruby-operator">*</span> <span class="ruby-ivar">@items</span>[<span class="ruby-identifier">item</span>].<span class="ruby-identifier">search_vector</span>)[<span class="ruby-value">0</span>]
+      <span class="ruby-keyword">end</span>
+      [<span class="ruby-identifier">item</span>, <span class="ruby-identifier">val</span>]
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">result</span>.<span class="ruby-identifier">sort_by</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-identifier">x</span>[<span class="ruby-value">1</span>] }.<span class="ruby-identifier">reverse</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- proximity_array_for_content-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- proximity_array_for_content-method -->
+
+    
+      <div id="method-i-proximity_norms_for_content" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">proximity_norms_for_content</span><span
+            class="method-args">( doc, &block )</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Similar to <a
+href="LSI.html#method-i-proximity_array_for_content">#proximity_array_for_content</a>,
+this function takes similar arguments and returns a similar array. However,
+it uses the normalized calculated vectors instead of their full versions.
+This is useful when you&#39;re trying to perform operations on content that
+is much smaller than the text you&#39;re working with. search uses this
+primitive.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="proximity_norms_for_content-source">
+            <pre><span class="ruby-comment"># File lib/classifier-reborn/lsi.rb, line 196</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">proximity_norms_for_content</span>( <span class="ruby-identifier">doc</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span> )
+  <span class="ruby-keyword">return</span> [] <span class="ruby-keyword">if</span> <span class="ruby-identifier">needs_rebuild?</span>
+
+  <span class="ruby-identifier">content_node</span> = <span class="ruby-identifier">node_for_content</span>( <span class="ruby-identifier">doc</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span> )
+  <span class="ruby-identifier">result</span> =
+    <span class="ruby-ivar">@items</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">collect</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">item</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">$GSL</span>
+        <span class="ruby-identifier">val</span> = <span class="ruby-identifier">content_node</span>.<span class="ruby-identifier">search_norm</span> <span class="ruby-operator">*</span> <span class="ruby-ivar">@items</span>[<span class="ruby-identifier">item</span>].<span class="ruby-identifier">search_norm</span>.<span class="ruby-identifier">col</span>
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-identifier">val</span> = (<span class="ruby-constant">Matrix</span>[<span class="ruby-identifier">content_node</span>.<span class="ruby-identifier">search_norm</span>] <span class="ruby-operator">*</span> <span class="ruby-ivar">@items</span>[<span class="ruby-identifier">item</span>].<span class="ruby-identifier">search_norm</span>)[<span class="ruby-value">0</span>]
+      <span class="ruby-keyword">end</span>
+      [<span class="ruby-identifier">item</span>, <span class="ruby-identifier">val</span>]
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">result</span>.<span class="ruby-identifier">sort_by</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-identifier">x</span>[<span class="ruby-value">1</span>] }.<span class="ruby-identifier">reverse</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- proximity_norms_for_content-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- proximity_norms_for_content-method -->
+
+    
+      <div id="method-i-remove_item" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">remove_item</span><span
+            class="method-args">( item )</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Removes an item from the database, if it is indexed.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="remove_item-source">
+            <pre><span class="ruby-comment"># File lib/classifier-reborn/lsi.rb, line 84</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">remove_item</span>( <span class="ruby-identifier">item</span> )
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@items</span>.<span class="ruby-identifier">key?</span> <span class="ruby-identifier">item</span>
+    <span class="ruby-ivar">@items</span>.<span class="ruby-identifier">delete</span> <span class="ruby-identifier">item</span>
+    <span class="ruby-ivar">@version</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- remove_item-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- remove_item-method -->
+
+    
+      <div id="method-i-search" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">search</span><span
+            class="method-args">( string, max_nearest=3 )</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This function allows for text-based search of your index. Unlike other
+functions like <a href="LSI.html#method-i-find_related">#find_related</a>
+and classify, search only takes short strings. It will also ignore factors
+like repeated words. It is best for short, google-like search terms. A
+search will first priortize lexical relationships, then semantic ones.</p>
+
+<p>While this may seem backwards compared to the other functions that <a
+href="LSI.html">LSI</a> supports, it is actually the same algorithm, just
+applied on a smaller document.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="search-source">
+            <pre><span class="ruby-comment"># File lib/classifier-reborn/lsi.rb, line 219</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">search</span>( <span class="ruby-identifier">string</span>, <span class="ruby-identifier">max_nearest</span>=<span class="ruby-value">3</span> )
+  <span class="ruby-keyword">return</span> [] <span class="ruby-keyword">if</span> <span class="ruby-identifier">needs_rebuild?</span>
+  <span class="ruby-identifier">carry</span> = <span class="ruby-identifier">proximity_norms_for_content</span>( <span class="ruby-identifier">string</span> )
+  <span class="ruby-identifier">result</span> = <span class="ruby-identifier">carry</span>.<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-identifier">x</span>[<span class="ruby-value">0</span>] }
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">result</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-identifier">max_nearest</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- search-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- search-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+     <section id="private-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Private Instance Methods</h3>
+
+    
+      <div id="method-i-build_reduced_matrix" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">build_reduced_matrix</span><span
+            class="method-args">( matrix, cutoff=0.75 )</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="build_reduced_matrix-source">
+            <pre><span class="ruby-comment"># File lib/classifier-reborn/lsi.rb, line 279</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">build_reduced_matrix</span>( <span class="ruby-identifier">matrix</span>, <span class="ruby-identifier">cutoff</span>=<span class="ruby-value">0.75</span> )
+  <span class="ruby-comment"># TODO: Check that M&gt;=N on these dimensions! Transpose helps assure this</span>
+  <span class="ruby-identifier">u</span>, <span class="ruby-identifier">v</span>, <span class="ruby-identifier">s</span> = <span class="ruby-identifier">matrix</span>.<span class="ruby-constant">SV_decomp</span>
+
+  <span class="ruby-comment"># TODO: Better than 75% term, please. :\</span>
+  <span class="ruby-identifier">s_cutoff</span> = <span class="ruby-identifier">s</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">reverse</span>[(<span class="ruby-identifier">s</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">cutoff</span>).<span class="ruby-identifier">round</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>]
+  <span class="ruby-identifier">s</span>.<span class="ruby-identifier">size</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">ord</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">s</span>[<span class="ruby-identifier">ord</span>] = <span class="ruby-value">0.0</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">s</span>[<span class="ruby-identifier">ord</span>] <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">s_cutoff</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-comment"># Reconstruct the term document matrix, only with reduced rank</span>
+  <span class="ruby-identifier">u</span> <span class="ruby-operator">*</span> (<span class="ruby-identifier">$GSL</span> <span class="ruby-operator">?</span> <span class="ruby-constant">GSL</span><span class="ruby-operator">::</span><span class="ruby-constant">Matrix</span> <span class="ruby-operator">:</span> <span class="ruby-operator">::</span><span class="ruby-constant">Matrix</span>).<span class="ruby-identifier">diag</span>( <span class="ruby-identifier">s</span> ) <span class="ruby-operator">*</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">trans</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- build_reduced_matrix-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- build_reduced_matrix-method -->
+
+    
+      <div id="method-i-make_word_list" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">make_word_list</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="make_word_list-source">
+            <pre><span class="ruby-comment"># File lib/classifier-reborn/lsi.rb, line 308</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">make_word_list</span>
+  <span class="ruby-ivar">@word_list</span> = <span class="ruby-constant">WordList</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-ivar">@items</span>.<span class="ruby-identifier">each_value</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">node</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">node</span>.<span class="ruby-identifier">word_hash</span>.<span class="ruby-identifier">each_key</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">key</span><span class="ruby-operator">|</span> <span class="ruby-ivar">@word_list</span>.<span class="ruby-identifier">add_word</span> <span class="ruby-identifier">key</span> }
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- make_word_list-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- make_word_list-method -->
+
+    
+      <div id="method-i-node_for_content" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">node_for_content</span><span
+            class="method-args">(item, &block)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="node_for_content-source">
+            <pre><span class="ruby-comment"># File lib/classifier-reborn/lsi.rb, line 292</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">node_for_content</span>(<span class="ruby-identifier">item</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@items</span>[<span class="ruby-identifier">item</span>]
+    <span class="ruby-keyword">return</span> <span class="ruby-ivar">@items</span>[<span class="ruby-identifier">item</span>]
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">clean_word_hash</span> = <span class="ruby-constant">Hasher</span>.<span class="ruby-identifier">clean_word_hash</span>(<span class="ruby-identifier">block</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">block</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">item</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">item</span>.<span class="ruby-identifier">to_s</span>)
+
+    <span class="ruby-identifier">cn</span> = <span class="ruby-constant">ContentNode</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">clean_word_hash</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>) <span class="ruby-comment"># make the node and extract the data</span>
+
+    <span class="ruby-keyword">unless</span> <span class="ruby-identifier">needs_rebuild?</span>
+      <span class="ruby-identifier">cn</span>.<span class="ruby-identifier">raw_vector_with</span>( <span class="ruby-ivar">@word_list</span> ) <span class="ruby-comment"># make the lsi raw and norm vectors</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">cn</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- node_for_content-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- node_for_content-method -->
+
+    
+    </section><!-- private-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

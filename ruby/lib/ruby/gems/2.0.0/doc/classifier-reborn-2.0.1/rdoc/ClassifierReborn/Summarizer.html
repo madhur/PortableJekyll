@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>module ClassifierReborn::Summarizer - classifier-reborn-2.0.1 Documentation</title>
+
+<link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/darkfish.js"></script>
+
+
+<body id="top" class="module">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../index.html">Home</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/classifier-reborn/lsi/summarizer.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    
+    
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li ><a href="#method-i-paragraph_summary">#paragraph_summary</a>
+    
+    <li ><a href="#method-i-perform_lsi">#perform_lsi</a>
+    
+    <li ><a href="#method-i-split_paragraphs">#split_paragraphs</a>
+    
+    <li ><a href="#method-i-split_sentences">#split_sentences</a>
+    
+    <li ><a href="#method-i-summary">#summary</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="../LICENSE.html">LICENSE</a>
+  
+    <li class="file"><a href="../README_markdown.html">README.markdown</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../Array.html">Array</a>
+  
+    <li><a href="../ClassifierReborn.html">ClassifierReborn</a>
+  
+    <li><a href="../ClassifierReborn/Bayes.html">ClassifierReborn::Bayes</a>
+  
+    <li><a href="../ClassifierReborn/ContentNode.html">ClassifierReborn::ContentNode</a>
+  
+    <li><a href="../ClassifierReborn/Hasher.html">ClassifierReborn::Hasher</a>
+  
+    <li><a href="../ClassifierReborn/LSI.html">ClassifierReborn::LSI</a>
+  
+    <li><a href="../ClassifierReborn/Summarizer.html">ClassifierReborn::Summarizer</a>
+  
+    <li><a href="../ClassifierReborn/WordList.html">ClassifierReborn::WordList</a>
+  
+    <li><a href="../GSL.html">GSL</a>
+  
+    <li><a href="../GSL/Matrix.html">GSL::Matrix</a>
+  
+    <li><a href="../GSL/Vector.html">GSL::Vector</a>
+  
+    <li><a href="../Matrix.html">Matrix</a>
+  
+    <li><a href="../Object.html">Object</a>
+  
+    <li><a href="../Vector.html">Vector</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="module">module ClassifierReborn::Summarizer</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-paragraph_summary" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">paragraph_summary</span><span
+            class="method-args">( str, count=1, separator=" [...] " )</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="paragraph_summary-source">
+            <pre><span class="ruby-comment"># File lib/classifier-reborn/lsi/summarizer.rb, line 13</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">paragraph_summary</span>( <span class="ruby-identifier">str</span>, <span class="ruby-identifier">count</span>=<span class="ruby-value">1</span>, <span class="ruby-identifier">separator</span>=<span class="ruby-string">&quot; [...] &quot;</span> )
+  <span class="ruby-identifier">perform_lsi</span> <span class="ruby-identifier">split_paragraphs</span>(<span class="ruby-identifier">str</span>), <span class="ruby-identifier">count</span>, <span class="ruby-identifier">separator</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- paragraph_summary-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- paragraph_summary-method -->
+
+    
+      <div id="method-i-perform_lsi" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">perform_lsi</span><span
+            class="method-args">(chunks, count, separator)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="perform_lsi-source">
+            <pre><span class="ruby-comment"># File lib/classifier-reborn/lsi/summarizer.rb, line 25</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">perform_lsi</span>(<span class="ruby-identifier">chunks</span>, <span class="ruby-identifier">count</span>, <span class="ruby-identifier">separator</span>)
+  <span class="ruby-identifier">lsi</span> = <span class="ruby-constant">ClassifierReborn</span><span class="ruby-operator">::</span><span class="ruby-constant">LSI</span>.<span class="ruby-identifier">new</span> <span class="ruby-value">:auto_rebuild</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">false</span>
+  <span class="ruby-identifier">chunks</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">chunk</span><span class="ruby-operator">|</span> <span class="ruby-identifier">lsi</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">chunk</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">chunk</span>.<span class="ruby-identifier">strip</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">chunk</span>.<span class="ruby-identifier">strip</span>.<span class="ruby-identifier">split</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span> }
+  <span class="ruby-identifier">lsi</span>.<span class="ruby-identifier">build_index</span>
+  <span class="ruby-identifier">summaries</span> = <span class="ruby-identifier">lsi</span>.<span class="ruby-identifier">highest_relative_content</span> <span class="ruby-identifier">count</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">summaries</span>.<span class="ruby-identifier">reject</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">chunk</span><span class="ruby-operator">|</span> <span class="ruby-operator">!</span><span class="ruby-identifier">summaries</span>.<span class="ruby-identifier">include?</span> <span class="ruby-identifier">chunk</span> }.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-identifier">x</span>.<span class="ruby-identifier">strip</span> }.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">separator</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- perform_lsi-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- perform_lsi-method -->
+
+    
+      <div id="method-i-split_paragraphs" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">split_paragraphs</span><span
+            class="method-args">(str)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="split_paragraphs-source">
+            <pre><span class="ruby-comment"># File lib/classifier-reborn/lsi/summarizer.rb, line 21</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">split_paragraphs</span>(<span class="ruby-identifier">str</span>)
+  <span class="ruby-identifier">str</span>.<span class="ruby-identifier">split</span> <span class="ruby-regexp">/(\n\n|\r\r|\r\n\r\n)/</span> <span class="ruby-comment"># TODO: make this less primitive</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- split_paragraphs-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- split_paragraphs-method -->
+
+    
+      <div id="method-i-split_sentences" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">split_sentences</span><span
+            class="method-args">(str)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="split_sentences-source">
+            <pre><span class="ruby-comment"># File lib/classifier-reborn/lsi/summarizer.rb, line 17</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">split_sentences</span>(<span class="ruby-identifier">str</span>)
+  <span class="ruby-identifier">str</span>.<span class="ruby-identifier">split</span> <span class="ruby-regexp">/(\.|\!|\?)/</span> <span class="ruby-comment"># TODO: make this less primitive</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- split_sentences-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- split_sentences-method -->
+
+    
+      <div id="method-i-summary" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">summary</span><span
+            class="method-args">( str, count=10, separator=" [...] " )</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="summary-source">
+            <pre><span class="ruby-comment"># File lib/classifier-reborn/lsi/summarizer.rb, line 9</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">summary</span>( <span class="ruby-identifier">str</span>, <span class="ruby-identifier">count</span>=<span class="ruby-value">10</span>, <span class="ruby-identifier">separator</span>=<span class="ruby-string">&quot; [...] &quot;</span> )
+  <span class="ruby-identifier">perform_lsi</span> <span class="ruby-identifier">split_sentences</span>(<span class="ruby-identifier">str</span>), <span class="ruby-identifier">count</span>, <span class="ruby-identifier">separator</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- summary-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- summary-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

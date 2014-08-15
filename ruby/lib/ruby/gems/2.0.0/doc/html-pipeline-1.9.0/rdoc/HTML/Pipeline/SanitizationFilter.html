@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>class HTML::Pipeline::SanitizationFilter - html-pipeline-1.9.0 Documentation</title>
+
+<link type="text/css" media="screen" href="../../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../../index.html">Home</a>
+    <a href="../../table_of_contents.html#classes">Classes</a>
+    <a href="../../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/html/pipeline/sanitization_filter.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link"><a href="Filter.html">HTML::Pipeline::Filter</a>
+  
+</nav>
+
+    
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li ><a href="#method-i-call">#call</a>
+    
+    <li ><a href="#method-i-whitelist">#whitelist</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../../HTML.html">HTML</a>
+  
+    <li><a href="../../HTML/Pipeline.html">HTML::Pipeline</a>
+  
+    <li><a href="../../HTML/Pipeline/AbsoluteSourceFilter.html">HTML::Pipeline::AbsoluteSourceFilter</a>
+  
+    <li><a href="../../HTML/Pipeline/AutolinkFilter.html">HTML::Pipeline::AutolinkFilter</a>
+  
+    <li><a href="../../HTML/Pipeline/BodyContent.html">HTML::Pipeline::BodyContent</a>
+  
+    <li><a href="../../HTML/Pipeline/CamoFilter.html">HTML::Pipeline::CamoFilter</a>
+  
+    <li><a href="../../HTML/Pipeline/EmailReplyFilter.html">HTML::Pipeline::EmailReplyFilter</a>
+  
+    <li><a href="../../HTML/Pipeline/EmojiFilter.html">HTML::Pipeline::EmojiFilter</a>
+  
+    <li><a href="../../HTML/Pipeline/Filter.html">HTML::Pipeline::Filter</a>
+  
+    <li><a href="../../HTML/Pipeline/Filter/InvalidDocumentException.html">HTML::Pipeline::Filter::InvalidDocumentException</a>
+  
+    <li><a href="../../HTML/Pipeline/HttpsFilter.html">HTML::Pipeline::HttpsFilter</a>
+  
+    <li><a href="../../HTML/Pipeline/ImageMaxWidthFilter.html">HTML::Pipeline::ImageMaxWidthFilter</a>
+  
+    <li><a href="../../HTML/Pipeline/MarkdownFilter.html">HTML::Pipeline::MarkdownFilter</a>
+  
+    <li><a href="../../HTML/Pipeline/MentionFilter.html">HTML::Pipeline::MentionFilter</a>
+  
+    <li><a href="../../HTML/Pipeline/PlainTextInputFilter.html">HTML::Pipeline::PlainTextInputFilter</a>
+  
+    <li><a href="../../HTML/Pipeline/SanitizationFilter.html">HTML::Pipeline::SanitizationFilter</a>
+  
+    <li><a href="../../HTML/Pipeline/SyntaxHighlightFilter.html">HTML::Pipeline::SyntaxHighlightFilter</a>
+  
+    <li><a href="../../HTML/Pipeline/TableOfContentsFilter.html">HTML::Pipeline::TableOfContentsFilter</a>
+  
+    <li><a href="../../HTML/Pipeline/TextFilter.html">HTML::Pipeline::TextFilter</a>
+  
+    <li><a href="../../HTML/Pipeline/TextileFilter.html">HTML::Pipeline::TextileFilter</a>
+  
+    <li><a href="../../Nokogiri.html">Nokogiri</a>
+  
+    <li><a href="../../Nokogiri/XML.html">Nokogiri::XML</a>
+  
+    <li><a href="../../Nokogiri/XML/Node.html">Nokogiri::XML::Node</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class HTML::Pipeline::SanitizationFilter</h1>
+
+  <div id="description" class="description">
+    
+<p><a href="../../HTML.html">HTML</a> filter with sanization routines and
+whitelists. This module defines what <a href="../../HTML.html">HTML</a> is
+allowed in user provided content and fixes up issues with unbalanced tags
+and whatnot.</p>
+
+<p>See the Sanitize docs for more information on the underlying library:</p>
+
+<p><a
+href="https://github.com/rgrove/sanitize/#readme">github.com/rgrove/sanitize/#readme</a></p>
+
+<p>Context options:</p>
+
+<pre class="ruby">:<span class="ruby-identifier">whitelist</span>      <span class="ruby-operator">-</span> <span class="ruby-constant">The</span> <span class="ruby-identifier">sanitizer</span> <span class="ruby-identifier">whitelist</span> <span class="ruby-identifier">configuration</span> <span class="ruby-identifier">to</span> <span class="ruby-identifier">use</span>. <span class="ruby-constant">This</span>
+                  <span class="ruby-identifier">can</span> <span class="ruby-identifier">be</span> <span class="ruby-identifier">one</span> <span class="ruby-identifier">of</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">options</span> <span class="ruby-identifier">constants</span> <span class="ruby-identifier">defined</span> <span class="ruby-keyword">in</span> <span class="ruby-identifier">this</span>
+                  <span class="ruby-keyword">class</span> <span class="ruby-keyword">or</span> <span class="ruby-identifier">a</span> <span class="ruby-identifier">custom</span> <span class="ruby-identifier">sanitize</span> <span class="ruby-identifier">options</span> <span class="ruby-identifier">hash</span>.
+:<span class="ruby-identifier">anchor_schemes</span> <span class="ruby-operator">-</span> <span class="ruby-constant">The</span> <span class="ruby-constant">URL</span> <span class="ruby-identifier">schemes</span> <span class="ruby-identifier">to</span> <span class="ruby-identifier">allow</span> <span class="ruby-keyword">in</span> <span class="ruby-operator">&lt;</span><span class="ruby-identifier">a</span> <span class="ruby-identifier">href</span><span class="ruby-operator">&gt;</span> <span class="ruby-identifier">attributes</span>. <span class="ruby-constant">The</span>
+                  <span class="ruby-identifier">default</span> <span class="ruby-identifier">set</span> <span class="ruby-identifier">is</span> <span class="ruby-identifier">provided</span> <span class="ruby-keyword">in</span> <span class="ruby-identifier">the</span> <span class="ruby-constant">ANCHOR_SCHEMES</span>
+                  <span class="ruby-identifier">constant</span> <span class="ruby-keyword">in</span> <span class="ruby-identifier">this</span> <span class="ruby-identifier">class</span>. <span class="ruby-constant">If</span> <span class="ruby-identifier">passed</span>, <span class="ruby-identifier">this</span> <span class="ruby-identifier">overrides</span> <span class="ruby-identifier">any</span>
+                  <span class="ruby-identifier">schemes</span> <span class="ruby-identifier">specified</span> <span class="ruby-keyword">in</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">whitelist</span> <span class="ruby-identifier">configuration</span>.
+</pre>
+
+<p>This filter does not write additional information to the context.</p>
+
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+    <!-- Constants -->
+    <section id="constants-list" class="section">
+      <h3 class="section-header">Constants</h3>
+      <dl>
+      
+        <dt id="ANCHOR_SCHEMES">ANCHOR_SCHEMES
+        
+        <dd class="description"><p>These schemes are the only ones allowed in &lt;a href&gt; attributes by
+default.</p>
+        
+      
+        <dt id="FULL">FULL
+        
+        <dd class="description"><p>Strip all <a href="../../HTML.html">HTML</a> tags from the document.</p>
+        
+      
+        <dt id="LIMITED">LIMITED
+        
+        <dd class="description"><p>A more limited sanitization whitelist. This includes all attributes,
+protocols, and transformers from <a
+href="SanitizationFilter.html#WHITELIST">WHITELIST</a> but with a more
+locked down set of allowed elements.</p>
+        
+      
+        <dt id="LISTS">LISTS
+        
+        <dd class="description">
+        
+      
+        <dt id="LIST_ITEM">LIST_ITEM
+        
+        <dd class="description">
+        
+      
+        <dt id="TABLE">TABLE
+        
+        <dd class="description">
+        
+      
+        <dt id="TABLE_ITEMS">TABLE_ITEMS
+        
+        <dd class="description"><p>List of table child elements. These must be contained by a &lt;table&gt;
+element or they are not allowed through. Otherwise they can be used to
+break out of places we&#39;re using tables to contain formatted user
+content (like pull request review comments).</p>
+        
+      
+        <dt id="TABLE_SECTIONS">TABLE_SECTIONS
+        
+        <dd class="description">
+        
+      
+        <dt id="WHITELIST">WHITELIST
+        
+        <dd class="description"><p>The main sanitization whitelist. Only these elements and attributes are
+allowed through by default.</p>
+        
+      
+      </dl>
+    </section>
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-call" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">call</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Sanitize markup using the Sanitize library.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="call-source">
+            <pre><span class="ruby-comment"># File lib/html/pipeline/sanitization_filter.rb, line 107</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">call</span>
+  <span class="ruby-constant">Sanitize</span>.<span class="ruby-identifier">clean_node!</span>(<span class="ruby-identifier">doc</span>, <span class="ruby-identifier">whitelist</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- call-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- call-method -->
+
+    
+      <div id="method-i-whitelist" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">whitelist</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>The whitelist to use when sanitizing. This can be passed in the context
+hash to the filter but defaults to <a
+href="SanitizationFilter.html#WHITELIST">WHITELIST</a> constant value
+above.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="whitelist-source">
+            <pre><span class="ruby-comment"># File lib/html/pipeline/sanitization_filter.rb, line 113</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">whitelist</span>
+  <span class="ruby-identifier">whitelist</span> = <span class="ruby-identifier">context</span>[<span class="ruby-value">:whitelist</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">WHITELIST</span>
+  <span class="ruby-identifier">anchor_schemes</span> = <span class="ruby-identifier">context</span>[<span class="ruby-value">:anchor_schemes</span>]
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">whitelist</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">anchor_schemes</span>
+  <span class="ruby-identifier">whitelist</span> = <span class="ruby-identifier">whitelist</span>.<span class="ruby-identifier">dup</span>
+  <span class="ruby-identifier">whitelist</span>[<span class="ruby-value">:protocols</span>] = (<span class="ruby-identifier">whitelist</span>[<span class="ruby-value">:protocols</span>] <span class="ruby-operator">||</span> {}).<span class="ruby-identifier">dup</span>
+  <span class="ruby-identifier">whitelist</span>[<span class="ruby-value">:protocols</span>][<span class="ruby-string">&#39;a&#39;</span>] = (<span class="ruby-identifier">whitelist</span>[<span class="ruby-value">:protocols</span>][<span class="ruby-string">&#39;a&#39;</span>] <span class="ruby-operator">||</span> {}).<span class="ruby-identifier">merge</span>(<span class="ruby-string">&#39;href&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">anchor_schemes</span>)
+  <span class="ruby-identifier">whitelist</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- whitelist-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- whitelist-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

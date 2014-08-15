@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>class HTML::Pipeline::MentionFilter - html-pipeline-1.9.0 Documentation</title>
+
+<link type="text/css" media="screen" href="../../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../../index.html">Home</a>
+    <a href="../../table_of_contents.html#classes">Classes</a>
+    <a href="../../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/html/pipeline/@mention_filter.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">Filter
+  
+</nav>
+
+    
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li ><a href="#method-c-mentioned_logins_in">::mentioned_logins_in</a>
+    
+    <li ><a href="#method-i-call">#call</a>
+    
+    <li ><a href="#method-i-info_url">#info_url</a>
+    
+    <li ><a href="#method-i-link_to_mention_info">#link_to_mention_info</a>
+    
+    <li ><a href="#method-i-link_to_mentioned_user">#link_to_mentioned_user</a>
+    
+    <li ><a href="#method-i-mention_link_filter">#mention_link_filter</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../../HTML.html">HTML</a>
+  
+    <li><a href="../../HTML/Pipeline.html">HTML::Pipeline</a>
+  
+    <li><a href="../../HTML/Pipeline/AbsoluteSourceFilter.html">HTML::Pipeline::AbsoluteSourceFilter</a>
+  
+    <li><a href="../../HTML/Pipeline/AutolinkFilter.html">HTML::Pipeline::AutolinkFilter</a>
+  
+    <li><a href="../../HTML/Pipeline/BodyContent.html">HTML::Pipeline::BodyContent</a>
+  
+    <li><a href="../../HTML/Pipeline/CamoFilter.html">HTML::Pipeline::CamoFilter</a>
+  
+    <li><a href="../../HTML/Pipeline/EmailReplyFilter.html">HTML::Pipeline::EmailReplyFilter</a>
+  
+    <li><a href="../../HTML/Pipeline/EmojiFilter.html">HTML::Pipeline::EmojiFilter</a>
+  
+    <li><a href="../../HTML/Pipeline/Filter.html">HTML::Pipeline::Filter</a>
+  
+    <li><a href="../../HTML/Pipeline/Filter/InvalidDocumentException.html">HTML::Pipeline::Filter::InvalidDocumentException</a>
+  
+    <li><a href="../../HTML/Pipeline/HttpsFilter.html">HTML::Pipeline::HttpsFilter</a>
+  
+    <li><a href="../../HTML/Pipeline/ImageMaxWidthFilter.html">HTML::Pipeline::ImageMaxWidthFilter</a>
+  
+    <li><a href="../../HTML/Pipeline/MarkdownFilter.html">HTML::Pipeline::MarkdownFilter</a>
+  
+    <li><a href="../../HTML/Pipeline/MentionFilter.html">HTML::Pipeline::MentionFilter</a>
+  
+    <li><a href="../../HTML/Pipeline/PlainTextInputFilter.html">HTML::Pipeline::PlainTextInputFilter</a>
+  
+    <li><a href="../../HTML/Pipeline/SanitizationFilter.html">HTML::Pipeline::SanitizationFilter</a>
+  
+    <li><a href="../../HTML/Pipeline/SyntaxHighlightFilter.html">HTML::Pipeline::SyntaxHighlightFilter</a>
+  
+    <li><a href="../../HTML/Pipeline/TableOfContentsFilter.html">HTML::Pipeline::TableOfContentsFilter</a>
+  
+    <li><a href="../../HTML/Pipeline/TextFilter.html">HTML::Pipeline::TextFilter</a>
+  
+    <li><a href="../../HTML/Pipeline/TextileFilter.html">HTML::Pipeline::TextileFilter</a>
+  
+    <li><a href="../../Nokogiri.html">Nokogiri</a>
+  
+    <li><a href="../../Nokogiri/XML.html">Nokogiri::XML</a>
+  
+    <li><a href="../../Nokogiri/XML/Node.html">Nokogiri::XML::Node</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class HTML::Pipeline::MentionFilter</h1>
+
+  <div id="description" class="description">
+    
+<p><a href="../../HTML.html">HTML</a> filter that replaces @user mentions with
+links. Mentions within &lt;pre&gt;, &lt;code&gt;, and &lt;a&gt; elements
+are ignored. Mentions that reference users that do not exist are ignored.</p>
+
+<p>Context options:</p>
+
+<pre>:base_url - Used to construct links to user profile pages for each
+            mention.
+:info_url - Used to link to &quot;more info&quot; when someone mentions @mention
+            or @mentioned.</pre>
+
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+    <!-- Constants -->
+    <section id="constants-list" class="section">
+      <h3 class="section-header">Constants</h3>
+      <dl>
+      
+        <dt id="IGNORE_PARENTS">IGNORE_PARENTS
+        
+        <dd class="description"><p>Don&#39;t look for mentions in text nodes that are children of these
+elements</p>
+        
+      
+        <dt id="MentionLogins">MentionLogins
+        
+        <dd class="description"><p>List of username logins that, when mentioned, link to the blog post about
+@mentions instead of triggering a real mention.</p>
+        
+      
+        <dt id="MentionPattern">MentionPattern
+        
+        <dd class="description"><p>Pattern used to extract @mentions from text.</p>
+        
+      
+      </dl>
+    </section>
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-mentioned_logins_in" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">mentioned_logins_in</span><span
+            class="method-args">(text) { |match, login, include?(downcase)| ... }</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Public: Find user @mentions in text.  See <a
+href="MentionFilter.html#method-i-mention_link_filter">#mention_link_filter</a>.</p>
+
+<pre class="ruby"><span class="ruby-constant">MentionFilter</span>.<span class="ruby-identifier">mentioned_logins_in</span>(<span class="ruby-identifier">text</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">match</span>, <span class="ruby-identifier">login</span>, <span class="ruby-identifier">is_mentioned</span><span class="ruby-operator">|</span>
+  <span class="ruby-node">&quot;&lt;a href=...&gt;#{login}&lt;/a&gt;&quot;</span>
+<span class="ruby-keyword">end</span>
+</pre>
+
+<p>text - String text to search.</p>
+
+<p>Yields the String match, the String login name, and a Boolean determining
+if the match = “@<a href="http://ed">mention</a>”.  The yield&#39;s return
+replaces the match in the original text.</p>
+
+<p>Returns a String replaced with the return of the block.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="mentioned_logins_in-source">
+            <pre><span class="ruby-comment"># File lib/html/pipeline/@mention_filter.rb, line 30</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">mentioned_logins_in</span>(<span class="ruby-identifier">text</span>)
+  <span class="ruby-identifier">text</span>.<span class="ruby-identifier">gsub</span> <span class="ruby-constant">MentionPattern</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">match</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">login</span> = <span class="ruby-node">$1</span>
+    <span class="ruby-keyword">yield</span> <span class="ruby-identifier">match</span>, <span class="ruby-identifier">login</span>, <span class="ruby-constant">MentionLogins</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">login</span>.<span class="ruby-identifier">downcase</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- mentioned_logins_in-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- mentioned_logins_in-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-call" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">call</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="call-source">
+            <pre><span class="ruby-comment"># File lib/html/pipeline/@mention_filter.rb, line 62</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">call</span>
+  <span class="ruby-identifier">result</span>[<span class="ruby-value">:mentioned_usernames</span>] <span class="ruby-operator">||=</span> []
+
+  <span class="ruby-identifier">doc</span>.<span class="ruby-identifier">search</span>(<span class="ruby-string">&#39;text()&#39;</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">node</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">content</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">to_html</span>
+    <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">content</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-string">&#39;@&#39;</span>)
+    <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">has_ancestor?</span>(<span class="ruby-identifier">node</span>, <span class="ruby-constant">IGNORE_PARENTS</span>)
+    <span class="ruby-identifier">html</span> = <span class="ruby-identifier">mention_link_filter</span>(<span class="ruby-identifier">content</span>, <span class="ruby-identifier">base_url</span>, <span class="ruby-identifier">info_url</span>)
+    <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">html</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">content</span>
+    <span class="ruby-identifier">node</span>.<span class="ruby-identifier">replace</span>(<span class="ruby-identifier">html</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">doc</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- call-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- call-method -->
+
+    
+      <div id="method-i-info_url" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">info_url</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>The URL to provide when someone @mentions a “mention” name, such as
+@mention or @mentioned, that will give them more info on mentions.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="info_url-source">
+            <pre><span class="ruby-comment"># File lib/html/pipeline/@mention_filter.rb, line 78</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">info_url</span>
+  <span class="ruby-identifier">context</span>[<span class="ruby-value">:info_url</span>] <span class="ruby-operator">||</span> <span class="ruby-keyword">nil</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- info_url-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- info_url-method -->
+
+    
+      <div id="method-i-link_to_mention_info" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">link_to_mention_info</span><span
+            class="method-args">(text, info_url=nil)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="link_to_mention_info-source">
+            <pre><span class="ruby-comment"># File lib/html/pipeline/@mention_filter.rb, line 105</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">link_to_mention_info</span>(<span class="ruby-identifier">text</span>, <span class="ruby-identifier">info_url</span>=<span class="ruby-keyword">nil</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-node">&quot;@#{text}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">info_url</span>.<span class="ruby-identifier">nil?</span>
+  <span class="ruby-node">&quot;&lt;a href=&#39;#{info_url}&#39; class=&#39;user-mention&#39;&gt;&quot;</span> <span class="ruby-operator">+</span>
+  <span class="ruby-node">&quot;@#{text}&quot;</span> <span class="ruby-operator">+</span>
+  <span class="ruby-string">&quot;&lt;/a&gt;&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- link_to_mention_info-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- link_to_mention_info-method -->
+
+    
+      <div id="method-i-link_to_mentioned_user" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">link_to_mentioned_user</span><span
+            class="method-args">(login)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="link_to_mentioned_user-source">
+            <pre><span class="ruby-comment"># File lib/html/pipeline/@mention_filter.rb, line 112</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">link_to_mentioned_user</span>(<span class="ruby-identifier">login</span>)
+  <span class="ruby-identifier">result</span>[<span class="ruby-value">:mentioned_usernames</span>] <span class="ruby-operator">|=</span> [<span class="ruby-identifier">login</span>]
+  <span class="ruby-identifier">url</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">base_url</span>, <span class="ruby-identifier">login</span>)
+  <span class="ruby-node">&quot;&lt;a href=&#39;#{url}&#39; class=&#39;user-mention&#39;&gt;&quot;</span> <span class="ruby-operator">+</span>
+  <span class="ruby-node">&quot;@#{login}&quot;</span> <span class="ruby-operator">+</span>
+  <span class="ruby-string">&quot;&lt;/a&gt;&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- link_to_mentioned_user-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- link_to_mentioned_user-method -->
+
+    
+      <div id="method-i-mention_link_filter" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">mention_link_filter</span><span
+            class="method-args">(text, base_url='/', info_url=nil)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Replace user @mentions in text with links to the mentioned user&#39;s
+profile page.</p>
+
+<p>text      - String text to replace @mention usernames in. base_url  - The
+base URL used to construct user profile URLs. <a
+href="MentionFilter.html#method-i-info_url">#info_url</a>  - The “more
+info” URL used to link to more info on @mentions.</p>
+
+<pre>If nil we don&#39;t link @mention or @mentioned.</pre>
+
+<p>Returns a string with @mentions replaced with links. All links have a
+&#39;user-mention&#39; class name attached for styling.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="mention_link_filter-source">
+            <pre><span class="ruby-comment"># File lib/html/pipeline/@mention_filter.rb, line 92</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">mention_link_filter</span>(<span class="ruby-identifier">text</span>, <span class="ruby-identifier">base_url</span>=<span class="ruby-string">&#39;/&#39;</span>, <span class="ruby-identifier">info_url</span>=<span class="ruby-keyword">nil</span>)
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">mentioned_logins_in</span>(<span class="ruby-identifier">text</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">match</span>, <span class="ruby-identifier">login</span>, <span class="ruby-identifier">is_mentioned</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">link</span> =
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_mentioned</span>
+        <span class="ruby-identifier">link_to_mention_info</span>(<span class="ruby-identifier">login</span>, <span class="ruby-identifier">info_url</span>)
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-identifier">link_to_mentioned_user</span>(<span class="ruby-identifier">login</span>)
+      <span class="ruby-keyword">end</span>
+
+    <span class="ruby-identifier">link</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">match</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-node">&quot;@#{login}&quot;</span>, <span class="ruby-identifier">link</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">match</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- mention_link_filter-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- mention_link_filter-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+
