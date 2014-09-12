@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>class Hitimes::TimedValueMetric - hitimes-1.2.2 Documentation</title>
+
+<link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../index.html">Home</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/hitimes/timed_value_metric.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link"><a href="Metric.html">Hitimes::Metric</a>
+  
+</nav>
+
+    
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li class="calls-super" ><a href="#method-c-new">::new</a>
+    
+    <li ><a href="#method-c-now">::now</a>
+    
+    <li ><a href="#method-i-duration">#duration</a>
+    
+    <li ><a href="#method-i-measure">#measure</a>
+    
+    <li ><a href="#method-i-rate">#rate</a>
+    
+    <li ><a href="#method-i-running-3F">#running?</a>
+    
+    <li ><a href="#method-i-split">#split</a>
+    
+    <li ><a href="#method-i-start">#start</a>
+    
+    <li ><a href="#method-i-stop">#stop</a>
+    
+    <li class="calls-super" ><a href="#method-i-to_hash">#to_hash</a>
+    
+    <li ><a href="#method-i-unit_count">#unit_count</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="../CONTRIBUTING_md.html">CONTRIBUTING</a>
+  
+    <li class="file"><a href="../HISTORY_md.html">HISTORY</a>
+  
+    <li class="file"><a href="../Manifest_txt.html">Manifest</a>
+  
+    <li class="file"><a href="../README_md.html">README</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../Hitimes.html">Hitimes</a>
+  
+    <li><a href="../Hitimes/Error.html">Hitimes::Error</a>
+  
+    <li><a href="../Hitimes/Metric.html">Hitimes::Metric</a>
+  
+    <li><a href="../Hitimes/MutexedStats.html">Hitimes::MutexedStats</a>
+  
+    <li><a href="../Hitimes/Paths.html">Hitimes::Paths</a>
+  
+    <li><a href="../Hitimes/Stats.html">Hitimes::Stats</a>
+  
+    <li><a href="../Hitimes/TimedMetric.html">Hitimes::TimedMetric</a>
+  
+    <li><a href="../Hitimes/TimedValueMetric.html">Hitimes::TimedValueMetric</a>
+  
+    <li><a href="../Hitimes/ValueMetric.html">Hitimes::ValueMetric</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class Hitimes::TimedValueMetric</h1>
+
+  <div id="description" class="description">
+    
+<p>A <a href="TimedValueMetric.html">TimedValueMetric</a> holds the metrics on
+how long it takes to do a batch of something.something.  For measuring how
+long a method takes to operate on N items.</p>
+
+<pre>tm = TimedValueMetric.new( &#39;my-batch-method&#39; )
+
+42.times do 
+  tm.start
+  number_of_items_processed = do_something
+  tm.stop( number_of_items_processed )
+end
+
+puts &quot;#{ tm.name } operated at a rate of #{ tm.rate } calls per second&quot;</pre>
+
+<p><a href="TimedValueMetric.html">TimedValueMetric</a> combines the
+usefulness of a <a href="ValueMetric.html">ValueMetric</a> and a <a
+href="TimedMetric.html">TimedMetric</a>.The stats are available for both
+the time it took to do the operation andthe sizes of the batches that were
+run.</p>
+
+<p>A <a href="TimedValueMetric.html">TimedValueMetric</a> keeps track of both
+the time it took to do an operationand the size of the batch that was
+operated on.  These metrics are keptseparately as <code>timed_stats</code>
+and <code>value_stats</code> accessors.</p>
+
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+    <!-- Attributes -->
+    <section id="attribute-method-details" class="method-section section">
+      <h3 class="section-header">Attributes</h3>
+
+      
+      <div id="attribute-i-timed_stats" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">timed_stats</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>holds all the Timed statistics</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-value_stats" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">value_stats</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>holds all the Value statistics</p>
+        
+        </div>
+      </div>
+      
+    </section><!-- attribute-method-details -->
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            new( &#39;name&#39;) &rarr; TimedValueMetric
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            new( &#39;name&#39;, &#39;other&#39; =&gt; &#39;data&#39;) &rarr; TimedValueMetric
+          </span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Create a new <a href="TimedValueMetric.html">TimedValueMetric</a> giving it
+a name and additional data.<code>additional_data</code> may be anything
+that follows the <code>to_hash</code> protocol</p>
+          
+          
+            <div class="method-calls-super">
+              Calls superclass method
+              <a href="Metric.html#method-c-new">Hitimes::Metric.new</a>
+            </div>
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/hitimes/timed_value_metric.rb, line 58</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>( <span class="ruby-identifier">name</span>, <span class="ruby-identifier">additional_data</span> = {} )
+  <span class="ruby-keyword">super</span>( <span class="ruby-identifier">name</span>, <span class="ruby-identifier">additional_data</span> )
+  <span class="ruby-ivar">@timed_stats</span>      = <span class="ruby-constant">Stats</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-ivar">@value_stats</span>      = <span class="ruby-constant">Stats</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-ivar">@current_interval</span> = <span class="ruby-constant">Interval</span>.<span class="ruby-identifier">new</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- new-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- new-method -->
+
+    
+      <div id="method-c-now" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            now( &#39;name&#39; ) &rarr; TimedValueMetric
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Return a <a href="TimedValueMetric.html">TimedValueMetric</a> that has been
+started</p>
+          
+          
+
+          
+          <div class="method-source-code" id="now-source">
+            <pre><span class="ruby-comment"># File lib/hitimes/timed_value_metric.rb, line 43</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">now</span>( <span class="ruby-identifier">name</span>, <span class="ruby-identifier">additional_data</span> = {} )
+  <span class="ruby-identifier">t</span> = <span class="ruby-constant">TimedValueMetric</span>.<span class="ruby-identifier">new</span>( <span class="ruby-identifier">name</span>, <span class="ruby-identifier">additional_data</span> )
+  <span class="ruby-identifier">t</span>.<span class="ruby-identifier">start</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">t</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- now-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- now-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-duration" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            duration &rarr; Float
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>The duration of measured time from the metric.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="duration-source">
+            <pre><span class="ruby-comment"># File lib/hitimes/timed_value_metric.rb, line 172</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">duration</span>
+  <span class="ruby-ivar">@timed_stats</span>.<span class="ruby-identifier">sum</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- duration-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- duration-method -->
+
+    
+      <div id="method-i-measure" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            measure( value ) {  ... } &rarr; Object
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Measure the execution of a block and add those stats to the running
+stats.The return value is the return value of the block.  A value must be
+passedinto <code>measure</code> to update the <code>value_stats</code>
+portion of the <a href="TimedValueMetric.html">TimedValueMetric</a>.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="measure-source">
+            <pre><span class="ruby-comment"># File lib/hitimes/timed_value_metric.rb, line 129</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">measure</span>( <span class="ruby-identifier">value</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span> )
+  <span class="ruby-identifier">return_value</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-identifier">start</span>
+    <span class="ruby-identifier">return_value</span> = <span class="ruby-keyword">yield</span>
+  <span class="ruby-keyword">ensure</span>
+    <span class="ruby-identifier">stop</span>( <span class="ruby-identifier">value</span> )
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">return_value</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- measure-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- measure-method -->
+
+    
+      <div id="method-i-rate" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            rate &rarr; Float
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Rate in the context of the <a
+href="TimedValueMetric.html">TimedValueMetric</a> is different than
+theTimedMetric.  In the <a
+href="TimedValueMetric.html">TimedValueMetric</a>, each measurement of time
+isassociated with a quantity of things done during that unit of time. 
+Sothe <code>rate</code> for a <a
+href="TimedValueMetric.html">TimedValueMetric</a> is the (sum of all
+quantities sampled) /( sum of all durations measured )</p>
+
+<p>For example, say you were measuring, using a <a
+href="TimedValueMetric.html">TimedValueMetric</a> batch jobsthat had
+individual units of work.</p>
+
+<pre>tvm = TimedValueMetric.new( &#39;some-batch&#39; )
+tvm.start
+# process a batch of 12 units
+duration1 = tvm.stop( 12 )
+
+tvm.start
+# process a larger batch of 42 units
+duration2 = tvm.stop( 42 )</pre>
+
+<p>At this point the rate of units per second is calculated as ( 12 + 42 ) / (
+duration1 + duration2 )</p>
+
+<pre>some_batch_rate = tvm.rate # returns ( 34 / ( duration1+duration2 ) )</pre>
+          
+          
+
+          
+          <div class="method-source-code" id="rate-source">
+            <pre><span class="ruby-comment"># File lib/hitimes/timed_value_metric.rb, line 212</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">rate</span>
+  <span class="ruby-ivar">@value_stats</span>.<span class="ruby-identifier">sum</span> <span class="ruby-operator">/</span> <span class="ruby-ivar">@timed_stats</span>.<span class="ruby-identifier">sum</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- rate-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- rate-method -->
+
+    
+      <div id="method-i-running-3F" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            running? &rarr; true or false
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>return whether or not the metric is currently timing something.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="running-3F-source">
+            <pre><span class="ruby-comment"># File lib/hitimes/timed_value_metric.rb, line 71</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">running?</span>
+  <span class="ruby-ivar">@current_interval</span>.<span class="ruby-identifier">running?</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- running-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- running-3F-method -->
+
+    
+      <div id="method-i-split" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            split( value ) &rarr; Float
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Split the current metric.  Essentially, mark a split time.  This meansstop
+the current interval, with the givein <code>value</code> and create a
+newinterval, but make sure that the new interval lines up exactly,
+timewise,behind the previous interval.</p>
+
+<p>If the metric is running, then split returns the duration of the
+previousinterval, i.e. the split-time.  If the metric is not running,
+nothinghappens, no stats are updated, and false is returned.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="split-source">
+            <pre><span class="ruby-comment"># File lib/hitimes/timed_value_metric.rb, line 154</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">split</span>( <span class="ruby-identifier">value</span> )
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@current_interval</span>.<span class="ruby-identifier">running?</span> <span class="ruby-keyword">then</span> 
+    <span class="ruby-identifier">next_interval</span> = <span class="ruby-ivar">@current_interval</span>.<span class="ruby-identifier">split</span>
+    <span class="ruby-identifier">d</span> = <span class="ruby-ivar">@current_interval</span>.<span class="ruby-identifier">duration</span>
+    <span class="ruby-ivar">@timed_stats</span>.<span class="ruby-identifier">update</span>( <span class="ruby-identifier">d</span> )
+    <span class="ruby-ivar">@value_stats</span>.<span class="ruby-identifier">update</span>( <span class="ruby-identifier">value</span> )
+    <span class="ruby-ivar">@current_interval</span> = <span class="ruby-identifier">next_interval</span> 
+    <span class="ruby-keyword">return</span> <span class="ruby-identifier">d</span>
+  <span class="ruby-keyword">end</span> 
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- split-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- split-method -->
+
+    
+      <div id="method-i-start" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            start &rarr; nil
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Start the current timer, if the current timer is already started, thenthis
+is a noop.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="start-source">
+            <pre><span class="ruby-comment"># File lib/hitimes/timed_value_metric.rb, line 82</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">start</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-keyword">not</span> <span class="ruby-ivar">@current_interval</span>.<span class="ruby-identifier">running?</span> <span class="ruby-keyword">then</span>
+    <span class="ruby-ivar">@current_interval</span>.<span class="ruby-identifier">start</span>
+    <span class="ruby-ivar">@sampling_start_time</span> <span class="ruby-operator">||=</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">utc_microseconds</span>() 
+    <span class="ruby-ivar">@sampling_start_interval</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Interval</span>.<span class="ruby-identifier">now</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">nil</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- start-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- start-method -->
+
+    
+      <div id="method-i-stop" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            stop( count ) &rarr; Float or nil
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Stop the current metric.  The <code>count</code> parameter must be avalue
+to update to the <em>value</em> portion of the <a
+href="TimedValueMetric.html">TimedValueMetric</a>.  Generallythis is
+probably the number of things that were operated upon since+start+ was
+invoked.</p>
+
+<p>This updates both the <code>value_stats</code> and <code>timed_stats</code>
+stats and removesthe current interval. If the metric is stopped then the
+duration of thelast Interval is returned.  If the metric was already
+stopped before thiscall, then false is returned and no stats are updated.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="stop-source">
+            <pre><span class="ruby-comment"># File lib/hitimes/timed_value_metric.rb, line 106</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">stop</span>( <span class="ruby-identifier">value</span> )
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@current_interval</span>.<span class="ruby-identifier">running?</span> <span class="ruby-keyword">then</span>
+    <span class="ruby-identifier">d</span> = <span class="ruby-ivar">@current_interval</span>.<span class="ruby-identifier">stop</span>
+    <span class="ruby-ivar">@timed_stats</span>.<span class="ruby-identifier">update</span>( <span class="ruby-identifier">d</span> )
+    <span class="ruby-ivar">@current_interval</span> = <span class="ruby-constant">Interval</span>.<span class="ruby-identifier">new</span>
+    <span class="ruby-ivar">@value_stats</span>.<span class="ruby-identifier">update</span>( <span class="ruby-identifier">value</span> )
+
+    <span class="ruby-comment"># update the lenght of time we have been sampling</span>
+    <span class="ruby-ivar">@sampling_delta</span> = <span class="ruby-ivar">@sampling_start_interval</span>.<span class="ruby-identifier">duration_so_far</span>
+
+    <span class="ruby-keyword">return</span> <span class="ruby-identifier">d</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- stop-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- stop-method -->
+
+    
+      <div id="method-i-to_hash" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            to_hash &rarr; Hash
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Convert the metric to a hash</p>
+          
+          
+            <div class="method-calls-super">
+              Calls superclass method
+              <a href="Metric.html#method-i-to_hash">Hitimes::Metric#to_hash</a>
+            </div>
+          
+
+          
+          <div class="method-source-code" id="to_hash-source">
+            <pre><span class="ruby-comment"># File lib/hitimes/timed_value_metric.rb, line 222</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">to_hash</span>
+  <span class="ruby-identifier">h</span> = <span class="ruby-keyword">super</span>
+  <span class="ruby-identifier">h</span>[<span class="ruby-string">&#39;timed_stats&#39;</span>] = <span class="ruby-ivar">@timed_stats</span>.<span class="ruby-identifier">to_hash</span>
+  <span class="ruby-identifier">h</span>[<span class="ruby-string">&#39;value_stats&#39;</span>] = <span class="ruby-ivar">@value_stats</span>.<span class="ruby-identifier">to_hash</span>( <span class="ruby-constant">Stats</span><span class="ruby-operator">::</span><span class="ruby-constant">STATS</span> <span class="ruby-operator">-</span> <span class="ruby-node">%w[ rate ]</span> )
+  <span class="ruby-identifier">h</span>[<span class="ruby-string">&#39;rate&#39;</span>] = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">rate</span>
+  <span class="ruby-identifier">h</span>[<span class="ruby-string">&#39;unit_count&#39;</span>] = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">unit_count</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">h</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- to_hash-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- to_hash-method -->
+
+    
+      <div id="method-i-unit_count" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            unit_count &rarr; Float
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>The sum of all values passed to <code>stop</code> or <code>skip</code> or
+<code>measure</code></p>
+          
+          
+
+          
+          <div class="method-source-code" id="unit_count-source">
+            <pre><span class="ruby-comment"># File lib/hitimes/timed_value_metric.rb, line 182</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">unit_count</span>
+  <span class="ruby-ivar">@value_stats</span>.<span class="ruby-identifier">sum</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- unit_count-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- unit_count-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

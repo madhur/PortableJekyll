@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>hitimes-1.2.2 Documentation</title>
+
+<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="./js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
+
+
+<body>
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="./index.html">Home</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="./CONTRIBUTING_md.html">CONTRIBUTING</a>
+  
+    <li class="file"><a href="./HISTORY_md.html">HISTORY</a>
+  
+    <li class="file"><a href="./Manifest_txt.html">Manifest</a>
+  
+    <li class="file"><a href="./README_md.html">README</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="./Hitimes.html">Hitimes</a>
+  
+    <li><a href="./Hitimes/Error.html">Hitimes::Error</a>
+  
+    <li><a href="./Hitimes/Metric.html">Hitimes::Metric</a>
+  
+    <li><a href="./Hitimes/MutexedStats.html">Hitimes::MutexedStats</a>
+  
+    <li><a href="./Hitimes/Paths.html">Hitimes::Paths</a>
+  
+    <li><a href="./Hitimes/Stats.html">Hitimes::Stats</a>
+  
+    <li><a href="./Hitimes/TimedMetric.html">Hitimes::TimedMetric</a>
+  
+    <li><a href="./Hitimes/TimedValueMetric.html">Hitimes::TimedValueMetric</a>
+  
+    <li><a href="./Hitimes/ValueMetric.html">Hitimes::ValueMetric</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation" class="description">
+
+<h2 id="label-hitimes">hitimes<span><a href="#label-hitimes">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+<ul><li>
+<p><a href="http://github.com/copiousfreetime/hitimes">Homepage</a></p>
+</li><li>
+<p><a href="http://github.com.org/copiousfreetime/hitimes">Github project</a></p>
+</li><li>
+<p>email jeremy at copiousfreetime dot org</p>
+</li><li>
+<p><code>git clone url git://github.com/copiousfreetime/hitimes.git</code></p>
+</li></ul>
+
+<h2 id="label-INSTALL">INSTALL<span><a href="#label-INSTALL">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+<ul><li>
+<p><code>gem install hitimes</code></p>
+</li></ul>
+
+<h2 id="label-DESCRIPTION">DESCRIPTION<span><a href="#label-DESCRIPTION">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+
+<p><a href="Hitimes.html">Hitimes</a> is a fast, high resolution timer library
+for recording
+performance metrics. It uses the appropriate low method calls
+for each
+system to get the highest granularity time increments possible.</p>
+
+<p>It currently supports any of the following systems:</p>
+<ul><li>
+<p>any system with the POSIX call <code>clock_gettime()</code></p>
+</li><li>
+<p>Mac OS X</p>
+</li><li>
+<p>Windows</p>
+</li><li>
+<p>JRuby</p>
+</li></ul>
+
+<p>Using <a href="Hitimes.html">Hitimes</a> can be faster than using a series
+of <code>Time.new</code> calls, and
+it will have a much higher granularity.
+It is definitely faster than
+using <code>Process.times</code>.</p>
+
+<h2 id="label-SYNOPSIS">SYNOPSIS<span><a href="#label-SYNOPSIS">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+
+<h3 id="label-Interval">Interval<span><a href="#label-Interval">&para;</a> <a href="#documentation">&uarr;</a></span></h3>
+
+<p>Use Hitimes::Interval to calculate only the duration of a block of code</p>
+
+<pre class="ruby"><span class="ruby-identifier">duration</span> = <span class="ruby-constant">Hitimes</span><span class="ruby-operator">::</span><span class="ruby-constant">Interval</span>.<span class="ruby-identifier">measure</span> <span class="ruby-keyword">do</span>
+             <span class="ruby-comment"># some operation ...</span>
+           <span class="ruby-keyword">end</span>
+
+<span class="ruby-identifier">puts</span> <span class="ruby-identifier">duration</span>
+</pre>
+
+<h3 id="label-TimedMetric">TimedMetric<span><a href="#label-TimedMetric">&para;</a> <a href="#documentation">&uarr;</a></span></h3>
+
+<p>Use a <a href="Hitimes/TimedMetric.html">Hitimes::TimedMetric</a> to
+calculate statistics about an iterative operation</p>
+
+<pre class="ruby"><span class="ruby-identifier">timed_metric</span> = <span class="ruby-constant">Hitimes</span><span class="ruby-operator">::</span><span class="ruby-constant">TimedMetric</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&#39;operation on items&#39;</span>)
+</pre>
+
+<p>Explicitly use <code>start</code> and <code>stop</code>:</p>
+
+<pre class="ruby"><span class="ruby-identifier">collection</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">item</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">timed_metric</span>.<span class="ruby-identifier">start</span>
+  <span class="ruby-comment"># .. do something with item</span>
+  <span class="ruby-identifier">timed_metric</span>.<span class="ruby-identifier">stop</span>
+<span class="ruby-keyword">end</span>
+</pre>
+
+<p>Or use the block. In TimedMetric the return value of <code>measure</code>
+is the return
+value of the block</p>
+
+<pre class="ruby"><span class="ruby-identifier">collection</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">item</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">result_of_do_something</span> = <span class="ruby-identifier">timed_metric</span>.<span class="ruby-identifier">measure</span> { <span class="ruby-identifier">do_something</span>( <span class="ruby-identifier">item</span> ) }
+<span class="ruby-keyword">end</span>
+</pre>
+
+<p>And then look at the stats</p>
+
+<pre class="ruby"><span class="ruby-identifier">puts</span> <span class="ruby-identifier">timed_metric</span>.<span class="ruby-identifier">mean</span>
+<span class="ruby-identifier">puts</span> <span class="ruby-identifier">timed_metric</span>.<span class="ruby-identifier">max</span>
+<span class="ruby-identifier">puts</span> <span class="ruby-identifier">timed_metric</span>.<span class="ruby-identifier">min</span>
+<span class="ruby-identifier">puts</span> <span class="ruby-identifier">timed_metric</span>.<span class="ruby-identifier">stddev</span>
+<span class="ruby-identifier">puts</span> <span class="ruby-identifier">timed_metric</span>.<span class="ruby-identifier">rate</span>
+</pre>
+
+<h3 id="label-ValueMetric">ValueMetric<span><a href="#label-ValueMetric">&para;</a> <a href="#documentation">&uarr;</a></span></h3>
+
+<p>Use a <a href="Hitimes/ValueMetric.html">Hitimes::ValueMetric</a> to
+calculate statistics about measured samples</p>
+
+<pre class="ruby"><span class="ruby-identifier">value_metric</span> = <span class="ruby-constant">Hitimes</span><span class="ruby-operator">::</span><span class="ruby-constant">ValueMetric</span>.<span class="ruby-identifier">new</span>( <span class="ruby-string">&#39;size of thing&#39;</span> )
+<span class="ruby-identifier">loop</span> <span class="ruby-keyword">do</span>
+  <span class="ruby-comment"># ... do stuff changing sizes of &#39;thing&#39;</span>
+  <span class="ruby-identifier">value_metric</span>.<span class="ruby-identifier">measure</span>( <span class="ruby-identifier">thing</span>.<span class="ruby-identifier">size</span> )
+  <span class="ruby-comment"># ... do other stuff that may change size of thing</span>
+<span class="ruby-keyword">end</span>
+
+<span class="ruby-identifier">puts</span> <span class="ruby-identifier">value_metric</span>.<span class="ruby-identifier">mean</span>
+<span class="ruby-identifier">puts</span> <span class="ruby-identifier">value_metric</span>.<span class="ruby-identifier">max</span>
+<span class="ruby-identifier">puts</span> <span class="ruby-identifier">value_metric</span>.<span class="ruby-identifier">min</span>
+<span class="ruby-identifier">puts</span> <span class="ruby-identifier">value_metric</span>.<span class="ruby-identifier">stddev</span>
+<span class="ruby-identifier">puts</span> <span class="ruby-identifier">value_metric</span>.<span class="ruby-identifier">rate</span>
+</pre>
+
+<h3 id="label-TimedValueMetric">TimedValueMetric<span><a href="#label-TimedValueMetric">&para;</a> <a href="#documentation">&uarr;</a></span></h3>
+
+<p>Use a <a href="Hitimes/TimedValueMetric.html">Hitimes::TimedValueMetric</a>
+to calculate statistics about batches of samples</p>
+
+<pre class="ruby"><span class="ruby-identifier">timed_value_metric</span> = <span class="ruby-constant">Hitimes</span><span class="ruby-operator">::</span><span class="ruby-constant">TimedValueMetric</span>.<span class="ruby-identifier">new</span>( <span class="ruby-string">&#39;batch times&#39;</span> )
+<span class="ruby-identifier">loop</span> <span class="ruby-keyword">do</span> 
+  <span class="ruby-identifier">batch</span> = <span class="ruby-operator">...</span> <span class="ruby-comment"># get a batch of things</span>
+  <span class="ruby-identifier">timed_value_metric</span>.<span class="ruby-identifier">start</span>
+  <span class="ruby-comment"># .. do something with batch</span>
+  <span class="ruby-identifier">timed_value_metric</span>.<span class="ruby-identifier">stop</span>( <span class="ruby-identifier">batch</span>.<span class="ruby-identifier">size</span> )
+<span class="ruby-keyword">end</span>
+
+<span class="ruby-identifier">puts</span> <span class="ruby-identifier">timed_value_metric</span>.<span class="ruby-identifier">rate</span>
+
+<span class="ruby-identifier">puts</span> <span class="ruby-identifier">timed_value_metric</span>.<span class="ruby-identifier">timed_stats</span>.<span class="ruby-identifier">mean</span>
+<span class="ruby-identifier">puts</span> <span class="ruby-identifier">timed_value_metric</span>.<span class="ruby-identifier">timed_stats</span>.<span class="ruby-identifier">max</span>
+<span class="ruby-identifier">puts</span> <span class="ruby-identifier">timed_value_metric</span>.<span class="ruby-identifier">timed_stats</span>.<span class="ruby-identifier">min</span>
+<span class="ruby-identifier">puts</span> <span class="ruby-identifier">timed_value_metric</span>.<span class="ruby-identifier">timed_stats</span>.<span class="ruby-identifier">stddev</span>
+
+<span class="ruby-identifier">puts</span> <span class="ruby-identifier">timed_value_metric</span>.<span class="ruby-identifier">value_stats</span>.<span class="ruby-identifier">mean</span>
+<span class="ruby-identifier">puts</span> <span class="ruby-identifier">timed_value_metric</span>.<span class="ruby-identifier">value_stats</span>.<span class="ruby-identifier">max</span>
+<span class="ruby-identifier">puts</span> <span class="ruby-identifier">timed_value_metric</span>.<span class="ruby-identifier">value_stats</span>.<span class="ruby-identifier">min</span>
+<span class="ruby-identifier">puts</span> <span class="ruby-identifier">timed_value_metric</span>.<span class="ruby-identifier">value_stats</span>.<span class="ruby-identifier">stddev</span>
+</pre>
+
+<h2 id="label-CHANGES">CHANGES<span><a href="#label-CHANGES">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+
+<p>Read the <a href="HISTORY_md.html">HISTORY.md</a> file.</p>
+
+<h2 id="label-BUILDING+FOR+WINDOWS">BUILDING FOR WINDOWS<span><a href="#label-BUILDING+FOR+WINDOWS">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+
+<p><a href="https://github.com/luislavena/rake-compiler">rake-compiler</a> is
+use for building
+the windows version. For me, on OSX to cross compile the
+process is:</p>
+
+<pre>% gem install rake-compiler # in each rvm instance, 1.8.7, 1.9.3
+% rvm use 2.0.0@hitimes
+% rake-compiler cross-ruby VERSION=2.0.0-p0 # or latest
+% rvm use 1.9.3@hitimes
+% rake-compiler cross-ruby VERSION=1.9.3-p374 # or latest
+% rvm use 1.8.7@hitimes
+% rake-compiler cross-ruby VERSION=1.8.7-p371
+
+# This only works via 1.8.7 at the current moment
+% rake cross native gem RUBY_CC_VERSION=1.8.7:1.9.3:2.0.0</pre>
+
+<h2 id="label-CREDITS">CREDITS<span><a href="#label-CREDITS">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+<ul><li>
+<p><a href="https://github.com/bruce">Bruce Williams</a> for suggesting the
+idea</p>
+</li></ul>
+
+<h2 id="label-ISC+License">ISC License<span><a href="#label-ISC+License">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+
+<p>Copyright © 2008-2012 Jeremy Hinegardner</p>
+
+<p>Permission to use, copy, modify, and/or distribute this software for
+any
+purpose with or without fee is hereby granted, provided that the
+above
+copyright notice and this permission notice appear in all copies.</p>
+
+<p>THE SOFTWARE IS PROVIDED “AS IS” AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND
+FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
+SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR
+IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.</p>
+</div>
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+
