@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>class ThreadSafe::Util::Adder - thread_safe-0.3.5 Documentation</title>
+
+<link type="text/css" media="screen" href="../../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../../index.html">Home</a>
+    <a href="../../table_of_contents.html#classes">Classes</a>
+    <a href="../../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/thread_safe/util/adder.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">Striped64
+  
+</nav>
+
+    
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li ><a href="#method-i-add">#add</a>
+    
+    <li ><a href="#method-i-decrement">#decrement</a>
+    
+    <li ><a href="#method-i-increment">#increment</a>
+    
+    <li ><a href="#method-i-reset">#reset</a>
+    
+    <li ><a href="#method-i-sum">#sum</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../../SynchronizedDelegator.html">SynchronizedDelegator</a>
+  
+    <li><a href="../../ThreadSafe.html">ThreadSafe</a>
+  
+    <li><a href="../../ThreadSafe.html">ThreadSafe</a>
+  
+    <li><a href="../../ThreadSafe/Array.html">ThreadSafe::Array</a>
+  
+    <li><a href="../../ThreadSafe/AtomicReferenceCacheBackend.html">ThreadSafe::AtomicReferenceCacheBackend</a>
+  
+    <li><a href="../../ThreadSafe/AtomicReferenceCacheBackend/Node.html">ThreadSafe::AtomicReferenceCacheBackend::Node</a>
+  
+    <li><a href="../../ThreadSafe/AtomicReferenceCacheBackend/Node/Util.html">ThreadSafe::AtomicReferenceCacheBackend::Node::Util</a>
+  
+    <li><a href="../../ThreadSafe/AtomicReferenceCacheBackend/Table.html">ThreadSafe::AtomicReferenceCacheBackend::Table</a>
+  
+    <li><a href="../../ThreadSafe/Cache.html">ThreadSafe::Cache</a>
+  
+    <li><a href="../../ThreadSafe/Hash.html">ThreadSafe::Hash</a>
+  
+    <li><a href="../../ThreadSafe/MriCacheBackend.html">ThreadSafe::MriCacheBackend</a>
+  
+    <li><a href="../../ThreadSafe/NonConcurrentCacheBackend.html">ThreadSafe::NonConcurrentCacheBackend</a>
+  
+    <li><a href="../../ThreadSafe/SynchronizedCacheBackend.html">ThreadSafe::SynchronizedCacheBackend</a>
+  
+    <li><a href="../../ThreadSafe/Util.html">ThreadSafe::Util</a>
+  
+    <li><a href="../../ThreadSafe/Util/Adder.html">ThreadSafe::Util::Adder</a>
+  
+    <li><a href="../../ThreadSafe/Util/CheapLockable.html">ThreadSafe::Util::CheapLockable</a>
+  
+    <li><a href="../../ThreadSafe/Util/PowerOfTwoTuple.html">ThreadSafe::Util::PowerOfTwoTuple</a>
+  
+    <li><a href="../../ThreadSafe/Util/Striped64.html">ThreadSafe::Util::Striped64</a>
+  
+    <li><a href="../../ThreadSafe/Util/Striped64/Cell.html">ThreadSafe::Util::Striped64::Cell</a>
+  
+    <li><a href="../../ThreadSafe/Util/Volatile.html">ThreadSafe::Util::Volatile</a>
+  
+    <li><a href="../../ThreadSafe/Util/VolatileTuple.html">ThreadSafe::Util::VolatileTuple</a>
+  
+    <li><a href="../../ThreadSafe/Util/XorShiftRandom.html">ThreadSafe::Util::XorShiftRandom</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class ThreadSafe::Util::Adder</h1>
+
+  <div id="description" class="description">
+    
+<p>A Ruby port of the Doug Lea&#39;s jsr166e.LondAdder class version 1.8
+available in public domain.</p>
+
+<p>Original source code available here: <a
+href="http://gee.cs.oswego.edu/cgi-bin/viewcvs.cgi/jsr166/src/jsr166e/LongAdder.java?revision=1.8">gee.cs.oswego.edu/cgi-bin/viewcvs.cgi/jsr166/src/jsr166e/LongAdder.java?revision=1.8</a></p>
+
+<p>One or more variables that together maintain an initially zero sum. When
+updates (method <code>add</code>) are contended across threads, the set of
+variables may grow dynamically to reduce contention. Method
+<code>sum</code> returns the current total combined across the variables
+maintaining the sum.</p>
+
+<p>This class is usually preferable to single <code>Atomic</code> reference
+when multiple threads update a common sum that is used for purposes such as
+collecting statistics, not for fine-grained synchronization control.  Under
+low update contention, the two classes have similar characteristics. But
+under high contention, expected throughput of this class is significantly
+higher, at the expense of higher space consumption.</p>
+
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-add" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">add</span><span
+            class="method-args">(x)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Adds the given value.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="add-source">
+            <pre><span class="ruby-comment"># File lib/thread_safe/util/adder.rb, line 24</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">add</span>(<span class="ruby-identifier">x</span>)
+  <span class="ruby-keyword">if</span> (<span class="ruby-identifier">current_cells</span> = <span class="ruby-identifier">cells</span>) <span class="ruby-operator">||</span> <span class="ruby-operator">!</span><span class="ruby-identifier">cas_base_computed</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">current_base</span><span class="ruby-operator">|</span> <span class="ruby-identifier">current_base</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">x</span>}
+    <span class="ruby-identifier">was_uncontended</span> = <span class="ruby-keyword">true</span>
+    <span class="ruby-identifier">hash</span>            = <span class="ruby-identifier">hash_code</span>
+    <span class="ruby-keyword">unless</span> <span class="ruby-identifier">current_cells</span> <span class="ruby-operator">&amp;&amp;</span> (<span class="ruby-identifier">cell</span> = <span class="ruby-identifier">current_cells</span>.<span class="ruby-identifier">volatile_get_by_hash</span>(<span class="ruby-identifier">hash</span>)) <span class="ruby-operator">&amp;&amp;</span> (<span class="ruby-identifier">was_uncontended</span> = <span class="ruby-identifier">cell</span>.<span class="ruby-identifier">cas_computed</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">current_value</span><span class="ruby-operator">|</span> <span class="ruby-identifier">current_value</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">x</span>})
+      <span class="ruby-identifier">retry_update</span>(<span class="ruby-identifier">x</span>, <span class="ruby-identifier">hash</span>, <span class="ruby-identifier">was_uncontended</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">current_value</span><span class="ruby-operator">|</span> <span class="ruby-identifier">current_value</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">x</span>}
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- add-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- add-method -->
+
+    
+      <div id="method-i-decrement" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">decrement</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="decrement-source">
+            <pre><span class="ruby-comment"># File lib/thread_safe/util/adder.rb, line 38</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">decrement</span>
+  <span class="ruby-identifier">add</span>(<span class="ruby-value">-1</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- decrement-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- decrement-method -->
+
+    
+      <div id="method-i-increment" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">increment</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="increment-source">
+            <pre><span class="ruby-comment"># File lib/thread_safe/util/adder.rb, line 34</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">increment</span>
+  <span class="ruby-identifier">add</span>(<span class="ruby-value">1</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- increment-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- increment-method -->
+
+    
+      <div id="method-i-reset" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">reset</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="reset-source">
+            <pre><span class="ruby-comment"># File lib/thread_safe/util/adder.rb, line 57</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">reset</span>
+  <span class="ruby-identifier">internal_reset</span>(<span class="ruby-value">0</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- reset-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- reset-method -->
+
+    
+      <div id="method-i-sum" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">sum</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Returns the current sum.  The returned value is <em>NOT</em> an atomic
+snapshot: Invocation in the absence of concurrent updates returns an
+accurate result, but concurrent updates that occur while the sum is being
+calculated might not be incorporated.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="sum-source">
+            <pre><span class="ruby-comment"># File lib/thread_safe/util/adder.rb, line 47</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">sum</span>
+  <span class="ruby-identifier">x</span> = <span class="ruby-identifier">base</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">current_cells</span> = <span class="ruby-identifier">cells</span>
+    <span class="ruby-identifier">current_cells</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">cell</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">x</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">cell</span>.<span class="ruby-identifier">value</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">cell</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">x</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- sum-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- sum-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

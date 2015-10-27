@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>module I18n::Backend::Base - i18n-0.7.0 Documentation</title>
+
+<link type="text/css" media="screen" href="../../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/darkfish.js"></script>
+
+
+<body id="top" class="module">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../../index.html">Home</a>
+    <a href="../../table_of_contents.html#classes">Classes</a>
+    <a href="../../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/i18n/backend/base.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    
+    <!-- Included Modules -->
+<nav id="includes-section" class="section">
+  <h3 class="section-header">Included Modules</h3>
+
+  <ul class="link-list">
+  
+  
+    <li><a class="include" href="Transliterator.html">I18n::Backend::Transliterator</a>
+  
+  
+  </ul>
+</nav>
+
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li ><a href="#method-i-available_locales">#available_locales</a>
+    
+    <li ><a href="#method-i-default">#default</a>
+    
+    <li ><a href="#method-i-exists-3F">#exists?</a>
+    
+    <li ><a href="#method-i-interpolate">#interpolate</a>
+    
+    <li ><a href="#method-i-load_file">#load_file</a>
+    
+    <li ><a href="#method-i-load_rb">#load_rb</a>
+    
+    <li ><a href="#method-i-load_translations">#load_translations</a>
+    
+    <li ><a href="#method-i-load_yml">#load_yml</a>
+    
+    <li ><a href="#method-i-localize">#localize</a>
+    
+    <li ><a href="#method-i-lookup">#lookup</a>
+    
+    <li ><a href="#method-i-pluralize">#pluralize</a>
+    
+    <li ><a href="#method-i-reload-21">#reload!</a>
+    
+    <li ><a href="#method-i-resolve">#resolve</a>
+    
+    <li ><a href="#method-i-store_translations">#store_translations</a>
+    
+    <li ><a href="#method-i-translate">#translate</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../../GetText.html">GetText</a>
+  
+    <li><a href="../../GetText/PoParser.html">GetText::PoParser</a>
+  
+    <li><a href="../../Hash.html">Hash</a>
+  
+    <li><a href="../../I18n.html">I18n</a>
+  
+    <li><a href="../../I18n/ArgumentError.html">I18n::ArgumentError</a>
+  
+    <li><a href="../../I18n/Backend.html">I18n::Backend</a>
+  
+    <li><a href="../../I18n/Backend/Base.html">I18n::Backend::Base</a>
+  
+    <li><a href="../../I18n/Backend/Cache.html">I18n::Backend::Cache</a>
+  
+    <li><a href="../../I18n/Backend/Cascade.html">I18n::Backend::Cascade</a>
+  
+    <li><a href="../../I18n/Backend/Chain.html">I18n::Backend::Chain</a>
+  
+    <li><a href="../../I18n/Backend/Chain/Implementation.html">I18n::Backend::Chain::Implementation</a>
+  
+    <li><a href="../../I18n/Backend/Fallbacks.html">I18n::Backend::Fallbacks</a>
+  
+    <li><a href="../../I18n/Backend/Flatten.html">I18n::Backend::Flatten</a>
+  
+    <li><a href="../../I18n/Backend/Gettext.html">I18n::Backend::Gettext</a>
+  
+    <li><a href="../../I18n/Backend/Gettext/PoData.html">I18n::Backend::Gettext::PoData</a>
+  
+    <li><a href="../../I18n/Backend/InterpolationCompiler.html">I18n::Backend::InterpolationCompiler</a>
+  
+    <li><a href="../../I18n/Backend/InterpolationCompiler/Compiler.html">I18n::Backend::InterpolationCompiler::Compiler</a>
+  
+    <li><a href="../../I18n/Backend/KeyValue.html">I18n::Backend::KeyValue</a>
+  
+    <li><a href="../../I18n/Backend/KeyValue/Implementation.html">I18n::Backend::KeyValue::Implementation</a>
+  
+    <li><a href="../../I18n/Backend/Memoize.html">I18n::Backend::Memoize</a>
+  
+    <li><a href="../../I18n/Backend/Metadata.html">I18n::Backend::Metadata</a>
+  
+    <li><a href="../../I18n/Backend/Pluralization.html">I18n::Backend::Pluralization</a>
+  
+    <li><a href="../../I18n/Backend/Simple.html">I18n::Backend::Simple</a>
+  
+    <li><a href="../../I18n/Backend/Simple/Implementation.html">I18n::Backend::Simple::Implementation</a>
+  
+    <li><a href="../../I18n/Backend/Transliterator.html">I18n::Backend::Transliterator</a>
+  
+    <li><a href="../../I18n/Backend/Transliterator/HashTransliterator.html">I18n::Backend::Transliterator::HashTransliterator</a>
+  
+    <li><a href="../../I18n/Backend/Transliterator/ProcTransliterator.html">I18n::Backend::Transliterator::ProcTransliterator</a>
+  
+    <li><a href="../../I18n/Config.html">I18n::Config</a>
+  
+    <li><a href="../../I18n/ExceptionHandler.html">I18n::ExceptionHandler</a>
+  
+    <li><a href="../../I18n/Gettext.html">I18n::Gettext</a>
+  
+    <li><a href="../../I18n/Gettext/Helpers.html">I18n::Gettext::Helpers</a>
+  
+    <li><a href="../../I18n/InvalidLocale.html">I18n::InvalidLocale</a>
+  
+    <li><a href="../../I18n/InvalidLocaleData.html">I18n::InvalidLocaleData</a>
+  
+    <li><a href="../../I18n/InvalidPluralizationData.html">I18n::InvalidPluralizationData</a>
+  
+    <li><a href="../../I18n/Locale.html">I18n::Locale</a>
+  
+    <li><a href="../../I18n/Locale/Fallbacks.html">I18n::Locale::Fallbacks</a>
+  
+    <li><a href="../../I18n/Locale/Tag.html">I18n::Locale::Tag</a>
+  
+    <li><a href="../../I18n/Locale/Tag/Parents.html">I18n::Locale::Tag::Parents</a>
+  
+    <li><a href="../../I18n/Locale/Tag/Rfc4646.html">I18n::Locale::Tag::Rfc4646</a>
+  
+    <li><a href="../../I18n/Locale/Tag/Rfc4646/Parser.html">I18n::Locale::Tag::Rfc4646::Parser</a>
+  
+    <li><a href="../../I18n/Locale/Tag/Simple.html">I18n::Locale::Tag::Simple</a>
+  
+    <li><a href="../../I18n/MissingInterpolationArgument.html">I18n::MissingInterpolationArgument</a>
+  
+    <li><a href="../../I18n/MissingTranslation.html">I18n::MissingTranslation</a>
+  
+    <li><a href="../../I18n/MissingTranslation/Base.html">I18n::MissingTranslation::Base</a>
+  
+    <li><a href="../../I18n/MissingTranslationData.html">I18n::MissingTranslationData</a>
+  
+    <li><a href="../../I18n/ReservedInterpolationKey.html">I18n::ReservedInterpolationKey</a>
+  
+    <li><a href="../../I18n/Tests.html">I18n::Tests</a>
+  
+    <li><a href="../../I18n/Tests/Basics.html">I18n::Tests::Basics</a>
+  
+    <li><a href="../../I18n/Tests/Defaults.html">I18n::Tests::Defaults</a>
+  
+    <li><a href="../../I18n/Tests/Interpolation.html">I18n::Tests::Interpolation</a>
+  
+    <li><a href="../../I18n/Tests/Interpolation/Encoding.html">I18n::Tests::Interpolation::Encoding</a>
+  
+    <li><a href="../../I18n/Tests/Link.html">I18n::Tests::Link</a>
+  
+    <li><a href="../../I18n/Tests/Localization.html">I18n::Tests::Localization</a>
+  
+    <li><a href="../../I18n/Tests/Localization/Date.html">I18n::Tests::Localization::Date</a>
+  
+    <li><a href="../../I18n/Tests/Localization/DateTime.html">I18n::Tests::Localization::DateTime</a>
+  
+    <li><a href="../../I18n/Tests/Localization/Procs.html">I18n::Tests::Localization::Procs</a>
+  
+    <li><a href="../../I18n/Tests/Localization/Time.html">I18n::Tests::Localization::Time</a>
+  
+    <li><a href="../../I18n/Tests/Lookup.html">I18n::Tests::Lookup</a>
+  
+    <li><a href="../../I18n/Tests/Pluralization.html">I18n::Tests::Pluralization</a>
+  
+    <li><a href="../../I18n/Tests/Procs.html">I18n::Tests::Procs</a>
+  
+    <li><a href="../../I18n/UnknownFileType.html">I18n::UnknownFileType</a>
+  
+    <li><a href="../../Kernel.html">Kernel</a>
+  
+    <li><a href="../../Object.html">Object</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="module">module I18n::Backend::Base</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-available_locales" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">available_locales</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Returns an array of locales for which translations are available ignoring
+the reserved translation meta data key :i18n.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="available_locales-source">
+            <pre><span class="ruby-comment"># File lib/i18n/backend/base.rb, line 79</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">available_locales</span>
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- available_locales-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- available_locales-method -->
+
+    
+      <div id="method-i-exists-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">exists?</span><span
+            class="method-args">(locale, key)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="exists-3F-source">
+            <pre><span class="ruby-comment"># File lib/i18n/backend/base.rb, line 45</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">locale</span>, <span class="ruby-identifier">key</span>)
+  <span class="ruby-identifier">lookup</span>(<span class="ruby-identifier">locale</span>, <span class="ruby-identifier">key</span>) <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- exists-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- exists-3F-method -->
+
+    
+      <div id="method-i-load_translations" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">load_translations</span><span
+            class="method-args">(*filenames)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Accepts a list of paths to translation files. Loads translations from plain
+Ruby (*.rb) or YAML files (*.yml). See <a
+href="Base.html#method-i-load_rb">load_rb</a> and <a
+href="Base.html#method-i-load_yml">load_yml</a> for details.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="load_translations-source">
+            <pre><span class="ruby-comment"># File lib/i18n/backend/base.rb, line 13</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">load_translations</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">filenames</span>)
+  <span class="ruby-identifier">filenames</span> = <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">load_path</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">filenames</span>.<span class="ruby-identifier">empty?</span>
+  <span class="ruby-identifier">filenames</span>.<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">filename</span><span class="ruby-operator">|</span> <span class="ruby-identifier">load_file</span>(<span class="ruby-identifier">filename</span>) }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- load_translations-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- load_translations-method -->
+
+    
+      <div id="method-i-localize" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">localize</span><span
+            class="method-args">(locale, object, format = :default, options = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Acts the same as <code>strftime</code>, but uses a localized version of the
+format string. Takes a key from the date/time formats translations as a
+format argument (<em>e.g.</em>, <code>:short</code> in
+<code>:&#39;date.formats&#39;</code>).</p>
+          
+          
+
+          
+          <div class="method-source-code" id="localize-source">
+            <pre><span class="ruby-comment"># File lib/i18n/backend/base.rb, line 52</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">localize</span>(<span class="ruby-identifier">locale</span>, <span class="ruby-identifier">object</span>, <span class="ruby-identifier">format</span> = <span class="ruby-value">:default</span>, <span class="ruby-identifier">options</span> = {})
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;Object must be a Date, DateTime or Time object. #{object.inspect} given.&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">object</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:strftime</span>)
+
+  <span class="ruby-keyword">if</span> <span class="ruby-constant">Symbol</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">format</span>
+    <span class="ruby-identifier">key</span>  = <span class="ruby-identifier">format</span>
+    <span class="ruby-identifier">type</span> = <span class="ruby-identifier">object</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:sec</span>) <span class="ruby-operator">?</span> <span class="ruby-string">&#39;time&#39;</span> <span class="ruby-operator">:</span> <span class="ruby-string">&#39;date&#39;</span>
+    <span class="ruby-identifier">options</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-value">:raise</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>, <span class="ruby-value">:object</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">object</span>, <span class="ruby-value">:locale</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">locale</span>)
+    <span class="ruby-identifier">format</span>  = <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">t</span>(<span class="ruby-value">:&quot;#{type}.formats.#{key}&quot;</span>, <span class="ruby-identifier">options</span>)
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-comment"># format = resolve(locale, object, format, options)</span>
+  <span class="ruby-identifier">format</span> = <span class="ruby-identifier">format</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/%[aAbBpP]/</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">match</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">case</span> <span class="ruby-identifier">match</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;%a&#39;</span> <span class="ruby-keyword">then</span> <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">t</span>(<span class="ruby-value">:&quot;date.abbr_day_names&quot;</span>,                  <span class="ruby-value">:locale</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">locale</span>, <span class="ruby-value">:format</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">format</span>)[<span class="ruby-identifier">object</span>.<span class="ruby-identifier">wday</span>]
+    <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;%A&#39;</span> <span class="ruby-keyword">then</span> <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">t</span>(<span class="ruby-value">:&quot;date.day_names&quot;</span>,                       <span class="ruby-value">:locale</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">locale</span>, <span class="ruby-value">:format</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">format</span>)[<span class="ruby-identifier">object</span>.<span class="ruby-identifier">wday</span>]
+    <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;%b&#39;</span> <span class="ruby-keyword">then</span> <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">t</span>(<span class="ruby-value">:&quot;date.abbr_month_names&quot;</span>,                <span class="ruby-value">:locale</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">locale</span>, <span class="ruby-value">:format</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">format</span>)[<span class="ruby-identifier">object</span>.<span class="ruby-identifier">mon</span>]
+    <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;%B&#39;</span> <span class="ruby-keyword">then</span> <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">t</span>(<span class="ruby-value">:&quot;date.month_names&quot;</span>,                     <span class="ruby-value">:locale</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">locale</span>, <span class="ruby-value">:format</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">format</span>)[<span class="ruby-identifier">object</span>.<span class="ruby-identifier">mon</span>]
+    <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;%p&#39;</span> <span class="ruby-keyword">then</span> <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">t</span>(<span class="ruby-value">:&quot;time.#{object.hour &lt; 12 ? :am : :pm}&quot;</span>, <span class="ruby-value">:locale</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">locale</span>, <span class="ruby-value">:format</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">format</span>).<span class="ruby-identifier">upcase</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">object</span>.<span class="ruby-identifier">respond_to?</span> <span class="ruby-value">:hour</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;%P&#39;</span> <span class="ruby-keyword">then</span> <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">t</span>(<span class="ruby-value">:&quot;time.#{object.hour &lt; 12 ? :am : :pm}&quot;</span>, <span class="ruby-value">:locale</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">locale</span>, <span class="ruby-value">:format</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">format</span>).<span class="ruby-identifier">downcase</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">object</span>.<span class="ruby-identifier">respond_to?</span> <span class="ruby-value">:hour</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">object</span>.<span class="ruby-identifier">strftime</span>(<span class="ruby-identifier">format</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- localize-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- localize-method -->
+
+    
+      <div id="method-i-reload-21" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">reload!</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="reload-21-source">
+            <pre><span class="ruby-comment"># File lib/i18n/backend/base.rb, line 83</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">reload!</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- reload-21-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- reload-21-method -->
+
+    
+      <div id="method-i-store_translations" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">store_translations</span><span
+            class="method-args">(locale, data, options = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method receives a locale, a data hash and options for storing
+translations. Should be implemented</p>
+          
+          
+
+          
+          <div class="method-source-code" id="store_translations-source">
+            <pre><span class="ruby-comment"># File lib/i18n/backend/base.rb, line 20</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">store_translations</span>(<span class="ruby-identifier">locale</span>, <span class="ruby-identifier">data</span>, <span class="ruby-identifier">options</span> = {})
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- store_translations-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- store_translations-method -->
+
+    
+      <div id="method-i-translate" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">translate</span><span
+            class="method-args">(locale, key, options = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="translate-source">
+            <pre><span class="ruby-comment"># File lib/i18n/backend/base.rb, line 24</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">translate</span>(<span class="ruby-identifier">locale</span>, <span class="ruby-identifier">key</span>, <span class="ruby-identifier">options</span> = {})
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">InvalidLocale</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">locale</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">locale</span>
+  <span class="ruby-identifier">entry</span> = <span class="ruby-identifier">key</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">lookup</span>(<span class="ruby-identifier">locale</span>, <span class="ruby-identifier">key</span>, <span class="ruby-identifier">options</span>[<span class="ruby-value">:scope</span>], <span class="ruby-identifier">options</span>)
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">options</span>.<span class="ruby-identifier">empty?</span>
+    <span class="ruby-identifier">entry</span> = <span class="ruby-identifier">resolve</span>(<span class="ruby-identifier">locale</span>, <span class="ruby-identifier">key</span>, <span class="ruby-identifier">entry</span>, <span class="ruby-identifier">options</span>)
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">count</span>, <span class="ruby-identifier">default</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">values_at</span>(<span class="ruby-value">:count</span>, <span class="ruby-value">:default</span>)
+    <span class="ruby-identifier">values</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">except</span>(<span class="ruby-operator">*</span><span class="ruby-constant">RESERVED_KEYS</span>)
+    <span class="ruby-identifier">entry</span> = <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">default</span> <span class="ruby-operator">?</span>
+      <span class="ruby-identifier">default</span>(<span class="ruby-identifier">locale</span>, <span class="ruby-identifier">key</span>, <span class="ruby-identifier">default</span>, <span class="ruby-identifier">options</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">resolve</span>(<span class="ruby-identifier">locale</span>, <span class="ruby-identifier">key</span>, <span class="ruby-identifier">entry</span>, <span class="ruby-identifier">options</span>)
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">throw</span>(<span class="ruby-value">:exception</span>, <span class="ruby-constant">I18n</span><span class="ruby-operator">::</span><span class="ruby-constant">MissingTranslation</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">locale</span>, <span class="ruby-identifier">key</span>, <span class="ruby-identifier">options</span>)) <span class="ruby-keyword">if</span> <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">nil?</span>
+  <span class="ruby-identifier">entry</span> = <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">dup</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">String</span>)
+
+  <span class="ruby-identifier">entry</span> = <span class="ruby-identifier">pluralize</span>(<span class="ruby-identifier">locale</span>, <span class="ruby-identifier">entry</span>, <span class="ruby-identifier">count</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">count</span>
+  <span class="ruby-identifier">entry</span> = <span class="ruby-identifier">interpolate</span>(<span class="ruby-identifier">locale</span>, <span class="ruby-identifier">entry</span>, <span class="ruby-identifier">values</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">values</span>
+  <span class="ruby-identifier">entry</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- translate-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- translate-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+     <section id="protected-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Protected Instance Methods</h3>
+
+    
+      <div id="method-i-default" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">default</span><span
+            class="method-args">(locale, object, subject, options = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Evaluates defaults. If given subject is an Array, it walks the array and
+returns the first translation that can be resolved. Otherwise it tries to
+resolve the translation directly.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="default-source">
+            <pre><span class="ruby-comment"># File lib/i18n/backend/base.rb, line 97</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">default</span>(<span class="ruby-identifier">locale</span>, <span class="ruby-identifier">object</span>, <span class="ruby-identifier">subject</span>, <span class="ruby-identifier">options</span> = {})
+  <span class="ruby-identifier">options</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">dup</span>.<span class="ruby-identifier">reject</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span> <span class="ruby-identifier">key</span> <span class="ruby-operator">==</span> <span class="ruby-value">:default</span> }
+  <span class="ruby-keyword">case</span> <span class="ruby-identifier">subject</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-constant">Array</span>
+    <span class="ruby-identifier">subject</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">item</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">result</span> = <span class="ruby-identifier">resolve</span>(<span class="ruby-identifier">locale</span>, <span class="ruby-identifier">object</span>, <span class="ruby-identifier">item</span>, <span class="ruby-identifier">options</span>) <span class="ruby-keyword">and</span> <span class="ruby-keyword">return</span> <span class="ruby-identifier">result</span>
+    <span class="ruby-keyword">end</span> <span class="ruby-keyword">and</span> <span class="ruby-keyword">nil</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">resolve</span>(<span class="ruby-identifier">locale</span>, <span class="ruby-identifier">object</span>, <span class="ruby-identifier">subject</span>, <span class="ruby-identifier">options</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- default-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- default-method -->
+
+    
+      <div id="method-i-interpolate" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">interpolate</span><span
+            class="method-args">(locale, string, values = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Interpolates values into a given string.</p>
+
+<pre class="ruby"><span class="ruby-identifier">interpolate</span> <span class="ruby-string">&quot;file %{file} opened by %%{user}&quot;</span>, :<span class="ruby-identifier">file</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;test.txt&#39;</span>, :<span class="ruby-identifier">user</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;Mr. X&#39;</span>
+<span class="ruby-comment"># =&gt; &quot;file test.txt opened by %{user}&quot;</span>
+</pre>
+          
+          
+
+          
+          <div class="method-source-code" id="interpolate-source">
+            <pre><span class="ruby-comment"># File lib/i18n/backend/base.rb, line 150</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">interpolate</span>(<span class="ruby-identifier">locale</span>, <span class="ruby-identifier">string</span>, <span class="ruby-identifier">values</span> = {})
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">string</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-operator">::</span><span class="ruby-constant">String</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">values</span>.<span class="ruby-identifier">empty?</span>
+    <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">interpolate</span>(<span class="ruby-identifier">string</span>, <span class="ruby-identifier">values</span>)
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">string</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- interpolate-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- interpolate-method -->
+
+    
+      <div id="method-i-load_file" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">load_file</span><span
+            class="method-args">(filename)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Loads a single translations file by delegating to <a
+href="Base.html#method-i-load_rb">load_rb</a> or <a
+href="Base.html#method-i-load_yml">load_yml</a> depending on the file
+extension and directly merges the data to the existing translations. Raises
+<a href="../UnknownFileType.html">I18n::UnknownFileType</a> for all other
+file extensions.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="load_file-source">
+            <pre><span class="ruby-comment"># File lib/i18n/backend/base.rb, line 162</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">load_file</span>(<span class="ruby-identifier">filename</span>)
+  <span class="ruby-identifier">type</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">extname</span>(<span class="ruby-identifier">filename</span>).<span class="ruby-identifier">tr</span>(<span class="ruby-string">&#39;.&#39;</span>, <span class="ruby-string">&#39;&#39;</span>).<span class="ruby-identifier">downcase</span>
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">UnknownFileType</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">type</span>, <span class="ruby-identifier">filename</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:&quot;load_#{type}&quot;</span>, <span class="ruby-keyword">true</span>)
+  <span class="ruby-identifier">data</span> = <span class="ruby-identifier">send</span>(<span class="ruby-value">:&quot;load_#{type}&quot;</span>, <span class="ruby-identifier">filename</span>)
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">data</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>)
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">InvalidLocaleData</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">filename</span>, <span class="ruby-string">&#39;expects it to return a hash, but does not&#39;</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">data</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">locale</span>, <span class="ruby-identifier">d</span><span class="ruby-operator">|</span> <span class="ruby-identifier">store_translations</span>(<span class="ruby-identifier">locale</span>, <span class="ruby-identifier">d</span> <span class="ruby-operator">||</span> {}) }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- load_file-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- load_file-method -->
+
+    
+      <div id="method-i-load_rb" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">load_rb</span><span
+            class="method-args">(filename)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Loads a plain Ruby translations file. eval&#39;ing the file must yield a <a
+href="../../Hash.html">Hash</a> containing translation data with locales as
+toplevel keys.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="load_rb-source">
+            <pre><span class="ruby-comment"># File lib/i18n/backend/base.rb, line 174</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">load_rb</span>(<span class="ruby-identifier">filename</span>)
+  <span class="ruby-identifier">eval</span>(<span class="ruby-constant">IO</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">filename</span>), <span class="ruby-identifier">binding</span>, <span class="ruby-identifier">filename</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- load_rb-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- load_rb-method -->
+
+    
+      <div id="method-i-load_yml" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">load_yml</span><span
+            class="method-args">(filename)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Loads a YAML translations file. The data must have locales as toplevel
+keys.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="load_yml-source">
+            <pre><span class="ruby-comment"># File lib/i18n/backend/base.rb, line 180</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">load_yml</span>(<span class="ruby-identifier">filename</span>)
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-constant">YAML</span>.<span class="ruby-identifier">load_file</span>(<span class="ruby-identifier">filename</span>)
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">TypeError</span>, <span class="ruby-constant">ScriptError</span>, <span class="ruby-constant">StandardError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">InvalidLocaleData</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">filename</span>, <span class="ruby-identifier">e</span>.<span class="ruby-identifier">inspect</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- load_yml-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- load_yml-method -->
+
+    
+      <div id="method-i-lookup" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">lookup</span><span
+            class="method-args">(locale, key, scope = [], options = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>The method which actually looks up for the translation in the store.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="lookup-source">
+            <pre><span class="ruby-comment"># File lib/i18n/backend/base.rb, line 89</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">lookup</span>(<span class="ruby-identifier">locale</span>, <span class="ruby-identifier">key</span>, <span class="ruby-identifier">scope</span> = [], <span class="ruby-identifier">options</span> = {})
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- lookup-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- lookup-method -->
+
+    
+      <div id="method-i-pluralize" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">pluralize</span><span
+            class="method-args">(locale, entry, count)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Picks a translation from a pluralized mnemonic subkey according to English
+pluralization rules :</p>
+<ul><li>
+<p>It will pick the :one subkey if count is equal to 1.</p>
+</li><li>
+<p>It will pick the :other subkey otherwise.</p>
+</li><li>
+<p>It will pick the :zero subkey in the special case where count is equal to 0
+and there is a :zero subkey present. This behaviour is not stand with
+regards to the CLDR pluralization rules.</p>
+</li></ul>
+
+<p>Other backends can implement more flexible or complex pluralization rules.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="pluralize-source">
+            <pre><span class="ruby-comment"># File lib/i18n/backend/base.rb, line 137</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">pluralize</span>(<span class="ruby-identifier">locale</span>, <span class="ruby-identifier">entry</span>, <span class="ruby-identifier">count</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">entry</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">count</span>
+
+  <span class="ruby-identifier">key</span> = <span class="ruby-value">:zero</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">count</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-value">:zero</span>)
+  <span class="ruby-identifier">key</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">count</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span> <span class="ruby-operator">?</span> <span class="ruby-value">:one</span> <span class="ruby-operator">:</span> <span class="ruby-value">:other</span>
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">InvalidPluralizationData</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">entry</span>, <span class="ruby-identifier">count</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">key</span>)
+  <span class="ruby-identifier">entry</span>[<span class="ruby-identifier">key</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- pluralize-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- pluralize-method -->
+
+    
+      <div id="method-i-resolve" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">resolve</span><span
+            class="method-args">(locale, object, subject, options = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Resolves a translation. If the given subject is a Symbol, it will be
+translated with the given options. If it is a Proc then it will be
+evaluated. All other subjects will be returned directly.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="resolve-source">
+            <pre><span class="ruby-comment"># File lib/i18n/backend/base.rb, line 113</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">resolve</span>(<span class="ruby-identifier">locale</span>, <span class="ruby-identifier">object</span>, <span class="ruby-identifier">subject</span>, <span class="ruby-identifier">options</span> = {})
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">subject</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:resolve</span>] <span class="ruby-operator">==</span> <span class="ruby-keyword">false</span>
+  <span class="ruby-identifier">result</span> = <span class="ruby-identifier">catch</span>(<span class="ruby-value">:exception</span>) <span class="ruby-keyword">do</span>
+    <span class="ruby-keyword">case</span> <span class="ruby-identifier">subject</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-constant">Symbol</span>
+      <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">translate</span>(<span class="ruby-identifier">subject</span>, <span class="ruby-identifier">options</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-value">:locale</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">locale</span>, <span class="ruby-value">:throw</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>))
+    <span class="ruby-keyword">when</span> <span class="ruby-constant">Proc</span>
+      <span class="ruby-identifier">date_or_time</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-value">:object</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">object</span>
+      <span class="ruby-identifier">resolve</span>(<span class="ruby-identifier">locale</span>, <span class="ruby-identifier">object</span>, <span class="ruby-identifier">subject</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">date_or_time</span>, <span class="ruby-identifier">options</span>))
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">subject</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">result</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">result</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">MissingTranslation</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- resolve-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- resolve-method -->
+
+    
+    </section><!-- protected-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

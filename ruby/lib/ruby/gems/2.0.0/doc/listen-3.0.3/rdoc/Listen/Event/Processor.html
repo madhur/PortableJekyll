@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>class Listen::Event::Processor - listen-3.0.3 Documentation</title>
+
+<link type="text/css" media="screen" href="../../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../../index.html">Home</a>
+    <a href="../../table_of_contents.html#classes">Classes</a>
+    <a href="../../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/listen/event/processor.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">Object
+  
+</nav>
+
+    
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li ><a href="#method-c-new">::new</a>
+    
+    <li ><a href="#method-i-_check_stopped">#_check_stopped</a>
+    
+    <li ><a href="#method-i-_deadline">#_deadline</a>
+    
+    <li ><a href="#method-i-_flush_wakeup_reasons">#_flush_wakeup_reasons</a>
+    
+    <li ><a href="#method-i-_process_changes">#_process_changes</a>
+    
+    <li ><a href="#method-i-_remember_time_of_first_unprocessed_event">#_remember_time_of_first_unprocessed_event</a>
+    
+    <li ><a href="#method-i-_reset_no_unprocessed_events">#_reset_no_unprocessed_events</a>
+    
+    <li ><a href="#method-i-_sleep">#_sleep</a>
+    
+    <li ><a href="#method-i-_timestamp">#_timestamp</a>
+    
+    <li ><a href="#method-i-_wait_until_events">#_wait_until_events</a>
+    
+    <li ><a href="#method-i-_wait_until_events_calm_down">#_wait_until_events_calm_down</a>
+    
+    <li ><a href="#method-i-_wait_until_no_longer_paused">#_wait_until_no_longer_paused</a>
+    
+    <li ><a href="#method-i-loop_for">#loop_for</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../../Listen.html">Listen</a>
+  
+    <li><a href="../../Listen/Adapter.html">Listen::Adapter</a>
+  
+    <li><a href="../../Listen/Adapter/BSD.html">Listen::Adapter::BSD</a>
+  
+    <li><a href="../../Listen/Adapter/Base.html">Listen::Adapter::Base</a>
+  
+    <li><a href="../../Listen/Adapter/Config.html">Listen::Adapter::Config</a>
+  
+    <li><a href="../../Listen/Adapter/Darwin.html">Listen::Adapter::Darwin</a>
+  
+    <li><a href="../../Listen/Adapter/Linux.html">Listen::Adapter::Linux</a>
+  
+    <li><a href="../../Listen/Adapter/Polling.html">Listen::Adapter::Polling</a>
+  
+    <li><a href="../../Listen/Adapter/Windows.html">Listen::Adapter::Windows</a>
+  
+    <li><a href="../../Listen/Backend.html">Listen::Backend</a>
+  
+    <li><a href="../../Listen/CLI.html">Listen::CLI</a>
+  
+    <li><a href="../../Listen/Change.html">Listen::Change</a>
+  
+    <li><a href="../../Listen/Change/Config.html">Listen::Change::Config</a>
+  
+    <li><a href="../../Listen/Directory.html">Listen::Directory</a>
+  
+    <li><a href="../../Listen/Event.html">Listen::Event</a>
+  
+    <li><a href="../../Listen/Event/Config.html">Listen::Event::Config</a>
+  
+    <li><a href="../../Listen/Event/Loop.html">Listen::Event::Loop</a>
+  
+    <li><a href="../../Listen/Event/Loop/Error.html">Listen::Event::Loop::Error</a>
+  
+    <li><a href="../../Listen/Event/Loop/Error/NotStarted.html">Listen::Event::Loop::Error::NotStarted</a>
+  
+    <li><a href="../../Listen/Event/Processor.html">Listen::Event::Processor</a>
+  
+    <li><a href="../../Listen/Event/Processor/Stopped.html">Listen::Event::Processor::Stopped</a>
+  
+    <li><a href="../../Listen/Event/Queue.html">Listen::Event::Queue</a>
+  
+    <li><a href="../../Listen/Event/Queue/Config.html">Listen::Event::Queue::Config</a>
+  
+    <li><a href="../../Listen/FSM.html">Listen::FSM</a>
+  
+    <li><a href="../../Listen/FSM/ClassMethods.html">Listen::FSM::ClassMethods</a>
+  
+    <li><a href="../../Listen/FSM/State.html">Listen::FSM::State</a>
+  
+    <li><a href="../../Listen/File.html">Listen::File</a>
+  
+    <li><a href="../../Listen/Forwarder.html">Listen::Forwarder</a>
+  
+    <li><a href="../../Listen/Internals.html">Listen::Internals</a>
+  
+    <li><a href="../../Listen/Internals/ThreadPool.html">Listen::Internals::ThreadPool</a>
+  
+    <li><a href="../../Listen/Listener.html">Listen::Listener</a>
+  
+    <li><a href="../../Listen/Listener/Config.html">Listen::Listener::Config</a>
+  
+    <li><a href="../../Listen/Logger.html">Listen::Logger</a>
+  
+    <li><a href="../../Listen/Options.html">Listen::Options</a>
+  
+    <li><a href="../../Listen/QueueOptimizer.html">Listen::QueueOptimizer</a>
+  
+    <li><a href="../../Listen/QueueOptimizer/Config.html">Listen::QueueOptimizer::Config</a>
+  
+    <li><a href="../../Listen/Record.html">Listen::Record</a>
+  
+    <li><a href="../../Listen/Record/Entry.html">Listen::Record::Entry</a>
+  
+    <li><a href="../../Listen/Record/SymlinkDetector.html">Listen::Record::SymlinkDetector</a>
+  
+    <li><a href="../../Listen/Record/SymlinkDetector/Error.html">Listen::Record::SymlinkDetector::Error</a>
+  
+    <li><a href="../../Listen/Silencer.html">Listen::Silencer</a>
+  
+    <li><a href="../../Listen/Silencer/Controller.html">Listen::Silencer::Controller</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class Listen::Event::Processor</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+    <!-- Attributes -->
+    <section id="attribute-method-details" class="method-section section">
+      <h3 class="section-header">Attributes</h3>
+
+      
+      <div id="attribute-i-config" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">config</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+    </section><!-- attribute-method-details -->
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">(config, reasons)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/listen/event/processor.rb, line 4</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">config</span>, <span class="ruby-identifier">reasons</span>)
+  <span class="ruby-ivar">@config</span> = <span class="ruby-identifier">config</span>
+  <span class="ruby-ivar">@reasons</span> = <span class="ruby-identifier">reasons</span>
+  <span class="ruby-identifier">_reset_no_unprocessed_events</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- new-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- new-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-loop_for" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">loop_for</span><span
+            class="method-args">(latency)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>TODO: implement this properly instead of checking the state at arbitrary
+points in time</p>
+          
+          
+
+          
+          <div class="method-source-code" id="loop_for-source">
+            <pre><span class="ruby-comment"># File lib/listen/event/processor.rb, line 12</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">loop_for</span>(<span class="ruby-identifier">latency</span>)
+  <span class="ruby-ivar">@latency</span> = <span class="ruby-identifier">latency</span>
+
+  <span class="ruby-identifier">loop</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">_wait_until_events</span>
+    <span class="ruby-identifier">_wait_until_events_calm_down</span>
+    <span class="ruby-identifier">_wait_until_no_longer_paused</span>
+    <span class="ruby-identifier">_process_changes</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">rescue</span> <span class="ruby-constant">Stopped</span>
+  <span class="ruby-constant">Listen</span><span class="ruby-operator">::</span><span class="ruby-constant">Logger</span>.<span class="ruby-identifier">debug</span>(<span class="ruby-string">&#39;Processing stopped&#39;</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- loop_for-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- loop_for-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+     <section id="private-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Private Instance Methods</h3>
+
+    
+      <div id="method-i-_check_stopped" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">_check_stopped</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="_check_stopped-source">
+            <pre><span class="ruby-comment"># File lib/listen/event/processor.rb, line 50</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">_check_stopped</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">config</span>.<span class="ruby-identifier">stopped?</span>
+
+  <span class="ruby-identifier">_flush_wakeup_reasons</span>
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">Stopped</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- _check_stopped-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- _check_stopped-method -->
+
+    
+      <div id="method-i-_deadline" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">_deadline</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="_deadline-source">
+            <pre><span class="ruby-comment"># File lib/listen/event/processor.rb, line 78</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">_deadline</span>
+  <span class="ruby-ivar">@first_unprocessed_event_time</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@latency</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- _deadline-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- _deadline-method -->
+
+    
+      <div id="method-i-_flush_wakeup_reasons" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">_flush_wakeup_reasons</span><span
+            class="method-args">() { |reason| ... }</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="_flush_wakeup_reasons-source">
+            <pre><span class="ruby-comment"># File lib/listen/event/processor.rb, line 88</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">_flush_wakeup_reasons</span>
+  <span class="ruby-identifier">reasons</span> = <span class="ruby-ivar">@reasons</span>
+  <span class="ruby-keyword">until</span> <span class="ruby-identifier">reasons</span>.<span class="ruby-identifier">empty?</span>
+    <span class="ruby-identifier">reason</span> = <span class="ruby-identifier">reasons</span>.<span class="ruby-identifier">pop</span>
+    <span class="ruby-keyword">yield</span> <span class="ruby-identifier">reason</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">block_given?</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- _flush_wakeup_reasons-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- _flush_wakeup_reasons-method -->
+
+    
+      <div id="method-i-_process_changes" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">_process_changes</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>for easier testing without sleep loop</p>
+          
+          
+
+          
+          <div class="method-source-code" id="_process_changes-source">
+            <pre><span class="ruby-comment"># File lib/listen/event/processor.rb, line 101</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">_process_changes</span>
+  <span class="ruby-identifier">_reset_no_unprocessed_events</span>
+
+  <span class="ruby-identifier">changes</span> = []
+  <span class="ruby-identifier">changes</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">config</span>.<span class="ruby-identifier">event_queue</span>.<span class="ruby-identifier">pop</span> <span class="ruby-keyword">until</span> <span class="ruby-identifier">config</span>.<span class="ruby-identifier">event_queue</span>.<span class="ruby-identifier">empty?</span>
+
+  <span class="ruby-identifier">callable</span> = <span class="ruby-identifier">config</span>.<span class="ruby-identifier">callable?</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">callable</span>
+
+  <span class="ruby-identifier">hash</span> = <span class="ruby-identifier">config</span>.<span class="ruby-identifier">optimize_changes</span>(<span class="ruby-identifier">changes</span>)
+  <span class="ruby-identifier">result</span> = [<span class="ruby-identifier">hash</span>[<span class="ruby-value">:modified</span>], <span class="ruby-identifier">hash</span>[<span class="ruby-value">:added</span>], <span class="ruby-identifier">hash</span>[<span class="ruby-value">:removed</span>]]
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">result</span>.<span class="ruby-identifier">all?</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:empty?</span>)
+
+  <span class="ruby-identifier">block_start</span> = <span class="ruby-identifier">_timestamp</span>
+  <span class="ruby-identifier">config</span>.<span class="ruby-identifier">call</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">result</span>)
+  <span class="ruby-constant">Listen</span><span class="ruby-operator">::</span><span class="ruby-constant">Logger</span>.<span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;Callback took #{_timestamp - block_start} sec&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- _process_changes-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- _process_changes-method -->
+
+    
+      <div id="method-i-_remember_time_of_first_unprocessed_event" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">_remember_time_of_first_unprocessed_event</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="_remember_time_of_first_unprocessed_event-source">
+            <pre><span class="ruby-comment"># File lib/listen/event/processor.rb, line 70</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">_remember_time_of_first_unprocessed_event</span>
+  <span class="ruby-ivar">@first_unprocessed_event_time</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">_timestamp</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- _remember_time_of_first_unprocessed_event-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- _remember_time_of_first_unprocessed_event-method -->
+
+    
+      <div id="method-i-_reset_no_unprocessed_events" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">_reset_no_unprocessed_events</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="_reset_no_unprocessed_events-source">
+            <pre><span class="ruby-comment"># File lib/listen/event/processor.rb, line 74</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">_reset_no_unprocessed_events</span>
+  <span class="ruby-ivar">@first_unprocessed_event_time</span> = <span class="ruby-keyword">nil</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- _reset_no_unprocessed_events-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- _reset_no_unprocessed_events-method -->
+
+    
+      <div id="method-i-_sleep" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">_sleep</span><span
+            class="method-args">(_local_reason, *args)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="_sleep-source">
+            <pre><span class="ruby-comment"># File lib/listen/event/processor.rb, line 57</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">_sleep</span>(<span class="ruby-identifier">_local_reason</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+  <span class="ruby-identifier">_check_stopped</span>
+  <span class="ruby-identifier">sleep_duration</span> = <span class="ruby-identifier">config</span>.<span class="ruby-identifier">sleep</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+  <span class="ruby-identifier">_check_stopped</span>
+
+  <span class="ruby-identifier">_flush_wakeup_reasons</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">reason</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">next</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">reason</span> <span class="ruby-operator">==</span> <span class="ruby-value">:event</span>
+    <span class="ruby-identifier">_remember_time_of_first_unprocessed_event</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">config</span>.<span class="ruby-identifier">paused?</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">sleep_duration</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- _sleep-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- _sleep-method -->
+
+    
+      <div id="method-i-_timestamp" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">_timestamp</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="_timestamp-source">
+            <pre><span class="ruby-comment"># File lib/listen/event/processor.rb, line 96</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">_timestamp</span>
+  <span class="ruby-identifier">config</span>.<span class="ruby-identifier">timestamp</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- _timestamp-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- _timestamp-method -->
+
+    
+      <div id="method-i-_wait_until_events" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">_wait_until_events</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="_wait_until_events-source">
+            <pre><span class="ruby-comment"># File lib/listen/event/processor.rb, line 82</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">_wait_until_events</span>
+  <span class="ruby-comment"># TODO: long sleep may not be a good idea?</span>
+  <span class="ruby-identifier">_sleep</span>(<span class="ruby-value">:waiting_for_events</span>) <span class="ruby-keyword">while</span> <span class="ruby-identifier">config</span>.<span class="ruby-identifier">event_queue</span>.<span class="ruby-identifier">empty?</span>
+  <span class="ruby-ivar">@first_unprocessed_event_time</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">_timestamp</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- _wait_until_events-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- _wait_until_events-method -->
+
+    
+      <div id="method-i-_wait_until_events_calm_down" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">_wait_until_events_calm_down</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="_wait_until_events_calm_down-source">
+            <pre><span class="ruby-comment"># File lib/listen/event/processor.rb, line 30</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">_wait_until_events_calm_down</span>
+  <span class="ruby-identifier">loop</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">now</span> = <span class="ruby-identifier">_timestamp</span>
+
+    <span class="ruby-comment"># Assure there&#39;s at least latency between callbacks to allow</span>
+    <span class="ruby-comment"># for accumulating changes</span>
+    <span class="ruby-identifier">diff</span> = <span class="ruby-identifier">_deadline</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">now</span>
+    <span class="ruby-keyword">break</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">diff</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-value">0</span>
+
+    <span class="ruby-comment"># give events a bit of time to accumulate so they can be</span>
+    <span class="ruby-comment"># compressed/optimized</span>
+    <span class="ruby-identifier">_sleep</span>(<span class="ruby-value">:waiting_until_latency</span>, <span class="ruby-identifier">diff</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- _wait_until_events_calm_down-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- _wait_until_events_calm_down-method -->
+
+    
+      <div id="method-i-_wait_until_no_longer_paused" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">_wait_until_no_longer_paused</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="_wait_until_no_longer_paused-source">
+            <pre><span class="ruby-comment"># File lib/listen/event/processor.rb, line 45</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">_wait_until_no_longer_paused</span>
+  <span class="ruby-comment"># TODO: may not be a good idea?</span>
+  <span class="ruby-identifier">_sleep</span>(<span class="ruby-value">:waiting_for_unpause</span>) <span class="ruby-keyword">while</span> <span class="ruby-identifier">config</span>.<span class="ruby-identifier">paused?</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- _wait_until_no_longer_paused-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- _wait_until_no_longer_paused-method -->
+
+    
+    </section><!-- private-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

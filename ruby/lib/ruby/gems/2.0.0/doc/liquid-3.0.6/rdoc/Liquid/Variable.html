@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>class Liquid::Variable - liquid-3.0.6 Documentation</title>
+
+<link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../index.html">Home</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/liquid/variable.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">Object
+  
+</nav>
+
+    <!-- Included Modules -->
+<nav id="includes-section" class="section">
+  <h3 class="section-header">Included Modules</h3>
+
+  <ul class="link-list">
+  
+  
+    <li><a class="include" href="ParserSwitching.html">Liquid::ParserSwitching</a>
+  
+  
+  </ul>
+</nav>
+
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li ><a href="#method-c-new">::new</a>
+    
+    <li ><a href="#method-i-evaluate_filter_expressions">#evaluate_filter_expressions</a>
+    
+    <li ><a href="#method-i-lax_parse">#lax_parse</a>
+    
+    <li ><a href="#method-i-markup_context">#markup_context</a>
+    
+    <li ><a href="#method-i-parse_filter_expressions">#parse_filter_expressions</a>
+    
+    <li ><a href="#method-i-parse_filterargs">#parse_filterargs</a>
+    
+    <li ><a href="#method-i-raw">#raw</a>
+    
+    <li ><a href="#method-i-render">#render</a>
+    
+    <li ><a href="#method-i-strict_parse">#strict_parse</a>
+    
+    <li ><a href="#method-i-taint_check">#taint_check</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="../History_md.html">History</a>
+  
+    <li class="file"><a href="../README_md.html">README</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../Array.html">Array</a>
+  
+    <li><a href="../Date.html">Date</a>
+  
+    <li><a href="../DateTime.html">DateTime</a>
+  
+    <li><a href="../FalseClass.html">FalseClass</a>
+  
+    <li><a href="../Hash.html">Hash</a>
+  
+    <li><a href="../Liquid.html">Liquid</a>
+  
+    <li><a href="../Liquid/ArgumentError.html">Liquid::ArgumentError</a>
+  
+    <li><a href="../Liquid/Assign.html">Liquid::Assign</a>
+  
+    <li><a href="../Liquid/BlankFileSystem.html">Liquid::BlankFileSystem</a>
+  
+    <li><a href="../Liquid/Block.html">Liquid::Block</a>
+  
+    <li><a href="../Liquid/BlockBody.html">Liquid::BlockBody</a>
+  
+    <li><a href="../Liquid/Break.html">Liquid::Break</a>
+  
+    <li><a href="../Liquid/BreakInterrupt.html">Liquid::BreakInterrupt</a>
+  
+    <li><a href="../Liquid/Capture.html">Liquid::Capture</a>
+  
+    <li><a href="../Liquid/Case.html">Liquid::Case</a>
+  
+    <li><a href="../Liquid/Comment.html">Liquid::Comment</a>
+  
+    <li><a href="../Liquid/Condition.html">Liquid::Condition</a>
+  
+    <li><a href="../Liquid/Context.html">Liquid::Context</a>
+  
+    <li><a href="../Liquid/ContextError.html">Liquid::ContextError</a>
+  
+    <li><a href="../Liquid/Continue.html">Liquid::Continue</a>
+  
+    <li><a href="../Liquid/ContinueInterrupt.html">Liquid::ContinueInterrupt</a>
+  
+    <li><a href="../Liquid/Cycle.html">Liquid::Cycle</a>
+  
+    <li><a href="../Liquid/Decrement.html">Liquid::Decrement</a>
+  
+    <li><a href="../Liquid/Document.html">Liquid::Document</a>
+  
+    <li><a href="../Liquid/Drop.html">Liquid::Drop</a>
+  
+    <li><a href="../Liquid/ElseCondition.html">Liquid::ElseCondition</a>
+  
+    <li><a href="../Liquid/Error.html">Liquid::Error</a>
+  
+    <li><a href="../Liquid/Expression.html">Liquid::Expression</a>
+  
+    <li><a href="../Liquid/FileSystemError.html">Liquid::FileSystemError</a>
+  
+    <li><a href="../Liquid/For.html">Liquid::For</a>
+  
+    <li><a href="../Liquid/I18n.html">Liquid::I18n</a>
+  
+    <li><a href="../Liquid/I18n/TranslationError.html">Liquid::I18n::TranslationError</a>
+  
+    <li><a href="../Liquid/If.html">Liquid::If</a>
+  
+    <li><a href="../Liquid/Ifchanged.html">Liquid::Ifchanged</a>
+  
+    <li><a href="../Liquid/Include.html">Liquid::Include</a>
+  
+    <li><a href="../Liquid/Increment.html">Liquid::Increment</a>
+  
+    <li><a href="../Liquid/Interrupt.html">Liquid::Interrupt</a>
+  
+    <li><a href="../Liquid/Lexer.html">Liquid::Lexer</a>
+  
+    <li><a href="../Liquid/LocalFileSystem.html">Liquid::LocalFileSystem</a>
+  
+    <li><a href="../Liquid/MemoryError.html">Liquid::MemoryError</a>
+  
+    <li><a href="../Liquid/Parser.html">Liquid::Parser</a>
+  
+    <li><a href="../Liquid/ParserSwitching.html">Liquid::ParserSwitching</a>
+  
+    <li><a href="../Liquid/Profiler.html">Liquid::Profiler</a>
+  
+    <li><a href="../Liquid/Profiler/Timing.html">Liquid::Profiler::Timing</a>
+  
+    <li><a href="../Liquid/RangeLookup.html">Liquid::RangeLookup</a>
+  
+    <li><a href="../Liquid/Raw.html">Liquid::Raw</a>
+  
+    <li><a href="../Liquid/StackLevelError.html">Liquid::StackLevelError</a>
+  
+    <li><a href="../Liquid/StandardError.html">Liquid::StandardError</a>
+  
+    <li><a href="../Liquid/StandardFilters.html">Liquid::StandardFilters</a>
+  
+    <li><a href="../Liquid/StandardFilters/InputIterator.html">Liquid::StandardFilters::InputIterator</a>
+  
+    <li><a href="../Liquid/Strainer.html">Liquid::Strainer</a>
+  
+    <li><a href="../Liquid/SyntaxError.html">Liquid::SyntaxError</a>
+  
+    <li><a href="../Liquid/TableRow.html">Liquid::TableRow</a>
+  
+    <li><a href="../Liquid/Tag.html">Liquid::Tag</a>
+  
+    <li><a href="../Liquid/TaintedError.html">Liquid::TaintedError</a>
+  
+    <li><a href="../Liquid/Template.html">Liquid::Template</a>
+  
+    <li><a href="../Liquid/Template/TagRegistry.html">Liquid::Template::TagRegistry</a>
+  
+    <li><a href="../Liquid/Token.html">Liquid::Token</a>
+  
+    <li><a href="../Liquid/Unless.html">Liquid::Unless</a>
+  
+    <li><a href="../Liquid/Utils.html">Liquid::Utils</a>
+  
+    <li><a href="../Liquid/Variable.html">Liquid::Variable</a>
+  
+    <li><a href="../Liquid/VariableLookup.html">Liquid::VariableLookup</a>
+  
+    <li><a href="../Module.html">Module</a>
+  
+    <li><a href="../NilClass.html">NilClass</a>
+  
+    <li><a href="../Numeric.html">Numeric</a>
+  
+    <li><a href="../String.html">String</a>
+  
+    <li><a href="../Time.html">Time</a>
+  
+    <li><a href="../TrueClass.html">TrueClass</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class Liquid::Variable</h1>
+
+  <div id="description" class="description">
+    
+<p>Holds variables. Variables are only loaded “just in time” and are not
+evaluated as part of the render stage</p>
+
+<pre>{{ monkey }}
+{{ user.name }}</pre>
+
+<p>Variables can be combined with filters:</p>
+
+<pre>{{ user | link }}</pre>
+
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+    <!-- Constants -->
+    <section id="constants-list" class="section">
+      <h3 class="section-header">Constants</h3>
+      <dl>
+      
+        <dt id="EasyParse">EasyParse
+        
+        <dd class="description">
+        
+      
+        <dt id="FilterParser">FilterParser
+        
+        <dd class="description">
+        
+      
+      </dl>
+    </section>
+    
+
+    
+    <!-- Attributes -->
+    <section id="attribute-method-details" class="method-section section">
+      <h3 class="section-header">Attributes</h3>
+
+      
+      <div id="attribute-i-filters" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">filters</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-line_number" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">line_number</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-name" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">name</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-warnings" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">warnings</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+    </section><!-- attribute-method-details -->
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">(markup, options = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/liquid/variable.rb, line 20</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">markup</span>, <span class="ruby-identifier">options</span> = {})
+  <span class="ruby-ivar">@markup</span>  = <span class="ruby-identifier">markup</span>
+  <span class="ruby-ivar">@name</span>    = <span class="ruby-keyword">nil</span>
+  <span class="ruby-ivar">@options</span> = <span class="ruby-identifier">options</span> <span class="ruby-operator">||</span> {}
+
+  <span class="ruby-identifier">parse_with_selected_parser</span>(<span class="ruby-identifier">markup</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- new-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- new-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-lax_parse" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">lax_parse</span><span
+            class="method-args">(markup)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="lax_parse-source">
+            <pre><span class="ruby-comment"># File lib/liquid/variable.rb, line 36</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">lax_parse</span>(<span class="ruby-identifier">markup</span>)
+  <span class="ruby-ivar">@filters</span> = []
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">markup</span> <span class="ruby-operator">=~</span> <span class="ruby-node">/(#{QuotedFragment})(.*)/</span><span class="ruby-identifier">m</span>
+    <span class="ruby-identifier">name_markup</span> = <span class="ruby-node">$1</span>
+    <span class="ruby-identifier">filter_markup</span> = <span class="ruby-node">$2</span>
+    <span class="ruby-ivar">@name</span> = <span class="ruby-constant">Expression</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">name_markup</span>)
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">filter_markup</span> <span class="ruby-operator">=~</span> <span class="ruby-node">/#{FilterSeparator}\s*(.*)/</span><span class="ruby-identifier">m</span>
+      <span class="ruby-identifier">filters</span> = <span class="ruby-node">$1</span>.<span class="ruby-identifier">scan</span>(<span class="ruby-constant">FilterParser</span>)
+      <span class="ruby-identifier">filters</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">f</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp">/\w+/</span>
+          <span class="ruby-identifier">filtername</span> = <span class="ruby-constant">Regexp</span>.<span class="ruby-identifier">last_match</span>(<span class="ruby-value">0</span>)
+          <span class="ruby-identifier">filterargs</span> = <span class="ruby-identifier">f</span>.<span class="ruby-identifier">scan</span>(<span class="ruby-node">/(?:#{FilterArgumentSeparator}|#{ArgumentSeparator})\s*((?:\w+\s*\:\s*)?#{QuotedFragment})/</span>).<span class="ruby-identifier">flatten</span>
+          <span class="ruby-ivar">@filters</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">parse_filter_expressions</span>(<span class="ruby-identifier">filtername</span>, <span class="ruby-identifier">filterargs</span>)
+        <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- lax_parse-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- lax_parse-method -->
+
+    
+      <div id="method-i-markup_context" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">markup_context</span><span
+            class="method-args">(markup)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="markup_context-source">
+            <pre><span class="ruby-comment"># File lib/liquid/variable.rb, line 32</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">markup_context</span>(<span class="ruby-identifier">markup</span>)
+  <span class="ruby-node">&quot;in \&quot;{{#{markup}}}\&quot;&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- markup_context-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- markup_context-method -->
+
+    
+      <div id="method-i-parse_filterargs" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">parse_filterargs</span><span
+            class="method-args">(p)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="parse_filterargs-source">
+            <pre><span class="ruby-comment"># File lib/liquid/variable.rb, line 75</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">parse_filterargs</span>(<span class="ruby-identifier">p</span>)
+  <span class="ruby-comment"># first argument</span>
+  <span class="ruby-identifier">filterargs</span> = [<span class="ruby-identifier">p</span>.<span class="ruby-identifier">argument</span>]
+  <span class="ruby-comment"># followed by comma separated others</span>
+  <span class="ruby-keyword">while</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">consume?</span>(<span class="ruby-value">:comma</span>)
+    <span class="ruby-identifier">filterargs</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">argument</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">filterargs</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- parse_filterargs-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- parse_filterargs-method -->
+
+    
+      <div id="method-i-raw" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">raw</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="raw-source">
+            <pre><span class="ruby-comment"># File lib/liquid/variable.rb, line 28</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">raw</span>
+  <span class="ruby-ivar">@markup</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- raw-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- raw-method -->
+
+    
+      <div id="method-i-render" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">render</span><span
+            class="method-args">(context)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="render-source">
+            <pre><span class="ruby-comment"># File lib/liquid/variable.rb, line 85</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">render</span>(<span class="ruby-identifier">context</span>)
+  <span class="ruby-ivar">@filters</span>.<span class="ruby-identifier">inject</span>(<span class="ruby-identifier">context</span>.<span class="ruby-identifier">evaluate</span>(<span class="ruby-ivar">@name</span>)) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">output</span>, (<span class="ruby-identifier">filter_name</span>, <span class="ruby-identifier">filter_args</span>, <span class="ruby-identifier">filter_kwargs</span>)<span class="ruby-operator">|</span>
+    <span class="ruby-identifier">filter_args</span> = <span class="ruby-identifier">evaluate_filter_expressions</span>(<span class="ruby-identifier">context</span>, <span class="ruby-identifier">filter_args</span>, <span class="ruby-identifier">filter_kwargs</span>)
+    <span class="ruby-identifier">output</span> = <span class="ruby-identifier">context</span>.<span class="ruby-identifier">invoke</span>(<span class="ruby-identifier">filter_name</span>, <span class="ruby-identifier">output</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">filter_args</span>)
+  <span class="ruby-keyword">end</span>.<span class="ruby-identifier">tap</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">obj</span><span class="ruby-operator">|</span> <span class="ruby-identifier">taint_check</span>(<span class="ruby-identifier">obj</span>) }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- render-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- render-method -->
+
+    
+      <div id="method-i-strict_parse" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">strict_parse</span><span
+            class="method-args">(markup)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="strict_parse-source">
+            <pre><span class="ruby-comment"># File lib/liquid/variable.rb, line 55</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">strict_parse</span>(<span class="ruby-identifier">markup</span>)
+  <span class="ruby-comment"># Very simple valid cases</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">markup</span> <span class="ruby-operator">=~</span> <span class="ruby-constant">EasyParse</span>
+    <span class="ruby-ivar">@name</span> = <span class="ruby-constant">Expression</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-node">$1</span>)
+    <span class="ruby-ivar">@filters</span> = []
+    <span class="ruby-keyword">return</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-ivar">@filters</span> = []
+  <span class="ruby-identifier">p</span> = <span class="ruby-constant">Parser</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">markup</span>)
+  <span class="ruby-comment"># Could be just filters with no input</span>
+  <span class="ruby-ivar">@name</span> = <span class="ruby-identifier">p</span>.<span class="ruby-identifier">look</span>(<span class="ruby-value">:pipe</span>) <span class="ruby-operator">?</span> <span class="ruby-keyword">nil</span> <span class="ruby-operator">:</span> <span class="ruby-constant">Expression</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">p</span>.<span class="ruby-identifier">expression</span>)
+  <span class="ruby-keyword">while</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">consume?</span>(<span class="ruby-value">:pipe</span>)
+    <span class="ruby-identifier">filtername</span> = <span class="ruby-identifier">p</span>.<span class="ruby-identifier">consume</span>(<span class="ruby-value">:id</span>)
+    <span class="ruby-identifier">filterargs</span> = <span class="ruby-identifier">p</span>.<span class="ruby-identifier">consume?</span>(<span class="ruby-value">:colon</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">parse_filterargs</span>(<span class="ruby-identifier">p</span>) <span class="ruby-operator">:</span> []
+    <span class="ruby-ivar">@filters</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">parse_filter_expressions</span>(<span class="ruby-identifier">filtername</span>, <span class="ruby-identifier">filterargs</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">p</span>.<span class="ruby-identifier">consume</span>(<span class="ruby-value">:end_of_string</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- strict_parse-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- strict_parse-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+     <section id="private-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Private Instance Methods</h3>
+
+    
+      <div id="method-i-evaluate_filter_expressions" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">evaluate_filter_expressions</span><span
+            class="method-args">(context, filter_args, filter_kwargs)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="evaluate_filter_expressions-source">
+            <pre><span class="ruby-comment"># File lib/liquid/variable.rb, line 109</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">evaluate_filter_expressions</span>(<span class="ruby-identifier">context</span>, <span class="ruby-identifier">filter_args</span>, <span class="ruby-identifier">filter_kwargs</span>)
+  <span class="ruby-identifier">parsed_args</span> = <span class="ruby-identifier">filter_args</span>.<span class="ruby-identifier">map</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">expr</span><span class="ruby-operator">|</span> <span class="ruby-identifier">context</span>.<span class="ruby-identifier">evaluate</span>(<span class="ruby-identifier">expr</span>) }
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">filter_kwargs</span>
+    <span class="ruby-identifier">parsed_kwargs</span> = {}
+    <span class="ruby-identifier">filter_kwargs</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">expr</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">parsed_kwargs</span>[<span class="ruby-identifier">key</span>] = <span class="ruby-identifier">context</span>.<span class="ruby-identifier">evaluate</span>(<span class="ruby-identifier">expr</span>)
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">parsed_args</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">parsed_kwargs</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">parsed_args</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- evaluate_filter_expressions-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- evaluate_filter_expressions-method -->
+
+    
+      <div id="method-i-parse_filter_expressions" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">parse_filter_expressions</span><span
+            class="method-args">(filter_name, unparsed_args)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="parse_filter_expressions-source">
+            <pre><span class="ruby-comment"># File lib/liquid/variable.rb, line 94</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">parse_filter_expressions</span>(<span class="ruby-identifier">filter_name</span>, <span class="ruby-identifier">unparsed_args</span>)
+  <span class="ruby-identifier">filter_args</span> = []
+  <span class="ruby-identifier">keyword_args</span> = {}
+  <span class="ruby-identifier">unparsed_args</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">a</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">matches</span> = <span class="ruby-identifier">a</span>.<span class="ruby-identifier">match</span>(<span class="ruby-node">/\A#{TagAttributes}\z/</span>)
+      <span class="ruby-identifier">keyword_args</span>[<span class="ruby-identifier">matches</span>[<span class="ruby-value">1</span>]] = <span class="ruby-constant">Expression</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">matches</span>[<span class="ruby-value">2</span>])
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">filter_args</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Expression</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">a</span>)
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">result</span> = [<span class="ruby-identifier">filter_name</span>, <span class="ruby-identifier">filter_args</span>]
+  <span class="ruby-identifier">result</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">keyword_args</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">keyword_args</span>.<span class="ruby-identifier">empty?</span>
+  <span class="ruby-identifier">result</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- parse_filter_expressions-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- parse_filter_expressions-method -->
+
+    
+      <div id="method-i-taint_check" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">taint_check</span><span
+            class="method-args">(obj)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="taint_check-source">
+            <pre><span class="ruby-comment"># File lib/liquid/variable.rb, line 121</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">taint_check</span>(<span class="ruby-identifier">obj</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">tainted?</span>
+    <span class="ruby-ivar">@markup</span> <span class="ruby-operator">=~</span> <span class="ruby-constant">QuotedFragment</span>
+    <span class="ruby-identifier">name</span> = <span class="ruby-constant">Regexp</span>.<span class="ruby-identifier">last_match</span>(<span class="ruby-value">0</span>)
+    <span class="ruby-keyword">case</span> <span class="ruby-constant">Template</span>.<span class="ruby-identifier">taint_mode</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-value">:warn</span>
+      <span class="ruby-ivar">@warnings</span> <span class="ruby-operator">||=</span> []
+      <span class="ruby-ivar">@warnings</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;variable &#39;#{name}&#39; is tainted and was not escaped&quot;</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-value">:error</span>
+      <span class="ruby-identifier">raise</span> <span class="ruby-constant">TaintedError</span>, <span class="ruby-node">&quot;Error - variable &#39;#{name}&#39; is tainted and was not escaped&quot;</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- taint_check-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- taint_check-method -->
+
+    
+    </section><!-- private-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

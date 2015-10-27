@@ -1,0 +1,1827 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>class ThreadSafe::AtomicReferenceCacheBackend - thread_safe-0.3.5 Documentation</title>
+
+<link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../index.html">Home</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/thread_safe/atomic_reference_cache_backend.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">Object
+  
+</nav>
+
+    
+    <!-- Extension Modules -->
+<nav id="extends-section" class="section">
+  <h3 class="section-header">Extended With Modules</h3>
+
+  <ul class="link-list">
+    
+  
+    <li><a class="extend" href="Util/Volatile.html">ThreadSafe::Util::Volatile</a>
+  
+  
+  </ul>
+</nav>
+
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li class="calls-super" ><a href="#method-c-new">::new</a>
+    
+    <li ><a href="#method-i-5B-5D">#[]</a>
+    
+    <li ><a href="#method-i-5B-5D-3D">#[]=</a>
+    
+    <li ><a href="#method-i-attempt_compute">#attempt_compute</a>
+    
+    <li ><a href="#method-i-attempt_get_and_set">#attempt_get_and_set</a>
+    
+    <li ><a href="#method-i-attempt_internal_compute_if_absent">#attempt_internal_compute_if_absent</a>
+    
+    <li ><a href="#method-i-attempt_internal_replace">#attempt_internal_replace</a>
+    
+    <li ><a href="#method-i-check_for_resize">#check_for_resize</a>
+    
+    <li ><a href="#method-i-clear">#clear</a>
+    
+    <li ><a href="#method-i-compute">#compute</a>
+    
+    <li ><a href="#method-i-compute_if_absent">#compute_if_absent</a>
+    
+    <li ><a href="#method-i-compute_if_present">#compute_if_present</a>
+    
+    <li ><a href="#method-i-delete">#delete</a>
+    
+    <li ><a href="#method-i-delete_pair">#delete_pair</a>
+    
+    <li ><a href="#method-i-each_pair">#each_pair</a>
+    
+    <li ><a href="#method-i-empty-3F">#empty?</a>
+    
+    <li ><a href="#method-i-find_value_in_node_list">#find_value_in_node_list</a>
+    
+    <li ><a href="#method-i-get_and_set">#get_and_set</a>
+    
+    <li ><a href="#method-i-get_or_default">#get_or_default</a>
+    
+    <li class="calls-super" ><a href="#method-i-initialize_copy">#initialize_copy</a>
+    
+    <li ><a href="#method-i-initialize_table">#initialize_table</a>
+    
+    <li ><a href="#method-i-internal_compute">#internal_compute</a>
+    
+    <li ><a href="#method-i-internal_replace">#internal_replace</a>
+    
+    <li ><a href="#method-i-key-3F">#key?</a>
+    
+    <li ><a href="#method-i-key_hash">#key_hash</a>
+    
+    <li ><a href="#method-i-merge_pair">#merge_pair</a>
+    
+    <li ><a href="#method-i-replace_if_exists">#replace_if_exists</a>
+    
+    <li ><a href="#method-i-replace_pair">#replace_pair</a>
+    
+    <li ><a href="#method-i-size">#size</a>
+    
+    <li ><a href="#method-i-table_size_for">#table_size_for</a>
+    
+    <li ><a href="#method-i-try_await_lock">#try_await_lock</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../SynchronizedDelegator.html">SynchronizedDelegator</a>
+  
+    <li><a href="../ThreadSafe.html">ThreadSafe</a>
+  
+    <li><a href="../ThreadSafe.html">ThreadSafe</a>
+  
+    <li><a href="../ThreadSafe/Array.html">ThreadSafe::Array</a>
+  
+    <li><a href="../ThreadSafe/AtomicReferenceCacheBackend.html">ThreadSafe::AtomicReferenceCacheBackend</a>
+  
+    <li><a href="../ThreadSafe/AtomicReferenceCacheBackend/Node.html">ThreadSafe::AtomicReferenceCacheBackend::Node</a>
+  
+    <li><a href="../ThreadSafe/AtomicReferenceCacheBackend/Node/Util.html">ThreadSafe::AtomicReferenceCacheBackend::Node::Util</a>
+  
+    <li><a href="../ThreadSafe/AtomicReferenceCacheBackend/Table.html">ThreadSafe::AtomicReferenceCacheBackend::Table</a>
+  
+    <li><a href="../ThreadSafe/Cache.html">ThreadSafe::Cache</a>
+  
+    <li><a href="../ThreadSafe/Hash.html">ThreadSafe::Hash</a>
+  
+    <li><a href="../ThreadSafe/MriCacheBackend.html">ThreadSafe::MriCacheBackend</a>
+  
+    <li><a href="../ThreadSafe/NonConcurrentCacheBackend.html">ThreadSafe::NonConcurrentCacheBackend</a>
+  
+    <li><a href="../ThreadSafe/SynchronizedCacheBackend.html">ThreadSafe::SynchronizedCacheBackend</a>
+  
+    <li><a href="../ThreadSafe/Util.html">ThreadSafe::Util</a>
+  
+    <li><a href="../ThreadSafe/Util/Adder.html">ThreadSafe::Util::Adder</a>
+  
+    <li><a href="../ThreadSafe/Util/CheapLockable.html">ThreadSafe::Util::CheapLockable</a>
+  
+    <li><a href="../ThreadSafe/Util/PowerOfTwoTuple.html">ThreadSafe::Util::PowerOfTwoTuple</a>
+  
+    <li><a href="../ThreadSafe/Util/Striped64.html">ThreadSafe::Util::Striped64</a>
+  
+    <li><a href="../ThreadSafe/Util/Striped64/Cell.html">ThreadSafe::Util::Striped64::Cell</a>
+  
+    <li><a href="../ThreadSafe/Util/Volatile.html">ThreadSafe::Util::Volatile</a>
+  
+    <li><a href="../ThreadSafe/Util/VolatileTuple.html">ThreadSafe::Util::VolatileTuple</a>
+  
+    <li><a href="../ThreadSafe/Util/XorShiftRandom.html">ThreadSafe::Util::XorShiftRandom</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class ThreadSafe::AtomicReferenceCacheBackend</h1>
+
+  <div id="description" class="description">
+    
+<p>A Ruby port of the Doug Lea&#39;s jsr166e.ConcurrentHashMapV8 class version
+1.59 available in public domain.</p>
+
+<p>Original source code available here: <a
+href="http://gee.cs.oswego.edu/cgi-bin/viewcvs.cgi/jsr166/src/jsr166e/ConcurrentHashMapV8.java?revision=1.59">gee.cs.oswego.edu/cgi-bin/viewcvs.cgi/jsr166/src/jsr166e/ConcurrentHashMapV8.java?revision=1.59</a></p>
+
+<p>The Ruby port skips out the <code>TreeBin</code> (red-black trees for use
+in bins whose size exceeds a threshold).</p>
+
+<p>A hash table supporting full concurrency of retrievals and high expected
+concurrency for updates. However, even though all operations are
+thread-safe, retrieval operations do <em>not</em> entail locking, and there
+is <em>not</em> any support for locking the entire table in a way that
+prevents all access.</p>
+
+<p>Retrieval operations generally do not block, so may overlap with update
+operations. Retrievals reflect the results of the most recently
+<em>completed</em> update operations holding upon their onset. (More
+formally, an update operation for a given key bears a
+<em>happens-before</em> relation with any (non <code>nil</code>) retrieval
+for that key reporting the updated value.) For aggregate operations such as
++clear()+, concurrent retrievals may reflect insertion or removal of only
+some entries. Similarly, the <code>each_pair</code> iterator yields
+elements reflecting the state of the hash table at some point at or since
+the start of the <code>each_pair</code>. Bear in mind that the results of
+aggregate status methods including +size()+ and <code>empty?</code>} are
+typically useful only when a map is not undergoing concurrent updates in
+other threads. Otherwise the results of these methods reflect transient
+states that may be adequate for monitoring or estimation purposes, but not
+for program control.</p>
+
+<p>The table is dynamically expanded when there are too many collisions (i.e.,
+keys that have distinct hash codes but fall into the same slot modulo the
+table size), with the expected average effect of maintaining roughly two
+bins per mapping (corresponding to a 0.75 load factor threshold for
+resizing). There may be much variance around this average as mappings are
+added and removed, but overall, this maintains a commonly accepted
+time/space tradeoff for hash tables. However, resizing this or any other
+kind of hash table may be a relatively slow operation. When possible, it is
+a good idea to provide a size estimate as an optional :initial_capacity
+initializer argument. An additional optional :load_factor constructor
+argument provides a further means of customizing initial table capacity by
+specifying the table density to be used in calculating the amount of space
+to allocate for the given number of elements. Note that using many keys
+with exactly the same <code>hash</code> is a sure way to slow down
+performance of any hash table.</p>
+
+<p>## Design overview</p>
+
+<p>The primary design goal of this hash table is to maintain concurrent
+readability (typically method +[]+, but also iteration and related methods)
+while minimizing update contention. Secondary goals are to keep space
+consumption about the same or better than plain <code>Hash</code>, and to
+support high initial insertion rates on an empty table by many threads.</p>
+
+<p>Each key-value mapping is held in a <code>Node</code>. The validation-based
+approach explained below leads to a lot of code sprawl because
+retry-control precludes factoring into smaller methods.</p>
+
+<p>The table is lazily initialized to a power-of-two size upon the first
+insertion. Each bin in the table normally contains a list of +Node+s (most
+often, the list has only zero or one <code>Node</code>). <a
+href="AtomicReferenceCacheBackend/Table.html">Table</a> accesses require
+volatile/atomic reads, writes, and CASes. The lists of nodes within bins
+are always accurately traversable under volatile reads, so long as lookups
+check hash code and non-nullness of value before checking key equality.</p>
+
+<p>We use the top two bits of <code>Node</code> hash fields for control
+purposes – they are available anyway because of addressing constraints. As
+explained further below, these top bits are used as follows:</p>
+
+<pre>- 00 - Normal
+- 01 - Locked
+- 11 - Locked and may have a thread waiting for lock
+- 10 - +Node+ is a forwarding node</pre>
+
+<p>The lower 28 bits of each <code>Node</code>&#39;s hash field contain a the
+key&#39;s hash code, except for forwarding nodes, for which the lower bits
+are zero (and so always have hash field == <code>MOVED</code>).</p>
+
+<p>Insertion (via +[]=+ or its variants) of the first node in an empty bin is
+performed by just CASing it to the bin. This is by far the most common case
+for put operations under most key/hash distributions. Other update
+operations (insert, delete, and replace) require locks. We do not want to
+waste the space required to associate a distinct lock object with each bin,
+so instead use the first node of a bin list itself as a lock. Blocking
+support for these locks relies +Util::CheapLockable. However, we also need
+a <code>try_lock</code> construction, so we overlay these by using bits of
+the <code>Node</code> hash field for lock control (see above), and so
+normally use builtin monitors only for blocking and signalling using
+<code>cheap_wait</code>/<code>cheap_broadcast</code> constructions. See
++Node#try_await_lock+.</p>
+
+<p>Using the first node of a list as a lock does not by itself suffice though:
+When a node is locked, any update must first validate that it is still the
+first node after locking it, and retry if not. Because new nodes are always
+appended to lists, once a node is first in a bin, it remains first until
+deleted or the bin becomes invalidated (upon resizing). However, operations
+that only conditionally update may inspect nodes until the point of update.
+This is a converse of sorts to the lazy locking technique described by
+Herlihy &amp; Shavit.</p>
+
+<p>The main disadvantage of per-bin locks is that other update operations on
+other nodes in a bin list protected by the same lock can stall, for example
+when user <code>eql?</code> or mapping functions take a long time. However,
+statistically, under random hash codes, this is not a common problem.
+Ideally, the frequency of nodes in bins follows a Poisson distribution (<a
+href="http://en.wikipedia.org/wiki/Poisson_distribution">en.wikipedia.org/wiki/Poisson_distribution</a>)
+with a parameter of about 0.5 on average, given the resizing threshold of
+0.75, although with a large variance because of resizing granularity.
+Ignoring variance, the expected occurrences of list size k are (exp(-0.5) *
+pow(0.5, k) / factorial(k)). The first values are:</p>
+
+<pre>- 0:    0.60653066
+- 1:    0.30326533
+- 2:    0.07581633
+- 3:    0.01263606
+- 4:    0.00157952
+- 5:    0.00015795
+- 6:    0.00001316
+- 7:    0.00000094
+- 8:    0.00000006
+- more: less than 1 in ten million</pre>
+
+<p>Lock contention probability for two threads accessing distinct elements is
+roughly 1 / (8 * elements) under random hashes.</p>
+
+<p>The table is resized when occupancy exceeds a percentage threshold
+(nominally, 0.75, but see below). Only a single thread performs the resize
+(using field <code>size_control</code>, to arrange exclusion), but the
+table otherwise remains usable for reads and updates. Resizing proceeds by
+transferring bins, one by one, from the table to the next table. Because we
+are using power-of-two expansion, the elements from each bin must either
+stay at same index, or move with a power of two offset. We eliminate
+unnecessary node creation by catching cases where old nodes can be reused
+because their next fields won&#39;t change. On average, only about
+one-sixth of them need cloning when a table doubles. The nodes they replace
+will be garbage collectable as soon as they are no longer referenced by any
+reader thread that may be in the midst of concurrently traversing table.
+Upon transfer, the old table bin contains only a special forwarding node
+(with hash field <code>MOVED</code>) that contains the next table as its
+key. On encountering a forwarding node, access and update operations
+restart, using the new table.</p>
+
+<p>Each bin transfer requires its bin lock. However, unlike other cases, a
+transfer can skip a bin if it fails to acquire its lock, and revisit it
+later. Method <code>rebuild</code> maintains a buffer of <a
+href="AtomicReferenceCacheBackend.html#TRANSFER_BUFFER_SIZE">TRANSFER_BUFFER_SIZE</a>
+bins that have been skipped because of failure to acquire a lock, and
+blocks only if none are available (i.e., only very rarely). The transfer
+operation must also ensure that all accessible bins in both the old and new
+table are usable by any traversal. When there are no lock acquisition
+failures, this is arranged simply by proceeding from the last bin
+(+table.size - 1+) up towards the first. Upon seeing a forwarding node,
+traversals arrange to move to the new table without revisiting nodes.
+However, when any node is skipped during a transfer, all earlier table bins
+may have become visible, so are initialized with a reverse-forwarding node
+back to the old table until the new ones are established. (This sometimes
+requires transiently locking a forwarding node, which is possible under the
+above encoding.) These more expensive mechanics trigger only when
+necessary.</p>
+
+<p>The traversal scheme also applies to partial traversals of ranges of bins
+(via an alternate Traverser constructor) to support partitioned aggregate
+operations.  Also, read-only operations give up if ever forwarded to a null
+table, which provides support for shutdown-style clearing, which is also
+not currently implemented.</p>
+
+<p>Lazy table initialization minimizes footprint until first use.</p>
+
+<p>The element count is maintained using a +ThreadSafe::Util::Adder+, which
+avoids contention on updates but can encounter cache thrashing if read too
+frequently during concurrent access. To avoid reading so often, resizing is
+attempted either when a bin lock is contended, or upon adding to a bin
+already holding two or more nodes (checked before adding in the
+<code>x_if_absent</code> methods, after adding in others). Under uniform
+hash distributions, the probability of this occurring at threshold is
+around 13%, meaning that only about 1 in 8 puts check threshold (and after
+resizing, many fewer do so). But this approximation has high variance for
+small table sizes, so we check on any collision for sizes &lt;= 64. The
+bulk putAll operation further reduces contention by only committing count
+updates upon these size checks.</p>
+
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+    <!-- Constants -->
+    <section id="constants-list" class="section">
+      <h3 class="section-header">Constants</h3>
+      <dl>
+      
+        <dt id="DEFAULT_CAPACITY">DEFAULT_CAPACITY
+        
+        <dd class="description">
+        
+      
+        <dt id="HASH_BITS">HASH_BITS
+        
+        <dd class="description">
+        
+      
+        <dt id="LOCKED">LOCKED
+        
+        <dd class="description">
+        
+      
+        <dt id="MAX_CAPACITY">MAX_CAPACITY
+        
+        <dd class="description">
+        
+      
+        <dt id="MOVED">MOVED
+        
+        <dd class="description"><p>shorthands</p>
+        
+      
+        <dt id="NOW_RESIZING">NOW_RESIZING
+        
+        <dd class="description">
+        
+      
+        <dt id="TRANSFER_BUFFER_SIZE">TRANSFER_BUFFER_SIZE
+        
+        <dd class="description"><p>The buffer size for skipped bins during transfers. The value is arbitrary
+but should be large enough to avoid most locking stalls during resizes.</p>
+        
+      
+        <dt id="WAITING">WAITING
+        
+        <dd class="description">
+        
+      
+      </dl>
+    </section>
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">(options = nil)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+            <div class="method-calls-super">
+              Calls superclass method
+              
+            </div>
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/thread_safe/atomic_reference_cache_backend.rb, line 357</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">options</span> = <span class="ruby-keyword">nil</span>)
+  <span class="ruby-keyword">super</span>()
+  <span class="ruby-ivar">@counter</span> = <span class="ruby-constant">Util</span><span class="ruby-operator">::</span><span class="ruby-constant">Adder</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-identifier">initial_capacity</span>  = <span class="ruby-identifier">options</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:initial_capacity</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">DEFAULT_CAPACITY</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">size_control</span> = (<span class="ruby-identifier">capacity</span> = <span class="ruby-identifier">table_size_for</span>(<span class="ruby-identifier">initial_capacity</span>)) <span class="ruby-operator">&gt;</span> <span class="ruby-constant">MAX_CAPACITY</span> <span class="ruby-operator">?</span> <span class="ruby-constant">MAX_CAPACITY</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">capacity</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- new-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- new-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-5B-5D" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">[]</span><span
+            class="method-args">(key)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="5B-5D-source">
+            <pre><span class="ruby-comment"># File lib/thread_safe/atomic_reference_cache_backend.rb, line 382</span>
+<span class="ruby-keyword">def</span> <span class="ruby-operator">[]</span>(<span class="ruby-identifier">key</span>)
+  <span class="ruby-identifier">get_or_default</span>(<span class="ruby-identifier">key</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- 5B-5D-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- 5B-5D-method -->
+
+    
+      <div id="method-i-5B-5D-3D" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">[]=</span><span
+            class="method-args">(key, value)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="5B-5D-3D-source">
+            <pre><span class="ruby-comment"># File lib/thread_safe/atomic_reference_cache_backend.rb, line 390</span>
+<span class="ruby-keyword">def</span> <span class="ruby-operator">[]=</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span>)
+  <span class="ruby-identifier">get_and_set</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span>)
+  <span class="ruby-identifier">value</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- 5B-5D-3D-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- 5B-5D-3D-method -->
+
+    
+      <div id="method-i-clear" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">clear</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Implementation for clear. Steps through each bin, removing all nodes.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="clear-source">
+            <pre><span class="ruby-comment"># File lib/thread_safe/atomic_reference_cache_backend.rb, line 529</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">clear</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">self</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">current_table</span> = <span class="ruby-identifier">table</span>
+  <span class="ruby-identifier">current_table_size</span> = <span class="ruby-identifier">current_table</span>.<span class="ruby-identifier">size</span>
+  <span class="ruby-identifier">deleted_count</span> = <span class="ruby-identifier">i</span> = <span class="ruby-value">0</span>
+  <span class="ruby-keyword">while</span> <span class="ruby-identifier">i</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">current_table_size</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span>(<span class="ruby-identifier">node</span> = <span class="ruby-identifier">current_table</span>.<span class="ruby-identifier">volatile_get</span>(<span class="ruby-identifier">i</span>))
+      <span class="ruby-identifier">i</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+    <span class="ruby-keyword">elsif</span> (<span class="ruby-identifier">node_hash</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">hash</span>) <span class="ruby-operator">==</span> <span class="ruby-constant">MOVED</span>
+      <span class="ruby-identifier">current_table</span>      = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">key</span>
+      <span class="ruby-identifier">current_table_size</span> = <span class="ruby-identifier">current_table</span>.<span class="ruby-identifier">size</span>
+    <span class="ruby-keyword">elsif</span> <span class="ruby-constant">Node</span>.<span class="ruby-identifier">locked_hash?</span>(<span class="ruby-identifier">node_hash</span>)
+      <span class="ruby-identifier">decrement_size</span>(<span class="ruby-identifier">deleted_count</span>) <span class="ruby-comment"># opportunistically update count</span>
+      <span class="ruby-identifier">deleted_count</span> = <span class="ruby-value">0</span>
+      <span class="ruby-identifier">node</span>.<span class="ruby-identifier">try_await_lock</span>(<span class="ruby-identifier">current_table</span>, <span class="ruby-identifier">i</span>)
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">current_table</span>.<span class="ruby-identifier">try_lock_via_hash</span>(<span class="ruby-identifier">i</span>, <span class="ruby-identifier">node</span>, <span class="ruby-identifier">node_hash</span>) <span class="ruby-keyword">do</span>
+        <span class="ruby-keyword">begin</span>
+          <span class="ruby-identifier">deleted_count</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span> <span class="ruby-keyword">if</span> <span class="ruby-constant">NULL</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">node</span>.<span class="ruby-identifier">value</span> <span class="ruby-comment"># recheck under lock</span>
+          <span class="ruby-identifier">node</span>.<span class="ruby-identifier">value</span> = <span class="ruby-keyword">nil</span>
+        <span class="ruby-keyword">end</span> <span class="ruby-keyword">while</span> <span class="ruby-identifier">node</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">next</span>
+        <span class="ruby-identifier">current_table</span>.<span class="ruby-identifier">volatile_set</span>(<span class="ruby-identifier">i</span>, <span class="ruby-keyword">nil</span>)
+        <span class="ruby-identifier">i</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">decrement_size</span>(<span class="ruby-identifier">deleted_count</span>)
+  <span class="ruby-keyword">self</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- clear-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- clear-method -->
+
+    
+      <div id="method-i-compute" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">compute</span><span
+            class="method-args">(key) { |NULL == old_value ? nil : old_value| ... }</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="compute-source">
+            <pre><span class="ruby-comment"># File lib/thread_safe/atomic_reference_cache_backend.rb, line 430</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">compute</span>(<span class="ruby-identifier">key</span>)
+  <span class="ruby-identifier">internal_compute</span>(<span class="ruby-identifier">key</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">old_value</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">if</span> (<span class="ruby-identifier">new_value</span> = <span class="ruby-keyword">yield</span>(<span class="ruby-constant">NULL</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">old_value</span> <span class="ruby-operator">?</span> <span class="ruby-keyword">nil</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">old_value</span>)).<span class="ruby-identifier">nil?</span>
+      <span class="ruby-constant">NULL</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">new_value</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- compute-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- compute-method -->
+
+    
+      <div id="method-i-compute_if_absent" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">compute_if_absent</span><span
+            class="method-args">(key) { || ... }</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="compute_if_absent-source">
+            <pre><span class="ruby-comment"># File lib/thread_safe/atomic_reference_cache_backend.rb, line 395</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">compute_if_absent</span>(<span class="ruby-identifier">key</span>)
+  <span class="ruby-identifier">hash</span>          = <span class="ruby-identifier">key_hash</span>(<span class="ruby-identifier">key</span>)
+  <span class="ruby-identifier">current_table</span> = <span class="ruby-identifier">table</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">initialize_table</span>
+  <span class="ruby-keyword">while</span> <span class="ruby-keyword">true</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span>(<span class="ruby-identifier">node</span> = <span class="ruby-identifier">current_table</span>.<span class="ruby-identifier">volatile_get</span>(<span class="ruby-identifier">i</span> = <span class="ruby-identifier">current_table</span>.<span class="ruby-identifier">hash_to_index</span>(<span class="ruby-identifier">hash</span>)))
+      <span class="ruby-identifier">succeeded</span>, <span class="ruby-identifier">new_value</span> = <span class="ruby-identifier">current_table</span>.<span class="ruby-identifier">try_to_cas_in_computed</span>(<span class="ruby-identifier">i</span>, <span class="ruby-identifier">hash</span>, <span class="ruby-identifier">key</span>) { <span class="ruby-keyword">yield</span> }
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">succeeded</span>
+        <span class="ruby-identifier">increment_size</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-identifier">new_value</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">elsif</span> (<span class="ruby-identifier">node_hash</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">hash</span>) <span class="ruby-operator">==</span> <span class="ruby-constant">MOVED</span>
+      <span class="ruby-identifier">current_table</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">key</span>
+    <span class="ruby-keyword">elsif</span> <span class="ruby-constant">NULL</span> <span class="ruby-operator">!=</span> (<span class="ruby-identifier">current_value</span> = <span class="ruby-identifier">find_value_in_node_list</span>(<span class="ruby-identifier">node</span>, <span class="ruby-identifier">key</span>, <span class="ruby-identifier">hash</span>, <span class="ruby-identifier">node_hash</span> <span class="ruby-operator">&amp;</span> <span class="ruby-constant">HASH_BITS</span>))
+      <span class="ruby-keyword">return</span> <span class="ruby-identifier">current_value</span>
+    <span class="ruby-keyword">elsif</span> <span class="ruby-constant">Node</span>.<span class="ruby-identifier">locked_hash?</span>(<span class="ruby-identifier">node_hash</span>)
+      <span class="ruby-identifier">try_await_lock</span>(<span class="ruby-identifier">current_table</span>, <span class="ruby-identifier">i</span>, <span class="ruby-identifier">node</span>)
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">succeeded</span>, <span class="ruby-identifier">value</span> = <span class="ruby-identifier">attempt_internal_compute_if_absent</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">hash</span>, <span class="ruby-identifier">current_table</span>, <span class="ruby-identifier">i</span>, <span class="ruby-identifier">node</span>, <span class="ruby-identifier">node_hash</span>) { <span class="ruby-keyword">yield</span> }
+      <span class="ruby-keyword">return</span> <span class="ruby-identifier">value</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">succeeded</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- compute_if_absent-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- compute_if_absent-method -->
+
+    
+      <div id="method-i-compute_if_present" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">compute_if_present</span><span
+            class="method-args">(key) { |NULL == old_value ? nil : old_value| ... }</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="compute_if_present-source">
+            <pre><span class="ruby-comment"># File lib/thread_safe/atomic_reference_cache_backend.rb, line 418</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">compute_if_present</span>(<span class="ruby-identifier">key</span>)
+  <span class="ruby-identifier">new_value</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-identifier">internal_replace</span>(<span class="ruby-identifier">key</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">old_value</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">if</span> (<span class="ruby-identifier">new_value</span> = <span class="ruby-keyword">yield</span>(<span class="ruby-constant">NULL</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">old_value</span> <span class="ruby-operator">?</span> <span class="ruby-keyword">nil</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">old_value</span>)).<span class="ruby-identifier">nil?</span>
+      <span class="ruby-constant">NULL</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">new_value</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">new_value</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- compute_if_present-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- compute_if_present-method -->
+
+    
+      <div id="method-i-delete" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">delete</span><span
+            class="method-args">(key)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="delete-source">
+            <pre><span class="ruby-comment"># File lib/thread_safe/atomic_reference_cache_backend.rb, line 480</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">delete</span>(<span class="ruby-identifier">key</span>)
+  <span class="ruby-identifier">replace_if_exists</span>(<span class="ruby-identifier">key</span>, <span class="ruby-constant">NULL</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- delete-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- delete-method -->
+
+    
+      <div id="method-i-delete_pair" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">delete_pair</span><span
+            class="method-args">(key, value)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="delete_pair-source">
+            <pre><span class="ruby-comment"># File lib/thread_safe/atomic_reference_cache_backend.rb, line 484</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">delete_pair</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span>)
+  <span class="ruby-identifier">result</span> = <span class="ruby-identifier">internal_replace</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span>) { <span class="ruby-constant">NULL</span> }
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">result</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">NULL</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">result</span>
+    <span class="ruby-operator">!</span><span class="ruby-operator">!</span><span class="ruby-identifier">result</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-keyword">false</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- delete_pair-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- delete_pair-method -->
+
+    
+      <div id="method-i-each_pair" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">each_pair</span><span
+            class="method-args">() { |key, value| ... }</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="each_pair-source">
+            <pre><span class="ruby-comment"># File lib/thread_safe/atomic_reference_cache_backend.rb, line 493</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">each_pair</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">self</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">current_table</span> = <span class="ruby-identifier">table</span>
+  <span class="ruby-identifier">current_table_size</span> = <span class="ruby-identifier">base_size</span> = <span class="ruby-identifier">current_table</span>.<span class="ruby-identifier">size</span>
+  <span class="ruby-identifier">i</span> = <span class="ruby-identifier">base_index</span> = <span class="ruby-value">0</span>
+  <span class="ruby-keyword">while</span> <span class="ruby-identifier">base_index</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">base_size</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">node</span> = <span class="ruby-identifier">current_table</span>.<span class="ruby-identifier">volatile_get</span>(<span class="ruby-identifier">i</span>)
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">node</span>.<span class="ruby-identifier">hash</span> <span class="ruby-operator">==</span> <span class="ruby-constant">MOVED</span>
+        <span class="ruby-identifier">current_table</span>      = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">key</span>
+        <span class="ruby-identifier">current_table_size</span> = <span class="ruby-identifier">current_table</span>.<span class="ruby-identifier">size</span>
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-keyword">begin</span>
+          <span class="ruby-keyword">if</span> <span class="ruby-constant">NULL</span> <span class="ruby-operator">!=</span> (<span class="ruby-identifier">value</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">value</span>) <span class="ruby-comment"># skip deleted or special nodes</span>
+            <span class="ruby-keyword">yield</span> <span class="ruby-identifier">node</span>.<span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span>
+          <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">end</span> <span class="ruby-keyword">while</span> <span class="ruby-identifier">node</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">next</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-keyword">if</span> (<span class="ruby-identifier">i_with_base</span> = <span class="ruby-identifier">i</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">base_size</span>) <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">current_table_size</span>
+      <span class="ruby-identifier">i</span> = <span class="ruby-identifier">i_with_base</span> <span class="ruby-comment"># visit upper slots if present</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">i</span> = <span class="ruby-identifier">base_index</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">self</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- each_pair-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- each_pair-method -->
+
+    
+      <div id="method-i-empty-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">empty?</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="empty-3F-source">
+            <pre><span class="ruby-comment"># File lib/thread_safe/atomic_reference_cache_backend.rb, line 524</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">empty?</span>
+  <span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- empty-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- empty-3F-method -->
+
+    
+      <div id="method-i-get_and_set" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">get_and_set</span><span
+            class="method-args">(key, value)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="get_and_set-source">
+            <pre><span class="ruby-comment"># File lib/thread_safe/atomic_reference_cache_backend.rb, line 460</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_and_set</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span>) <span class="ruby-comment"># internalPut in the original CHMV8</span>
+  <span class="ruby-identifier">hash</span>          = <span class="ruby-identifier">key_hash</span>(<span class="ruby-identifier">key</span>)
+  <span class="ruby-identifier">current_table</span> = <span class="ruby-identifier">table</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">initialize_table</span>
+  <span class="ruby-keyword">while</span> <span class="ruby-keyword">true</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span>(<span class="ruby-identifier">node</span> = <span class="ruby-identifier">current_table</span>.<span class="ruby-identifier">volatile_get</span>(<span class="ruby-identifier">i</span> = <span class="ruby-identifier">current_table</span>.<span class="ruby-identifier">hash_to_index</span>(<span class="ruby-identifier">hash</span>)))
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">current_table</span>.<span class="ruby-identifier">cas_new_node</span>(<span class="ruby-identifier">i</span>, <span class="ruby-identifier">hash</span>, <span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span>)
+        <span class="ruby-identifier">increment_size</span>
+        <span class="ruby-keyword">break</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">elsif</span> (<span class="ruby-identifier">node_hash</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">hash</span>) <span class="ruby-operator">==</span> <span class="ruby-constant">MOVED</span>
+      <span class="ruby-identifier">current_table</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">key</span>
+    <span class="ruby-keyword">elsif</span> <span class="ruby-constant">Node</span>.<span class="ruby-identifier">locked_hash?</span>(<span class="ruby-identifier">node_hash</span>)
+      <span class="ruby-identifier">try_await_lock</span>(<span class="ruby-identifier">current_table</span>, <span class="ruby-identifier">i</span>, <span class="ruby-identifier">node</span>)
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">succeeded</span>, <span class="ruby-identifier">old_value</span> = <span class="ruby-identifier">attempt_get_and_set</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span>, <span class="ruby-identifier">hash</span>, <span class="ruby-identifier">current_table</span>, <span class="ruby-identifier">i</span>, <span class="ruby-identifier">node</span>, <span class="ruby-identifier">node_hash</span>)
+      <span class="ruby-keyword">break</span> <span class="ruby-identifier">old_value</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">succeeded</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- get_and_set-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- get_and_set-method -->
+
+    
+      <div id="method-i-get_or_default" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">get_or_default</span><span
+            class="method-args">(key, else_value = nil)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="get_or_default-source">
+            <pre><span class="ruby-comment"># File lib/thread_safe/atomic_reference_cache_backend.rb, line 364</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_or_default</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">else_value</span> = <span class="ruby-keyword">nil</span>)
+  <span class="ruby-identifier">hash</span>          = <span class="ruby-identifier">key_hash</span>(<span class="ruby-identifier">key</span>)
+  <span class="ruby-identifier">current_table</span> = <span class="ruby-identifier">table</span>
+  <span class="ruby-keyword">while</span> <span class="ruby-identifier">current_table</span>
+    <span class="ruby-identifier">node</span> = <span class="ruby-identifier">current_table</span>.<span class="ruby-identifier">volatile_get_by_hash</span>(<span class="ruby-identifier">hash</span>)
+    <span class="ruby-identifier">current_table</span> =
+      <span class="ruby-keyword">while</span> <span class="ruby-identifier">node</span>
+        <span class="ruby-keyword">if</span> (<span class="ruby-identifier">node_hash</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">hash</span>) <span class="ruby-operator">==</span> <span class="ruby-constant">MOVED</span>
+          <span class="ruby-keyword">break</span> <span class="ruby-identifier">node</span>.<span class="ruby-identifier">key</span>
+        <span class="ruby-keyword">elsif</span> (<span class="ruby-identifier">node_hash</span> <span class="ruby-operator">&amp;</span> <span class="ruby-constant">HASH_BITS</span>) <span class="ruby-operator">==</span> <span class="ruby-identifier">hash</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">node</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">key</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">NULL</span> <span class="ruby-operator">!=</span> (<span class="ruby-identifier">value</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">value</span>)
+          <span class="ruby-keyword">return</span> <span class="ruby-identifier">value</span>
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-identifier">node</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">next</span>
+      <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">else_value</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- get_or_default-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- get_or_default-method -->
+
+    
+      <div id="method-i-key-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">key?</span><span
+            class="method-args">(key)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="key-3F-source">
+            <pre><span class="ruby-comment"># File lib/thread_safe/atomic_reference_cache_backend.rb, line 386</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">key?</span>(<span class="ruby-identifier">key</span>)
+  <span class="ruby-identifier">get_or_default</span>(<span class="ruby-identifier">key</span>, <span class="ruby-constant">NULL</span>) <span class="ruby-operator">!=</span> <span class="ruby-constant">NULL</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- key-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- key-3F-method -->
+
+    
+      <div id="method-i-merge_pair" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">merge_pair</span><span
+            class="method-args">(key, value) { |old_value| ... }</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="merge_pair-source">
+            <pre><span class="ruby-comment"># File lib/thread_safe/atomic_reference_cache_backend.rb, line 440</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">merge_pair</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span>)
+  <span class="ruby-identifier">internal_compute</span>(<span class="ruby-identifier">key</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">old_value</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-constant">NULL</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">old_value</span> <span class="ruby-operator">||</span> <span class="ruby-operator">!</span>(<span class="ruby-identifier">value</span> = <span class="ruby-keyword">yield</span>(<span class="ruby-identifier">old_value</span>)).<span class="ruby-identifier">nil?</span>
+      <span class="ruby-identifier">value</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-constant">NULL</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- merge_pair-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- merge_pair-method -->
+
+    
+      <div id="method-i-replace_if_exists" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">replace_if_exists</span><span
+            class="method-args">(key, new_value)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="replace_if_exists-source">
+            <pre><span class="ruby-comment"># File lib/thread_safe/atomic_reference_cache_backend.rb, line 454</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">replace_if_exists</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">new_value</span>)
+  <span class="ruby-keyword">if</span> (<span class="ruby-identifier">result</span> = <span class="ruby-identifier">internal_replace</span>(<span class="ruby-identifier">key</span>) { <span class="ruby-identifier">new_value</span> }) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">NULL</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">result</span>
+    <span class="ruby-identifier">result</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- replace_if_exists-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- replace_if_exists-method -->
+
+    
+      <div id="method-i-replace_pair" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">replace_pair</span><span
+            class="method-args">(key, old_value, new_value)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="replace_pair-source">
+            <pre><span class="ruby-comment"># File lib/thread_safe/atomic_reference_cache_backend.rb, line 450</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">replace_pair</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">old_value</span>, <span class="ruby-identifier">new_value</span>)
+  <span class="ruby-constant">NULL</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">internal_replace</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">old_value</span>) { <span class="ruby-identifier">new_value</span> }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- replace_pair-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- replace_pair-method -->
+
+    
+      <div id="method-i-size" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">size</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="size-source">
+            <pre><span class="ruby-comment"># File lib/thread_safe/atomic_reference_cache_backend.rb, line 520</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">size</span>
+  (<span class="ruby-identifier">sum</span> = <span class="ruby-ivar">@counter</span>.<span class="ruby-identifier">sum</span>) <span class="ruby-operator">&lt;</span> <span class="ruby-value">0</span> <span class="ruby-operator">?</span> <span class="ruby-value">0</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">sum</span> <span class="ruby-comment"># ignore transient negative values</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- size-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- size-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+     <section id="private-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Private Instance Methods</h3>
+
+    
+      <div id="method-i-attempt_compute" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">attempt_compute</span><span
+            class="method-args">(key, hash, current_table, i, node, node_hash) { |value| ... }</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="attempt_compute-source">
+            <pre><span class="ruby-comment"># File lib/thread_safe/atomic_reference_cache_backend.rb, line 678</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">attempt_compute</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">hash</span>, <span class="ruby-identifier">current_table</span>, <span class="ruby-identifier">i</span>, <span class="ruby-identifier">node</span>, <span class="ruby-identifier">node_hash</span>)
+  <span class="ruby-identifier">added</span> = <span class="ruby-keyword">false</span>
+  <span class="ruby-identifier">current_table</span>.<span class="ruby-identifier">try_lock_via_hash</span>(<span class="ruby-identifier">i</span>, <span class="ruby-identifier">node</span>, <span class="ruby-identifier">node_hash</span>) <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">predecessor_node</span> = <span class="ruby-keyword">nil</span>
+    <span class="ruby-keyword">while</span> <span class="ruby-keyword">true</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">node</span>.<span class="ruby-identifier">matches?</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">hash</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">NULL</span> <span class="ruby-operator">!=</span> (<span class="ruby-identifier">value</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">value</span>)
+        <span class="ruby-keyword">if</span> <span class="ruby-constant">NULL</span> <span class="ruby-operator">==</span> (<span class="ruby-identifier">node</span>.<span class="ruby-identifier">value</span> = <span class="ruby-identifier">value</span> = <span class="ruby-keyword">yield</span>(<span class="ruby-identifier">value</span>))
+          <span class="ruby-identifier">current_table</span>.<span class="ruby-identifier">delete_node_at</span>(<span class="ruby-identifier">i</span>, <span class="ruby-identifier">node</span>, <span class="ruby-identifier">predecessor_node</span>)
+          <span class="ruby-identifier">decrement_size</span>
+          <span class="ruby-identifier">value</span> = <span class="ruby-keyword">nil</span>
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span>, <span class="ruby-identifier">value</span>
+      <span class="ruby-keyword">end</span>
+      <span class="ruby-identifier">predecessor_node</span> = <span class="ruby-identifier">node</span>
+      <span class="ruby-keyword">unless</span> <span class="ruby-identifier">node</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">next</span>
+        <span class="ruby-keyword">if</span> <span class="ruby-constant">NULL</span> <span class="ruby-operator">==</span> (<span class="ruby-identifier">value</span> = <span class="ruby-keyword">yield</span>(<span class="ruby-constant">NULL</span>))
+          <span class="ruby-identifier">value</span> = <span class="ruby-keyword">nil</span>
+        <span class="ruby-keyword">else</span>
+          <span class="ruby-identifier">predecessor_node</span>.<span class="ruby-identifier">next</span> = <span class="ruby-constant">Node</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">hash</span>, <span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span>)
+          <span class="ruby-identifier">added</span> = <span class="ruby-keyword">true</span>
+          <span class="ruby-identifier">increment_size</span>
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span>, <span class="ruby-identifier">value</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">ensure</span>
+  <span class="ruby-identifier">check_for_resize</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">added</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- attempt_compute-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- attempt_compute-method -->
+
+    
+      <div id="method-i-attempt_get_and_set" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">attempt_get_and_set</span><span
+            class="method-args">(key, value, hash, current_table, i, node, node_hash)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="attempt_get_and_set-source">
+            <pre><span class="ruby-comment"># File lib/thread_safe/atomic_reference_cache_backend.rb, line 708</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">attempt_get_and_set</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span>, <span class="ruby-identifier">hash</span>, <span class="ruby-identifier">current_table</span>, <span class="ruby-identifier">i</span>, <span class="ruby-identifier">node</span>, <span class="ruby-identifier">node_hash</span>)
+  <span class="ruby-identifier">node_nesting</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-identifier">current_table</span>.<span class="ruby-identifier">try_lock_via_hash</span>(<span class="ruby-identifier">i</span>, <span class="ruby-identifier">node</span>, <span class="ruby-identifier">node_hash</span>) <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">node_nesting</span>    = <span class="ruby-value">1</span>
+    <span class="ruby-identifier">old_value</span>       = <span class="ruby-keyword">nil</span>
+    <span class="ruby-identifier">found_old_value</span> = <span class="ruby-keyword">false</span>
+    <span class="ruby-keyword">while</span> <span class="ruby-identifier">node</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">node</span>.<span class="ruby-identifier">matches?</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">hash</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">NULL</span> <span class="ruby-operator">!=</span> (<span class="ruby-identifier">old_value</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">value</span>)
+        <span class="ruby-identifier">found_old_value</span> = <span class="ruby-keyword">true</span>
+        <span class="ruby-identifier">node</span>.<span class="ruby-identifier">value</span> = <span class="ruby-identifier">value</span>
+        <span class="ruby-keyword">break</span>
+      <span class="ruby-keyword">end</span>
+      <span class="ruby-identifier">last</span> = <span class="ruby-identifier">node</span>
+      <span class="ruby-keyword">unless</span> <span class="ruby-identifier">node</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">next</span>
+        <span class="ruby-identifier">last</span>.<span class="ruby-identifier">next</span> = <span class="ruby-constant">Node</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">hash</span>, <span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span>)
+        <span class="ruby-keyword">break</span>
+      <span class="ruby-keyword">end</span>
+      <span class="ruby-identifier">node_nesting</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span>, <span class="ruby-identifier">old_value</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">found_old_value</span>
+    <span class="ruby-identifier">increment_size</span>
+    <span class="ruby-keyword">true</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">ensure</span>
+  <span class="ruby-identifier">check_for_resize</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">node_nesting</span> <span class="ruby-operator">&amp;&amp;</span> (<span class="ruby-identifier">node_nesting</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">current_table</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-value">64</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- attempt_get_and_set-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- attempt_get_and_set-method -->
+
+    
+      <div id="method-i-attempt_internal_compute_if_absent" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">attempt_internal_compute_if_absent</span><span
+            class="method-args">(key, hash, current_table, i, node, node_hash) { || ... }</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="attempt_internal_compute_if_absent-source">
+            <pre><span class="ruby-comment"># File lib/thread_safe/atomic_reference_cache_backend.rb, line 658</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">attempt_internal_compute_if_absent</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">hash</span>, <span class="ruby-identifier">current_table</span>, <span class="ruby-identifier">i</span>, <span class="ruby-identifier">node</span>, <span class="ruby-identifier">node_hash</span>)
+  <span class="ruby-identifier">added</span> = <span class="ruby-keyword">false</span>
+  <span class="ruby-identifier">current_table</span>.<span class="ruby-identifier">try_lock_via_hash</span>(<span class="ruby-identifier">i</span>, <span class="ruby-identifier">node</span>, <span class="ruby-identifier">node_hash</span>) <span class="ruby-keyword">do</span>
+    <span class="ruby-keyword">while</span> <span class="ruby-keyword">true</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">node</span>.<span class="ruby-identifier">matches?</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">hash</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">NULL</span> <span class="ruby-operator">!=</span> (<span class="ruby-identifier">value</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">value</span>)
+        <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span>, <span class="ruby-identifier">value</span>
+      <span class="ruby-keyword">end</span>
+      <span class="ruby-identifier">last</span> = <span class="ruby-identifier">node</span>
+      <span class="ruby-keyword">unless</span> <span class="ruby-identifier">node</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">next</span>
+        <span class="ruby-identifier">last</span>.<span class="ruby-identifier">next</span> = <span class="ruby-constant">Node</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">hash</span>, <span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span> = <span class="ruby-keyword">yield</span>)
+        <span class="ruby-identifier">added</span> = <span class="ruby-keyword">true</span>
+        <span class="ruby-identifier">increment_size</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span>, <span class="ruby-identifier">value</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">ensure</span>
+  <span class="ruby-identifier">check_for_resize</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">added</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- attempt_internal_compute_if_absent-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- attempt_internal_compute_if_absent-method -->
+
+    
+      <div id="method-i-attempt_internal_replace" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">attempt_internal_replace</span><span
+            class="method-args">(key, expected_old_value, hash, current_table, i, node, node_hash) { |old_value| ... }</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="attempt_internal_replace-source">
+            <pre><span class="ruby-comment"># File lib/thread_safe/atomic_reference_cache_backend.rb, line 594</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">attempt_internal_replace</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">expected_old_value</span>, <span class="ruby-identifier">hash</span>, <span class="ruby-identifier">current_table</span>, <span class="ruby-identifier">i</span>, <span class="ruby-identifier">node</span>, <span class="ruby-identifier">node_hash</span>)
+  <span class="ruby-identifier">current_table</span>.<span class="ruby-identifier">try_lock_via_hash</span>(<span class="ruby-identifier">i</span>, <span class="ruby-identifier">node</span>, <span class="ruby-identifier">node_hash</span>) <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">predecessor_node</span> = <span class="ruby-keyword">nil</span>
+    <span class="ruby-identifier">old_value</span>        = <span class="ruby-constant">NULL</span>
+    <span class="ruby-keyword">begin</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">node</span>.<span class="ruby-identifier">matches?</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">hash</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">NULL</span> <span class="ruby-operator">!=</span> (<span class="ruby-identifier">current_value</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">value</span>)
+        <span class="ruby-keyword">if</span> <span class="ruby-constant">NULL</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">expected_old_value</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">expected_old_value</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">current_value</span> <span class="ruby-comment"># NULL == expected_old_value means whatever value</span>
+          <span class="ruby-identifier">old_value</span> = <span class="ruby-identifier">current_value</span>
+          <span class="ruby-keyword">if</span> <span class="ruby-constant">NULL</span> <span class="ruby-operator">==</span> (<span class="ruby-identifier">node</span>.<span class="ruby-identifier">value</span> = <span class="ruby-keyword">yield</span>(<span class="ruby-identifier">old_value</span>))
+            <span class="ruby-identifier">current_table</span>.<span class="ruby-identifier">delete_node_at</span>(<span class="ruby-identifier">i</span>, <span class="ruby-identifier">node</span>, <span class="ruby-identifier">predecessor_node</span>)
+            <span class="ruby-identifier">decrement_size</span>
+          <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">break</span>
+      <span class="ruby-keyword">end</span>
+
+      <span class="ruby-identifier">predecessor_node</span> = <span class="ruby-identifier">node</span>
+    <span class="ruby-keyword">end</span> <span class="ruby-keyword">while</span> <span class="ruby-identifier">node</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">next</span>
+
+    <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span>, <span class="ruby-identifier">old_value</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- attempt_internal_replace-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- attempt_internal_replace-method -->
+
+    
+      <div id="method-i-check_for_resize" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">check_for_resize</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>If table is too small and not already resizing, creates next table and
+transfers bins. Rechecks occupancy after a transfer to see if another
+resize is already needed because resizings are lagging additions.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="check_for_resize-source">
+            <pre><span class="ruby-comment"># File lib/thread_safe/atomic_reference_cache_backend.rb, line 779</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">check_for_resize</span>
+  <span class="ruby-keyword">while</span> (<span class="ruby-identifier">current_table</span> = <span class="ruby-identifier">table</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">MAX_CAPACITY</span> <span class="ruby-operator">&gt;</span> (<span class="ruby-identifier">table_size</span> = <span class="ruby-identifier">current_table</span>.<span class="ruby-identifier">size</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">NOW_RESIZING</span> <span class="ruby-operator">!=</span> (<span class="ruby-identifier">size_ctrl</span> = <span class="ruby-identifier">size_control</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">size_ctrl</span> <span class="ruby-operator">&lt;</span> <span class="ruby-ivar">@counter</span>.<span class="ruby-identifier">sum</span>
+    <span class="ruby-identifier">try_in_resize_lock</span>(<span class="ruby-identifier">current_table</span>, <span class="ruby-identifier">size_ctrl</span>) <span class="ruby-keyword">do</span>
+      <span class="ruby-keyword">self</span>.<span class="ruby-identifier">table</span> = <span class="ruby-identifier">rebuild</span>(<span class="ruby-identifier">current_table</span>)
+      (<span class="ruby-identifier">table_size</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value">1</span>) <span class="ruby-operator">-</span> (<span class="ruby-identifier">table_size</span> <span class="ruby-operator">&gt;&gt;</span> <span class="ruby-value">1</span>) <span class="ruby-comment"># 75% load factor</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span></pre>
+          </div><!-- check_for_resize-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- check_for_resize-method -->
+
+    
+      <div id="method-i-find_value_in_node_list" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">find_value_in_node_list</span><span
+            class="method-args">(node, key, hash, pure_hash)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="find_value_in_node_list-source">
+            <pre><span class="ruby-comment"># File lib/thread_safe/atomic_reference_cache_backend.rb, line 617</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">find_value_in_node_list</span>(<span class="ruby-identifier">node</span>, <span class="ruby-identifier">key</span>, <span class="ruby-identifier">hash</span>, <span class="ruby-identifier">pure_hash</span>)
+  <span class="ruby-identifier">do_check_for_resize</span> = <span class="ruby-keyword">false</span>
+  <span class="ruby-keyword">while</span> <span class="ruby-keyword">true</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">pure_hash</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">hash</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">node</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">key</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">NULL</span> <span class="ruby-operator">!=</span> (<span class="ruby-identifier">value</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">value</span>)
+      <span class="ruby-keyword">return</span> <span class="ruby-identifier">value</span>
+    <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">node</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">next</span>
+      <span class="ruby-identifier">do_check_for_resize</span> = <span class="ruby-keyword">true</span> <span class="ruby-comment"># at least 2 nodes -&gt; check for resize</span>
+      <span class="ruby-identifier">pure_hash</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">pure_hash</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-keyword">return</span> <span class="ruby-constant">NULL</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">ensure</span>
+  <span class="ruby-identifier">check_for_resize</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">do_check_for_resize</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- find_value_in_node_list-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- find_value_in_node_list-method -->
+
+    
+      <div id="method-i-initialize_copy" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">initialize_copy</span><span
+            class="method-args">(other)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+            <div class="method-calls-super">
+              Calls superclass method
+              
+            </div>
+          
+
+          
+          <div class="method-source-code" id="initialize_copy-source">
+            <pre><span class="ruby-comment"># File lib/thread_safe/atomic_reference_cache_backend.rb, line 736</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize_copy</span>(<span class="ruby-identifier">other</span>)
+  <span class="ruby-keyword">super</span>
+  <span class="ruby-ivar">@counter</span> = <span class="ruby-constant">Util</span><span class="ruby-operator">::</span><span class="ruby-constant">Adder</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">table</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">size_control</span> = (<span class="ruby-identifier">other_table</span> = <span class="ruby-identifier">other</span>.<span class="ruby-identifier">table</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">other_table</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">:</span> <span class="ruby-constant">DEFAULT_CAPACITY</span>
+  <span class="ruby-keyword">self</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- initialize_copy-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- initialize_copy-method -->
+
+    
+      <div id="method-i-initialize_table" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">initialize_table</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Initializes table, using the size recorded in <code>size_control</code>.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="initialize_table-source">
+            <pre><span class="ruby-comment"># File lib/thread_safe/atomic_reference_cache_backend.rb, line 761</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize_table</span>
+  <span class="ruby-keyword">until</span> <span class="ruby-identifier">current_table</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">table</span>
+    <span class="ruby-keyword">if</span> (<span class="ruby-identifier">size_ctrl</span> = <span class="ruby-identifier">size_control</span>) <span class="ruby-operator">==</span> <span class="ruby-constant">NOW_RESIZING</span>
+      <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">pass</span> <span class="ruby-comment"># lost initialization race; just spin</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">try_in_resize_lock</span>(<span class="ruby-identifier">current_table</span>, <span class="ruby-identifier">size_ctrl</span>) <span class="ruby-keyword">do</span>
+        <span class="ruby-identifier">initial_size</span> = <span class="ruby-identifier">size_ctrl</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">size_ctrl</span> <span class="ruby-operator">:</span> <span class="ruby-constant">DEFAULT_CAPACITY</span>
+        <span class="ruby-identifier">current_table</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">table</span> = <span class="ruby-constant">Table</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">initial_size</span>)
+        <span class="ruby-identifier">initial_size</span> <span class="ruby-operator">-</span> (<span class="ruby-identifier">initial_size</span> <span class="ruby-operator">&gt;&gt;</span> <span class="ruby-value">2</span>) <span class="ruby-comment"># 75% load factor</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">current_table</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- initialize_table-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- initialize_table-method -->
+
+    
+      <div id="method-i-internal_compute" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">internal_compute</span><span
+            class="method-args">(key, &block)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="internal_compute-source">
+            <pre><span class="ruby-comment"># File lib/thread_safe/atomic_reference_cache_backend.rb, line 633</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">internal_compute</span>(<span class="ruby-identifier">key</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+  <span class="ruby-identifier">hash</span>          = <span class="ruby-identifier">key_hash</span>(<span class="ruby-identifier">key</span>)
+  <span class="ruby-identifier">current_table</span> = <span class="ruby-identifier">table</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">initialize_table</span>
+  <span class="ruby-keyword">while</span> <span class="ruby-keyword">true</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span>(<span class="ruby-identifier">node</span> = <span class="ruby-identifier">current_table</span>.<span class="ruby-identifier">volatile_get</span>(<span class="ruby-identifier">i</span> = <span class="ruby-identifier">current_table</span>.<span class="ruby-identifier">hash_to_index</span>(<span class="ruby-identifier">hash</span>)))
+      <span class="ruby-identifier">succeeded</span>, <span class="ruby-identifier">new_value</span> = <span class="ruby-identifier">current_table</span>.<span class="ruby-identifier">try_to_cas_in_computed</span>(<span class="ruby-identifier">i</span>, <span class="ruby-identifier">hash</span>, <span class="ruby-identifier">key</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">succeeded</span>
+        <span class="ruby-keyword">if</span> <span class="ruby-constant">NULL</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">new_value</span>
+          <span class="ruby-keyword">break</span> <span class="ruby-keyword">nil</span>
+        <span class="ruby-keyword">else</span>
+          <span class="ruby-identifier">increment_size</span>
+          <span class="ruby-keyword">break</span> <span class="ruby-identifier">new_value</span>
+        <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">elsif</span> (<span class="ruby-identifier">node_hash</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">hash</span>) <span class="ruby-operator">==</span> <span class="ruby-constant">MOVED</span>
+      <span class="ruby-identifier">current_table</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">key</span>
+    <span class="ruby-keyword">elsif</span> <span class="ruby-constant">Node</span>.<span class="ruby-identifier">locked_hash?</span>(<span class="ruby-identifier">node_hash</span>)
+      <span class="ruby-identifier">try_await_lock</span>(<span class="ruby-identifier">current_table</span>, <span class="ruby-identifier">i</span>, <span class="ruby-identifier">node</span>)
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">succeeded</span>, <span class="ruby-identifier">new_value</span> = <span class="ruby-identifier">attempt_compute</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">hash</span>, <span class="ruby-identifier">current_table</span>, <span class="ruby-identifier">i</span>, <span class="ruby-identifier">node</span>, <span class="ruby-identifier">node_hash</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+      <span class="ruby-keyword">break</span> <span class="ruby-identifier">new_value</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">succeeded</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- internal_compute-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- internal_compute-method -->
+
+    
+      <div id="method-i-internal_replace" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">internal_replace</span><span
+            class="method-args">(key, expected_old_value = NULL, &block)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Internal versions of the insertion methods, each a little more complicated
+than the last. All have the same basic structure:</p>
+
+<pre>1. If table uninitialized, create
+2. If bin empty, try to CAS new node
+3. If bin stale, use new table
+4. Lock and validate; if valid, scan and add or update</pre>
+
+<p>The others interweave other checks and/or alternative actions:</p>
+
+<pre>* Plain +get_and_set+ checks for and performs resize after insertion.
+* compute_if_absent prescans for mapping without lock (and fails to add
+  if present), which also makes pre-emptive resize checks worthwhile.</pre>
+
+<p>Someday when details settle down a bit more, it might be worth some
+factoring to reduce sprawl.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="internal_replace-source">
+            <pre><span class="ruby-comment"># File lib/thread_safe/atomic_reference_cache_backend.rb, line 574</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">internal_replace</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">expected_old_value</span> = <span class="ruby-constant">NULL</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+  <span class="ruby-identifier">hash</span>          = <span class="ruby-identifier">key_hash</span>(<span class="ruby-identifier">key</span>)
+  <span class="ruby-identifier">current_table</span> = <span class="ruby-identifier">table</span>
+  <span class="ruby-keyword">while</span> <span class="ruby-identifier">current_table</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span>(<span class="ruby-identifier">node</span> = <span class="ruby-identifier">current_table</span>.<span class="ruby-identifier">volatile_get</span>(<span class="ruby-identifier">i</span> = <span class="ruby-identifier">current_table</span>.<span class="ruby-identifier">hash_to_index</span>(<span class="ruby-identifier">hash</span>)))
+      <span class="ruby-keyword">break</span>
+    <span class="ruby-keyword">elsif</span> (<span class="ruby-identifier">node_hash</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">hash</span>) <span class="ruby-operator">==</span> <span class="ruby-constant">MOVED</span>
+      <span class="ruby-identifier">current_table</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">key</span>
+    <span class="ruby-keyword">elsif</span> (<span class="ruby-identifier">node_hash</span> <span class="ruby-operator">&amp;</span> <span class="ruby-constant">HASH_BITS</span>) <span class="ruby-operator">!=</span> <span class="ruby-identifier">hash</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">node</span>.<span class="ruby-identifier">next</span> <span class="ruby-comment"># precheck</span>
+      <span class="ruby-keyword">break</span> <span class="ruby-comment"># rules out possible existence</span>
+    <span class="ruby-keyword">elsif</span> <span class="ruby-constant">Node</span>.<span class="ruby-identifier">locked_hash?</span>(<span class="ruby-identifier">node_hash</span>)
+      <span class="ruby-identifier">try_await_lock</span>(<span class="ruby-identifier">current_table</span>, <span class="ruby-identifier">i</span>, <span class="ruby-identifier">node</span>)
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">succeeded</span>, <span class="ruby-identifier">old_value</span> = <span class="ruby-identifier">attempt_internal_replace</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">expected_old_value</span>, <span class="ruby-identifier">hash</span>, <span class="ruby-identifier">current_table</span>, <span class="ruby-identifier">i</span>, <span class="ruby-identifier">node</span>, <span class="ruby-identifier">node_hash</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+      <span class="ruby-keyword">return</span> <span class="ruby-identifier">old_value</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">succeeded</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-constant">NULL</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- internal_replace-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- internal_replace-method -->
+
+    
+      <div id="method-i-key_hash" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">key_hash</span><span
+            class="method-args">(key)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="key_hash-source">
+            <pre><span class="ruby-comment"># File lib/thread_safe/atomic_reference_cache_backend.rb, line 749</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">key_hash</span>(<span class="ruby-identifier">key</span>)
+  <span class="ruby-identifier">key</span>.<span class="ruby-identifier">hash</span> <span class="ruby-operator">&amp;</span> <span class="ruby-constant">HASH_BITS</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- key_hash-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- key_hash-method -->
+
+    
+      <div id="method-i-table_size_for" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">table_size_for</span><span
+            class="method-args">(entry_count)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Returns a power of two table size for the given desired capacity.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="table_size_for-source">
+            <pre><span class="ruby-comment"># File lib/thread_safe/atomic_reference_cache_backend.rb, line 754</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">table_size_for</span>(<span class="ruby-identifier">entry_count</span>)
+  <span class="ruby-identifier">size</span> = <span class="ruby-value">2</span>
+  <span class="ruby-identifier">size</span> <span class="ruby-operator">&lt;&lt;=</span> <span class="ruby-value">1</span> <span class="ruby-keyword">while</span> <span class="ruby-identifier">size</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">entry_count</span>
+  <span class="ruby-identifier">size</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- table_size_for-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- table_size_for-method -->
+
+    
+      <div id="method-i-try_await_lock" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">try_await_lock</span><span
+            class="method-args">(current_table, i, node)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="try_await_lock-source">
+            <pre><span class="ruby-comment"># File lib/thread_safe/atomic_reference_cache_backend.rb, line 744</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">try_await_lock</span>(<span class="ruby-identifier">current_table</span>, <span class="ruby-identifier">i</span>, <span class="ruby-identifier">node</span>)
+  <span class="ruby-identifier">check_for_resize</span> <span class="ruby-comment"># try resizing if can&#39;t get lock</span>
+  <span class="ruby-identifier">node</span>.<span class="ruby-identifier">try_await_lock</span>(<span class="ruby-identifier">current_table</span>, <span class="ruby-identifier">i</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- try_await_lock-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- try_await_lock-method -->
+
+    
+    </section><!-- private-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

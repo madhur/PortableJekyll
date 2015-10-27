@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>module I18n::Backend::KeyValue::Implementation - i18n-0.7.0 Documentation</title>
+
+<link type="text/css" media="screen" href="../../../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../../../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../../../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../../js/darkfish.js"></script>
+
+
+<body id="top" class="module">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../../../index.html">Home</a>
+    <a href="../../../table_of_contents.html#classes">Classes</a>
+    <a href="../../../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/i18n/backend/key_value.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    
+    <!-- Included Modules -->
+<nav id="includes-section" class="section">
+  <h3 class="section-header">Included Modules</h3>
+
+  <ul class="link-list">
+  
+  
+    <li><a class="include" href="../Base.html">I18n::Backend::Base</a>
+  
+  
+  
+    <li><a class="include" href="../Flatten.html">I18n::Backend::Flatten</a>
+  
+  
+  </ul>
+</nav>
+
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li ><a href="#method-c-new">::new</a>
+    
+    <li ><a href="#method-i-available_locales">#available_locales</a>
+    
+    <li ><a href="#method-i-lookup">#lookup</a>
+    
+    <li ><a href="#method-i-store_translations">#store_translations</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../../../GetText.html">GetText</a>
+  
+    <li><a href="../../../GetText/PoParser.html">GetText::PoParser</a>
+  
+    <li><a href="../../../Hash.html">Hash</a>
+  
+    <li><a href="../../../I18n.html">I18n</a>
+  
+    <li><a href="../../../I18n/ArgumentError.html">I18n::ArgumentError</a>
+  
+    <li><a href="../../../I18n/Backend.html">I18n::Backend</a>
+  
+    <li><a href="../../../I18n/Backend/Base.html">I18n::Backend::Base</a>
+  
+    <li><a href="../../../I18n/Backend/Cache.html">I18n::Backend::Cache</a>
+  
+    <li><a href="../../../I18n/Backend/Cascade.html">I18n::Backend::Cascade</a>
+  
+    <li><a href="../../../I18n/Backend/Chain.html">I18n::Backend::Chain</a>
+  
+    <li><a href="../../../I18n/Backend/Chain/Implementation.html">I18n::Backend::Chain::Implementation</a>
+  
+    <li><a href="../../../I18n/Backend/Fallbacks.html">I18n::Backend::Fallbacks</a>
+  
+    <li><a href="../../../I18n/Backend/Flatten.html">I18n::Backend::Flatten</a>
+  
+    <li><a href="../../../I18n/Backend/Gettext.html">I18n::Backend::Gettext</a>
+  
+    <li><a href="../../../I18n/Backend/Gettext/PoData.html">I18n::Backend::Gettext::PoData</a>
+  
+    <li><a href="../../../I18n/Backend/InterpolationCompiler.html">I18n::Backend::InterpolationCompiler</a>
+  
+    <li><a href="../../../I18n/Backend/InterpolationCompiler/Compiler.html">I18n::Backend::InterpolationCompiler::Compiler</a>
+  
+    <li><a href="../../../I18n/Backend/KeyValue.html">I18n::Backend::KeyValue</a>
+  
+    <li><a href="../../../I18n/Backend/KeyValue/Implementation.html">I18n::Backend::KeyValue::Implementation</a>
+  
+    <li><a href="../../../I18n/Backend/Memoize.html">I18n::Backend::Memoize</a>
+  
+    <li><a href="../../../I18n/Backend/Metadata.html">I18n::Backend::Metadata</a>
+  
+    <li><a href="../../../I18n/Backend/Pluralization.html">I18n::Backend::Pluralization</a>
+  
+    <li><a href="../../../I18n/Backend/Simple.html">I18n::Backend::Simple</a>
+  
+    <li><a href="../../../I18n/Backend/Simple/Implementation.html">I18n::Backend::Simple::Implementation</a>
+  
+    <li><a href="../../../I18n/Backend/Transliterator.html">I18n::Backend::Transliterator</a>
+  
+    <li><a href="../../../I18n/Backend/Transliterator/HashTransliterator.html">I18n::Backend::Transliterator::HashTransliterator</a>
+  
+    <li><a href="../../../I18n/Backend/Transliterator/ProcTransliterator.html">I18n::Backend::Transliterator::ProcTransliterator</a>
+  
+    <li><a href="../../../I18n/Config.html">I18n::Config</a>
+  
+    <li><a href="../../../I18n/ExceptionHandler.html">I18n::ExceptionHandler</a>
+  
+    <li><a href="../../../I18n/Gettext.html">I18n::Gettext</a>
+  
+    <li><a href="../../../I18n/Gettext/Helpers.html">I18n::Gettext::Helpers</a>
+  
+    <li><a href="../../../I18n/InvalidLocale.html">I18n::InvalidLocale</a>
+  
+    <li><a href="../../../I18n/InvalidLocaleData.html">I18n::InvalidLocaleData</a>
+  
+    <li><a href="../../../I18n/InvalidPluralizationData.html">I18n::InvalidPluralizationData</a>
+  
+    <li><a href="../../../I18n/Locale.html">I18n::Locale</a>
+  
+    <li><a href="../../../I18n/Locale/Fallbacks.html">I18n::Locale::Fallbacks</a>
+  
+    <li><a href="../../../I18n/Locale/Tag.html">I18n::Locale::Tag</a>
+  
+    <li><a href="../../../I18n/Locale/Tag/Parents.html">I18n::Locale::Tag::Parents</a>
+  
+    <li><a href="../../../I18n/Locale/Tag/Rfc4646.html">I18n::Locale::Tag::Rfc4646</a>
+  
+    <li><a href="../../../I18n/Locale/Tag/Rfc4646/Parser.html">I18n::Locale::Tag::Rfc4646::Parser</a>
+  
+    <li><a href="../../../I18n/Locale/Tag/Simple.html">I18n::Locale::Tag::Simple</a>
+  
+    <li><a href="../../../I18n/MissingInterpolationArgument.html">I18n::MissingInterpolationArgument</a>
+  
+    <li><a href="../../../I18n/MissingTranslation.html">I18n::MissingTranslation</a>
+  
+    <li><a href="../../../I18n/MissingTranslation/Base.html">I18n::MissingTranslation::Base</a>
+  
+    <li><a href="../../../I18n/MissingTranslationData.html">I18n::MissingTranslationData</a>
+  
+    <li><a href="../../../I18n/ReservedInterpolationKey.html">I18n::ReservedInterpolationKey</a>
+  
+    <li><a href="../../../I18n/Tests.html">I18n::Tests</a>
+  
+    <li><a href="../../../I18n/Tests/Basics.html">I18n::Tests::Basics</a>
+  
+    <li><a href="../../../I18n/Tests/Defaults.html">I18n::Tests::Defaults</a>
+  
+    <li><a href="../../../I18n/Tests/Interpolation.html">I18n::Tests::Interpolation</a>
+  
+    <li><a href="../../../I18n/Tests/Interpolation/Encoding.html">I18n::Tests::Interpolation::Encoding</a>
+  
+    <li><a href="../../../I18n/Tests/Link.html">I18n::Tests::Link</a>
+  
+    <li><a href="../../../I18n/Tests/Localization.html">I18n::Tests::Localization</a>
+  
+    <li><a href="../../../I18n/Tests/Localization/Date.html">I18n::Tests::Localization::Date</a>
+  
+    <li><a href="../../../I18n/Tests/Localization/DateTime.html">I18n::Tests::Localization::DateTime</a>
+  
+    <li><a href="../../../I18n/Tests/Localization/Procs.html">I18n::Tests::Localization::Procs</a>
+  
+    <li><a href="../../../I18n/Tests/Localization/Time.html">I18n::Tests::Localization::Time</a>
+  
+    <li><a href="../../../I18n/Tests/Lookup.html">I18n::Tests::Lookup</a>
+  
+    <li><a href="../../../I18n/Tests/Pluralization.html">I18n::Tests::Pluralization</a>
+  
+    <li><a href="../../../I18n/Tests/Procs.html">I18n::Tests::Procs</a>
+  
+    <li><a href="../../../I18n/UnknownFileType.html">I18n::UnknownFileType</a>
+  
+    <li><a href="../../../Kernel.html">Kernel</a>
+  
+    <li><a href="../../../Object.html">Object</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="module">module I18n::Backend::KeyValue::Implementation</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+    <!-- Attributes -->
+    <section id="attribute-method-details" class="method-section section">
+      <h3 class="section-header">Attributes</h3>
+
+      
+      <div id="attribute-i-store" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">store</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+    </section><!-- attribute-method-details -->
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">(store, subtrees=true)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/i18n/backend/key_value.rb, line 56</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">store</span>, <span class="ruby-identifier">subtrees</span>=<span class="ruby-keyword">true</span>)
+  <span class="ruby-ivar">@store</span>, <span class="ruby-ivar">@subtrees</span> = <span class="ruby-identifier">store</span>, <span class="ruby-identifier">subtrees</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- new-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- new-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-available_locales" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">available_locales</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="available_locales-source">
+            <pre><span class="ruby-comment"># File lib/i18n/backend/key_value.rb, line 79</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">available_locales</span>
+  <span class="ruby-identifier">locales</span> = <span class="ruby-ivar">@store</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span><span class="ruby-operator">|</span> <span class="ruby-identifier">k</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp">/\./</span>; <span class="ruby-node">$`</span> }
+  <span class="ruby-identifier">locales</span>.<span class="ruby-identifier">uniq!</span>
+  <span class="ruby-identifier">locales</span>.<span class="ruby-identifier">compact!</span>
+  <span class="ruby-identifier">locales</span>.<span class="ruby-identifier">map!</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span><span class="ruby-operator">|</span> <span class="ruby-identifier">k</span>.<span class="ruby-identifier">to_sym</span> }
+  <span class="ruby-identifier">locales</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- available_locales-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- available_locales-method -->
+
+    
+      <div id="method-i-store_translations" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">store_translations</span><span
+            class="method-args">(locale, data, options = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="store_translations-source">
+            <pre><span class="ruby-comment"># File lib/i18n/backend/key_value.rb, line 60</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">store_translations</span>(<span class="ruby-identifier">locale</span>, <span class="ruby-identifier">data</span>, <span class="ruby-identifier">options</span> = {})
+  <span class="ruby-identifier">escape</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:escape</span>, <span class="ruby-keyword">true</span>)
+  <span class="ruby-identifier">flatten_translations</span>(<span class="ruby-identifier">locale</span>, <span class="ruby-identifier">data</span>, <span class="ruby-identifier">escape</span>, <span class="ruby-ivar">@subtrees</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">key</span> = <span class="ruby-node">&quot;#{locale}.#{key}&quot;</span>
+
+    <span class="ruby-keyword">case</span> <span class="ruby-identifier">value</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-constant">Hash</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-ivar">@subtrees</span> <span class="ruby-operator">&amp;&amp;</span> (<span class="ruby-identifier">old_value</span> = <span class="ruby-ivar">@store</span>[<span class="ruby-identifier">key</span>])
+        <span class="ruby-identifier">old_value</span> = <span class="ruby-constant">ActiveSupport</span><span class="ruby-operator">::</span><span class="ruby-constant">JSON</span>.<span class="ruby-identifier">decode</span>(<span class="ruby-identifier">old_value</span>)
+        <span class="ruby-identifier">value</span> = <span class="ruby-identifier">old_value</span>.<span class="ruby-identifier">deep_symbolize_keys</span>.<span class="ruby-identifier">deep_merge!</span>(<span class="ruby-identifier">value</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">old_value</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>)
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-constant">Proc</span>
+      <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;Key-value stores cannot handle procs&quot;</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-ivar">@store</span>[<span class="ruby-identifier">key</span>] = <span class="ruby-constant">ActiveSupport</span><span class="ruby-operator">::</span><span class="ruby-constant">JSON</span>.<span class="ruby-identifier">encode</span>(<span class="ruby-identifier">value</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Symbol</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- store_translations-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- store_translations-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+     <section id="protected-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Protected Instance Methods</h3>
+
+    
+      <div id="method-i-lookup" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">lookup</span><span
+            class="method-args">(locale, key, scope = [], options = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="lookup-source">
+            <pre><span class="ruby-comment"># File lib/i18n/backend/key_value.rb, line 89</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">lookup</span>(<span class="ruby-identifier">locale</span>, <span class="ruby-identifier">key</span>, <span class="ruby-identifier">scope</span> = [], <span class="ruby-identifier">options</span> = {})
+  <span class="ruby-identifier">key</span>   = <span class="ruby-identifier">normalize_flat_keys</span>(<span class="ruby-identifier">locale</span>, <span class="ruby-identifier">key</span>, <span class="ruby-identifier">scope</span>, <span class="ruby-identifier">options</span>[<span class="ruby-value">:separator</span>])
+  <span class="ruby-identifier">value</span> = <span class="ruby-ivar">@store</span>[<span class="ruby-node">&quot;#{locale}.#{key}&quot;</span>]
+  <span class="ruby-identifier">value</span> = <span class="ruby-constant">ActiveSupport</span><span class="ruby-operator">::</span><span class="ruby-constant">JSON</span>.<span class="ruby-identifier">decode</span>(<span class="ruby-identifier">value</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">value</span>
+  <span class="ruby-identifier">value</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">deep_symbolize_keys</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">value</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- lookup-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- lookup-method -->
+
+    
+    </section><!-- protected-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

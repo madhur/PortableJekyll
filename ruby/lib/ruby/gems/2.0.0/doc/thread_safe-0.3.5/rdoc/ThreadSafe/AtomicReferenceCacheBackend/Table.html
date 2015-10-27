@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>class ThreadSafe::AtomicReferenceCacheBackend::Table - thread_safe-0.3.5 Documentation</title>
+
+<link type="text/css" media="screen" href="../../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../../index.html">Home</a>
+    <a href="../../table_of_contents.html#classes">Classes</a>
+    <a href="../../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/thread_safe/atomic_reference_cache_backend.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">Util::PowerOfTwoTuple
+  
+</nav>
+
+    
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li ><a href="#method-i-cas_new_node">#cas_new_node</a>
+    
+    <li ><a href="#method-i-delete_node_at">#delete_node_at</a>
+    
+    <li ><a href="#method-i-try_lock_via_hash">#try_lock_via_hash</a>
+    
+    <li ><a href="#method-i-try_to_cas_in_computed">#try_to_cas_in_computed</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../../SynchronizedDelegator.html">SynchronizedDelegator</a>
+  
+    <li><a href="../../ThreadSafe.html">ThreadSafe</a>
+  
+    <li><a href="../../ThreadSafe.html">ThreadSafe</a>
+  
+    <li><a href="../../ThreadSafe/Array.html">ThreadSafe::Array</a>
+  
+    <li><a href="../../ThreadSafe/AtomicReferenceCacheBackend.html">ThreadSafe::AtomicReferenceCacheBackend</a>
+  
+    <li><a href="../../ThreadSafe/AtomicReferenceCacheBackend/Node.html">ThreadSafe::AtomicReferenceCacheBackend::Node</a>
+  
+    <li><a href="../../ThreadSafe/AtomicReferenceCacheBackend/Node/Util.html">ThreadSafe::AtomicReferenceCacheBackend::Node::Util</a>
+  
+    <li><a href="../../ThreadSafe/AtomicReferenceCacheBackend/Table.html">ThreadSafe::AtomicReferenceCacheBackend::Table</a>
+  
+    <li><a href="../../ThreadSafe/Cache.html">ThreadSafe::Cache</a>
+  
+    <li><a href="../../ThreadSafe/Hash.html">ThreadSafe::Hash</a>
+  
+    <li><a href="../../ThreadSafe/MriCacheBackend.html">ThreadSafe::MriCacheBackend</a>
+  
+    <li><a href="../../ThreadSafe/NonConcurrentCacheBackend.html">ThreadSafe::NonConcurrentCacheBackend</a>
+  
+    <li><a href="../../ThreadSafe/SynchronizedCacheBackend.html">ThreadSafe::SynchronizedCacheBackend</a>
+  
+    <li><a href="../../ThreadSafe/Util.html">ThreadSafe::Util</a>
+  
+    <li><a href="../../ThreadSafe/Util/Adder.html">ThreadSafe::Util::Adder</a>
+  
+    <li><a href="../../ThreadSafe/Util/CheapLockable.html">ThreadSafe::Util::CheapLockable</a>
+  
+    <li><a href="../../ThreadSafe/Util/PowerOfTwoTuple.html">ThreadSafe::Util::PowerOfTwoTuple</a>
+  
+    <li><a href="../../ThreadSafe/Util/Striped64.html">ThreadSafe::Util::Striped64</a>
+  
+    <li><a href="../../ThreadSafe/Util/Striped64/Cell.html">ThreadSafe::Util::Striped64::Cell</a>
+  
+    <li><a href="../../ThreadSafe/Util/Volatile.html">ThreadSafe::Util::Volatile</a>
+  
+    <li><a href="../../ThreadSafe/Util/VolatileTuple.html">ThreadSafe::Util::VolatileTuple</a>
+  
+    <li><a href="../../ThreadSafe/Util/XorShiftRandom.html">ThreadSafe::Util::XorShiftRandom</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class ThreadSafe::AtomicReferenceCacheBackend::Table</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-cas_new_node" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">cas_new_node</span><span
+            class="method-args">(i, hash, key, value)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="cas_new_node-source">
+            <pre><span class="ruby-comment"># File lib/thread_safe/atomic_reference_cache_backend.rb, line 182</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">cas_new_node</span>(<span class="ruby-identifier">i</span>, <span class="ruby-identifier">hash</span>, <span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span>)
+  <span class="ruby-identifier">cas</span>(<span class="ruby-identifier">i</span>, <span class="ruby-keyword">nil</span>, <span class="ruby-constant">Node</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">hash</span>, <span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span>))
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- cas_new_node-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- cas_new_node-method -->
+
+    
+      <div id="method-i-delete_node_at" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">delete_node_at</span><span
+            class="method-args">(i, node, predecessor_node)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="delete_node_at-source">
+            <pre><span class="ruby-comment"># File lib/thread_safe/atomic_reference_cache_backend.rb, line 212</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">delete_node_at</span>(<span class="ruby-identifier">i</span>, <span class="ruby-identifier">node</span>, <span class="ruby-identifier">predecessor_node</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">predecessor_node</span>
+    <span class="ruby-identifier">predecessor_node</span>.<span class="ruby-identifier">next</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">next</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">volatile_set</span>(<span class="ruby-identifier">i</span>, <span class="ruby-identifier">node</span>.<span class="ruby-identifier">next</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- delete_node_at-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- delete_node_at-method -->
+
+    
+      <div id="method-i-try_lock_via_hash" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">try_lock_via_hash</span><span
+            class="method-args">(i, node, node_hash) { || ... }</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="try_lock_via_hash-source">
+            <pre><span class="ruby-comment"># File lib/thread_safe/atomic_reference_cache_backend.rb, line 206</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">try_lock_via_hash</span>(<span class="ruby-identifier">i</span>, <span class="ruby-identifier">node</span>, <span class="ruby-identifier">node_hash</span>)
+  <span class="ruby-identifier">node</span>.<span class="ruby-identifier">try_lock_via_hash</span>(<span class="ruby-identifier">node_hash</span>) <span class="ruby-keyword">do</span>
+    <span class="ruby-keyword">yield</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">volatile_get</span>(<span class="ruby-identifier">i</span>) <span class="ruby-operator">==</span> <span class="ruby-identifier">node</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- try_lock_via_hash-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- try_lock_via_hash-method -->
+
+    
+      <div id="method-i-try_to_cas_in_computed" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">try_to_cas_in_computed</span><span
+            class="method-args">(i, hash, key) { |NULL| ... }</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="try_to_cas_in_computed-source">
+            <pre><span class="ruby-comment"># File lib/thread_safe/atomic_reference_cache_backend.rb, line 186</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">try_to_cas_in_computed</span>(<span class="ruby-identifier">i</span>, <span class="ruby-identifier">hash</span>, <span class="ruby-identifier">key</span>)
+  <span class="ruby-identifier">succeeded</span> = <span class="ruby-keyword">false</span>
+  <span class="ruby-identifier">new_value</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-identifier">new_node</span>  = <span class="ruby-constant">Node</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">locked_hash</span> = <span class="ruby-identifier">hash</span> <span class="ruby-operator">|</span> <span class="ruby-constant">LOCKED</span>, <span class="ruby-identifier">key</span>, <span class="ruby-constant">NULL</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">cas</span>(<span class="ruby-identifier">i</span>, <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">new_node</span>)
+    <span class="ruby-keyword">begin</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-constant">NULL</span> <span class="ruby-operator">==</span> (<span class="ruby-identifier">new_value</span> = <span class="ruby-keyword">yield</span>(<span class="ruby-constant">NULL</span>))
+        <span class="ruby-identifier">was_null</span> = <span class="ruby-keyword">true</span>
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-identifier">new_node</span>.<span class="ruby-identifier">value</span> = <span class="ruby-identifier">new_value</span>
+      <span class="ruby-keyword">end</span>
+      <span class="ruby-identifier">succeeded</span> = <span class="ruby-keyword">true</span>
+    <span class="ruby-keyword">ensure</span>
+      <span class="ruby-identifier">volatile_set</span>(<span class="ruby-identifier">i</span>, <span class="ruby-keyword">nil</span>) <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">succeeded</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">was_null</span>
+      <span class="ruby-identifier">new_node</span>.<span class="ruby-identifier">unlock_via_hash</span>(<span class="ruby-identifier">locked_hash</span>, <span class="ruby-identifier">hash</span>)
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">succeeded</span>, <span class="ruby-identifier">new_value</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- try_to_cas_in_computed-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- try_to_cas_in_computed-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+
