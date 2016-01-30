@@ -1,0 +1,34 @@
+sudo: false
+language: ruby
+rvm:
+- 2.0
+- 2.1
+- 2.2
+matrix:
+  include:
+    - # GitHub Pages
+      rvm: 2.1.1
+      env: JEKYLL_VERSION=2.4.0
+    - rvm: 1.9.3
+      env: JEKYLL_VERSION=2.5
+env:
+  matrix:
+    - JEKYLL_VERSION=2.5
+    - JEKYLL_VERSION=3.0
+branches:
+  only:
+    - master
+install:
+- travis_retry script/bootstrap
+script: script/cibuild
+notifications:
+  irc:
+    on_success: change
+    on_failure: change
+    channels:
+    - irc.freenode.org#jekyll
+    template:
+    - '%{repository}#%{build_number} %{message} %{build_url}'
+  email:
+    on_success: never
+    on_failure: change
