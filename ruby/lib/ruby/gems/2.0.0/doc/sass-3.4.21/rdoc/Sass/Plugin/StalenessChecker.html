@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>class Sass::Plugin::StalenessChecker - sass-3.4.21 Documentation</title>
+
+<link type="text/css" media="screen" href="../../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../../index.html">Home</a>
+    <a href="../../table_of_contents.html#classes">Classes</a>
+    <a href="../../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/sass/plugin/staleness_checker.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">Object
+  
+</nav>
+
+    
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li ><a href="#method-c-new">::new</a>
+    
+    <li ><a href="#method-c-stylesheet_modified_since-3F">::stylesheet_modified_since?</a>
+    
+    <li ><a href="#method-c-stylesheet_needs_update-3F">::stylesheet_needs_update?</a>
+    
+    <li ><a href="#method-i-compute_dependencies">#compute_dependencies</a>
+    
+    <li ><a href="#method-i-dependencies">#dependencies</a>
+    
+    <li ><a href="#method-i-dependencies_stale-3F">#dependencies_stale?</a>
+    
+    <li ><a href="#method-i-dependency_updated-3F">#dependency_updated?</a>
+    
+    <li ><a href="#method-i-mtime">#mtime</a>
+    
+    <li ><a href="#method-i-stylesheet_modified_since-3F">#stylesheet_modified_since?</a>
+    
+    <li ><a href="#method-i-stylesheet_needs_update-3F">#stylesheet_needs_update?</a>
+    
+    <li ><a href="#method-i-tree">#tree</a>
+    
+    <li ><a href="#method-i-with_dependency_cache">#with_dependency_cache</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../../ActionController.html">ActionController</a>
+  
+    <li><a href="../../ActionController/Base.html">ActionController::Base</a>
+  
+    <li><a href="../../Merb.html">Merb</a>
+  
+    <li><a href="../../Merb/BootLoader.html">Merb::BootLoader</a>
+  
+    <li><a href="../../OrderedHash.html">OrderedHash</a>
+  
+    <li><a href="../../Sass.html">Sass</a>
+  
+    <li><a href="../../Sass/BaseEnvironment.html">Sass::BaseEnvironment</a>
+  
+    <li><a href="../../Sass/CSS.html">Sass::CSS</a>
+  
+    <li><a href="../../Sass/CacheStores.html">Sass::CacheStores</a>
+  
+    <li><a href="../../Sass/CacheStores/Base.html">Sass::CacheStores::Base</a>
+  
+    <li><a href="../../Sass/CacheStores/Chain.html">Sass::CacheStores::Chain</a>
+  
+    <li><a href="../../Sass/CacheStores/Filesystem.html">Sass::CacheStores::Filesystem</a>
+  
+    <li><a href="../../Sass/CacheStores/Memory.html">Sass::CacheStores::Memory</a>
+  
+    <li><a href="../../Sass/CacheStores/Null.html">Sass::CacheStores::Null</a>
+  
+    <li><a href="../../Sass/Callbacks.html">Sass::Callbacks</a>
+  
+    <li><a href="../../Sass/Callbacks/InstanceMethods.html">Sass::Callbacks::InstanceMethods</a>
+  
+    <li><a href="../../Sass/Engine.html">Sass::Engine</a>
+  
+    <li><a href="../../Sass/Engine/Line.html">Sass::Engine::Line</a>
+  
+    <li><a href="../../Sass/Environment.html">Sass::Environment</a>
+  
+    <li><a href="../../Sass/Exec.html">Sass::Exec</a>
+  
+    <li><a href="../../Sass/Exec/Base.html">Sass::Exec::Base</a>
+  
+    <li><a href="../../Sass/Exec/SassConvert.html">Sass::Exec::SassConvert</a>
+  
+    <li><a href="../../Sass/Exec/SassScss.html">Sass::Exec::SassScss</a>
+  
+    <li><a href="../../Sass/Exec/SassScss/Sass/Plugin.compiler.html">Sass::Exec::SassScss::Sass::Plugin.compiler</a>
+  
+    <li><a href="../../Sass/Features.html">Sass::Features</a>
+  
+    <li><a href="../../Sass/Importers.html">Sass::Importers</a>
+  
+    <li><a href="../../Sass/Importers/Base.html">Sass::Importers::Base</a>
+  
+    <li><a href="../../Sass/Importers/DeprecatedPath.html">Sass::Importers::DeprecatedPath</a>
+  
+    <li><a href="../../Sass/Importers/Filesystem.html">Sass::Importers::Filesystem</a>
+  
+    <li><a href="../../Sass/Logger.html">Sass::Logger</a>
+  
+    <li><a href="../../Sass/Logger/Base.html">Sass::Logger::Base</a>
+  
+    <li><a href="../../Sass/Logger/LogLevel.html">Sass::Logger::LogLevel</a>
+  
+    <li><a href="../../Sass/Logger/LogLevel/ClassMethods.html">Sass::Logger::LogLevel::ClassMethods</a>
+  
+    <li><a href="../../Sass/Media.html">Sass::Media</a>
+  
+    <li><a href="../../Sass/Media/Query.html">Sass::Media::Query</a>
+  
+    <li><a href="../../Sass/Media/QueryList.html">Sass::Media::QueryList</a>
+  
+    <li><a href="../../Sass/Plugin.html">Sass::Plugin</a>
+  
+    <li><a href="../../Sass/Plugin/Compiler.html">Sass::Plugin::Compiler</a>
+  
+    <li><a href="../../Sass/Plugin/Configuration.html">Sass::Plugin::Configuration</a>
+  
+    <li><a href="../../Sass/Plugin/MerbBootLoader.html">Sass::Plugin::MerbBootLoader</a>
+  
+    <li><a href="../../Sass/Plugin/Rack.html">Sass::Plugin::Rack</a>
+  
+    <li><a href="../../Sass/Plugin/StalenessChecker.html">Sass::Plugin::StalenessChecker</a>
+  
+    <li><a href="../../Sass/ReadOnlyEnvironment.html">Sass::ReadOnlyEnvironment</a>
+  
+    <li><a href="../../Sass/Repl.html">Sass::Repl</a>
+  
+    <li><a href="../../Sass/SCSS.html">Sass::SCSS</a>
+  
+    <li><a href="../../Sass/SCSS/CssParser.html">Sass::SCSS::CssParser</a>
+  
+    <li><a href="../../Sass/SCSS/Parser.html">Sass::SCSS::Parser</a>
+  
+    <li><a href="../../Sass/SCSS/RX.html">Sass::SCSS::RX</a>
+  
+    <li><a href="../../Sass/SCSS/ScriptLexer.html">Sass::SCSS::ScriptLexer</a>
+  
+    <li><a href="../../Sass/SCSS/ScriptParser.html">Sass::SCSS::ScriptParser</a>
+  
+    <li><a href="../../Sass/SCSS/StaticParser.html">Sass::SCSS::StaticParser</a>
+  
+    <li><a href="../../Sass/Script.html">Sass::Script</a>
+  
+    <li><a href="../../Sass/Script/CssLexer.html">Sass::Script::CssLexer</a>
+  
+    <li><a href="../../Sass/Script/CssParser.html">Sass::Script::CssParser</a>
+  
+    <li><a href="../../Sass/Script/Functions.html">Sass::Script::Functions</a>
+  
+    <li><a href="../../Sass/Script/Functions/EvaluationContext.html">Sass::Script::Functions::EvaluationContext</a>
+  
+    <li><a href="../../Sass/Script/Lexer.html">Sass::Script::Lexer</a>
+  
+    <li><a href="../../Sass/Script/Parser.html">Sass::Script::Parser</a>
+  
+    <li><a href="../../Sass/Script/Tree.html">Sass::Script::Tree</a>
+  
+    <li><a href="../../Sass/Script/Tree/Funcall.html">Sass::Script::Tree::Funcall</a>
+  
+    <li><a href="../../Sass/Script/Tree/Interpolation.html">Sass::Script::Tree::Interpolation</a>
+  
+    <li><a href="../../Sass/Script/Tree/ListLiteral.html">Sass::Script::Tree::ListLiteral</a>
+  
+    <li><a href="../../Sass/Script/Tree/Literal.html">Sass::Script::Tree::Literal</a>
+  
+    <li><a href="../../Sass/Script/Tree/MapLiteral.html">Sass::Script::Tree::MapLiteral</a>
+  
+    <li><a href="../../Sass/Script/Tree/Node.html">Sass::Script::Tree::Node</a>
+  
+    <li><a href="../../Sass/Script/Tree/Operation.html">Sass::Script::Tree::Operation</a>
+  
+    <li><a href="../../Sass/Script/Tree/Selector.html">Sass::Script::Tree::Selector</a>
+  
+    <li><a href="../../Sass/Script/Tree/StringInterpolation.html">Sass::Script::Tree::StringInterpolation</a>
+  
+    <li><a href="../../Sass/Script/Tree/UnaryOperation.html">Sass::Script::Tree::UnaryOperation</a>
+  
+    <li><a href="../../Sass/Script/Tree/Variable.html">Sass::Script::Tree::Variable</a>
+  
+    <li><a href="../../Sass/Script/Value.html">Sass::Script::Value</a>
+  
+    <li><a href="../../Sass/Script/Value/ArgList.html">Sass::Script::Value::ArgList</a>
+  
+    <li><a href="../../Sass/Script/Value/Base.html">Sass::Script::Value::Base</a>
+  
+    <li><a href="../../Sass/Script/Value/Bool.html">Sass::Script::Value::Bool</a>
+  
+    <li><a href="../../Sass/Script/Value/Color.html">Sass::Script::Value::Color</a>
+  
+    <li><a href="../../Sass/Script/Value/Helpers.html">Sass::Script::Value::Helpers</a>
+  
+    <li><a href="../../Sass/Script/Value/List.html">Sass::Script::Value::List</a>
+  
+    <li><a href="../../Sass/Script/Value/Map.html">Sass::Script::Value::Map</a>
+  
+    <li><a href="../../Sass/Script/Value/Null.html">Sass::Script::Value::Null</a>
+  
+    <li><a href="../../Sass/Script/Value/Number.html">Sass::Script::Value::Number</a>
+  
+    <li><a href="../../Sass/Script/Value/Number/Math.html">Sass::Script::Value::Number::Math</a>
+  
+    <li><a href="../../Sass/Script/Value/String.html">Sass::Script::Value::String</a>
+  
+    <li><a href="../../Sass/Selector.html">Sass::Selector</a>
+  
+    <li><a href="../../Sass/Selector/AbstractSequence.html">Sass::Selector::AbstractSequence</a>
+  
+    <li><a href="../../Sass/Selector/Attribute.html">Sass::Selector::Attribute</a>
+  
+    <li><a href="../../Sass/Selector/Class.html">Sass::Selector::Class</a>
+  
+    <li><a href="../../Sass/Selector/CommaSequence.html">Sass::Selector::CommaSequence</a>
+  
+    <li><a href="../../Sass/Selector/Element.html">Sass::Selector::Element</a>
+  
+    <li><a href="../../Sass/Selector/Id.html">Sass::Selector::Id</a>
+  
+    <li><a href="../../Sass/Selector/Parent.html">Sass::Selector::Parent</a>
+  
+    <li><a href="../../Sass/Selector/Placeholder.html">Sass::Selector::Placeholder</a>
+  
+    <li><a href="../../Sass/Selector/Pseudo.html">Sass::Selector::Pseudo</a>
+  
+    <li><a href="../../Sass/Selector/Sequence.html">Sass::Selector::Sequence</a>
+  
+    <li><a href="../../Sass/Selector/Simple.html">Sass::Selector::Simple</a>
+  
+    <li><a href="../../Sass/Selector/SimpleSequence.html">Sass::Selector::SimpleSequence</a>
+  
+    <li><a href="../../Sass/Selector/Universal.html">Sass::Selector::Universal</a>
+  
+    <li><a href="../../Sass/SemiGlobalEnvironment.html">Sass::SemiGlobalEnvironment</a>
+  
+    <li><a href="../../Sass/Shared.html">Sass::Shared</a>
+  
+    <li><a href="../../Sass/Source.html">Sass::Source</a>
+  
+    <li><a href="../../Sass/Source/Map.html">Sass::Source::Map</a>
+  
+    <li><a href="../../Sass/Source/Map/Mapping.html">Sass::Source::Map::Mapping</a>
+  
+    <li><a href="../../Sass/Source/Position.html">Sass::Source::Position</a>
+  
+    <li><a href="../../Sass/Source/Range.html">Sass::Source::Range</a>
+  
+    <li><a href="../../Sass/Stack.html">Sass::Stack</a>
+  
+    <li><a href="../../Sass/Stack/Frame.html">Sass::Stack::Frame</a>
+  
+    <li><a href="../../Sass/Supports.html">Sass::Supports</a>
+  
+    <li><a href="../../Sass/Supports/Condition.html">Sass::Supports::Condition</a>
+  
+    <li><a href="../../Sass/Supports/Declaration.html">Sass::Supports::Declaration</a>
+  
+    <li><a href="../../Sass/Supports/Interpolation.html">Sass::Supports::Interpolation</a>
+  
+    <li><a href="../../Sass/Supports/Negation.html">Sass::Supports::Negation</a>
+  
+    <li><a href="../../Sass/Supports/Operator.html">Sass::Supports::Operator</a>
+  
+    <li><a href="../../Sass/SyntaxError.html">Sass::SyntaxError</a>
+  
+    <li><a href="../../Sass/Tree.html">Sass::Tree</a>
+  
+    <li><a href="../../Sass/Tree/AtRootNode.html">Sass::Tree::AtRootNode</a>
+  
+    <li><a href="../../Sass/Tree/CharsetNode.html">Sass::Tree::CharsetNode</a>
+  
+    <li><a href="../../Sass/Tree/CommentNode.html">Sass::Tree::CommentNode</a>
+  
+    <li><a href="../../Sass/Tree/ContentNode.html">Sass::Tree::ContentNode</a>
+  
+    <li><a href="../../Sass/Tree/CssImportNode.html">Sass::Tree::CssImportNode</a>
+  
+    <li><a href="../../Sass/Tree/DebugNode.html">Sass::Tree::DebugNode</a>
+  
+    <li><a href="../../Sass/Tree/DirectiveNode.html">Sass::Tree::DirectiveNode</a>
+  
+    <li><a href="../../Sass/Tree/EachNode.html">Sass::Tree::EachNode</a>
+  
+    <li><a href="../../Sass/Tree/ErrorNode.html">Sass::Tree::ErrorNode</a>
+  
+    <li><a href="../../Sass/Tree/ExtendNode.html">Sass::Tree::ExtendNode</a>
+  
+    <li><a href="../../Sass/Tree/ForNode.html">Sass::Tree::ForNode</a>
+  
+    <li><a href="../../Sass/Tree/FunctionNode.html">Sass::Tree::FunctionNode</a>
+  
+    <li><a href="../../Sass/Tree/IfNode.html">Sass::Tree::IfNode</a>
+  
+    <li><a href="../../Sass/Tree/ImportNode.html">Sass::Tree::ImportNode</a>
+  
+    <li><a href="../../Sass/Tree/KeyframeRuleNode.html">Sass::Tree::KeyframeRuleNode</a>
+  
+    <li><a href="../../Sass/Tree/MediaNode.html">Sass::Tree::MediaNode</a>
+  
+    <li><a href="../../Sass/Tree/MixinDefNode.html">Sass::Tree::MixinDefNode</a>
+  
+    <li><a href="../../Sass/Tree/MixinNode.html">Sass::Tree::MixinNode</a>
+  
+    <li><a href="../../Sass/Tree/Node.html">Sass::Tree::Node</a>
+  
+    <li><a href="../../Sass/Tree/PropNode.html">Sass::Tree::PropNode</a>
+  
+    <li><a href="../../Sass/Tree/ReturnNode.html">Sass::Tree::ReturnNode</a>
+  
+    <li><a href="../../Sass/Tree/RootNode.html">Sass::Tree::RootNode</a>
+  
+    <li><a href="../../Sass/Tree/RuleNode.html">Sass::Tree::RuleNode</a>
+  
+    <li><a href="../../Sass/Tree/SupportsNode.html">Sass::Tree::SupportsNode</a>
+  
+    <li><a href="../../Sass/Tree/TraceNode.html">Sass::Tree::TraceNode</a>
+  
+    <li><a href="../../Sass/Tree/VariableNode.html">Sass::Tree::VariableNode</a>
+  
+    <li><a href="../../Sass/Tree/Visitors.html">Sass::Tree::Visitors</a>
+  
+    <li><a href="../../Sass/Tree/Visitors/Base.html">Sass::Tree::Visitors::Base</a>
+  
+    <li><a href="../../Sass/Tree/Visitors/CheckNesting.html">Sass::Tree::Visitors::CheckNesting</a>
+  
+    <li><a href="../../Sass/Tree/Visitors/Convert.html">Sass::Tree::Visitors::Convert</a>
+  
+    <li><a href="../../Sass/Tree/Visitors/Cssize.html">Sass::Tree::Visitors::Cssize</a>
+  
+    <li><a href="../../Sass/Tree/Visitors/Cssize/Bubble.html">Sass::Tree::Visitors::Cssize::Bubble</a>
+  
+    <li><a href="../../Sass/Tree/Visitors/DeepCopy.html">Sass::Tree::Visitors::DeepCopy</a>
+  
+    <li><a href="../../Sass/Tree/Visitors/Extend.html">Sass::Tree::Visitors::Extend</a>
+  
+    <li><a href="../../Sass/Tree/Visitors/Perform.html">Sass::Tree::Visitors::Perform</a>
+  
+    <li><a href="../../Sass/Tree/Visitors/SetOptions.html">Sass::Tree::Visitors::SetOptions</a>
+  
+    <li><a href="../../Sass/Tree/Visitors/ToCss.html">Sass::Tree::Visitors::ToCss</a>
+  
+    <li><a href="../../Sass/Tree/WarnNode.html">Sass::Tree::WarnNode</a>
+  
+    <li><a href="../../Sass/Tree/WhileNode.html">Sass::Tree::WhileNode</a>
+  
+    <li><a href="../../Sass/UnitConversionError.html">Sass::UnitConversionError</a>
+  
+    <li><a href="../../Sass/Util.html">Sass::Util</a>
+  
+    <li><a href="../../Sass/Util/CrossPlatformRandom.html">Sass::Util::CrossPlatformRandom</a>
+  
+    <li><a href="../../Sass/Util/MultibyteStringScanner.html">Sass::Util::MultibyteStringScanner</a>
+  
+    <li><a href="../../Sass/Util/NormalizedMap.html">Sass::Util::NormalizedMap</a>
+  
+    <li><a href="../../Sass/Util/StaticConditionalContext.html">Sass::Util::StaticConditionalContext</a>
+  
+    <li><a href="../../Sass/Util/SubsetMap.html">Sass::Util::SubsetMap</a>
+  
+    <li><a href="../../Sass/Util/Test.html">Sass::Util::Test</a>
+  
+    <li><a href="../../Sass/Version.html">Sass::Version</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class Sass::Plugin::StalenessChecker</h1>
+
+  <div id="description" class="description">
+    
+<p>The class handles `.<a href="http://ca">s</a>ss` file staleness checks via
+their mtime timestamps.</p>
+
+<p>To speed things up two level of caches are employed:</p>
+<ul><li>
+<p>A class-level dependency cache which stores @import paths for each file.
+This is a long-lived cache that is reused by every <a
+href="StalenessChecker.html">StalenessChecker</a> instance.</p>
+</li><li>
+<p>Three short-lived instance-level caches, one for file mtimes, one for
+whether a file is stale during this particular run. and one for the parse
+tree for a file. These are only used by a single <a
+href="StalenessChecker.html">StalenessChecker</a> instance.</p>
+</li></ul>
+
+<p>Usage:</p>
+<ul><li>
+<p>For a one-off staleness check of a single `.<a href="http://ca">s</a>ss`
+file, the class-level {stylesheet_needs_update?} method should be used.</p>
+</li><li>
+<p>For a series of staleness checks (e.g. checking all files for staleness) a
+<a href="StalenessChecker.html">StalenessChecker</a> instance should be
+created, and the instance-level {#stylesheet_needs_update?} method should
+be used. the caches should make the whole process significantly faster.
+<strong>WARNING</strong>: It is important not to retain the instance for
+too long, as its instance-level caches are never explicitly expired.</p>
+</li></ul>
+
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+    <!-- Attributes -->
+    <section id="attribute-method-details" class="method-section section">
+      <h3 class="section-header">Attributes</h3>
+
+      
+      <div id="attribute-c-dependencies_cache" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">dependencies_cache</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>TODO: attach this to a compiler instance. @private</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-c-dependency_cache_mutex" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">dependency_cache_mutex</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+    </section><!-- attribute-method-details -->
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">(options)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Creates a new <a href="StalenessChecker.html">StalenessChecker</a> for
+checking the staleness of several stylesheets at once.</p>
+
+<p>@param options [{Symbol =&gt; Object}]</p>
+
+<pre>See {file:SASS_REFERENCE.md#sass_options the Sass options documentation}.</pre>
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/sass/plugin/staleness_checker.rb, line 43</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">options</span>)
+  <span class="ruby-comment"># URIs that are being actively checked for staleness. Protects against</span>
+  <span class="ruby-comment"># import loops.</span>
+  <span class="ruby-ivar">@actively_checking</span> = <span class="ruby-constant">Set</span>.<span class="ruby-identifier">new</span>
+
+  <span class="ruby-comment"># Entries in the following instance-level caches are never explicitly expired.</span>
+  <span class="ruby-comment"># Instead they are supposed to automatically go out of scope when a series of staleness</span>
+  <span class="ruby-comment"># checks (this instance of StalenessChecker was created for) is finished.</span>
+  <span class="ruby-ivar">@mtimes</span>, <span class="ruby-ivar">@dependencies_stale</span>, <span class="ruby-ivar">@parse_trees</span> = {}, {}, {}
+  <span class="ruby-ivar">@options</span> = <span class="ruby-constant">Sass</span><span class="ruby-operator">::</span><span class="ruby-constant">Engine</span>.<span class="ruby-identifier">normalize_options</span>(<span class="ruby-identifier">options</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- new-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- new-method -->
+
+    
+      <div id="method-c-stylesheet_modified_since-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">stylesheet_modified_since?</span><span
+            class="method-args">(template_file, mtime, importer = nil)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Returns whether a <a href="../../Sass.html">Sass</a> or <a
+href="../SCSS.html">SCSS</a> stylesheet has been modified since a given
+time.</p>
+
+<p>The distinction between this method and the instance-level
+{#stylesheet_modified_since?} is that the instance method preserves mtime
+and stale-dependency caches, so it&#39;s better to use when checking
+multiple stylesheets at once.</p>
+
+<p>@param template_file [String] The location of the <a
+href="../../Sass.html">Sass</a> or <a href="../SCSS.html">SCSS</a>
+template. @param mtime [Fixnum] The modification time to check against.
+@param importer [Sass::Importers::Base] The importer used to locate the
+stylesheet.</p>
+
+<pre>Defaults to the filesystem importer.</pre>
+
+<p>@return [Boolean] Whether the stylesheet has been modified.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="stylesheet_modified_since-3F-source">
+            <pre><span class="ruby-comment"># File lib/sass/plugin/staleness_checker.rb, line 110</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">stylesheet_modified_since?</span>(<span class="ruby-identifier">template_file</span>, <span class="ruby-identifier">mtime</span>, <span class="ruby-identifier">importer</span> = <span class="ruby-keyword">nil</span>)
+  <span class="ruby-identifier">new</span>(<span class="ruby-constant">Plugin</span>.<span class="ruby-identifier">engine_options</span>).<span class="ruby-identifier">stylesheet_modified_since?</span>(<span class="ruby-identifier">template_file</span>, <span class="ruby-identifier">mtime</span>, <span class="ruby-identifier">importer</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- stylesheet_modified_since-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- stylesheet_modified_since-3F-method -->
+
+    
+      <div id="method-c-stylesheet_needs_update-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">stylesheet_needs_update?</span><span
+            class="method-args">(css_file, template_file, importer = nil)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Returns whether or not a given <a href="../CSS.html">CSS</a> file is out of
+date and needs to be regenerated.</p>
+
+<p>The distinction between this method and the instance-level
+{#stylesheet_needs_update?} is that the instance method preserves mtime and
+stale-dependency caches, so it&#39;s better to use when checking multiple
+stylesheets at once.</p>
+
+<p>@param css_file [String] The location of the <a href="../CSS.html">CSS</a>
+file to check. @param template_file [String] The location of the <a
+href="../../Sass.html">Sass</a> or <a href="../SCSS.html">SCSS</a> template</p>
+
+<pre>that is compiled to `css_file`.</pre>
+
+<p>@return [Boolean] Whether the stylesheet needs to be updated.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="stylesheet_needs_update-3F-source">
+            <pre><span class="ruby-comment"># File lib/sass/plugin/staleness_checker.rb, line 95</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">stylesheet_needs_update?</span>(<span class="ruby-identifier">css_file</span>, <span class="ruby-identifier">template_file</span>, <span class="ruby-identifier">importer</span> = <span class="ruby-keyword">nil</span>)
+  <span class="ruby-identifier">new</span>(<span class="ruby-constant">Plugin</span>.<span class="ruby-identifier">engine_options</span>).<span class="ruby-identifier">stylesheet_needs_update?</span>(<span class="ruby-identifier">css_file</span>, <span class="ruby-identifier">template_file</span>, <span class="ruby-identifier">importer</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- stylesheet_needs_update-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- stylesheet_needs_update-3F-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-stylesheet_modified_since-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">stylesheet_modified_since?</span><span
+            class="method-args">(template_file, mtime, importer = nil)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Returns whether a <a href="../../Sass.html">Sass</a> or <a
+href="../SCSS.html">SCSS</a> stylesheet has been modified since a given
+time.</p>
+
+<p>@param template_file [String] The location of the <a
+href="../../Sass.html">Sass</a> or <a href="../SCSS.html">SCSS</a>
+template. @param mtime [Fixnum] The modification time to check against.
+@param importer [Sass::Importers::Base] The importer used to locate the
+stylesheet.</p>
+
+<pre>Defaults to the filesystem importer.</pre>
+
+<p>@return [Boolean] Whether the stylesheet has been modified.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="stylesheet_modified_since-3F-source">
+            <pre><span class="ruby-comment"># File lib/sass/plugin/staleness_checker.rb, line 79</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">stylesheet_modified_since?</span>(<span class="ruby-identifier">template_file</span>, <span class="ruby-identifier">mtime</span>, <span class="ruby-identifier">importer</span> = <span class="ruby-keyword">nil</span>)
+  <span class="ruby-identifier">importer</span> <span class="ruby-operator">||=</span> <span class="ruby-ivar">@options</span>[<span class="ruby-value">:filesystem_importer</span>].<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;.&quot;</span>)
+  <span class="ruby-identifier">dependency_updated?</span>(<span class="ruby-identifier">mtime</span>).<span class="ruby-identifier">call</span>(<span class="ruby-identifier">template_file</span>, <span class="ruby-identifier">importer</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- stylesheet_modified_since-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- stylesheet_modified_since-3F-method -->
+
+    
+      <div id="method-i-stylesheet_needs_update-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">stylesheet_needs_update?</span><span
+            class="method-args">(css_file, template_file, importer = nil)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Returns whether or not a given <a href="../CSS.html">CSS</a> file is out of
+date and needs to be regenerated.</p>
+
+<p>@param css_file [String] The location of the <a href="../CSS.html">CSS</a>
+file to check. @param template_file [String] The location of the <a
+href="../../Sass.html">Sass</a> or <a href="../SCSS.html">SCSS</a> template</p>
+
+<pre>that is compiled to `css_file`.</pre>
+
+<p>@return [Boolean] Whether the stylesheet needs to be updated.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="stylesheet_needs_update-3F-source">
+            <pre><span class="ruby-comment"># File lib/sass/plugin/staleness_checker.rb, line 62</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">stylesheet_needs_update?</span>(<span class="ruby-identifier">css_file</span>, <span class="ruby-identifier">template_file</span>, <span class="ruby-identifier">importer</span> = <span class="ruby-keyword">nil</span>)
+  <span class="ruby-identifier">template_file</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-identifier">template_file</span>)
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-identifier">css_mtime</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">mtime</span>(<span class="ruby-identifier">css_file</span>)
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">ENOENT</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">stylesheet_modified_since?</span>(<span class="ruby-identifier">template_file</span>, <span class="ruby-identifier">css_mtime</span>, <span class="ruby-identifier">importer</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- stylesheet_needs_update-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- stylesheet_needs_update-3F-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+     <section id="private-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Private Instance Methods</h3>
+
+    
+      <div id="method-i-compute_dependencies" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">compute_dependencies</span><span
+            class="method-args">(uri, importer)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="compute_dependencies-source">
+            <pre><span class="ruby-comment"># File lib/sass/plugin/staleness_checker.rb, line 173</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">compute_dependencies</span>(<span class="ruby-identifier">uri</span>, <span class="ruby-identifier">importer</span>)
+  <span class="ruby-identifier">tree</span>(<span class="ruby-identifier">uri</span>, <span class="ruby-identifier">importer</span>).<span class="ruby-identifier">grep</span>(<span class="ruby-constant">Tree</span><span class="ruby-operator">::</span><span class="ruby-constant">ImportNode</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">n</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">n</span>.<span class="ruby-identifier">css_import?</span>
+    <span class="ruby-identifier">file</span> = <span class="ruby-identifier">n</span>.<span class="ruby-identifier">imported_file</span>
+    <span class="ruby-identifier">key</span> = [<span class="ruby-identifier">file</span>.<span class="ruby-identifier">options</span>[<span class="ruby-value">:filename</span>], <span class="ruby-identifier">file</span>.<span class="ruby-identifier">options</span>[<span class="ruby-value">:importer</span>]]
+    <span class="ruby-ivar">@parse_trees</span>[<span class="ruby-identifier">key</span>] = <span class="ruby-identifier">file</span>.<span class="ruby-identifier">to_tree</span>
+    <span class="ruby-identifier">key</span>
+  <span class="ruby-keyword">end</span>.<span class="ruby-identifier">compact</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- compute_dependencies-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- compute_dependencies-method -->
+
+    
+      <div id="method-i-dependencies" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">dependencies</span><span
+            class="method-args">(uri, importer)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="dependencies-source">
+            <pre><span class="ruby-comment"># File lib/sass/plugin/staleness_checker.rb, line 144</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">dependencies</span>(<span class="ruby-identifier">uri</span>, <span class="ruby-identifier">importer</span>)
+  <span class="ruby-identifier">stored_mtime</span>, <span class="ruby-identifier">dependencies</span> =
+    <span class="ruby-identifier">with_dependency_cache</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">cache</span><span class="ruby-operator">|</span> <span class="ruby-constant">Sass</span><span class="ruby-operator">::</span><span class="ruby-constant">Util</span>.<span class="ruby-identifier">destructure</span>(<span class="ruby-identifier">cache</span>[[<span class="ruby-identifier">uri</span>, <span class="ruby-identifier">importer</span>]])}
+
+  <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">stored_mtime</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">stored_mtime</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">mtime</span>(<span class="ruby-identifier">uri</span>, <span class="ruby-identifier">importer</span>)
+    <span class="ruby-identifier">dependencies</span> = <span class="ruby-identifier">compute_dependencies</span>(<span class="ruby-identifier">uri</span>, <span class="ruby-identifier">importer</span>)
+    <span class="ruby-identifier">with_dependency_cache</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">cache</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">cache</span>[[<span class="ruby-identifier">uri</span>, <span class="ruby-identifier">importer</span>]] = [<span class="ruby-identifier">mtime</span>(<span class="ruby-identifier">uri</span>, <span class="ruby-identifier">importer</span>), <span class="ruby-identifier">dependencies</span>]
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">dependencies</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- dependencies-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- dependencies-method -->
+
+    
+      <div id="method-i-dependencies_stale-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">dependencies_stale?</span><span
+            class="method-args">(uri, importer, css_mtime)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="dependencies_stale-3F-source">
+            <pre><span class="ruby-comment"># File lib/sass/plugin/staleness_checker.rb, line 116</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">dependencies_stale?</span>(<span class="ruby-identifier">uri</span>, <span class="ruby-identifier">importer</span>, <span class="ruby-identifier">css_mtime</span>)
+  <span class="ruby-identifier">timestamps</span> = <span class="ruby-ivar">@dependencies_stale</span>[[<span class="ruby-identifier">uri</span>, <span class="ruby-identifier">importer</span>]] <span class="ruby-operator">||=</span> {}
+  <span class="ruby-identifier">timestamps</span>.<span class="ruby-identifier">each_pair</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">checked_css_mtime</span>, <span class="ruby-identifier">is_stale</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">checked_css_mtime</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-identifier">css_mtime</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">is_stale</span>
+      <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+    <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">checked_css_mtime</span> <span class="ruby-operator">&gt;</span> <span class="ruby-identifier">css_mtime</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">is_stale</span>
+      <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">timestamps</span>[<span class="ruby-identifier">css_mtime</span>] = <span class="ruby-identifier">dependencies</span>(<span class="ruby-identifier">uri</span>, <span class="ruby-identifier">importer</span>).<span class="ruby-identifier">any?</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">dependency_updated?</span>(<span class="ruby-identifier">css_mtime</span>))
+<span class="ruby-keyword">rescue</span> <span class="ruby-constant">Sass</span><span class="ruby-operator">::</span><span class="ruby-constant">SyntaxError</span>
+  <span class="ruby-comment"># If there&#39;s an error finding dependencies, default to recompiling.</span>
+  <span class="ruby-keyword">true</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- dependencies_stale-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- dependencies_stale-3F-method -->
+
+    
+      <div id="method-i-dependency_updated-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">dependency_updated?</span><span
+            class="method-args">(css_mtime)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="dependency_updated-3F-source">
+            <pre><span class="ruby-comment"># File lib/sass/plugin/staleness_checker.rb, line 158</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">dependency_updated?</span>(<span class="ruby-identifier">css_mtime</span>)
+  <span class="ruby-identifier">proc</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">uri</span>, <span class="ruby-identifier">importer</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">next</span> <span class="ruby-keyword">true</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@actively_checking</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">uri</span>)
+    <span class="ruby-keyword">begin</span>
+      <span class="ruby-ivar">@actively_checking</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">uri</span>
+      <span class="ruby-identifier">sass_mtime</span> = <span class="ruby-identifier">mtime</span>(<span class="ruby-identifier">uri</span>, <span class="ruby-identifier">importer</span>)
+      <span class="ruby-operator">!</span><span class="ruby-identifier">sass_mtime</span> <span class="ruby-operator">||</span>
+        <span class="ruby-identifier">sass_mtime</span> <span class="ruby-operator">&gt;</span> <span class="ruby-identifier">css_mtime</span> <span class="ruby-operator">||</span>
+        <span class="ruby-identifier">dependencies_stale?</span>(<span class="ruby-identifier">uri</span>, <span class="ruby-identifier">importer</span>, <span class="ruby-identifier">css_mtime</span>)
+    <span class="ruby-keyword">ensure</span>
+      <span class="ruby-ivar">@actively_checking</span>.<span class="ruby-identifier">delete</span> <span class="ruby-identifier">uri</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- dependency_updated-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- dependency_updated-3F-method -->
+
+    
+      <div id="method-i-mtime" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">mtime</span><span
+            class="method-args">(uri, importer)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="mtime-source">
+            <pre><span class="ruby-comment"># File lib/sass/plugin/staleness_checker.rb, line 131</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">mtime</span>(<span class="ruby-identifier">uri</span>, <span class="ruby-identifier">importer</span>)
+  <span class="ruby-ivar">@mtimes</span>[[<span class="ruby-identifier">uri</span>, <span class="ruby-identifier">importer</span>]] <span class="ruby-operator">||=</span>
+    <span class="ruby-keyword">begin</span>
+      <span class="ruby-identifier">mtime</span> = <span class="ruby-identifier">importer</span>.<span class="ruby-identifier">mtime</span>(<span class="ruby-identifier">uri</span>, <span class="ruby-ivar">@options</span>)
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">mtime</span>.<span class="ruby-identifier">nil?</span>
+        <span class="ruby-identifier">with_dependency_cache</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">cache</span><span class="ruby-operator">|</span> <span class="ruby-identifier">cache</span>.<span class="ruby-identifier">delete</span>([<span class="ruby-identifier">uri</span>, <span class="ruby-identifier">importer</span>])}
+        <span class="ruby-keyword">nil</span>
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-identifier">mtime</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- mtime-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- mtime-method -->
+
+    
+      <div id="method-i-tree" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">tree</span><span
+            class="method-args">(uri, importer)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="tree-source">
+            <pre><span class="ruby-comment"># File lib/sass/plugin/staleness_checker.rb, line 183</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">tree</span>(<span class="ruby-identifier">uri</span>, <span class="ruby-identifier">importer</span>)
+  <span class="ruby-ivar">@parse_trees</span>[[<span class="ruby-identifier">uri</span>, <span class="ruby-identifier">importer</span>]] <span class="ruby-operator">||=</span> <span class="ruby-identifier">importer</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">uri</span>, <span class="ruby-ivar">@options</span>).<span class="ruby-identifier">to_tree</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- tree-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- tree-method -->
+
+    
+      <div id="method-i-with_dependency_cache" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">with_dependency_cache</span><span
+            class="method-args">() { |dependencies_cache| ... }</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Get access to the global dependency cache in a threadsafe manner. Inside
+the block, no other thread can access the dependency cache.</p>
+
+<p>@yieldparam cache [Hash] The hash that is the global dependency cache
+@return The value returned by the block to which this method yields</p>
+          
+          
+
+          
+          <div class="method-source-code" id="with_dependency_cache-source">
+            <pre><span class="ruby-comment"># File lib/sass/plugin/staleness_checker.rb, line 192</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">with_dependency_cache</span>
+  <span class="ruby-constant">StalenessChecker</span>.<span class="ruby-identifier">dependency_cache_mutex</span>.<span class="ruby-identifier">synchronize</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-keyword">yield</span> <span class="ruby-constant">StalenessChecker</span>.<span class="ruby-identifier">dependencies_cache</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- with_dependency_cache-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- with_dependency_cache-method -->
+
+    
+    </section><!-- private-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+
