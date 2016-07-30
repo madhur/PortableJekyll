@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>class Jekyll::Mentions - jekyll-mentions-1.1.3 Documentation</title>
+
+<link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../index.html">Home</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/jekyll-mentions.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">Object
+  
+</nav>
+
+    
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li ><a href="#method-c-filter_with_mention">::filter_with_mention</a>
+    
+    <li ><a href="#method-c-filters">::filters</a>
+    
+    <li ><a href="#method-c-mention_base">::mention_base</a>
+    
+    <li ><a href="#method-c-mention_username_pattern">::mention_username_pattern</a>
+    
+    <li ><a href="#method-c-mentionable-3F">::mentionable?</a>
+    
+    <li ><a href="#method-c-mentionify">::mentionify</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../Jekyll.html">Jekyll</a>
+  
+    <li><a href="../Jekyll/Mentions.html">Jekyll::Mentions</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class Jekyll::Mentions</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+    <!-- Constants -->
+    <section id="constants-list" class="section">
+      <h3 class="section-header">Constants</h3>
+      <dl>
+      
+        <dt id="BODY_START_TAG">BODY_START_TAG
+        
+        <dd class="description">
+        
+      
+        <dt id="GITHUB_DOT_COM">GITHUB_DOT_COM
+        
+        <dd class="description">
+        
+      
+        <dt id="InvalidJekyllMentionConfig">InvalidJekyllMentionConfig
+        
+        <dd class="description">
+        
+      
+      </dl>
+    </section>
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-filter_with_mention" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">filter_with_mention</span><span
+            class="method-args">(src)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Public: Create or fetch the filter for the given {{src}} base URL.</p>
+
+<p>src - the base URL (e.g. <a href="https://github.com">github.com</a>)</p>
+
+<p>Returns an HTML::Pipeline instance for the given base URL.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="filter_with_mention-source">
+            <pre><span class="ruby-comment"># File lib/jekyll-mentions.rb, line 31</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">filter_with_mention</span>(<span class="ruby-identifier">src</span>)
+  <span class="ruby-identifier">filters</span>[<span class="ruby-identifier">src</span>] <span class="ruby-operator">||=</span> <span class="ruby-constant">HTML</span><span class="ruby-operator">::</span><span class="ruby-constant">Pipeline</span>.<span class="ruby-identifier">new</span>([
+    <span class="ruby-constant">HTML</span><span class="ruby-operator">::</span><span class="ruby-constant">Pipeline</span><span class="ruby-operator">::</span><span class="ruby-constant">MentionFilter</span>
+  ], { <span class="ruby-value">:base_url</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">src</span> , <span class="ruby-value">:username_pattern</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">mention_username_pattern</span> })
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- filter_with_mention-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- filter_with_mention-method -->
+
+    
+      <div id="method-c-filters" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">filters</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Public: Filters hash where the key is the mention base URL. Effectively a
+cache.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="filters-source">
+            <pre><span class="ruby-comment"># File lib/jekyll-mentions.rb, line 43</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">filters</span>
+  <span class="ruby-ivar">@filters</span> <span class="ruby-operator">||=</span> {}
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- filters-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- filters-method -->
+
+    
+      <div id="method-c-mention_base" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">mention_base</span><span
+            class="method-args">(config = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Public: Calculate the base URL to use for mentioning. The custom base URL
+can be defined in the config as jekyll-mentions.base_url or
+jekyll-mentions, and must be a valid URL (i.e. it must include a protocol
+and valid domain) It should <em>not</em> have a trailing slash.</p>
+
+<p>config - the hash-like configuration of the document&#39;s site</p>
+
+<p>Returns a URL to use as the base URL for mentions. Defaults to the <a
+href="https://github.com">github.com</a>.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="mention_base-source">
+            <pre><span class="ruby-comment"># File lib/jekyll-mentions.rb, line 57</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">mention_base</span>(<span class="ruby-identifier">config</span> = {})
+  <span class="ruby-identifier">mention_config</span> = <span class="ruby-identifier">config</span>[<span class="ruby-string">&#39;jekyll-mentions&#39;</span>]
+  <span class="ruby-keyword">case</span> <span class="ruby-identifier">mention_config</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-keyword">nil</span>, <span class="ruby-constant">NilClass</span>
+    <span class="ruby-constant">GITHUB_DOT_COM</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-constant">String</span>
+    <span class="ruby-identifier">mention_config</span>.<span class="ruby-identifier">to_s</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-constant">Hash</span>
+    <span class="ruby-identifier">mention_config</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-string">&#39;base_url&#39;</span>, <span class="ruby-constant">GITHUB_DOT_COM</span>)
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">InvalidJekyllMentionConfig</span>,
+      <span class="ruby-string">&quot;Your jekyll-mentions config has to either be a&quot;</span>              <span class="ruby-node">&quot; string or a hash. It&#39;s a #{mention_config.class} right now.&quot;</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- mention_base-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- mention_base-method -->
+
+    
+      <div id="method-c-mention_username_pattern" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">mention_username_pattern</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="mention_username_pattern-source">
+            <pre><span class="ruby-comment"># File lib/jekyll-mentions.rb, line 37</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">mention_username_pattern</span>
+  <span class="ruby-constant">Regexp</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">HTML</span><span class="ruby-operator">::</span><span class="ruby-constant">Pipeline</span><span class="ruby-operator">::</span><span class="ruby-constant">MentionFilter</span><span class="ruby-operator">::</span><span class="ruby-constant">UsernamePattern</span>.<span class="ruby-identifier">source</span>, <span class="ruby-constant">Regexp</span><span class="ruby-operator">::</span><span class="ruby-constant">IGNORECASE</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- mention_username_pattern-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- mention_username_pattern-method -->
+
+    
+      <div id="method-c-mentionable-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">mentionable?</span><span
+            class="method-args">(doc)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Public: Defines the conditions for a document to be emojiable.</p>
+
+<p>doc - the Jekyll::Document or Jekyll::Page</p>
+
+<p>Returns true if the doc is written &amp; is HTML.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="mentionable-3F-source">
+            <pre><span class="ruby-comment"># File lib/jekyll-mentions.rb, line 78</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">mentionable?</span>(<span class="ruby-identifier">doc</span>)
+  (<span class="ruby-identifier">doc</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Jekyll</span><span class="ruby-operator">::</span><span class="ruby-constant">Page</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">doc</span>.<span class="ruby-identifier">write?</span>) <span class="ruby-operator">&amp;&amp;</span>
+    <span class="ruby-identifier">doc</span>.<span class="ruby-identifier">output_ext</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;.html&quot;</span> <span class="ruby-operator">||</span> (<span class="ruby-identifier">doc</span>.<span class="ruby-identifier">permalink</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">doc</span>.<span class="ruby-identifier">permalink</span>.<span class="ruby-identifier">end_with?</span>(<span class="ruby-string">&quot;/&quot;</span>))
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- mentionable-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- mentionable-3F-method -->
+
+    
+      <div id="method-c-mentionify" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">mentionify</span><span
+            class="method-args">(doc)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="mentionify-source">
+            <pre><span class="ruby-comment"># File lib/jekyll-mentions.rb, line 13</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">mentionify</span>(<span class="ruby-identifier">doc</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">doc</span>.<span class="ruby-identifier">output</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-string">&quot;@&quot;</span>)
+  <span class="ruby-identifier">src</span> = <span class="ruby-identifier">mention_base</span>(<span class="ruby-identifier">doc</span>.<span class="ruby-identifier">site</span>.<span class="ruby-identifier">config</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">doc</span>.<span class="ruby-identifier">output</span>.<span class="ruby-identifier">include?</span> <span class="ruby-constant">BODY_START_TAG</span>
+    <span class="ruby-identifier">parsed_doc</span>    = <span class="ruby-constant">Nokogiri</span><span class="ruby-operator">::</span><span class="ruby-constant">HTML</span><span class="ruby-operator">::</span><span class="ruby-constant">Document</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">doc</span>.<span class="ruby-identifier">output</span>)
+    <span class="ruby-identifier">body</span>          = <span class="ruby-identifier">parsed_doc</span>.<span class="ruby-identifier">at_css</span>(<span class="ruby-string">&#39;body&#39;</span>)
+    <span class="ruby-identifier">body</span>.<span class="ruby-identifier">children</span> = <span class="ruby-identifier">filter_with_mention</span>(<span class="ruby-identifier">src</span>).<span class="ruby-identifier">call</span>(<span class="ruby-identifier">body</span>.<span class="ruby-identifier">inner_html</span>)[<span class="ruby-value">:output</span>].<span class="ruby-identifier">to_s</span>
+    <span class="ruby-identifier">doc</span>.<span class="ruby-identifier">output</span>    = <span class="ruby-identifier">parsed_doc</span>.<span class="ruby-identifier">to_html</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">doc</span>.<span class="ruby-identifier">output</span> = <span class="ruby-identifier">filter_with_mention</span>(<span class="ruby-identifier">src</span>).<span class="ruby-identifier">call</span>(<span class="ruby-identifier">doc</span>.<span class="ruby-identifier">output</span>)[<span class="ruby-value">:output</span>].<span class="ruby-identifier">to_s</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- mentionify-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- mentionify-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

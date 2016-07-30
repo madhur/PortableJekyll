@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>class Concurrent::AbstractExecutorService - concurrent-ruby-1.0.2 Documentation</title>
+
+<link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../index.html">Home</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/concurrent/executor/abstract_executor_service.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">Synchronization::LockableObject
+  
+</nav>
+
+    <!-- Included Modules -->
+<nav id="includes-section" class="section">
+  <h3 class="section-header">Included Modules</h3>
+
+  <ul class="link-list">
+  
+  
+    <li><a class="include" href="ExecutorService.html">Concurrent::ExecutorService</a>
+  
+  
+  </ul>
+</nav>
+
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li class="calls-super" ><a href="#method-c-new">::new</a>
+    
+    <li ><a href="#method-i-auto_terminate-3D">#auto_terminate=</a>
+    
+    <li ><a href="#method-i-auto_terminate-3F">#auto_terminate?</a>
+    
+    <li ><a href="#method-i-handle_fallback">#handle_fallback</a>
+    
+    <li ><a href="#method-i-kill">#kill</a>
+    
+    <li ><a href="#method-i-ns_auto_terminate-3D">#ns_auto_terminate=</a>
+    
+    <li ><a href="#method-i-ns_auto_terminate-3F">#ns_auto_terminate?</a>
+    
+    <li ><a href="#method-i-ns_execute">#ns_execute</a>
+    
+    <li ><a href="#method-i-ns_kill_execution">#ns_kill_execution</a>
+    
+    <li ><a href="#method-i-ns_shutdown_execution">#ns_shutdown_execution</a>
+    
+    <li ><a href="#method-i-running-3F">#running?</a>
+    
+    <li ><a href="#method-i-shutdown">#shutdown</a>
+    
+    <li ><a href="#method-i-shutdown-3F">#shutdown?</a>
+    
+    <li ><a href="#method-i-shuttingdown-3F">#shuttingdown?</a>
+    
+    <li ><a href="#method-i-terminate_at_exit">#terminate_at_exit</a>
+    
+    <li ><a href="#method-i-wait_for_termination">#wait_for_termination</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="../CHANGELOG_md.html">CHANGELOG</a>
+  
+    <li class="file"><a href="../LICENSE_txt.html">LICENSE</a>
+  
+    <li class="file"><a href="../README_md.html">README</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../Concurrent.html">Concurrent</a>
+  
+    <li><a href="../Concurrent/AbstractExchanger.html">Concurrent::AbstractExchanger</a>
+  
+    <li><a href="../Concurrent/AbstractExecutorService.html">Concurrent::AbstractExecutorService</a>
+  
+    <li><a href="../Concurrent/AbstractThreadLocalVar.html">Concurrent::AbstractThreadLocalVar</a>
+  
+    <li><a href="../Concurrent/Agent.html">Concurrent::Agent</a>
+  
+    <li><a href="../Concurrent/Agent/Error.html">Concurrent::Agent::Error</a>
+  
+    <li><a href="../Concurrent/Agent/ValidationError.html">Concurrent::Agent::ValidationError</a>
+  
+    <li><a href="../Concurrent/Array.html">Concurrent::Array</a>
+  
+    <li><a href="../Concurrent/Async.html">Concurrent::Async</a>
+  
+    <li><a href="../Concurrent/Async/AsyncDelegator.html">Concurrent::Async::AsyncDelegator</a>
+  
+    <li><a href="../Concurrent/Async/AwaitDelegator.html">Concurrent::Async::AwaitDelegator</a>
+  
+    <li><a href="../Concurrent/Async/ClassMethods.html">Concurrent::Async::ClassMethods</a>
+  
+    <li><a href="../Concurrent/AtExitImplementation.html">Concurrent::AtExitImplementation</a>
+  
+    <li><a href="../Concurrent/Atom.html">Concurrent::Atom</a>
+  
+    <li><a href="../Concurrent/AtomicBoolean.html">Concurrent::AtomicBoolean</a>
+  
+    <li><a href="../Concurrent/AtomicDirectUpdate.html">Concurrent::AtomicDirectUpdate</a>
+  
+    <li><a href="../Concurrent/AtomicFixnum.html">Concurrent::AtomicFixnum</a>
+  
+    <li><a href="../Concurrent/AtomicNumericCompareAndSetWrapper.html">Concurrent::AtomicNumericCompareAndSetWrapper</a>
+  
+    <li><a href="../Concurrent/AtomicReference.html">Concurrent::AtomicReference</a>
+  
+    <li><a href="../Concurrent/CAtomicReference.html">Concurrent::CAtomicReference</a>
+  
+    <li><a href="../Concurrent/CachedThreadPool.html">Concurrent::CachedThreadPool</a>
+  
+    <li><a href="../Concurrent/Collection.html">Concurrent::Collection</a>
+  
+    <li><a href="../Concurrent/Collection/AtomicReferenceMapBackend.html">Concurrent::Collection::AtomicReferenceMapBackend</a>
+  
+    <li><a href="../Concurrent/Collection/AtomicReferenceMapBackend/Node.html">Concurrent::Collection::AtomicReferenceMapBackend::Node</a>
+  
+    <li><a href="../Concurrent/Collection/AtomicReferenceMapBackend/Table.html">Concurrent::Collection::AtomicReferenceMapBackend::Table</a>
+  
+    <li><a href="../Concurrent/Collection/CopyOnNotifyObserverSet.html">Concurrent::Collection::CopyOnNotifyObserverSet</a>
+  
+    <li><a href="../Concurrent/Collection/CopyOnWriteObserverSet.html">Concurrent::Collection::CopyOnWriteObserverSet</a>
+  
+    <li><a href="../Concurrent/Collection/JavaNonConcurrentPriorityQueue.html">Concurrent::Collection::JavaNonConcurrentPriorityQueue</a>
+  
+    <li><a href="../Concurrent/Collection/MriMapBackend.html">Concurrent::Collection::MriMapBackend</a>
+  
+    <li><a href="../Concurrent/Collection/NonConcurrentMapBackend.html">Concurrent::Collection::NonConcurrentMapBackend</a>
+  
+    <li><a href="../Concurrent/Collection/NonConcurrentPriorityQueue.html">Concurrent::Collection::NonConcurrentPriorityQueue</a>
+  
+    <li><a href="../Concurrent/Collection/RubyNonConcurrentPriorityQueue.html">Concurrent::Collection::RubyNonConcurrentPriorityQueue</a>
+  
+    <li><a href="../Concurrent/Collection/SynchronizedMapBackend.html">Concurrent::Collection::SynchronizedMapBackend</a>
+  
+    <li><a href="../Concurrent/Concern.html">Concurrent::Concern</a>
+  
+    <li><a href="../Concurrent/Concern/Deprecation.html">Concurrent::Concern::Deprecation</a>
+  
+    <li><a href="../Concurrent/Concern/Dereferenceable.html">Concurrent::Concern::Dereferenceable</a>
+  
+    <li><a href="../Concurrent/Concern/Logging.html">Concurrent::Concern::Logging</a>
+  
+    <li><a href="../Concurrent/Concern/Obligation.html">Concurrent::Concern::Obligation</a>
+  
+    <li><a href="../Concurrent/Concern/Observable.html">Concurrent::Concern::Observable</a>
+  
+    <li><a href="../Concurrent/ConcurrentUpdateError.html">Concurrent::ConcurrentUpdateError</a>
+  
+    <li><a href="../Concurrent/CountDownLatch.html">Concurrent::CountDownLatch</a>
+  
+    <li><a href="../Concurrent/CyclicBarrier.html">Concurrent::CyclicBarrier</a>
+  
+    <li><a href="../Concurrent/Delay.html">Concurrent::Delay</a>
+  
+    <li><a href="../Concurrent/DependencyCounter.html">Concurrent::DependencyCounter</a>
+  
+    <li><a href="../Concurrent/Edge.html">Concurrent::Edge</a>
+  
+    <li><a href="../Concurrent/Event.html">Concurrent::Event</a>
+  
+    <li><a href="../Concurrent/Exchanger.html">Concurrent::Exchanger</a>
+  
+    <li><a href="../Concurrent/ExecutorService.html">Concurrent::ExecutorService</a>
+  
+    <li><a href="../Concurrent/FixedThreadPool.html">Concurrent::FixedThreadPool</a>
+  
+    <li><a href="../Concurrent/Future.html">Concurrent::Future</a>
+  
+    <li><a href="../Concurrent/Hash.html">Concurrent::Hash</a>
+  
+    <li><a href="../Concurrent/IVar.html">Concurrent::IVar</a>
+  
+    <li><a href="../Concurrent/ImmediateExecutor.html">Concurrent::ImmediateExecutor</a>
+  
+    <li><a href="../Concurrent/ImmutableStruct.html">Concurrent::ImmutableStruct</a>
+  
+    <li><a href="../Concurrent/IndirectImmediateExecutor.html">Concurrent::IndirectImmediateExecutor</a>
+  
+    <li><a href="../Concurrent/JavaAtomicReference.html">Concurrent::JavaAtomicReference</a>
+  
+    <li><a href="../Concurrent/JavaCountDownLatch.html">Concurrent::JavaCountDownLatch</a>
+  
+    <li><a href="../Concurrent/JavaExchanger.html">Concurrent::JavaExchanger</a>
+  
+    <li><a href="../Concurrent/JavaExecutorService.html">Concurrent::JavaExecutorService</a>
+  
+    <li><a href="../Concurrent/JavaExecutorService/Job.html">Concurrent::JavaExecutorService::Job</a>
+  
+    <li><a href="../Concurrent/JavaSingleThreadExecutor.html">Concurrent::JavaSingleThreadExecutor</a>
+  
+    <li><a href="../Concurrent/JavaThreadLocalVar.html">Concurrent::JavaThreadLocalVar</a>
+  
+    <li><a href="../Concurrent/JavaThreadPoolExecutor.html">Concurrent::JavaThreadPoolExecutor</a>
+  
+    <li><a href="../Concurrent/LazyRegister.html">Concurrent::LazyRegister</a>
+  
+    <li><a href="../Concurrent/MVar.html">Concurrent::MVar</a>
+  
+    <li><a href="../Concurrent/Map.html">Concurrent::Map</a>
+  
+    <li><a href="../Concurrent/Maybe.html">Concurrent::Maybe</a>
+  
+    <li><a href="../Concurrent/MutableStruct.html">Concurrent::MutableStruct</a>
+  
+    <li><a href="../Concurrent/MutexAtomicBoolean.html">Concurrent::MutexAtomicBoolean</a>
+  
+    <li><a href="../Concurrent/MutexAtomicFixnum.html">Concurrent::MutexAtomicFixnum</a>
+  
+    <li><a href="../Concurrent/MutexAtomicReference.html">Concurrent::MutexAtomicReference</a>
+  
+    <li><a href="../Concurrent/MutexCountDownLatch.html">Concurrent::MutexCountDownLatch</a>
+  
+    <li><a href="../Concurrent/MutexSemaphore.html">Concurrent::MutexSemaphore</a>
+  
+    <li><a href="../Concurrent/Options.html">Concurrent::Options</a>
+  
+    <li><a href="../Concurrent/Process.html">Concurrent::Process</a>
+  
+    <li><a href="../Concurrent/Promise.html">Concurrent::Promise</a>
+  
+    <li><a href="../Concurrent/RbxAtomicReference.html">Concurrent::RbxAtomicReference</a>
+  
+    <li><a href="../Concurrent/ReadWriteLock.html">Concurrent::ReadWriteLock</a>
+  
+    <li><a href="../Concurrent/ReentrantReadWriteLock.html">Concurrent::ReentrantReadWriteLock</a>
+  
+    <li><a href="../Concurrent/RubyExchanger.html">Concurrent::RubyExchanger</a>
+  
+    <li><a href="../Concurrent/RubyExchanger/Node.html">Concurrent::RubyExchanger::Node</a>
+  
+    <li><a href="../Concurrent/RubyExecutorService.html">Concurrent::RubyExecutorService</a>
+  
+    <li><a href="../Concurrent/RubySingleThreadExecutor.html">Concurrent::RubySingleThreadExecutor</a>
+  
+    <li><a href="../Concurrent/RubyThreadLocalVar.html">Concurrent::RubyThreadLocalVar</a>
+  
+    <li><a href="../Concurrent/RubyThreadPoolExecutor.html">Concurrent::RubyThreadPoolExecutor</a>
+  
+    <li><a href="../Concurrent/RubyThreadPoolExecutor/Worker.html">Concurrent::RubyThreadPoolExecutor::Worker</a>
+  
+    <li><a href="../Concurrent/SafeTaskExecutor.html">Concurrent::SafeTaskExecutor</a>
+  
+    <li><a href="../Concurrent/ScheduledTask.html">Concurrent::ScheduledTask</a>
+  
+    <li><a href="../Concurrent/Semaphore.html">Concurrent::Semaphore</a>
+  
+    <li><a href="../Concurrent/SerialExecutorService.html">Concurrent::SerialExecutorService</a>
+  
+    <li><a href="../Concurrent/SerializedExecution.html">Concurrent::SerializedExecution</a>
+  
+    <li><a href="../Concurrent/SerializedExecutionDelegator.html">Concurrent::SerializedExecutionDelegator</a>
+  
+    <li><a href="../Concurrent/SettableStruct.html">Concurrent::SettableStruct</a>
+  
+    <li><a href="../Concurrent/SimpleExecutorService.html">Concurrent::SimpleExecutorService</a>
+  
+    <li><a href="../Concurrent/SingleThreadExecutor.html">Concurrent::SingleThreadExecutor</a>
+  
+    <li><a href="../Concurrent/Synchronization.html">Concurrent::Synchronization</a>
+  
+    <li><a href="../Concurrent/Synchronization/AbstractLockableObject.html">Concurrent::Synchronization::AbstractLockableObject</a>
+  
+    <li><a href="../Concurrent/Synchronization/AbstractObject.html">Concurrent::Synchronization::AbstractObject</a>
+  
+    <li><a href="../Concurrent/Synchronization/AbstractStruct.html">Concurrent::Synchronization::AbstractStruct</a>
+  
+    <li><a href="../Concurrent/Synchronization/Condition.html">Concurrent::Synchronization::Condition</a>
+  
+    <li><a href="../Concurrent/Synchronization/JRubyAttrVolatile.html">Concurrent::Synchronization::JRubyAttrVolatile</a>
+  
+    <li><a href="../Concurrent/Synchronization/JRubyAttrVolatile/ClassMethods.html">Concurrent::Synchronization::JRubyAttrVolatile::ClassMethods</a>
+  
+    <li><a href="../Concurrent/Synchronization/JRubyLockableObject.html">Concurrent::Synchronization::JRubyLockableObject</a>
+  
+    <li><a href="../Concurrent/Synchronization/JRubyObject.html">Concurrent::Synchronization::JRubyObject</a>
+  
+    <li><a href="../Concurrent/Synchronization/Lock.html">Concurrent::Synchronization::Lock</a>
+  
+    <li><a href="../Concurrent/Synchronization/LockableObject.html">Concurrent::Synchronization::LockableObject</a>
+  
+    <li><a href="../Concurrent/Synchronization/MriAttrVolatile.html">Concurrent::Synchronization::MriAttrVolatile</a>
+  
+    <li><a href="../Concurrent/Synchronization/MriAttrVolatile/ClassMethods.html">Concurrent::Synchronization::MriAttrVolatile::ClassMethods</a>
+  
+    <li><a href="../Concurrent/Synchronization/MriLockableObject.html">Concurrent::Synchronization::MriLockableObject</a>
+  
+    <li><a href="../Concurrent/Synchronization/MriMonitorLockableObject.html">Concurrent::Synchronization::MriMonitorLockableObject</a>
+  
+    <li><a href="../Concurrent/Synchronization/MriMutexLockableObject.html">Concurrent::Synchronization::MriMutexLockableObject</a>
+  
+    <li><a href="../Concurrent/Synchronization/MriObject.html">Concurrent::Synchronization::MriObject</a>
+  
+    <li><a href="../Concurrent/Synchronization/Object.html">Concurrent::Synchronization::Object</a>
+  
+    <li><a href="../Concurrent/Synchronization/RbxAttrVolatile.html">Concurrent::Synchronization::RbxAttrVolatile</a>
+  
+    <li><a href="../Concurrent/Synchronization/RbxAttrVolatile/ClassMethods.html">Concurrent::Synchronization::RbxAttrVolatile::ClassMethods</a>
+  
+    <li><a href="../Concurrent/Synchronization/RbxLockableObject.html">Concurrent::Synchronization::RbxLockableObject</a>
+  
+    <li><a href="../Concurrent/Synchronization/RbxObject.html">Concurrent::Synchronization::RbxObject</a>
+  
+    <li><a href="../Concurrent/Synchronization/TruffleAttrVolatile.html">Concurrent::Synchronization::TruffleAttrVolatile</a>
+  
+    <li><a href="../Concurrent/Synchronization/TruffleAttrVolatile/ClassMethods.html">Concurrent::Synchronization::TruffleAttrVolatile::ClassMethods</a>
+  
+    <li><a href="../Concurrent/Synchronization/TruffleLockableObject.html">Concurrent::Synchronization::TruffleLockableObject</a>
+  
+    <li><a href="../Concurrent/Synchronization/TruffleObject.html">Concurrent::Synchronization::TruffleObject</a>
+  
+    <li><a href="../Concurrent/SynchronizedDelegator.html">Concurrent::SynchronizedDelegator</a>
+  
+    <li><a href="../Concurrent/TVar.html">Concurrent::TVar</a>
+  
+    <li><a href="../Concurrent/ThreadLocalVar.html">Concurrent::ThreadLocalVar</a>
+  
+    <li><a href="../Concurrent/ThreadPoolExecutor.html">Concurrent::ThreadPoolExecutor</a>
+  
+    <li><a href="../Concurrent/ThreadSafe.html">Concurrent::ThreadSafe</a>
+  
+    <li><a href="../Concurrent/ThreadSafe/Util.html">Concurrent::ThreadSafe::Util</a>
+  
+    <li><a href="../Concurrent/ThreadSafe/Util/Adder.html">Concurrent::ThreadSafe::Util::Adder</a>
+  
+    <li><a href="../Concurrent/ThreadSafe/Util/CheapLockable.html">Concurrent::ThreadSafe::Util::CheapLockable</a>
+  
+    <li><a href="../Concurrent/ThreadSafe/Util/PowerOfTwoTuple.html">Concurrent::ThreadSafe::Util::PowerOfTwoTuple</a>
+  
+    <li><a href="../Concurrent/ThreadSafe/Util/Striped64.html">Concurrent::ThreadSafe::Util::Striped64</a>
+  
+    <li><a href="../Concurrent/ThreadSafe/Util/Striped64/Cell.html">Concurrent::ThreadSafe::Util::Striped64::Cell</a>
+  
+    <li><a href="../Concurrent/ThreadSafe/Util/Volatile.html">Concurrent::ThreadSafe::Util::Volatile</a>
+  
+    <li><a href="../Concurrent/ThreadSafe/Util/XorShiftRandom.html">Concurrent::ThreadSafe::Util::XorShiftRandom</a>
+  
+    <li><a href="../Concurrent/TimerSet.html">Concurrent::TimerSet</a>
+  
+    <li><a href="../Concurrent/TimerTask.html">Concurrent::TimerTask</a>
+  
+    <li><a href="../Concurrent/Transaction.html">Concurrent::Transaction</a>
+  
+    <li><a href="../Concurrent/Tuple.html">Concurrent::Tuple</a>
+  
+    <li><a href="../Concurrent/Utility.html">Concurrent::Utility</a>
+  
+    <li><a href="../Concurrent/Utility/EngineDetector.html">Concurrent::Utility::EngineDetector</a>
+  
+    <li><a href="../Concurrent/Utility/NativeExtensionLoader.html">Concurrent::Utility::NativeExtensionLoader</a>
+  
+    <li><a href="../Concurrent/Utility/ProcessorCounter.html">Concurrent::Utility::ProcessorCounter</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class Concurrent::AbstractExecutorService</h1>
+
+  <div id="description" class="description">
+    
+<p>@!macro abstract_executor_service_public_api @!visibility private</p>
+
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+    <!-- Constants -->
+    <section id="constants-list" class="section">
+      <h3 class="section-header">Constants</h3>
+      <dl>
+      
+        <dt id="FALLBACK_POLICIES">FALLBACK_POLICIES
+        
+        <dd class="description"><p>The set of possible fallback policies that may be set at thread pool
+creation.</p>
+        
+      
+      </dl>
+    </section>
+    
+
+    
+    <!-- Attributes -->
+    <section id="attribute-method-details" class="method-section section">
+      <h3 class="section-header">Attributes</h3>
+
+      
+      <div id="attribute-i-fallback_policy" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">fallback_policy</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>@!macro executor_service_attr_reader_fallback_policy</p>
+        
+        </div>
+      </div>
+      
+    </section><!-- attribute-method-details -->
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">(*args, &block)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Create a new thread pool.</p>
+          
+          
+            <div class="method-calls-super">
+              Calls superclass method
+              
+            </div>
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/concurrent/executor/abstract_executor_service.rb, line 20</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+  <span class="ruby-keyword">super</span>(<span class="ruby-operator">&amp;</span><span class="ruby-keyword">nil</span>)
+  <span class="ruby-identifier">synchronize</span> { <span class="ruby-identifier">ns_initialize</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>) }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- new-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- new-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-auto_terminate-3D" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">auto_terminate=</span><span
+            class="method-args">(value)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>@!macro executor_service_method_auto_terminate_setter</p>
+          
+          
+
+          
+          <div class="method-source-code" id="auto_terminate-3D-source">
+            <pre><span class="ruby-comment"># File lib/concurrent/executor/abstract_executor_service.rb, line 61</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">auto_terminate=</span>(<span class="ruby-identifier">value</span>)
+  <span class="ruby-identifier">synchronize</span> { <span class="ruby-keyword">self</span>.<span class="ruby-identifier">ns_auto_terminate</span> = <span class="ruby-identifier">value</span> }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- auto_terminate-3D-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- auto_terminate-3D-method -->
+
+    
+      <div id="method-i-auto_terminate-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">auto_terminate?</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>@!macro executor_service_method_auto_terminate_question</p>
+          
+          
+
+          
+          <div class="method-source-code" id="auto_terminate-3F-source">
+            <pre><span class="ruby-comment"># File lib/concurrent/executor/abstract_executor_service.rb, line 56</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">auto_terminate?</span>
+  <span class="ruby-identifier">synchronize</span> { <span class="ruby-identifier">ns_auto_terminate?</span> }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- auto_terminate-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- auto_terminate-3F-method -->
+
+    
+      <div id="method-i-kill" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">kill</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>@!macro executor_service_method_kill</p>
+          
+          
+
+          
+          <div class="method-source-code" id="kill-source">
+            <pre><span class="ruby-comment"># File lib/concurrent/executor/abstract_executor_service.rb, line 31</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">kill</span>
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- kill-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- kill-method -->
+
+    
+      <div id="method-i-running-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">running?</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>@!macro executor_service_method_running_question</p>
+          
+          
+
+          
+          <div class="method-source-code" id="running-3F-source">
+            <pre><span class="ruby-comment"># File lib/concurrent/executor/abstract_executor_service.rb, line 41</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">running?</span>
+  <span class="ruby-identifier">synchronize</span> { <span class="ruby-identifier">ns_running?</span> }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- running-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- running-3F-method -->
+
+    
+      <div id="method-i-shutdown" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">shutdown</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>@!macro executor_service_method_shutdown</p>
+          
+          
+
+          
+          <div class="method-source-code" id="shutdown-source">
+            <pre><span class="ruby-comment"># File lib/concurrent/executor/abstract_executor_service.rb, line 26</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">shutdown</span>
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- shutdown-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- shutdown-method -->
+
+    
+      <div id="method-i-shutdown-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">shutdown?</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>@!macro executor_service_method_shutdown_question</p>
+          
+          
+
+          
+          <div class="method-source-code" id="shutdown-3F-source">
+            <pre><span class="ruby-comment"># File lib/concurrent/executor/abstract_executor_service.rb, line 51</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">shutdown?</span>
+  <span class="ruby-identifier">synchronize</span> { <span class="ruby-identifier">ns_shutdown?</span> }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- shutdown-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- shutdown-3F-method -->
+
+    
+      <div id="method-i-shuttingdown-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">shuttingdown?</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>@!macro executor_service_method_shuttingdown_question</p>
+          
+          
+
+          
+          <div class="method-source-code" id="shuttingdown-3F-source">
+            <pre><span class="ruby-comment"># File lib/concurrent/executor/abstract_executor_service.rb, line 46</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">shuttingdown?</span>
+  <span class="ruby-identifier">synchronize</span> { <span class="ruby-identifier">ns_shuttingdown?</span> }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- shuttingdown-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- shuttingdown-3F-method -->
+
+    
+      <div id="method-i-wait_for_termination" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">wait_for_termination</span><span
+            class="method-args">(timeout = nil)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>@!macro executor_service_method_wait_for_termination</p>
+          
+          
+
+          
+          <div class="method-source-code" id="wait_for_termination-source">
+            <pre><span class="ruby-comment"># File lib/concurrent/executor/abstract_executor_service.rb, line 36</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">wait_for_termination</span>(<span class="ruby-identifier">timeout</span> = <span class="ruby-keyword">nil</span>)
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- wait_for_termination-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- wait_for_termination-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+     <section id="private-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Private Instance Methods</h3>
+
+    
+      <div id="method-i-handle_fallback" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">handle_fallback</span><span
+            class="method-args">(*args) { |*args| ... }</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Handler which executes the `fallback_policy` once the queue size reaches
+`max_queue`.</p>
+
+<p>@param [Array] args the arguments to the task which is being handled.</p>
+
+<p>@!visibility private</p>
+          
+          
+
+          
+          <div class="method-source-code" id="handle_fallback-source">
+            <pre><span class="ruby-comment"># File lib/concurrent/executor/abstract_executor_service.rb, line 73</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">handle_fallback</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+  <span class="ruby-keyword">case</span> <span class="ruby-identifier">fallback_policy</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-value">:abort</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">RejectedExecutionError</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-value">:discard</span>
+    <span class="ruby-keyword">false</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-value">:caller_runs</span>
+    <span class="ruby-keyword">begin</span>
+      <span class="ruby-keyword">yield</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+    <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ex</span>
+      <span class="ruby-comment"># let it fail</span>
+      <span class="ruby-identifier">log</span> <span class="ruby-constant">DEBUG</span>, <span class="ruby-identifier">ex</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">true</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">fail</span> <span class="ruby-node">&quot;Unknown fallback policy #{fallback_policy}&quot;</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- handle_fallback-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- handle_fallback-method -->
+
+    
+      <div id="method-i-ns_auto_terminate-3D" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">ns_auto_terminate=</span><span
+            class="method-args">(value)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="ns_auto_terminate-3D-source">
+            <pre><span class="ruby-comment"># File lib/concurrent/executor/abstract_executor_service.rb, line 116</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">ns_auto_terminate=</span>(<span class="ruby-identifier">value</span>)
+  <span class="ruby-keyword">case</span> <span class="ruby-identifier">value</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-keyword">true</span>
+    <span class="ruby-constant">AtExit</span>.<span class="ruby-identifier">add</span>(<span class="ruby-keyword">self</span>) { <span class="ruby-identifier">terminate_at_exit</span> }
+    <span class="ruby-ivar">@auto_terminate</span> = <span class="ruby-keyword">true</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-keyword">false</span>
+    <span class="ruby-constant">AtExit</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-keyword">self</span>)
+    <span class="ruby-ivar">@auto_terminate</span> = <span class="ruby-keyword">false</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- ns_auto_terminate-3D-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- ns_auto_terminate-3D-method -->
+
+    
+      <div id="method-i-ns_auto_terminate-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">ns_auto_terminate?</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="ns_auto_terminate-3F-source">
+            <pre><span class="ruby-comment"># File lib/concurrent/executor/abstract_executor_service.rb, line 112</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">ns_auto_terminate?</span>
+  <span class="ruby-operator">!</span><span class="ruby-operator">!</span><span class="ruby-ivar">@auto_terminate</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- ns_auto_terminate-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- ns_auto_terminate-3F-method -->
+
+    
+      <div id="method-i-ns_execute" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">ns_execute</span><span
+            class="method-args">(*args, &task)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="ns_execute-source">
+            <pre><span class="ruby-comment"># File lib/concurrent/executor/abstract_executor_service.rb, line 92</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">ns_execute</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">task</span>)
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- ns_execute-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- ns_execute-method -->
+
+    
+      <div id="method-i-ns_kill_execution" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">ns_kill_execution</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>@!macro [attach] executor_service_method_ns_kill_execution</p>
+
+<pre>Callback method called when the executor has been killed.
+The default behavior is to do nothing.</pre>
+          
+          
+
+          
+          <div class="method-source-code" id="ns_kill_execution-source">
+            <pre><span class="ruby-comment"># File lib/concurrent/executor/abstract_executor_service.rb, line 108</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">ns_kill_execution</span>
+  <span class="ruby-comment"># do nothing</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- ns_kill_execution-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- ns_kill_execution-method -->
+
+    
+      <div id="method-i-ns_shutdown_execution" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">ns_shutdown_execution</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>@!macro [attach] executor_service_method_ns_shutdown_execution</p>
+
+<pre>Callback method called when an orderly shutdown has completed.
+The default behavior is to signal all waiting threads.</pre>
+          
+          
+
+          
+          <div class="method-source-code" id="ns_shutdown_execution-source">
+            <pre><span class="ruby-comment"># File lib/concurrent/executor/abstract_executor_service.rb, line 100</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">ns_shutdown_execution</span>
+  <span class="ruby-comment"># do nothing</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- ns_shutdown_execution-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- ns_shutdown_execution-method -->
+
+    
+      <div id="method-i-terminate_at_exit" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">terminate_at_exit</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="terminate_at_exit-source">
+            <pre><span class="ruby-comment"># File lib/concurrent/executor/abstract_executor_service.rb, line 129</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">terminate_at_exit</span>
+  <span class="ruby-identifier">kill</span> <span class="ruby-comment"># TODO be gentle first</span>
+  <span class="ruby-identifier">wait_for_termination</span>(<span class="ruby-value">10</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- terminate_at_exit-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- terminate_at_exit-method -->
+
+    
+    </section><!-- private-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+
