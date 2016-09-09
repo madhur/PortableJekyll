@@ -8,5 +8,11 @@ SET SSL_CERT_FILE=%~dp0curl\bin\cacert.pem
 echo Welcome to Portable Jekyll
 echo.
 
-:: now bring current sessions to cmd with /k args (stay)
-call cmd /k
+:: now bring current sessions to cmd
+if [%1]==[] (
+    :: ...either with /k args (stay)
+    call cmd /k
+) else (
+    :: ...or directly call something else
+    call cmd /c %1
+)
